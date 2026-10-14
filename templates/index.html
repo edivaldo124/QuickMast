@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block lang %}pt-br{% endblock %}
+{% block titulo %}Quick Mast{% endblock %}
+{% block classe_pagina %} pagina--inicio{% endblock %}
+
+{% block conteudo %}
+    <img class="inicio__icone" src="{{ url_for('static', filename='img/logo-icone.svg') }}" width="96" height="96" alt="">
+    <h1>Quick Mast</h1>
+    <p class="inicio__subtitulo">Detetor rápido de mastite</p>
+
+    {% if usuario %}
+        <p class="inicio__ola">Olá, {{ usuario.nome }}!</p>
+        <a class="btn btn--verde" href="/ubere">Iniciar medições</a>
+    {% else %}
+        <a class="btn btn--verde" href="/login">Entrar</a>
+    {% endif %}
+{% endblock %}

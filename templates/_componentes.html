@@ -1,0 +1,56 @@
+{# Componentes da biblioteca no Figma ("QuickMast – Telas", página Componentes).
+   Os gerados pelo JavaScript (banner, item do histórico) estão em stetic/js/componentes.js. #}
+
+{# Barra superior alinhada à direita: nome (perfil) · Utilizadores (só admin) · Sair #}
+{% macro barra(usuario) -%}
+<header class="barra">
+    <span class="barra__usuario">{{ usuario.nome }} ({{ usuario.perfil }})</span>
+    {% if usuario.perfil == 'admin' %}<a class="barra__link" href="/usuarios">Utilizadores</a>{% endif %}
+    <form method="post" action="/logout"><button type="submit" class="sair">Sair</button></form>
+</header>
+{%- endmacro %}
+
+{# Banner de diagnóstico. tipo: ok | alerta | analisando #}
+{% macro banner(tipo, mensagem) -%}
+<div class="banner banner--{{ tipo }}" role="{{ 'alert' if tipo == 'alerta' else 'status' }}">
+    <span class="banner__icone ic {{ {'ok': 'ic--check', 'alerta': 'ic--alerta', 'analisando': 'ic--carregando'}[tipo] }}" aria-hidden="true"></span>
+    <div class="banner__texto"><p class="banner__mensagem">{{ mensagem }}</p></div>
+</div>
+{%- endmacro %}
+
+{# Campo com rótulo. O <input class="campo"> vai no corpo do {% call %};
+   com aria-invalid="true" fica no estado de erro (borda vermelha + "!"). #}
+{% macro campo(id, rotulo, classe_rotulo='rotulo') -%}
+<div class="grupo">
+    <label class="{{ classe_rotulo }}" for="{{ id }}">{{ rotulo }}</label>
+    <div class="campo-caixa">{{ caller() }}</div>
+</div>
+{%- endmacro %}
+
+{# Úbere: grelha 2x2 fixa. data-teto = número do teto no firmware (ordem de medição 1 → 4) #}
+{% macro ubere() -%}
+<div class="ubere">
+    {% for teto, sigla in [(2, 'AE'), (1, 'AD'), (4, 'PE'), (3, 'PD')] %}
+    <div class="teto nao-medido" data-teto="{{ teto }}">
+        <span class="teto__icone" aria-hidden="true"></span>
+        <span class="teto__sigla">{{ sigla }}</span>
+        <small></small>
+        <span class="sr-only teto__estado">Não medido</span>
+    </div>
+    {% endfor %}
+</div>
+{%- endmacro %}
+
+{# Legenda dos estados do teto #}
+{% macro legenda() -%}
+<ul class="legenda">
+    <li><span class="ic ic--nao-medido" aria-hidden="true"></span>Não medido</li>
+    <li><span class="ic ic--a-ler" aria-hidden="true"></span>A ler</li>
+    <li><span class="ic ic--sadio" aria-hidden="true"></span>Sadio</li>
+    <li><span class="ic ic--suspeita" aria-hidden="true"></span>Suspeita</li>
+</ul>
+{%- endmacro %}
+
+{% macro voltar() -%}
+<a class="link-texto voltar" href="/ubere"><span class="voltar__seta" aria-hidden="true"></span>Voltar às medições</a>
+{%- endmacro %}

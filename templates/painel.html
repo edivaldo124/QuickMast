@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% from '_componentes.html' import barra %}
+{% block titulo %}QuickMast - Painel de estatísticas{% endblock %}
+
+{% block conteudo %}
+    {{ barra(usuario) }}
+    <h1>Painel de estatísticas</h1>
+    <div id="mensagem" class="oculto-se-vazio" aria-live="polite"></div>
+
+    <div class="medias">
+        <div class="cartao media">
+            <p class="media__rotulo">Temperatura média</p>
+            <p id="tempMedia" class="media__valor">--</p>
+        </div>
+        <div class="cartao media">
+            <p class="media__rotulo">Condutividade média</p>
+            <p id="condMedia" class="media__valor">--</p>
+        </div>
+    </div>
+
+    <h2 class="titulo-secao">Suspeitas por teto</h2>
+    <!-- Mesma posição do úbere; data-teto = número do teto no firmware -->
+    <div class="mapa">
+        {% for teto, sigla in [(2, 'AE'), (1, 'AD'), (4, 'PE'), (3, 'PD')] %}
+        <div class="mapa__teto" data-teto="{{ teto }}">
+            <span class="mapa__rotulo">{{ sigla }} · T{{ teto }}</span>
+            <span class="mapa__numero">--</span>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="escala" aria-hidden="true">
+        <span>0</span>
+        {% for alfa in [0.12, 0.35, 0.6, 0.8, 1] %}<span class="escala__passo" style="--alfa: {{ alfa }}"></span>{% endfor %}
+        <span id="escalaMax">--</span>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{ url_for('static', filename='js/componentes.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/painel.js') }}"></script>
+{% endblock %}

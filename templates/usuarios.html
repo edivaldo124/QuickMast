@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% from '_componentes.html' import barra, voltar %}
+{% block titulo %}QuickMast - Utilizadores{% endblock %}
+{% block classe_pagina %} pagina--lista{% endblock %}
+
+{% block conteudo %}
+    {{ barra(usuario) }}
+    <h1>Utilizadores</h1>
+    {{ voltar() }}
+    <div id="mensagem" class="oculto-se-vazio" aria-live="polite"></div>
+
+    <ul id="listaUsuarios" class="lista lista--usuarios"></ul>
+{% endblock %}
+
+{% block scripts %}
+    <script>const MEU_ID = {{ usuario.id }};</script>
+    <script src="{{ url_for('static', filename='js/componentes.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/usuarios.js') }}"></script>
+{% endblock %}

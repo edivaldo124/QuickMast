@@ -1,0 +1,16 @@
+services:
+  db:
+    image: postgres:16
+    container_name: quickmast-db
+    restart: unless-stopped
+    environment:   # valores vindos do .env (ver .env.example)
+      POSTGRES_USER: ${POSTGRES_USER:?defina no .env}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?defina no .env}
+      POSTGRES_DB: ${POSTGRES_DB:?defina no .env}
+    ports:
+      - "5433:5432"
+    volumes:
+      - quickmast_dados:/var/lib/postgresql/data
+
+volumes:
+  quickmast_dados:

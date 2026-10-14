@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% from '_componentes.html' import barra, campo, ubere, legenda %}
+{% block titulo %}QuickMast - Úbere{% endblock %}
+{# Fase atual: vaca | medir | resultado. Cada bloco diz em que fases aparece (data-fases). #}
+{% block atributos_body %} data-fase="vaca"{% endblock %}
+
+{% block conteudo %}
+    {{ barra(usuario) }}
+
+    <!-- PASSO 0: identificar a vaca -->
+    <section id="passoVaca" class="pilha" data-fases="vaca">
+        <h1 class="centro">QuickMast</h1>
+        {% call campo('inputVaca', 'Brinco / ID da vaca', 'rotulo rotulo--grande') %}
+            <input class="campo" id="inputVaca" type="text" placeholder="Ex.: BR-102" autocomplete="off">
+        {% endcall %}
+        <button id="btnIniciar" class="btn btn--verde">Iniciar medição</button>
+    </section>
+
+    <!-- Vaca em teste e progresso (passos 1-4 e resultado) -->
+    <div class="cartao cabecalho-vaca" data-fases="medir resultado">
+        <div class="cabecalho-vaca__linha">
+            <p id="vacaAtual"></p>
+            <p id="progressoTexto" class="progresso__texto" data-fases="medir"></p>
+        </div>
+        <div class="progresso" data-fases="medir" aria-hidden="true">
+            <span class="progresso__etapa"></span>
+            <span class="progresso__etapa"></span>
+            <span class="progresso__etapa"></span>
+            <span class="progresso__etapa"></span>
+        </div>
+    </div>
+
+    <!-- PASSOS 1-4: medir cada teto -->
+    <section id="passoMedir" class="pilha" data-fases="medir">
+        <p id="instrucao" class="instrucao"></p>
+        <p class="cartao ao-vivo">
+            <span class="ao-vivo__ponto" aria-hidden="true"></span>
+            <span>Ao vivo: <span id="vivoTemp">--</span> °C | cond <span id="vivoCond">--</span></span>
+        </p>
+    </section>
+
+    <!-- RESULTADO FINAL: diagnóstico -->
+    <div id="diagnostico" data-fases="resultado" aria-live="polite"></div>
+
+    <!-- O ÚBERE (sempre visível). data-teto = número do teto no firmware -->
+    {{ ubere() }}
+    {{ legenda() }}
+
+    <button id="btnCapturar" class="btn btn--azul" data-fases="medir">Capturar amostra</button>
+
+    <section id="resultado" class="pilha" data-fases="resultado">
+        <p id="estadoGravacao" class="confirmacao"></p>
+        <button id="btnNova" class="btn btn--verde">Nova vaca</button>
+    </section>
+
+    <!-- HISTÓRICO (vem do PostgreSQL, através da API) -->
+    <section class="pilha" data-fases="vaca" aria-labelledby="tituloHistorico">
+        <h2 id="tituloHistorico">Histórico</h2>
+        <a id="estatisticas" class="estatisticas escondido" href="/painel">
+            <span class="sr-only">Painel de estatísticas:</span>
+            <span class="cartao estatistica"><span id="estVacas" class="estatistica__numero"></span><span class="estatistica__rotulo">vacas</span></span>
+            <span class="cartao estatistica"><span id="estTestes" class="estatistica__numero"></span><span class="estatistica__rotulo">testes</span></span>
+            <span class="cartao estatistica"><span id="estSuspeita" class="estatistica__numero"></span><span class="estatistica__rotulo">com suspeita</span></span>
+            <span class="cartao estatistica"><span id="estPercentual" class="estatistica__numero"></span></span>
+        </a>
+        <a class="btn btn--cinza" href="/exportar.csv">Descarregar relatório (CSV)</a>
+        <ul id="listaHistorico" class="lista"></ul>
+    </section>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{ url_for('static', filename='js/componentes.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/ubere.js') }}"></script>
+{% endblock %}

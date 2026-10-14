@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% from '_componentes.html' import banner, campo %}
+{% block titulo %}QuickMast - Entrar{% endblock %}
+{% block classe_pagina %} pagina--entrada{% endblock %}
+
+{% block conteudo %}
+    {# Campos em erro: no login, os dois; ao criar conta, o campo de que fala a mensagem #}
+    {% set erro_entrar = erro and aba == 'entrar' %}
+    {% set erro_criar = {
+        'Nome entre 2 e 100 caracteres.': 'nome',
+        'Email inválido.': 'email',
+        'Este email já está registado.': 'email',
+        'A senha precisa de 8 a 128 caracteres.': 'senha'
+    }.get(erro) if aba == 'criar' else none %}
+
+    {% if erro %}{{ banner('alerta', erro) }}{% endif %}
+
+    <section id="formEntrar" class="entrada {{ '' if aba == 'entrar' else 'escondido' }}">
+        <header class="entrada__cabecalho">
+            <h1>QuickMast</h1>
+            <h2 class="subtitulo">Entrar</h2>
+        </header>
+        <form class="entrada__form" method="post" action="/login">
+            <input type="hidden" name="next" value="{{ next }}">
+            {% call campo('entrarEmail', 'Email') %}
+                <input class="campo" id="entrarEmail" type="email" name="email" required autocomplete="username"{% if erro_entrar %} aria-invalid="true"{% endif %}>
+            {% endcall %}
+            {% call campo('entrarSenha', 'Senha') %}
+                <input class="campo" id="entrarSenha" type="password" name="senha" required autocomplete="current-password"{% if erro_entrar %} aria-invalid="true"{% endif %}>
+            {% endcall %}
+            <button class="btn btn--verde" type="submit">Entrar</button>
+        </form>
+        <a class="link-texto" href="#" id="irCriar">Criar conta</a>
+    </section>
+
+    <section id="formCriar" class="entrada entrada--criar {{ '' if aba == 'criar' else 'escondido' }}">
+        <header class="entrada__cabecalho">
+            <h1>QuickMast</h1>
+            <h2 class="subtitulo">Criar conta</h2>
+        </header>
+        <form class="entrada__form" method="post" action="/registrar">
+            {% call campo('criarNome', 'Nome') %}
+                <input class="campo" id="criarNome" type="text" name="nome" required minlength="2" maxlength="100" autocomplete="name"{% if erro_criar == 'nome' %} aria-invalid="true"{% endif %}>
+            {% endcall %}
+            {% call campo('criarEmail', 'Email') %}
+                <input class="campo" id="criarEmail" type="email" name="email" required autocomplete="username"{% if erro_criar == 'email' %} aria-invalid="true"{% endif %}>
+            {% endcall %}
+            {% call campo('criarSenha', 'Senha (mín. 8 caracteres)') %}
+                <input class="campo" id="criarSenha" type="password" name="senha" required minlength="8" autocomplete="new-password"{% if erro_criar == 'senha' %} aria-invalid="true"{% endif %}>
+            {% endcall %}
+            <button class="btn btn--azul" type="submit">Criar conta</button>
+        </form>
+        <a class="link-texto" href="#" id="irEntrar">Já tenho conta</a>
+    </section>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{ url_for('static', filename='js/login.js') }}"></script>
+{% endblock %}
