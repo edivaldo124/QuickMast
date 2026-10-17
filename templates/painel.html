@@ -1,37 +1,45 @@
 {% extends 'base.html' %}
-{% from '_componentes.html' import barra %}
+{% from '_componentes.html' import barra, voltar %}
 {% block titulo %}QuickMast - Painel de estatísticas{% endblock %}
+{% block classe_pagina %} pagina--painel{% endblock %}
+
+{% block cabecalho %}{{ barra(usuario) }}{% endblock %}
 
 {% block conteudo %}
-    {{ barra(usuario) }}
     <h1>Painel de estatísticas</h1>
+    {{ voltar() }}
     <div id="mensagem" class="oculto-se-vazio" aria-live="polite"></div>
 
-    <div class="medias">
-        <div class="cartao media">
-            <p class="media__rotulo">Temperatura média</p>
-            <p id="tempMedia" class="media__valor">--</p>
+    <div class="painel">
+        <div class="medias">
+            <div class="cartao media media--temp">
+                <p class="media__rotulo">Temperatura média</p>
+                <p id="tempMedia" class="media__valor">--</p>
+            </div>
+            <div class="cartao media media--cond">
+                <p class="media__rotulo">Condutividade média</p>
+                <p id="condMedia" class="media__valor">--</p>
+            </div>
         </div>
-        <div class="cartao media">
-            <p class="media__rotulo">Condutividade média</p>
-            <p id="condMedia" class="media__valor">--</p>
-        </div>
-    </div>
 
-    <h2 class="titulo-secao">Suspeitas por teto</h2>
-    <!-- Mesma posição do úbere; data-teto = número do teto no firmware -->
-    <div class="mapa">
-        {% for teto, sigla in [(2, 'AE'), (1, 'AD'), (4, 'PE'), (3, 'PD')] %}
-        <div class="mapa__teto" data-teto="{{ teto }}">
-            <span class="mapa__rotulo">{{ sigla }} · T{{ teto }}</span>
-            <span class="mapa__numero">--</span>
-        </div>
-        {% endfor %}
-    </div>
-    <div class="escala" aria-hidden="true">
-        <span>0</span>
-        {% for alfa in [0.12, 0.35, 0.6, 0.8, 1] %}<span class="escala__passo" style="--alfa: {{ alfa }}"></span>{% endfor %}
-        <span id="escalaMax">--</span>
+        <section class="cartao painel__mapa" aria-labelledby="tituloMapa">
+            <h2 id="tituloMapa" class="titulo-secao">Suspeitas por teto</h2>
+            <!-- Mesma posição do úbere; data-teto = número do teto no firmware -->
+            <div class="mapa">
+                {% for teto, sigla in [(2, 'AE'), (1, 'AD'), (4, 'PE'), (3, 'PD')] %}
+                <div class="mapa__teto" data-teto="{{ teto }}">
+                    <span class="mapa__rotulo">{{ sigla }} · T{{ teto }}</span>
+                    <span class="mapa__numero">--</span>
+                </div>
+                {% endfor %}
+            </div>
+            {# A intensidade de cada passo está no CSS (.escala__passo:nth-child) #}
+            <div class="escala" aria-hidden="true">
+                <span>0</span>
+                {% for _ in range(5) %}<span class="escala__passo"></span>{% endfor %}
+                <span id="escalaMax">--</span>
+            </div>
+        </section>
     </div>
 {% endblock %}
 

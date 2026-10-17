@@ -4,6 +4,7 @@ from flask import Blueprint, jsonify, request
 from dao import usuario_dao
 from modelos.usuario import PERFIS
 from servicos.autenticacao import exigir_login, usuario_atual
+from servicos.seguranca import auditar
 
 usuarios_api = Blueprint('usuarios_api', __name__, url_prefix='/api')
 
@@ -23,7 +24,9 @@ def listar():
 @usuarios_api.patch('/usuarios/<int:usuario_id>')
 @exigir_login('admin')
 def atualizar(usuario_id):
-    dados = request.get_json(silent=True) or {}
+    dados = request.get_json(silent=True)
+    if not isinstance(dados, dict):
+        return jsonify({'erro': 'corpo JSON inválido'}), 400
     perfil = dados.get('perfil')
     ativo = dados.get('ativo')
 
@@ -45,4 +48,5 @@ def atualizar(usuario_id):
     if perde_admin and usuario_dao.contar_admins_ativos() <= 1:
         return jsonify({'erro': 'tem de existir pelo menos um admin ativo'}), 400
 
+    auditar('usuario_alterado', alvo=usuario_id, perfil=perfil, ativo=ativo)
     return jsonify(usuario_dao.atualizar_usuario(usuario_id, perfil, ativo))

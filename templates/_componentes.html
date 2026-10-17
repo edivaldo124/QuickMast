@@ -1,12 +1,18 @@
 {# Componentes da biblioteca no Figma ("QuickMast – Telas", página Componentes).
    Os gerados pelo JavaScript (banner, item do histórico) estão em stetic/js/componentes.js. #}
 
-{# Barra superior alinhada à direita: nome (perfil) · Utilizadores (só admin) · Sair #}
-{% macro barra(usuario) -%}
+{# Barra superior: marca (volta ao início) à esquerda; nome (perfil, abre "A minha conta") · Utilizadores (só admin) · Sair à direita.
+   atual='usuarios' ou 'conta' marca o link da página em que se está. #}
+{% macro barra(usuario, atual=none) -%}
 <header class="barra">
-    <span class="barra__usuario">{{ usuario.nome }} ({{ usuario.perfil }})</span>
-    {% if usuario.perfil == 'admin' %}<a class="barra__link" href="/usuarios">Utilizadores</a>{% endif %}
-    <form method="post" action="/logout"><button type="submit" class="sair">Sair</button></form>
+    <div class="barra__conteudo">
+        <a class="barra__marca" href="/" aria-label="QuickMast – início">
+            <img src="{{ url_for('static', filename='img/logo-icone.svg') }}" width="36" height="36" alt="">
+        </a>
+        <a class="barra__usuario" href="/conta"{% if atual == 'conta' %} aria-current="page"{% endif %}><span class="avatar" aria-hidden="true">{{ usuario.nome[:1]|upper }}</span><span class="barra__nome">{{ usuario.nome }} ({{ usuario.perfil }})</span><span class="sr-only"> – a minha conta</span></a>
+        {% if usuario.perfil == 'admin' %}<a class="barra__link" href="/usuarios"{% if atual == 'usuarios' %} aria-current="page"{% endif %}>Utilizadores</a>{% endif %}
+        <form method="post" action="/logout"><button type="submit" class="sair">Sair</button></form>
+    </div>
 </header>
 {%- endmacro %}
 

@@ -4,6 +4,7 @@ from flask import Blueprint, jsonify, request
 from dao import banco
 from servicos.autenticacao import exigir_login, usuario_atual
 from servicos.diagnostico import diagnosticar
+from servicos.seguranca import auditar
 
 testes_api = Blueprint('testes_api', __name__, url_prefix='/api')
 
@@ -63,7 +64,7 @@ def listar_testes():
     suspeitos = {'1': True, 'true': True, '0': False, 'false': False}.get(
         request.args.get('suspeitos', '').lower())
     limite = min(max(request.args.get('limite', 20, type=int), 1), 100)
-    pagina = max(request.args.get('pagina', 1, type=int), 1)
+    pagina = min(max(request.args.get('pagina', 1, type=int), 1), 100_000)   # OFFSET gigante dá erro 500 no Postgres
 
     itens, total = banco.listar_testes(brinco, suspeitos, limite, pagina)
     return jsonify({'total': total, 'pagina': pagina, 'limite': limite, 'testes': itens})
@@ -83,13 +84,16 @@ def obter_teste(teste_id):
 def apagar_teste(teste_id):
     if not banco.apagar_teste(teste_id):
         return jsonify({'erro': 'teste não encontrado'}), 404
+    auditar('teste_apagado', teste_id=teste_id)
     return jsonify({'ok': True})
 
 
 @testes_api.get('/vacas')
 @exigir_login()
 def listar_vacas():
-    return jsonify(banco.listar_vacas())
+    limite = min(max(request.args.get('limite', 1000, type=int), 1), 1000)
+    pagina = min(max(request.args.get('pagina', 1, type=int), 1), 100_000)
+    return jsonify(banco.listar_vacas(limite, pagina))
 
 
 @testes_api.get('/vacas/<brinco>/testes')

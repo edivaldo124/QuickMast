@@ -1,6 +1,7 @@
 const msg = document.getElementById('mensagem');
 const lista = document.getElementById('listaUsuarios');
 const PERFIS = ['operador', 'veterinario', 'admin'];
+const MEU_ID = Number(document.body.dataset.meuId);
 
 async function alterar(id, campos) {
     const r = await fetch('/api/usuarios/' + id, {

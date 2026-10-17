@@ -1,4 +1,5 @@
 // Histórico de uma vaca: só lê GET /api/vacas/<brinco>/testes (mais recente primeiro).
+const BRINCO = document.body.dataset.brinco;
 const FALHA = 'Erro ao carregar o histórico';
 
 async function carregar() {

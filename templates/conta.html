@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% from '_componentes.html' import barra, voltar, banner, campo %}
+{% block titulo %}QuickMast - A minha conta{% endblock %}
+{% block classe_pagina %} pagina--lista pagina--conta{% endblock %}
+
+{% block cabecalho %}{{ barra(usuario, atual='conta') }}{% endblock %}
+
+{% block conteudo %}
+    <h1>A minha conta</h1>
+    {{ voltar() }}
+    {% for mensagem in get_flashed_messages() %}{{ banner('ok', mensagem) }}{% endfor %}
+    {% if erro %}{{ banner('alerta', erro) }}{% endif %}
+
+    <section class="cartao conta__secao" aria-labelledby="tituloSenha">
+        <h2 id="tituloSenha" class="conta__titulo">Trocar senha</h2>
+        <form class="entrada__form" method="post" action="/conta/senha">
+            {# Para o gestor de senhas saber de que conta é a senha nova #}
+            <input type="text" name="email" value="{{ usuario.email }}" autocomplete="username" hidden>
+            {% call campo('senhaAtual', 'Senha atual') %}
+                <input class="campo" id="senhaAtual" type="password" name="senha_atual" required autocomplete="current-password"{% if erro == 'A senha atual está errada.' %} aria-invalid="true"{% endif %}>
+            {% endcall %}
+            {% call campo('senhaNova', 'Nova senha (mín. 8 caracteres)') %}
+                <input class="campo" id="senhaNova" type="password" name="senha_nova" required minlength="8" maxlength="128" autocomplete="new-password">
+            {% endcall %}
+            {% call campo('senhaRepetir', 'Repetir a nova senha') %}
+                <input class="campo" id="senhaRepetir" type="password" name="senha_repetir" required minlength="8" maxlength="128" autocomplete="new-password">
+            {% endcall %}
+            <button class="btn btn--azul" type="submit">Guardar nova senha</button>
+        </form>
+    </section>
+
+    <section class="cartao conta__secao" aria-labelledby="tituloMfa">
+        <h2 id="tituloMfa" class="conta__titulo">Verificação em dois passos</h2>
+        {% if usuario.mfa_ativo %}
+            <p class="conta__estado"><span class="ic ic--check" aria-hidden="true"></span>Ativa: o login pede o código da app autenticadora.</p>
+        {% else %}
+            <p class="conta__texto">Além da senha, o login passa a pedir um código de 6 dígitos gerado no telemóvel.{% if usuario.perfil == 'admin' %} Obrigatória para administradores.{% endif %}</p>
+            <a class="btn btn--verde" href="/conta/mfa">Ativar</a>
+        {% endif %}
+    </section>
+{% endblock %}

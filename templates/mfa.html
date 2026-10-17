@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% from '_componentes.html' import banner, campo %}
+{% block titulo %}QuickMast - Verificação em dois passos{% endblock %}
+{% block classe_pagina %} pagina--entrada{% endblock %}
+
+{# modo='configurar': ler o QR e confirmar com um código (/conta/mfa).
+   modo='entrar': segundo passo do login, depois da senha (/login/mfa). #}
+{% block conteudo %}
+    {% if erro %}{{ banner('alerta', erro) }}{% endif %}
+
+    <section class="entrada">
+        <header class="entrada__cabecalho">
+            <img class="entrada__icone" src="{{ url_for('static', filename='img/logo-icone.svg') }}" width="52" height="52" alt="">
+            <h1>Quick<span class="marca__mast">Mast</span></h1>
+            <h2 class="subtitulo">{{ 'Ativar verificação em dois passos' if modo == 'configurar' else 'Código de verificação' }}</h2>
+        </header>
+
+        {% if modo == 'configurar' %}
+            <ol class="mfa__passos">
+                <li>Instale no telemóvel uma app autenticadora (Google Authenticator, Microsoft Authenticator, Aegis…).</li>
+                <li>Na app, adicione uma conta e leia este código QR.</li>
+                <li>Escreva abaixo o código de 6 dígitos que a app mostra.</li>
+            </ol>
+            <img class="mfa__qr" src="{{ qr }}" alt="Código QR para adicionar o QuickMast à app autenticadora">
+            <p class="mfa__chave">Sem câmara? Escreva esta chave na app:
+                <code class="mfa__segredo">{{ segredo }}</code></p>
+        {% else %}
+            <p class="mfa__texto">Abra a app autenticadora no telemóvel e escreva o código de 6 dígitos do QuickMast.</p>
+        {% endif %}
+
+        <form class="entrada__form" method="post" action="{{ '/conta/mfa' if modo == 'configurar' else '/login/mfa' }}">
+            {% call campo('codigo', 'Código de 6 dígitos') %}
+                <input class="campo campo--centro" id="codigo" type="text" name="codigo" required inputmode="numeric" pattern="[0-9 ]{6,7}" maxlength="7" autocomplete="one-time-code" autofocus{% if erro %} aria-invalid="true"{% endif %}>
+            {% endcall %}
+            <button class="btn btn--verde" type="submit">{{ 'Ativar' if modo == 'configurar' else 'Entrar' }}</button>
+        </form>
+
+        {% if modo == 'entrar' %}
+            <a class="link-texto" href="/login">Voltar</a>
+        {% elif usuario.perfil == 'admin' %}
+            {# O admin só sai daqui depois de ativar: a alternativa é sair da conta #}
+            <form class="centro" method="post" action="/logout"><button type="submit" class="link-texto">Sair</button></form>
+        {% else %}
+            <a class="link-texto" href="/conta">Agora não</a>
+        {% endif %}
+    </section>
+{% endblock %}

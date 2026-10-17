@@ -1,10 +1,13 @@
 {% extends 'base.html' %}
 {% from '_componentes.html' import barra, voltar %}
 {% block titulo %}QuickMast - Utilizadores{% endblock %}
-{% block classe_pagina %} pagina--lista{% endblock %}
+{% block classe_pagina %} pagina--lista pagina--usuarios{% endblock %}
+{# Dados para o JS em data-*: a CSP não permite <script> inline #}
+{% block atributos_body %} data-meu-id="{{ usuario.id }}"{% endblock %}
+
+{% block cabecalho %}{{ barra(usuario, atual='usuarios') }}{% endblock %}
 
 {% block conteudo %}
-    {{ barra(usuario) }}
     <h1>Utilizadores</h1>
     {{ voltar() }}
     <div id="mensagem" class="oculto-se-vazio" aria-live="polite"></div>
@@ -13,7 +16,6 @@
 {% endblock %}
 
 {% block scripts %}
-    <script>const MEU_ID = {{ usuario.id }};</script>
     <script src="{{ url_for('static', filename='js/componentes.js') }}"></script>
     <script src="{{ url_for('static', filename='js/usuarios.js') }}"></script>
 {% endblock %}

@@ -3,15 +3,16 @@
 {% block titulo %}QuickMast - Úbere{% endblock %}
 {# Fase atual: vaca | medir | resultado. Cada bloco diz em que fases aparece (data-fases). #}
 {% block atributos_body %} data-fase="vaca"{% endblock %}
+{% block classe_pagina %} pagina--ubere{% endblock %}
+
+{% block cabecalho %}{{ barra(usuario) }}{% endblock %}
 
 {% block conteudo %}
-    {{ barra(usuario) }}
-
     <!-- PASSO 0: identificar a vaca -->
     <section id="passoVaca" class="pilha" data-fases="vaca">
-        <h1 class="centro">QuickMast</h1>
+        <h1 class="centro">Quick<span class="marca__mast">Mast</span></h1>
         {% call campo('inputVaca', 'Brinco / ID da vaca', 'rotulo rotulo--grande') %}
-            <input class="campo" id="inputVaca" type="text" placeholder="Ex.: BR-102" autocomplete="off">
+            <input class="campo campo--centro" id="inputVaca" type="text" placeholder="Ex.: BR-102" autocomplete="off">
         {% endcall %}
         <button id="btnIniciar" class="btn btn--verde">Iniciar medição</button>
     </section>
@@ -54,7 +55,7 @@
     </section>
 
     <!-- HISTÓRICO (vem do PostgreSQL, através da API) -->
-    <section class="pilha" data-fases="vaca" aria-labelledby="tituloHistorico">
+    <section class="pilha historico" data-fases="vaca" aria-labelledby="tituloHistorico">
         <h2 id="tituloHistorico">Histórico</h2>
         <a id="estatisticas" class="estatisticas escondido" href="/painel">
             <span class="sr-only">Painel de estatísticas:</span>
@@ -63,7 +64,7 @@
             <span class="cartao estatistica"><span id="estSuspeita" class="estatistica__numero"></span><span class="estatistica__rotulo">com suspeita</span></span>
             <span class="cartao estatistica"><span id="estPercentual" class="estatistica__numero"></span></span>
         </a>
-        <a class="btn btn--cinza" href="/exportar.csv">Descarregar relatório (CSV)</a>
+        <a class="btn btn--cinza btn--descarregar" href="/exportar.csv">Descarregar relatório (CSV)</a>
         <ul id="listaHistorico" class="lista"></ul>
     </section>
 {% endblock %}

@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block titulo %}QuickMast{% endblock %}</title>
-    <meta name="theme-color" content="#F4F4F4">
+    <meta name="theme-color" content="#F1F4F0">
     <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='img/logo-icone.svg') }}">
     <link rel="apple-touch-icon" href="{{ url_for('static', filename='img/apple-touch-icon.png') }}">
     <link rel="preload" href="{{ url_for('static', filename='fonts/inter-latin-wght-normal.woff2') }}" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/quickmast.css') }}">
 </head>
 <body{% block atributos_body %}{% endblock %}>
+    {% block cabecalho %}{% endblock %}
     <main class="pagina{% block classe_pagina %}{% endblock %}">
         {% block conteudo %}{% endblock %}
     </main>

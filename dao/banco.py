@@ -1,12 +1,17 @@
+import logging
 import os
 
-from sqlalchemy import create_engine, select, func, case
+from sqlalchemy import create_engine, inspect, make_url, select, func, case
 from sqlalchemy.orm import Session, selectinload, contains_eager
 
 from modelos import Base, Vaca, Teste, Leitura
 
+log = logging.getLogger(__name__)
+
 # Endereço do PostgreSQL, vindo da variável de ambiente DATABASE_URL (.env).
 # Formato: postgresql+psycopg2://utilizador:senha@servidor:porta/base
+# A aplicação usa um utilizador que só lê e escreve dados; o dono do banco (DATABASE_URL_ADMIN)
+# só entra em criar_tabela(), chamado por "flask --app servidor iniciar".
 DATABASE_URL = os.environ.get('DATABASE_URL')
 if not DATABASE_URL:
     raise RuntimeError('DATABASE_URL não definida: copie .env.example para .env e preencha.')
@@ -14,9 +19,68 @@ if not DATABASE_URL:
 # pool_pre_ping testa a ligação antes de a usar (evita erros se o banco reiniciar)
 engine = create_engine(DATABASE_URL, pool_pre_ping=True)
 
+# Colunas acrescentadas depois da 1.ª versão: o create_all não altera tabelas que já existem.
+# Só constantes daqui entram no ALTER TABLE.
+_COLUNAS_NOVAS = {
+    'usuarios': [
+        ('sessao_versao', 'INTEGER NOT NULL DEFAULT 0'),
+        ('totp_segredo', 'VARCHAR(32)'),
+        ('totp_ultimo_passo', 'INTEGER'),
+    ],
+}
+
+
+def _migrar(eng):
+    insp = inspect(eng)
+    with eng.begin() as con:
+        for tabela, colunas in _COLUNAS_NOVAS.items():
+            existentes = {c['name'] for c in insp.get_columns(tabela)}
+            for nome, tipo in colunas:
+                if nome not in existentes:
+                    con.exec_driver_sql(f'ALTER TABLE {tabela} ADD COLUMN {nome} {tipo}')
+                    log.info('Coluna %s.%s criada', tabela, nome)
+
+
+def _garantir_utilizador_app(eng_admin):
+    """Cria (ou atualiza a senha de) o utilizador do DATABASE_URL só com SELECT/INSERT/UPDATE/DELETE."""
+    app_url = make_url(DATABASE_URL)
+    utilizador, senha = app_url.username, app_url.password
+    if not utilizador or utilizador == eng_admin.url.username:
+        log.warning('DATABASE_URL usa o dono do banco: a aplicação tem mais privilégios do que precisa '
+                    '(ver configurar_banco_app.py).')
+        return
+    if not senha:
+        raise RuntimeError('DATABASE_URL sem senha para o utilizador da aplicação.')
+    q = eng_admin.dialect.identifier_preparer.quote_identifier
+    with eng_admin.begin() as con:
+        existe = con.exec_driver_sql('SELECT 1 FROM pg_roles WHERE rolname = %(r)s', {'r': utilizador}).scalar()
+        acao = 'ALTER' if existe else 'CREATE'
+        # O psycopg2 põe a senha como literal com escape; o nome vai entre aspas de identificador
+        con.exec_driver_sql(f'{acao} ROLE {q(utilizador)} WITH LOGIN NOSUPERUSER NOCREATEDB '
+                            f'NOCREATEROLE NOREPLICATION PASSWORD %(s)s', {'s': senha})
+        base = con.exec_driver_sql('SELECT current_database()').scalar()
+        for sql in (f'GRANT CONNECT ON DATABASE {q(base)} TO {q(utilizador)}',
+                    f'GRANT USAGE ON SCHEMA public TO {q(utilizador)}',
+                    f'REVOKE CREATE ON SCHEMA public FROM {q(utilizador)}',
+                    f'GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO {q(utilizador)}',
+                    f'GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO {q(utilizador)}'):
+            con.exec_driver_sql(sql)
+    log.info('Utilizador da aplicação %s pronto (só leitura e escrita de dados)', utilizador)
+
 
 def criar_tabela():
-    Base.metadata.create_all(engine)
+    """Cria as tabelas, aplica as colunas novas e prepara o utilizador da aplicação.
+    Com DATABASE_URL_ADMIN usa o dono do banco; sem ele, o próprio DATABASE_URL (como antes)."""
+    url_admin = os.environ.get('DATABASE_URL_ADMIN')
+    eng = create_engine(url_admin) if url_admin else engine
+    try:
+        Base.metadata.create_all(eng)
+        _migrar(eng)
+        if url_admin and eng.dialect.name == 'postgresql':
+            _garantir_utilizador_app(eng)
+    finally:
+        if eng is not engine:
+            eng.dispose()
 
 
 def verificar_ligacao():
@@ -124,7 +188,7 @@ def obter_teste(teste_id):
         return _teste_para_dict(teste) if teste else None
 
 
-def listar_vacas():
+def listar_vacas(limite=1000, pagina=1):
     with Session(engine) as sessao:
         consulta = (
             select(
@@ -134,6 +198,7 @@ def listar_vacas():
                 func.coalesce(func.sum(case((Teste.tem_mastite, 1), else_=0)), 0),
             )
             .outerjoin(Teste).group_by(Vaca.id).order_by(Vaca.brinco)
+            .limit(limite).offset((pagina - 1) * limite)
         )
         return [
             {'brinco': b, 'testes': n, 'ultimo_teste': u.isoformat() if u else None,
@@ -165,7 +230,7 @@ def estatisticas():
 
 
 def linhas_csv(brinco=None):
-    """Uma linha por leitura, para exportação."""
+    """Uma linha por leitura, para exportação. Gerador: lê do banco aos blocos, sem carregar tudo."""
     with Session(engine) as sessao:
         consulta = (
             select(Teste.id, Vaca.brinco, Teste.data, Leitura.teto, Leitura.temp,
@@ -174,12 +239,11 @@ def linhas_csv(brinco=None):
             .join(Vaca, Vaca.id == Teste.vaca_id)
             .where(*_filtros(brinco))
             .order_by(Teste.id, Leitura.teto)
+            .execution_options(yield_per=500)
         )
-        return [
-            (tid, b, d.astimezone().strftime('%Y-%m-%d %H:%M:%S'), teto, temp, cond,
-             'sim' if susp else 'nao', motivo or '')
-            for tid, b, d, teto, temp, cond, susp, motivo in sessao.execute(consulta)
-        ]
+        for tid, b, d, teto, temp, cond, susp, motivo in sessao.execute(consulta):
+            yield (tid, b, d.astimezone().strftime('%Y-%m-%d %H:%M:%S'), teto, temp, cond,
+                   'sim' if susp else 'nao', motivo or '')
 
 
 if __name__ == '__main__':

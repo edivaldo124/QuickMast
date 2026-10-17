@@ -2,9 +2,12 @@
 {% from '_componentes.html' import barra, voltar %}
 {% block titulo %}QuickMast - {{ brinco }}{% endblock %}
 {% block classe_pagina %} pagina--lista{% endblock %}
+{# Dados para o JS em data-*: a CSP não permite <script> inline #}
+{% block atributos_body %} data-brinco="{{ brinco }}"{% endblock %}
+
+{% block cabecalho %}{{ barra(usuario) }}{% endblock %}
 
 {% block conteudo %}
-    {{ barra(usuario) }}
     {{ voltar() }}
     <h1>{{ brinco }}</h1>
     <div id="mensagem" class="oculto-se-vazio" aria-live="polite"></div>
@@ -13,7 +16,6 @@
 {% endblock %}
 
 {% block scripts %}
-    <script>const BRINCO = {{ brinco|tojson }};</script>
     <script src="{{ url_for('static', filename='js/componentes.js') }}"></script>
     <script src="{{ url_for('static', filename='js/vaca.js') }}"></script>
 {% endblock %}

@@ -4,8 +4,21 @@
 {% block classe_pagina %} pagina--inicio{% endblock %}
 
 {% block conteudo %}
-    <img class="inicio__icone" src="{{ url_for('static', filename='img/logo-icone.svg') }}" width="96" height="96" alt="">
-    <h1>Quick Mast</h1>
+    {# Logo em linha (e não <img>) para os tetos poderem surgir um a um #}
+    <div class="inicio__icone" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="104" height="104">
+            <rect class="logo__placa" width="120" height="120" rx="30" fill="#2E7D32"/>
+            <circle class="logo__teto logo__teto--ae" cx="41" cy="41" r="19" fill="#FFFFFF"/>
+            <circle class="logo__teto logo__teto--ad" cx="79" cy="41" r="19" fill="#FFFFFF"/>
+            <circle class="logo__teto logo__teto--pe" cx="41" cy="79" r="19" fill="#FFFFFF"/>
+            <g class="logo__teto logo__teto--alerta">
+                <circle cx="79" cy="79" r="21" fill="#C62828" stroke="#FFFFFF" stroke-width="5"/>
+                <rect x="76" y="66" width="6" height="16" rx="3" fill="#FFFFFF"/>
+                <circle cx="79" cy="89" r="3.4" fill="#FFFFFF"/>
+            </g>
+        </svg>
+    </div>
+    <h1>Quick <span class="marca__mast">Mast</span></h1>
     <p class="inicio__subtitulo">Detetor rápido de mastite</p>
 
     {% if usuario %}

@@ -1,6 +1,6 @@
 services:
   db:
-    image: postgres:16
+    image: postgres:16.14   # versão fixa: atualizar de propósito (mudar aqui, pull e up -d)
     container_name: quickmast-db
     restart: unless-stopped
     environment:   # valores vindos do .env (ver .env.example)
@@ -8,9 +8,17 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?defina no .env}
       POSTGRES_DB: ${POSTGRES_DB:?defina no .env}
     ports:
-      - "5433:5432"
+      # Só nesta máquina. Sem o 127.0.0.1 o Docker abre a porta a toda a rede e passa por cima do UFW.
+      - "127.0.0.1:5433:5432"
     volumes:
       - quickmast_dados:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    security_opt:
+      - no-new-privileges:true
 
 volumes:
   quickmast_dados:

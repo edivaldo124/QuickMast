@@ -1,14 +1,16 @@
 """Blueprints da aplicação, um por área:
 
     paginas      /, /ubere, /painel, /vacas/<brinco>, /usuarios   (HTML)
-    auth         /login, /registrar, /logout
+    auth         /login, /login/mfa, /registrar, /logout
+    conta        /conta, /conta/senha, /conta/mfa
     testes_api   /api/testes, /api/vacas, /api/estatisticas
     usuarios_api /api/me, /api/usuarios
-    sensor       /read (simulador do ESP8266)
+    sensor       /read (simulador do ESP8266, só com SIMULADOR_SENSOR=1)
     utilitarios  /saude, /exportar.csv
     erros        respostas de erro em JSON na API
 """
 from blueprints.auth import auth
+from blueprints.conta import conta
 from blueprints.erros import erros
 from blueprints.paginas import paginas
 from blueprints.sensor import sensor
@@ -18,5 +20,8 @@ from blueprints.utilitarios import utilitarios
 
 
 def registrar_blueprints(app):
-    for bp in (paginas, auth, testes_api, usuarios_api, sensor, utilitarios, erros):
+    for bp in (paginas, auth, conta, testes_api, usuarios_api, utilitarios, erros):
         app.register_blueprint(bp)
+    # Em produção quem responde ao /read é o ESP8266; o simulador fica desligado
+    if app.config['SIMULADOR_SENSOR']:
+        app.register_blueprint(sensor)
