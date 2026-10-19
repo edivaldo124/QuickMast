@@ -20,5 +20,31 @@ services:
     security_opt:
       - no-new-privileges:true
 
+  # Servidor para testes no PC (ex.: com a placa ESP8266 na mesma rede). Só sobe com o perfil:
+  #   docker compose --profile app up -d --build      logs: docker compose logs -f app
+  app:
+    build: .
+    profiles: ["app"]
+    depends_on:
+      db:
+        condition: service_healthy
+    # Rede do próprio PC: o DATABASE_URL do .env (localhost:5433) serve sem mudanças e o gunicorn
+    # atende em http://<IP do PC>:5000, que é onde a placa chega (aberto à rede local de propósito).
+    # Parar no fim do teste: docker compose stop app
+    network_mode: host
+    env_file: .env
+    environment:
+      PORTA: "5000"
+      FLASK_DEBUG: "0"
+      COOKIE_SEGURO: "0"      # HTTP na rede local
+      ATRAS_DE_PROXY: "0"     # sem Nginx: o gunicorn atende direto (por isso o 0.0.0.0 é seguro)
+      SIMULADOR_SENSOR: "0"
+      LOG_JSON: "0"
+      # Registo fechado aqui, seja qual for o .env (este servidor fica aberto à rede). Para criar a
+      # conta da placa: ABRIR_REGISTO=1 docker compose --profile app up -d (e depois sem o ABRIR_REGISTO)
+      PERMITIR_REGISTO: ${ABRIR_REGISTO:-0}
+    security_opt:
+      - no-new-privileges:true
+
 volumes:
   quickmast_dados:

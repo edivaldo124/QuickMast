@@ -20,13 +20,13 @@ def ubere():
 @paginas.get('/painel')
 @exigir_login()
 def painel():
-    return render_template('painel.html')     # dados: GET /api/estatisticas
+    return render_template('painel.html')     
 
 
 @paginas.get('/vacas/<brinco>')
 @exigir_login()
 def historico_vaca(brinco):
-    return render_template('vaca.html', brinco=brinco)   # dados: GET /api/vacas/<brinco>/testes
+    return render_template('vaca.html', brinco=brinco)   # dados: GET /api/vacas/<brinco>/tes
 
 
 @paginas.get('/usuarios')

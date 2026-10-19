@@ -14,7 +14,7 @@ sensor = Blueprint('sensor', __name__)
 def read():
     time.sleep(1)  # finge que o sensor demora 1 segundo a estabilizar
     # random serve: são valores de teste, não segredos (por isso o nosec do bandit).
-    # temp como o String(temperatura, 1) do ESP; cond como o analogRead (inteiro 0-1023)
-    temp = round(random.uniform(38.0, 41.0), 1)   # nosec B311
-    cond = random.randint(300, 550)               # nosec B311
-    return jsonify({'temp': temp, 'cond': cond})
+    # cond como o analogRead (inteiro 0-1023): leite normal ~300, mastite acima de 390.
+    # Sem temp, como a placa atual (firmware/quickmast_esp8266)
+    cond = random.randint(270, 420)               # nosec B311
+    return jsonify({'cond': cond})

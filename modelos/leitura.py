@@ -15,7 +15,7 @@ class Leitura(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     teste_id: Mapped[int] = mapped_column(ForeignKey('testes.id', ondelete='CASCADE'), index=True)
     teto: Mapped[int] = mapped_column(Integer)
-    temp: Mapped[float] = mapped_column(Float)
+    temp: Mapped[float | None] = mapped_column(Float, nullable=True)   # a placa atual não mede temperatura
     cond: Mapped[int] = mapped_column(Integer)
     suspeito: Mapped[bool] = mapped_column(Boolean, default=False)
     motivo: Mapped[str | None] = mapped_column(String(100), nullable=True)

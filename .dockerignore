@@ -1,0 +1,21 @@
+# Só o código da aplicação vai para a imagem: nada de segredos nem do ambiente local
+.env
+.env.*
+.git
+.github
+.venv
+venv
+__pycache__/
+*.py[cod]
+*.db
+*.sqlite3
+graphify-out/
+firmware/
+.claude/
+.idea/
+.vscode/
+RELATORIO_SEGURANCA.md
+PROMPT_DEPLOY_GEMINI.md
+Dockerfile
+docker-compose.yml
+.dockerignore

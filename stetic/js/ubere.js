@@ -17,12 +17,15 @@ const ESTADOS = {
 // ---------- Estado do teste ----------
 let vaca = '';
 let tetoAtual = 0;          // 0 = nenhum teste em curso
-let leituras = {};          // {1: {temp, cond}, 2: ...}
+let leituras = {};          // {1: {temp, cond}, 2: ...}; temp só vem se a placa a medir
 let lendoAoVivo = false;    // evita pedidos /read sobrepostos
 let timerVivo = null;
 
 // ---------- Elementos da página ----------
 const $ = id => document.getElementById(id);
+
+// A placa atual só mede a condutividade: o /read pode vir sem temp
+const temTemp = d => typeof d.temp === 'number';
 
 function elTeto(n) {
     return document.querySelector('.teto[data-teto="' + n + '"]');
@@ -52,7 +55,7 @@ async function lerAoVivo() {
     lendoAoVivo = true;
     try {
         const d = await (await fetch('/read')).json();
-        $('vivoTemp').textContent = d.temp.toFixed(1);
+        $('vivoTemp').textContent = temTemp(d) ? d.temp.toFixed(1) : '--';
         $('vivoCond').textContent = d.cond;
     } catch (e) {
         $('vivoTemp').textContent = '--';
@@ -113,7 +116,7 @@ async function capturar() {
         leituras[tetoAtual] = { temp: d.temp, cond: d.cond };
         // Por agora fica "capturado" (verde); o diagnóstico final corrige a cor
         mudarEstado(teto, 'sadio');
-        teto.querySelector('small').textContent = d.temp.toFixed(1) + '° / ' + d.cond;
+        teto.querySelector('small').textContent = (temTemp(d) ? d.temp.toFixed(1) + '° / ' : '') + d.cond;
     } catch (e) {
         mudarEstado(teto, 'nao-medido');
         alert('Erro de comunicação com o servidor/placa.');

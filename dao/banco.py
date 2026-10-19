@@ -29,6 +29,11 @@ _COLUNAS_NOVAS = {
     ],
 }
 
+# Colunas que passaram a aceitar NULL (o create_all também não muda isto). Só constantes daqui.
+_COLUNAS_OPCIONAIS = {
+    'leituras': ['temp'],   # o sensor de temperatura saiu da placa
+}
+
 
 def _migrar(eng):
     insp = inspect(eng)
@@ -39,6 +44,17 @@ def _migrar(eng):
                 if nome not in existentes:
                     con.exec_driver_sql(f'ALTER TABLE {tabela} ADD COLUMN {nome} {tipo}')
                     log.info('Coluna %s.%s criada', tabela, nome)
+        for tabela, colunas in _COLUNAS_OPCIONAIS.items():
+            obrigatorias = {c['name'] for c in insp.get_columns(tabela) if not c['nullable']}
+            for nome in colunas:
+                if nome not in obrigatorias:
+                    continue
+                if eng.dialect.name != 'postgresql':
+                    log.warning('%s.%s continua NOT NULL: só o PostgreSQL é migrado (apague o banco local)',
+                                tabela, nome)
+                    continue
+                con.exec_driver_sql(f'ALTER TABLE {tabela} ALTER COLUMN {nome} DROP NOT NULL')
+                log.info('Coluna %s.%s passou a aceitar NULL', tabela, nome)
 
 
 def _garantir_utilizador_app(eng_admin):

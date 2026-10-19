@@ -25,13 +25,15 @@ def _validar(dados):
     for item in bruto:
         try:
             teto = int(item['teto'])
-            temp = float(item['temp'])
             cond = int(item['cond'])
-        except (KeyError, TypeError, ValueError):
-            raise ValueError('cada leitura precisa de teto, temp e cond numéricos')
+            # temp é opcional: a placa atual só tem o sensor de condutividade (o DS18B20 saiu)
+            temp = item.get('temp')
+            temp = None if temp is None else float(temp)
+        except (KeyError, TypeError, ValueError, AttributeError):
+            raise ValueError('cada leitura precisa de teto e cond numéricos (temp é opcional)')
         if teto not in (1, 2, 3, 4) or teto in por_teto:
             raise ValueError('tetos têm de ser 1, 2, 3 e 4, sem repetir')
-        if not 0 < temp <= 60:
+        if temp is not None and not 0 < temp <= 60:
             raise ValueError(f'teto {teto}: temperatura inválida (sensor desligado?)')
         if not 0 <= cond <= 1023:
             raise ValueError(f'teto {teto}: condutividade fora de 0-1023')
