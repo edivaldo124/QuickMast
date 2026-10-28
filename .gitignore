@@ -27,3 +27,7 @@ graphify-out/
 
 # Relatório de segurança: descreve falhas ainda abertas, não vai para o GitHub
 RELATORIO_SEGURANCA.md
+
+# Understand Anything (arquivos locais; o resto de .ua/ deve ser commitado)
+.ua/intermediate/
+.ua/diff-overlay.json
