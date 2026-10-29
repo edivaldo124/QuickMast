@@ -1149,8 +1149,9 @@ label.linha { cursor: pointer; }
 .titulo-secao { font-size: 20px; font-weight: 700; line-height: 1.3; letter-spacing: -0.01em; }
 .titulo-secao__total { font-weight: 400; color: var(--texto-secundario); }
 /* As listas de vacas e de testes, por baixo do mapa */
-.painel__lista { display: flex; flex-direction: column; gap: 12px; }
-.painel > .painel__lista { animation-delay: 0.18s; }
+.painel__listas { display: flex; flex-direction: column; gap: 24px; }
+.painel > .painel__listas { animation-delay: 0.18s; }
+.painel__lista { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
 
 /* Mini-úbere: a intensidade do vermelho é o número de suspeitas (o número aparece sempre).
    O vermelho é pintado sobre #F4F4F4: é o fundo que o painel.js usa para escolher a cor do texto. */
@@ -1348,6 +1349,7 @@ button.link-texto { background: none; border: 0; font-family: inherit; cursor: p
     .painel { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 24px; align-items: start; }
     .painel .medias { grid-template-columns: 1fr; }
     .painel__mapa { padding: 24px 24px 28px; }
+    .painel__listas { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; align-items: start; }
 
     .pagina--usuarios { max-width: 1120px; }
     .lista--usuarios { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); align-items: start; }

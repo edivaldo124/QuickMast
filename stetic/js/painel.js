@@ -70,7 +70,7 @@ function itemVaca(v) {
     const item = criar('a', 'cartao item');
     item.href = '/vacas/' + encodeURIComponent(v.brinco);
     item.append(
-        criar('span', 'item__data', v.ultimo_teste ? 'Último: ' + formatarData(v.ultimo_teste) : 'Sem testes'),
+        criar('span', 'item__data', v.ultimo_teste ? formatarData(v.ultimo_teste) : 'Sem testes'),
         criar('span', 'item__operador', v.testes + (v.testes === 1 ? ' teste' : ' testes')),
         criar('span', 'item__vaca', v.brinco)
     );
