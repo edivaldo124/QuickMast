@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% from '_componentes.html' import barra, voltar %}
+{% from '_componentes.html' import barra, voltar, esqueletos %}
 {% block titulo %}QuickMast - Utilizadores{% endblock %}
 {% block classe_pagina %} pagina--lista pagina--usuarios{% endblock %}
 {# Dados para o JS em data-*: a CSP não permite <script> inline #}
@@ -12,7 +12,7 @@
     {{ voltar() }}
     <div id="mensagem" class="oculto-se-vazio" aria-live="polite"></div>
 
-    <ul id="listaUsuarios" class="lista lista--usuarios"></ul>
+    <ul id="listaUsuarios" class="lista lista--usuarios" data-entrada>{{ esqueletos(2, 'cartao esqueleto esqueleto--usuario') }}</ul>
 {% endblock %}
 
 {% block scripts %}

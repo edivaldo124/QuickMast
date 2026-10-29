@@ -10,9 +10,18 @@
 {% block conteudo %}
     {{ voltar() }}
     <h1>{{ brinco }}</h1>
+    <p id="resumoVaca" class="resumo oculto-se-vazio"></p>
     <div id="mensagem" class="oculto-se-vazio" aria-live="polite"></div>
 
-    <ol id="linhaTempo" class="linha-tempo"></ol>
+    {# data-entrada: os testes entram em cascata e a linha desenha-se (só na 1.ª vez) #}
+    <ol id="linhaTempo" class="linha-tempo" data-entrada>
+        {% for _ in range(3) %}
+        <li class="evento evento--esqueleto" aria-hidden="true">
+            <span class="ic evento__marcador"></span>
+            <div class="cartao esqueleto"><span></span><span></span></div>
+        </li>
+        {% endfor %}
+    </ol>
 {% endblock %}
 
 {% block scripts %}

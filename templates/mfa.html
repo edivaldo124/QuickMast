@@ -1,11 +1,13 @@
 {% extends 'base.html' %}
-{% from '_componentes.html' import banner, campo %}
+{% from '_componentes.html' import banner, campo, marca_entrada %}
 {% block titulo %}QuickMast - Verificação em dois passos{% endblock %}
 {% block classe_pagina %} pagina--entrada{% endblock %}
 
 {# modo='configurar': ler o QR e confirmar com um código (/conta/mfa).
    modo='entrar': segundo passo do login, depois da senha (/login/mfa). #}
 {% block conteudo %}
+    {{ marca_entrada() }}
+    <div class="entrada__conteudo">
     {% if erro %}{{ banner('alerta', erro) }}{% endif %}
 
     <section class="entrada">
@@ -23,7 +25,8 @@
             </ol>
             <img class="mfa__qr" src="{{ qr }}" alt="Código QR para adicionar o QuickMast à app autenticadora">
             <p class="mfa__chave">Sem câmara? Escreva esta chave na app:
-                <code class="mfa__segredo">{{ segredo }}</code></p>
+                <code class="mfa__segredo" id="segredoMfa">{{ segredo }}</code></p>
+            <button type="button" class="link-texto" data-copiar="segredoMfa">Copiar chave</button>
         {% else %}
             <p class="mfa__texto">Abra a app autenticadora no telemóvel e escreva o código de 6 dígitos do QuickMast.</p>
         {% endif %}
@@ -44,4 +47,9 @@
             <a class="link-texto" href="/conta">Agora não</a>
         {% endif %}
     </section>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{ url_for('static', filename='js/formularios.js') }}"></script>
 {% endblock %}

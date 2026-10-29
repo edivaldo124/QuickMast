@@ -91,6 +91,9 @@
     --svg-utilizadores: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='9.5' cy='8' r='3.5'/%3E%3Cpath d='M3 20v-1a5 5 0 0 1 5-5h3a5 5 0 0 1 5 5v1M16 4.6a3.5 3.5 0 0 1 0 6.8M21 20v-1a5 5 0 0 0-3-4.6'/%3E%3C/g%3E%3C/svg%3E");
     --svg-termometro: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M14 14.8V5a2 2 0 0 0-4 0v9.8a4 4 0 1 0 4 0z' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
     --svg-condutividade: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M13 3L5 14h6l-1 7 8-11h-6l1-7z' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    --svg-olho: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z'/%3E%3Ccircle cx='12' cy='12' r='3'/%3E%3C/g%3E%3C/svg%3E");
+    --svg-olho-fechado: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3 3l18 18M10.6 5.1A10.7 10.7 0 0 1 12 5c6.4 0 10 7 10 7a17.6 17.6 0 0 1-3.2 4.2M6.6 6.6C3.8 8.4 2 12 2 12s3.6 7 10 7a10 10 0 0 0 5.4-1.6M9.9 9.9a3 3 0 0 0 4.2 4.2' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    --svg-procurar: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='%23000' stroke-width='2.4' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='6.5'/%3E%3Cpath d='M20 20l-4.2-4.2'/%3E%3C/g%3E%3C/svg%3E");
 }
 
 /* ---------- 2. ESTILO GERAL ---------- */
@@ -156,7 +159,54 @@ h2 { font-size: 24px; }
 .lista { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
 
 .oculto-se-vazio:empty { display: none; }
+/* O banner() troca a classe toda: sem isto, depois de um limparBanner() ficava um vão vazio */
+#mensagem:empty, #avisoMedir:empty { display: none; }
 .escondido { display: none !important; }
+
+/* Entre páginas: o conteúdo troca com um esbatido curto e a barra superior fica no lugar */
+@media (prefers-reduced-motion: no-preference) {
+    @view-transition { navigation: auto; }
+}
+::view-transition-old(root),
+::view-transition-new(root) { animation-duration: 0.2s; }
+
+/* Listas com data-entrada (o JS tira-o depois da 1.ª vez): os itens entram em cascata */
+[data-entrada] > * { animation: surgir 0.4s var(--curva-saida) backwards; }
+[data-entrada] > :nth-child(2) { animation-delay: 0.05s; }
+[data-entrada] > :nth-child(3) { animation-delay: 0.1s; }
+[data-entrada] > :nth-child(4) { animation-delay: 0.15s; }
+[data-entrada] > :nth-child(5) { animation-delay: 0.2s; }
+[data-entrada] > :nth-child(n+6) { animation-delay: 0.25s; }
+
+/* Esqueleto: o lugar do conteúdo enquanto a API responde; um brilho atravessa-o */
+.esqueleto {
+    position: relative;
+    display: grid;
+    align-content: center;
+    gap: 12px;
+    min-height: 80px;
+    padding: 16px;
+    overflow: hidden;
+    pointer-events: none;
+}
+.esqueleto > span { height: 12px; border-radius: 6px; background: var(--borda-cartao); }
+.esqueleto > span:nth-child(1) { width: 42%; }
+.esqueleto > span:nth-child(2) { width: 28%; height: 18px; }
+.esqueleto > span:nth-child(3) { width: 64%; }
+.esqueleto::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(100deg, transparent 20%, rgb(255 255 255 / 0.7) 50%, transparent 80%);
+    transform: translateX(-100%);
+    animation: brilho 1.4s ease-in-out infinite;
+}
+
+/* Inclinação 3D que segue o rato (movimento.js; no toque fica direito) */
+[data-tilt] {
+    transform: perspective(800px) rotateX(var(--incl-x, 0deg)) rotateY(var(--incl-y, 0deg));
+    transition: transform 0.4s var(--curva-saida);
+}
 
 /* Ecrã de medições: só aparecem os blocos da fase atual (body[data-fase] muda no ubere.js) */
 body[data-fase="vaca"] [data-fases]:not([data-fases~="vaca"]),
@@ -266,7 +316,7 @@ body[data-fase] [data-fases] [data-fases] { animation: none; }
 }
 
 @media (hover: hover) {
-    .btn:hover:not(:disabled) { background-color: var(--cor-botao-hover); }
+    .btn:hover:not(:disabled) { background-color: var(--cor-botao-hover); transform: translateY(-1px); }
     .btn--cinza:hover:not(:disabled) { background-color: var(--superficie-suave); }
 }
 .btn:active:not(:disabled) {
@@ -392,6 +442,47 @@ h1 + .voltar { margin-top: -12px; }
     line-height: 1;
     pointer-events: none;
 }
+/* O campo em erro abana uma vez quando a página chega (o servidor marcou-o) */
+.campo[aria-invalid="true"] { animation: abanar 0.4s ease-in-out; }
+
+/* Texto do erro por baixo do campo (ex.: brinco vazio) */
+.campo-erro { display: flex; align-items: center; gap: 8px; margin-top: -8px; font-size: 15px; font-weight: 600; color: var(--teto-suspeita); }
+.campo-erro[hidden] { display: none; }
+
+/* Senha com o botão "mostrar" (formularios.js): o "!" do erro passa para a esquerda do olho */
+.campo-caixa--senha .campo { padding-right: 96px; }
+.campo-caixa--senha:has(.campo[aria-invalid="true"])::after { right: 60px; }
+.campo__olho {
+    position: absolute;
+    top: 50%;
+    right: 6px;
+    display: grid;
+    place-items: center;
+    width: 52px;
+    height: 52px;
+    margin-top: -26px;
+    padding: 0;
+    border: 0;
+    border-radius: 10px;
+    background: none;
+    color: var(--texto-secundario);
+    cursor: pointer;
+    transition: color 0.15s, background-color 0.15s;
+}
+.campo__olho::before {
+    content: '';
+    width: 24px;
+    height: 24px;
+    background: currentColor;
+    -webkit-mask: var(--svg-olho) center / contain no-repeat;
+    mask: var(--svg-olho) center / contain no-repeat;
+}
+.campo__olho[aria-pressed="true"]::before {
+    -webkit-mask-image: var(--svg-olho-fechado);
+    mask-image: var(--svg-olho-fechado);
+}
+@media (hover: hover) { .campo__olho:hover { color: var(--texto-principal); background: var(--superficie-suave); } }
+.campo__olho:active { background: #E9EEE8; }
 
 /* ---------- 6. BANNER (Tipo: ok | alerta | analisando) ---------- */
 .banner {
@@ -429,6 +520,7 @@ h1 + .voltar { margin-top: -12px; }
 .barra {
     background: var(--superficie-superficie);
     border-bottom: 1px solid var(--borda-cartao);
+    view-transition-name: barra;   /* não esbate ao mudar de página */
 }
 .barra__conteudo {
     display: flex;
@@ -618,6 +710,30 @@ a.barra__usuario:hover .barra__nome, a.barra__usuario[aria-current="page"] .barr
 
 /* O teto que está a ser medido ganha um contorno âmbar */
 .teto.ativo { --anel-teto: 0 0 0 4px var(--superficie-superficie), 0 0 0 9px var(--teto-ativo); }
+/* ...e, enquanto espera a sonda, um segundo anel respira à volta dele ("é este") */
+.teto.ativo.nao-medido::before {
+    content: '';
+    position: absolute;
+    inset: -12px;
+    border: 3px solid var(--teto-ativo);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: respirar 1.6s ease-in-out infinite;
+}
+
+/* Amostra capturada: uma onda verde sai do teto uma vez (ubere.js junta .capturado) */
+.teto.sadio.capturado::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border: 3px solid var(--teto-sadio);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: onda-unica 0.7s var(--curva-saida) forwards;
+}
+
+/* Diagnóstico final: os tetos viram-se para a câmara um a um, pela ordem de medição */
+.teto.revelar { animation: virar 0.55s var(--curva-saida) backwards; animation-delay: calc(var(--i, 0) * 0.09s); }
 
 /* ---------- 10. LEGENDA DOS ESTADOS ---------- */
 .legenda {
@@ -710,6 +826,16 @@ a.barra__usuario:hover .barra__nome, a.barra__usuario[aria-current="page"] .barr
     border-radius: 50%;
     background: var(--teto-a-ler);
     animation: vivo 1.6s ease-out infinite;
+}
+/* Mini-gráfico das últimas leituras do teto em curso (a mais recente à direita) */
+.ao-vivo__grafico { flex: 1; min-width: 48px; max-width: 120px; height: 32px; margin-left: auto; overflow: visible; }
+.ao-vivo__grafico polyline {
+    fill: none;
+    stroke: var(--teto-a-ler);
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    vector-effect: non-scaling-stroke;
 }
 
 /* "Teste #42 guardado no histórico." */
@@ -805,8 +931,54 @@ a.barra__usuario:hover .barra__nome, a.barra__usuario[aria-current="page"] .barr
     box-shadow: var(--sombra-1);
     overflow: hidden;
 }
-#listaHistorico:empty { display: none; }
-#listaHistorico > li + li { border-top: 1px solid var(--borda-cartao); }
+#listaHistorico:empty,
+#listaHistorico:not(:has(> li:not([hidden]))) { display: none; }   /* a procura escondeu todos */
+#listaHistorico > li:not([hidden]) ~ li { border-top: 1px solid var(--borda-cartao); }
+
+/* Procurar uma vaca: filtra o histórico enquanto se escreve; a lupa abre o histórico dela */
+.procura { position: relative; display: flex; }
+.procura .campo { min-height: var(--alvo-min); padding-left: 48px; padding-right: 64px; font-size: 17px; }
+.procura::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 16px;
+    width: 20px;
+    height: 20px;
+    margin-top: -10px;
+    background: var(--texto-secundario);
+    -webkit-mask: var(--svg-procurar) center / contain no-repeat;
+    mask: var(--svg-procurar) center / contain no-repeat;
+    pointer-events: none;
+}
+.procura__botao {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    bottom: 4px;
+    display: grid;
+    place-items: center;
+    width: 48px;
+    padding: 0;
+    border: 0;
+    border-radius: 9px;
+    background: var(--botao-azul);
+    color: var(--texto-branco);
+    cursor: pointer;
+    transition: background-color 0.15s, transform 0.12s var(--curva-saida);
+}
+.procura__botao::before {
+    content: '';
+    width: 20px;
+    height: 20px;
+    background: currentColor;
+    -webkit-mask: var(--svg-avancar) center / contain no-repeat;
+    mask: var(--svg-avancar) center / contain no-repeat;
+}
+@media (hover: hover) { .procura__botao:hover { background: var(--botao-azul-hover); } }
+.procura__botao:active { transform: scale(0.95); }
+.procura__vazio { font-size: 15px; color: var(--texto-secundario); text-align: center; }
+.procura__vazio[hidden] { display: none; }
 #listaHistorico .item { border: 0; border-radius: 0; box-shadow: none; }
 #listaHistorico .banner { border-radius: 0; }
 
@@ -873,6 +1045,9 @@ a.item:focus-visible { outline-offset: -3px; }
 .cartao-usuario__nome { font-size: 18px; font-weight: 700; line-height: 1.3; letter-spacing: -0.01em; overflow-wrap: anywhere; }
 .cartao-usuario__email { font-size: var(--fs-legenda); color: var(--texto-secundario); overflow-wrap: anywhere; }
 .cartao-usuario .linha { border-top: 1px solid var(--borda-cartao); }
+/* O cartão que acabou de ser guardado acende um instante a verde */
+.cartao--guardado { animation: guardado 1.4s ease-out; }
+.esqueleto--usuario { min-height: 212px; }
 
 .linha { display: flex; align-items: center; gap: 12px; min-height: 68px; }
 .linha__rotulo { min-width: 48px; font-size: 15px; font-weight: 600; }
@@ -932,7 +1107,22 @@ label.linha { cursor: pointer; }
 .interruptor:disabled { opacity: 0.6; }
 
 /* ---------- 14. PAINEL DE ESTATÍSTICAS ---------- */
+/* --alfa registada: assim a intensidade do vermelho pode ser animada (o mapa "aquece" ao chegar) */
+@property --alfa { syntax: '<number>'; inherits: false; initial-value: 0.12; }
+
 .painel { display: flex; flex-direction: column; gap: 16px; }
+/* Os cartões entram em cascata */
+.painel > *, .medias > * { animation: surgir 0.4s var(--curva-saida) backwards; }
+.medias > :nth-child(2) { animation-delay: 0.06s; }
+.painel > .painel__mapa { animation-delay: 0.12s; }
+/* Enquanto a API responde, os números são barras a brilhar */
+.painel[aria-busy="true"] .media__valor,
+.painel[aria-busy="true"] .mapa__numero {
+    color: transparent;
+    border-radius: 8px;
+    background: linear-gradient(100deg, var(--borda-cartao) 30%, var(--superficie-suave) 50%, var(--borda-cartao) 70%) 0 0 / 300% 100%;
+    animation: brilho-fundo 1.4s linear infinite;
+}
 
 .medias { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .media { display: flex; flex-direction: column; gap: 6px; min-height: 96px; padding: 16px; }
@@ -961,17 +1151,28 @@ label.linha { cursor: pointer; }
 .mapa__teto {
     --tinta: rgb(198 40 40 / var(--alfa, 0.12));
     aspect-ratio: 1;
+    border: 0;
     border-radius: 50%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 2px;
+    padding: 0;
     background: linear-gradient(var(--tinta), var(--tinta)), #F4F4F4;
     box-shadow: inset 0 0 0 1.5px rgb(198 40 40 / 0.25);
+    font-family: inherit;
     color: var(--cor-texto, var(--texto-principal));
-    transition: background-color 0.4s;
+    cursor: pointer;
+    transition: --alfa 0.8s var(--curva-saida), transform 0.15s var(--curva-saida), box-shadow 0.2s;
+    transition-delay: calc(var(--i, 0) * 0.08s), 0s, 0s;
 }
+/* Tocar num teto mostra o detalhe por baixo; o escolhido fica com um anel */
+@media (hover: hover) { .mapa__teto:hover { transform: scale(1.04); } }
+.mapa__teto:active { transform: scale(0.97); }
+.mapa__teto[aria-pressed="true"] { box-shadow: inset 0 0 0 1.5px rgb(198 40 40 / 0.25), 0 0 0 4px var(--superficie-superficie), 0 0 0 7px var(--texto-principal); }
+.mapa__detalhe { min-height: 2.8em; font-size: 15px; line-height: 1.4; color: var(--texto-secundario); text-align: center; text-wrap: balance; }
+.mapa__detalhe strong { color: var(--texto-principal); }
 .mapa__rotulo { font-size: 17px; font-weight: 700; line-height: 1.2; }
 .mapa__numero { font-size: 40px; font-weight: 700; line-height: 1.1; letter-spacing: -0.025em; font-variant-numeric: tabular-nums; }
 
@@ -1021,6 +1222,26 @@ label.linha { cursor: pointer; }
     border-radius: 1px;
     background: var(--borda-cartao);
 }
+/* Na 1.ª vez, a linha desenha-se de cima para baixo à medida que os testes entram */
+.linha-tempo[data-entrada] .evento:not(:last-child)::before { transform-origin: top; animation: desenhar 0.5s var(--curva-saida) backwards; animation-delay: inherit; }
+.evento--esqueleto .evento__marcador { background: var(--borda-cartao); }
+
+/* Resumo da vaca: quantos testes, quantos com suspeita, o último */
+.resumo { display: flex; flex-wrap: wrap; gap: 8px; margin: -4px 0 4px; }
+.resumo__item {
+    display: inline-flex;
+    align-items: center;
+    min-height: 32px;
+    padding: 0 12px;
+    border-radius: var(--raio-pilula);
+    background: var(--superficie-superficie);
+    box-shadow: inset 0 0 0 1px var(--borda-cartao);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--texto-secundario);
+    font-variant-numeric: tabular-nums;
+}
+.resumo__item--suspeita { background: #FDECEC; box-shadow: inset 0 0 0 1px rgb(198 40 40 / 0.3); color: #A61F1F; }
 
 /* ---------- 16. INÍCIO E ENTRADA ---------- */
 .pagina--inicio {
@@ -1055,6 +1276,9 @@ label.linha { cursor: pointer; }
 .pagina--inicio > :not(.inicio__icone) { animation: surgir 0.35s var(--curva-saida) 0.2s backwards; }
 
 .pagina--entrada { padding-top: 40px; gap: 20px; }
+.entrada__conteudo { display: flex; flex-direction: column; gap: 20px; }
+/* Painel da marca à esquerda do formulário: só no computador (17. ECRÃS LARGOS) */
+.entrada__marca { display: none; }
 .entrada { display: flex; flex-direction: column; gap: 20px; }
 .entrada--criar, .entrada--criar .entrada__form { gap: 18px; }
 .entrada__cabecalho { display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center; }
@@ -1125,6 +1349,34 @@ button.link-texto { background: none; border: 0; font-family: inherit; cursor: p
 @media (min-width: 1024px) {
     .barra { position: sticky; top: 0; z-index: 10; }
 
+    /* Entrada: a marca à esquerda (o fundo escuro da página inicial), o formulário à direita */
+    .pagina--entrada:has(> .entrada__marca) {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        max-width: 960px;
+        min-height: 620px;
+        padding: 0;
+        overflow: hidden;
+    }
+    .entrada__marca {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        padding: 48px 40px;
+        background: radial-gradient(70% 60% at 50% 40%, rgb(46 125 50 / 0.32), transparent 75%), #0B110D;
+        color: #F3F6F2;
+        text-align: center;
+    }
+    .entrada__marca .inicio__icone { width: 132px; height: 132px; margin-bottom: 18px; }
+    .entrada__marca-nome { font-size: 36px; font-weight: 800; line-height: 1.1; letter-spacing: -0.035em; }
+    .entrada__marca-nome .marca__mast { color: #7FD08A; }
+    .entrada__marca-texto { font-size: 18px; color: rgb(243 246 242 / 0.74); }
+    .entrada__conteudo { justify-content: center; padding: 48px 44px 36px; }
+    /* O logo já está no painel: no formulário fica só o título */
+    .pagina--entrada:has(> .entrada__marca) .entrada__icone { display: none; }
+
     /* Identificar a vaca + úbere à esquerda, histórico à direita.
        Durante a medição volta a uma coluna: o operador só vê o que está a fazer. */
     body[data-fase="vaca"] .pagina--ubere {
@@ -1160,6 +1412,23 @@ button.link-texto { background: none; border: 0; font-family: inherit; cursor: p
 @keyframes brotar-sadio { from { opacity: 0; transform: scale(0.4); } }
 @keyframes brotar-alerta { from { opacity: 0; transform: scale(0.4); } }
 @keyframes placa { from { opacity: 0; transform: scale(0.88); } }
+@keyframes brilho { to { transform: translateX(100%); } }
+@keyframes brilho-fundo { to { background-position: -150% 0; } }
+@keyframes abanar {
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+}
+@keyframes respirar {
+    0%, 100% { opacity: 0.85; transform: scale(1); }
+    50%      { opacity: 0.25; transform: scale(1.07); }
+}
+@keyframes onda-unica {
+    from { opacity: 0.7; transform: scale(1); }
+    to   { opacity: 0; transform: scale(1.3); }
+}
+@keyframes virar { from { opacity: 0.3; transform: perspective(500px) rotateY(85deg); } }
+@keyframes desenhar { from { transform: scaleY(0); } }
+@keyframes guardado { from { box-shadow: 0 0 0 3px var(--teto-sadio), var(--sombra-2); } }
 
 /* Movimento reduzido: tudo fica no estado final (o anel de suspeita continua visível) */
 @media (prefers-reduced-motion: reduce) {
@@ -1168,5 +1437,9 @@ button.link-texto { background: none; border: 0; font-family: inherit; cursor: p
         animation-delay: 0ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
+        transition-delay: 0ms !important;
     }
+    /* Sem brilho a atravessar os esqueletos: ficam só as barras paradas */
+    .esqueleto::after { display: none; }
+    [data-tilt] { transform: none; }
 }

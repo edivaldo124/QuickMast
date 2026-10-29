@@ -2,6 +2,7 @@ const msg = document.getElementById('mensagem');
 const lista = document.getElementById('listaUsuarios');
 const PERFIS = ['operador', 'veterinario', 'admin'];
 const MEU_ID = Number(document.body.dataset.meuId);
+let apagarGuardado = null;   // o "Guardado." some sozinho; um erro fica até à próxima alteração
 
 async function alterar(id, campos) {
     const r = await fetch('/api/usuarios/' + id, {
@@ -10,15 +11,23 @@ async function alterar(id, campos) {
         body: JSON.stringify(campos)
     });
     const corpoResp = await r.json();
-    if (r.ok) banner(msg, 'ok', 'Guardado.');
-    else banner(msg, 'alerta', corpoResp.erro);
-    carregar();
+    clearTimeout(apagarGuardado);
+    if (r.ok) {
+        banner(msg, 'ok', 'Guardado.');
+        apagarGuardado = setTimeout(() => limparBanner(msg), 4000);
+    } else {
+        banner(msg, 'alerta', corpoResp.erro);
+    }
+    await carregar();
+    // O cartão alterado acende um instante (a lista foi desenhada de novo)
+    if (r.ok) lista.querySelector('[data-id="' + id + '"]')?.classList.add('cartao--guardado');
 }
 
 // Cartão de um utilizador: nome, email, Perfil (lista) e Ativo (interruptor com Sim/Não)
 function cartao(u) {
     const eu = u.id === MEU_ID;
     const li = criar('li', 'cartao cartao-usuario');
+    li.dataset.id = u.id;
 
     const cabecalho = criar('div', 'cartao-usuario__cabecalho');
     cabecalho.append(
@@ -61,9 +70,14 @@ function cartao(u) {
 
 async function carregar() {
     const r = await fetch('/api/usuarios');
-    if (!r.ok) { banner(msg, 'alerta', 'Sem permissão.'); return; }
+    if (!r.ok) {
+        lista.replaceChildren();   // sai o esqueleto
+        banner(msg, 'alerta', 'Sem permissão.');
+        return;
+    }
     const usuarios = await r.json();
     lista.replaceChildren(...usuarios.map(cartao));
+    primeiraEntrada(lista);
 }
 
 carregar();

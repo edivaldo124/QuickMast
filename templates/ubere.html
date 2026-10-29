@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% from '_componentes.html' import barra, campo, ubere, legenda %}
+{% from '_componentes.html' import barra, campo, ubere, legenda, esqueletos %}
 {% block titulo %}QuickMast - Úbere{% endblock %}
 {# Fase atual: vaca | medir | resultado. Cada bloco diz em que fases aparece (data-fases). #}
 {% block atributos_body %} data-fase="vaca"{% endblock %}
@@ -12,8 +12,11 @@
     <section id="passoVaca" class="pilha" data-fases="vaca">
         <h1 class="centro">Quick<span class="marca__mast">Mast</span></h1>
         {% call campo('inputVaca', 'Brinco / ID da vaca', 'rotulo rotulo--grande') %}
-            <input class="campo campo--centro" id="inputVaca" type="text" placeholder="Ex.: BR-102" autocomplete="off">
+            <input class="campo campo--centro" id="inputVaca" type="text" placeholder="Ex.: BR-102" autocomplete="off" list="listaVacas" aria-describedby="erroVaca">
         {% endcall %}
+        <p id="erroVaca" class="campo-erro" hidden>Escreva o brinco/ID da vaca.</p>
+        {# Sugestões: as vacas já registadas (GET /api/vacas), para não criar a mesma vaca duas vezes #}
+        <datalist id="listaVacas"></datalist>
         <button id="btnIniciar" class="btn btn--verde">Iniciar medição</button>
     </section>
 
@@ -37,7 +40,11 @@
         <p class="cartao ao-vivo">
             <span class="ao-vivo__ponto" aria-hidden="true"></span>
             <span>Ao vivo: <span id="vivoTemp">--</span> °C | cond <span id="vivoCond">--</span></span>
+            {# As últimas leituras do teto em curso (ubere.js, desenharVivo) #}
+            <svg class="ao-vivo__grafico" viewBox="0 0 100 32" preserveAspectRatio="none" aria-hidden="true"><polyline id="vivoLinha" points=""/></svg>
         </p>
+        {# Falha ao capturar (placa sem resposta, sonda fora do leite): aqui, em vez de um alert() #}
+        <div id="avisoMedir" aria-live="assertive"></div>
     </section>
 
     <!-- RESULTADO FINAL: diagnóstico -->
@@ -65,7 +72,14 @@
             <span class="cartao estatistica"><span id="estPercentual" class="estatistica__numero"></span></span>
         </a>
         <a class="btn btn--cinza btn--descarregar" href="/exportar.csv">Descarregar relatório (CSV)</a>
-        <ul id="listaHistorico" class="lista"></ul>
+        {# Escrever filtra os últimos testes; a seta abre o histórico completo da vaca (/vacas/<brinco>) #}
+        <form id="procurarVaca" class="procura" role="search">
+            <label class="sr-only" for="inputProcura">Procurar vaca pelo brinco</label>
+            <input class="campo" id="inputProcura" type="search" placeholder="Procurar vaca (brinco)" list="listaVacas" autocomplete="off" enterkeyhint="search">
+            <button class="procura__botao" type="submit" aria-label="Abrir o histórico da vaca"></button>
+        </form>
+        <p id="procuraVazia" class="procura__vazio" hidden>Nenhum dos últimos testes é desta vaca. Toque na seta para ver o histórico dela.</p>
+        <ul id="listaHistorico" class="lista" data-entrada>{{ esqueletos(3) }}</ul>
     </section>
 {% endblock %}
 

@@ -1,6 +1,24 @@
 {# Componentes da biblioteca no Figma ("QuickMast – Telas", página Componentes).
    Os gerados pelo JavaScript (banner, item do histórico) estão em stetic/js/componentes.js. #}
 
+{# Logo do início em linha (e não <img>) para os tetos poderem surgir um a um (16. INÍCIO no CSS).
+   data-tilt: inclina com o rato (movimento.js) #}
+{% macro logo_inicio() -%}
+<div class="inicio__icone" aria-hidden="true" data-tilt>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="104" height="104">
+        <rect class="logo__placa" width="120" height="120" rx="30" fill="#2E7D32"/>
+        <circle class="logo__teto logo__teto--ae" cx="41" cy="41" r="19" fill="#FFFFFF"/>
+        <circle class="logo__teto logo__teto--ad" cx="79" cy="41" r="19" fill="#FFFFFF"/>
+        <circle class="logo__teto logo__teto--pe" cx="41" cy="79" r="19" fill="#FFFFFF"/>
+        <g class="logo__teto logo__teto--alerta">
+            <circle cx="79" cy="79" r="21" fill="#C62828" stroke="#FFFFFF" stroke-width="5"/>
+            <rect x="76" y="66" width="6" height="16" rx="3" fill="#FFFFFF"/>
+            <circle cx="79" cy="89" r="3.4" fill="#FFFFFF"/>
+        </g>
+    </svg>
+</div>
+{%- endmacro %}
+
 {# Barra superior: marca (volta ao início) à esquerda; nome (perfil, abre "A minha conta") · Utilizadores (só admin) · Sair à direita.
    atual='usuarios' ou 'conta' marca o link da página em que se está. #}
 {% macro barra(usuario, atual=none) -%}
@@ -55,6 +73,20 @@
     <li><span class="ic ic--sadio" aria-hidden="true"></span>Sadio</li>
     <li><span class="ic ic--suspeita" aria-hidden="true"></span>Suspeita</li>
 </ul>
+{%- endmacro %}
+
+{# Lugar de um item enquanto a API responde (o JS troca-o pelos itens verdadeiros) #}
+{% macro esqueletos(n, classe='cartao esqueleto') -%}
+{% for _ in range(n) %}<li class="{{ classe }}" aria-hidden="true"><span></span><span></span><span></span></li>{% endfor %}
+{%- endmacro %}
+
+{# Painel da marca à esquerda do formulário, no computador (entrar, criar conta, código MFA) #}
+{% macro marca_entrada() -%}
+<aside class="entrada__marca" aria-hidden="true">
+    {{ logo_inicio() }}
+    <p class="entrada__marca-nome">Quick <span class="marca__mast">Mast</span></p>
+    <p class="entrada__marca-texto">Detetor rápido de mastite</p>
+</aside>
 {%- endmacro %}
 
 {% macro voltar() -%}

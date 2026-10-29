@@ -1,0 +1,404 @@
+/* Página inicial sem sessão (templates/index.html).
+   Hero que avança com o scroll, como os templates Framerate, com a cena 3D no lugar do vídeo:
+   o trilho tem 500svh; a cena, o véu e o palco ficam presos ao ecrã por cima uns dos outros.
+   Usa as variáveis do quickmast.css (--fonte, --botao-verde, --svg-avancar...). */
+
+.corpo--landing {
+    --landing-fundo: #0B110D;
+    --landing-texto: #F3F6F2;
+    --landing-suave: rgb(243 246 242 / 0.74);
+    --landing-fraco: rgb(243 246 242 / 0.5);
+    --landing-linha: rgb(243 246 242 / 0.28);
+    --landing-destaque: #7FD08A;   /* o verde da marca clareado: 10:1 no fundo */
+    --landing-margem: clamp(22px, 4vw, 64px);
+    --landing-curva: cubic-bezier(0.16, 1, 0.3, 1);
+    background: var(--landing-fundo);
+    color: var(--landing-texto);
+}
+/* Durante a abertura o ecrã não rola */
+.corpo--landing.landing-carregando { overflow: hidden; }
+
+.pagina.pagina--landing { display: block; max-width: none; margin: 0; padding: 0; container-type: normal; }
+
+/* Versão sem JavaScript (o logo, o título e o Entrar do início de sempre) */
+.landing-reserva .inicio__subtitulo { color: var(--landing-suave); }
+
+.micro {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    line-height: 1.3;
+    text-transform: uppercase;
+}
+
+/* ---------- Marca e botão Entrar ---------- */
+.landing__marca {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--landing-texto);
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    text-decoration: none;
+    text-transform: none;
+}
+.landing__logo { width: 28px; height: 28px; flex: none; }
+
+.landing__entrar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 0 22px;
+    border-radius: var(--raio-pilula);
+    background: var(--botao-verde);
+    box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.14);
+    color: var(--texto-branco);
+    font-size: 15px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background-color 180ms ease, transform 180ms var(--landing-curva);
+}
+.landing__entrar:hover { background: #388E3C; transform: translateY(-1px); }
+.landing__entrar:active { transform: translateY(0) scale(0.98); }
+
+.corpo--landing :focus-visible { outline: 3px solid var(--landing-destaque); outline-offset: 3px; }
+
+/* ---------- Abertura (sai quando a página e as fontes estão prontas) ---------- */
+.abertura {
+    position: fixed;
+    z-index: 30;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 24px var(--landing-margem) 28px;
+    background: var(--landing-fundo);
+    color: var(--landing-texto);
+    transition: opacity 500ms ease, visibility 500ms ease;
+}
+.abertura--fim { visibility: hidden; opacity: 0; pointer-events: none; }
+
+.abertura__topo,
+.abertura__base {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: rgb(243 246 242 / 0.58);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    line-height: 1.3;
+    text-transform: uppercase;
+}
+.abertura__centro { width: min(320px, 72vw); }
+.abertura__centro .micro:first-child { margin-bottom: 18px; color: var(--landing-suave); }
+.abertura__barra {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 1px;
+    overflow: hidden;
+    background: var(--landing-linha);
+}
+.abertura__barra span {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -35%;
+    width: 35%;
+    background: var(--landing-destaque);
+    animation: varrer 1.35s ease-in-out infinite;
+}
+.abertura__estado { margin-top: 12px; color: var(--landing-fraco); }
+
+@keyframes varrer {
+    from { transform: translateX(0); }
+    to   { transform: translateX(385%); }
+}
+
+/* ---------- Trilho: o scroll que move a cena e troca as manchetes ---------- */
+.trilho {
+    position: relative;
+    height: 500vh;
+    height: 500svh;
+}
+
+.trilho__cena {
+    position: sticky;
+    top: 0;
+    z-index: 0;
+    height: 100vh;
+    height: 100svh;
+    overflow: hidden;
+    /* Um brilho verde atrás do objeto: aparece logo, antes do 3D */
+    background: radial-gradient(48% 56% at 75% 50%, rgb(46 125 50 / 0.24), transparent 72%);
+}
+.cena { opacity: 0; transition: opacity 0.8s ease; }
+.trilho__cena--pronta .cena { opacity: 1; }
+
+/* Logo SVG no sítio do objeto 3D: fica sem WebGL e enquanto a cena não chega */
+.cena-reserva {
+    position: absolute;
+    inset: 0 0 0 50%;
+    display: grid;
+    place-items: center;
+    transition: opacity 0.6s ease;
+}
+.cena-reserva svg { width: min(26vw, 44vh); height: auto; filter: drop-shadow(0 30px 60px rgb(46 125 50 / 0.35)); }
+.trilho__cena--pronta .cena-reserva { opacity: 0; }
+
+/* Véu: escurece só a zona do texto, para ele ler bem em qualquer quadro da cena */
+.trilho__veu {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    height: 100vh;
+    height: 100svh;
+    margin-top: -100vh;
+    margin-top: -100svh;
+    background: linear-gradient(90deg, rgb(11 17 13 / 0.82) 0%, rgb(11 17 13 / 0.42) 46%, transparent 66%);
+    pointer-events: none;
+}
+
+.palco {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    height: 100vh;
+    height: 100svh;
+    min-height: 560px;
+    margin-top: -100vh;
+    margin-top: -100svh;
+    padding: 24px var(--landing-margem) 28px;
+    pointer-events: none;   /* a cena por baixo recebe o rato; só a navegação e os botões o tiram */
+}
+
+.landing__nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    pointer-events: auto;
+}
+
+/* ---------- Manchetes (uma por parte do scroll) ---------- */
+.manchetes {
+    position: absolute;
+    inset: 50% 0 auto;
+    width: 100%;
+    padding: 0 var(--landing-margem);
+    transform: translateY(-44%);
+}
+.manchetes__pilha {
+    position: relative;
+    width: 100%;
+    height: clamp(360px, 36vw, 520px);
+}
+
+.manchete {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    opacity: 0;
+    transition: opacity 260ms ease;
+}
+.manchete--ativa { opacity: 1; }
+
+.sobretitulo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 22px;
+    color: var(--landing-suave);
+}
+.ponto-estado {
+    flex: none;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--landing-fraco);
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+/* Fica verde quando a cena 3D desenha o primeiro quadro */
+.ponto-estado--pronto { background: var(--landing-destaque); box-shadow: 0 0 0 4px rgb(127 208 138 / 0.18); }
+
+.manchete h2 {
+    font-size: clamp(56px, 7.6vw, 132px);
+    font-weight: 800;
+    letter-spacing: -0.055em;
+    line-height: 0.9;
+    overflow-wrap: normal;
+    text-wrap: nowrap;
+}
+/* Cada linha sobe por trás de uma máscara. O espaço extra em cima e em baixo deixa os acentos e
+   a vírgula fora do corte, sem mudar a distância entre linhas. */
+.manchete__linha {
+    display: block;
+    overflow: hidden;
+    padding: 0.1em 0 0.08em;
+    margin: -0.1em 0 -0.08em;
+}
+.manchete__linha > span {
+    display: block;
+    will-change: transform;
+    transition: transform 780ms var(--landing-curva);
+}
+.manchete--antes .manchete__linha > span { transform: translateY(-112%); }
+.manchete--depois .manchete__linha > span { transform: translateY(112%); }
+.manchete--ativa .manchete__linha > span { transform: translateY(0); }
+.manchete--ativa .manchete__linha:nth-child(2) > span { transition-delay: 75ms; }
+
+.manchete .sobretitulo,
+.manchete .manchete__base {
+    opacity: 0;
+    transition: opacity 260ms ease, transform 460ms var(--landing-curva);
+}
+.manchete--antes .sobretitulo,
+.manchete--antes .manchete__base { transform: translateY(-14px); }
+.manchete--depois .sobretitulo,
+.manchete--depois .manchete__base { transform: translateY(14px); }
+.manchete--ativa .sobretitulo,
+.manchete--ativa .manchete__base { opacity: 1; transform: translateY(0); }
+.manchete--ativa .sobretitulo { transition-delay: 90ms; }
+.manchete--ativa .manchete__base { transition-delay: 150ms; }
+
+.manchete__base {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 28px;
+    width: min(620px, 100%);
+    margin-top: auto;
+    font-size: 16px;
+    line-height: 1.35;
+}
+.manchete__base > p { max-width: 310px; color: var(--landing-suave); }
+
+/* "Continuar" (desce até à manchete seguinte) e, na última, "Entrar" */
+.seta-circulo {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    gap: 14px;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--landing-texto);
+    font: inherit;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-decoration: none;
+    text-transform: uppercase;
+    cursor: pointer;
+    pointer-events: auto;
+}
+.seta-circulo__icone {
+    display: grid;
+    width: 48px;
+    height: 48px;
+    place-items: center;
+    border: 1px solid rgb(243 246 242 / 0.7);
+    border-radius: 50%;
+    transition: background-color 180ms ease, color 180ms ease, transform 180ms var(--landing-curva);
+}
+.seta-circulo__icone::before {
+    content: '';
+    width: 18px;
+    height: 18px;
+    background: currentColor;
+    -webkit-mask: var(--svg-avancar) center / contain no-repeat;
+    mask: var(--svg-avancar) center / contain no-repeat;
+}
+.seta-circulo__icone--baixo::before { transform: rotate(90deg); }
+.seta-circulo:hover .seta-circulo__icone,
+.seta-circulo:focus-visible .seta-circulo__icone { background: var(--landing-texto); color: var(--landing-fundo); }
+.seta-circulo:active .seta-circulo__icone { transform: scale(0.94); }
+
+/* ---------- Medidor do scroll (00 a 100) ---------- */
+.medidor {
+    position: absolute;
+    right: var(--landing-margem);
+    bottom: 28px;
+    display: grid;
+    grid-template-columns: 1px minmax(0, 150px);
+    grid-template-rows: 1fr auto;
+    column-gap: 16px;
+    min-height: 104px;
+    align-items: end;
+}
+.medidor__rotulo { grid-column: 2; grid-row: 1; color: var(--landing-suave); line-height: 1.6; }
+.medidor__linha {
+    position: relative;
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    display: block;
+    width: 1px;
+    height: 100%;
+    background: var(--landing-linha);
+}
+.medidor__linha span {
+    position: absolute;
+    inset: 0;
+    display: block;
+    background: var(--landing-destaque);
+    transform: scaleY(0.04);
+    transform-origin: bottom;
+    transition: transform 120ms linear;
+}
+.medidor__valor { grid-column: 2; grid-row: 2; justify-self: end; margin-top: 8px; font-variant-numeric: tabular-nums; }
+
+/* ---------- Rodapé ---------- */
+.landing__rodape {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px 28px;
+    padding: 56px var(--landing-margem) 64px;
+    border-top: 1px solid rgb(243 246 242 / 0.1);
+    color: var(--landing-suave);
+}
+.landing__rodape p { flex: 1; min-width: 180px; }
+
+/* ---------- Ecrã em pé (telemóvel, tablet ao alto): o objeto em cima, o texto em baixo ---------- */
+@media (max-aspect-ratio: 1/1) {
+    .trilho__cena { background: radial-gradient(70% 34% at 50% 26%, rgb(46 125 50 / 0.26), transparent 72%); }
+    .cena-reserva { inset: 9svh 0 auto; height: 34svh; }
+    .cena-reserva svg { width: min(46vw, 28svh); }
+    .trilho__veu { background: linear-gradient(to top, rgb(11 17 13 / 0.94) 0%, rgb(11 17 13 / 0.7) 40%, transparent 60%); }
+
+    .palco { min-height: 0; padding-top: 20px; padding-bottom: 22px; }
+    .manchetes { inset: auto 0 108px; transform: none; }
+    .manchetes__pilha { height: clamp(260px, 36svh, 340px); }
+    .manchete h2 { font-size: clamp(40px, 12.4vw, 92px); line-height: 0.92; }
+    .sobretitulo { margin-bottom: 16px; }
+    .manchete__base { flex-direction: column; align-items: flex-start; gap: 18px; font-size: 15px; }
+
+    .medidor { right: 22px; bottom: 22px; grid-template-columns: 1px minmax(0, 112px); min-height: 72px; }
+    .medidor__rotulo { font-size: 10px; }
+}
+
+/* Ecrã baixo (telemóvel deitado): menos altura para tudo */
+@media (max-height: 520px) and (min-aspect-ratio: 1/1) {
+    .palco { min-height: 0; padding-top: 14px; padding-bottom: 14px; }
+    .manchetes__pilha { height: 300px; }
+    .manchete h2 { font-size: clamp(40px, 6.4vw, 72px); }
+    .sobretitulo { margin-bottom: 12px; }
+    .medidor { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .manchete,
+    .manchete__linha > span,
+    .manchete .sobretitulo,
+    .manchete .manchete__base,
+    .abertura,
+    .cena,
+    .cena-reserva { transition: none; }
+    .abertura__barra span { animation: none; left: 0; width: 100%; opacity: 0.6; }
+}

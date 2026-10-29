@@ -4,17 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block titulo %}QuickMast{% endblock %}</title>
-    <meta name="theme-color" content="#F1F4F0">
+    <meta name="theme-color" content="{% block cor_tema %}#F1F4F0{% endblock %}">
     <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='img/logo-icone.svg') }}">
     <link rel="apple-touch-icon" href="{{ url_for('static', filename='img/apple-touch-icon.png') }}">
     <link rel="preload" href="{{ url_for('static', filename='fonts/inter-latin-wght-normal.woff2') }}" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/quickmast.css') }}">
+    {% block estilos %}{% endblock %}
 </head>
 <body{% block atributos_body %}{% endblock %}>
     {% block cabecalho %}{% endblock %}
     <main class="pagina{% block classe_pagina %}{% endblock %}">
         {% block conteudo %}{% endblock %}
     </main>
+    {% block script_base %}<script src="{{ url_for('static', filename='js/movimento.js') }}"></script>{% endblock %}
     {% block scripts %}{% endblock %}
 </body>
 </html>
