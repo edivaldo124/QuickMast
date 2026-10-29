@@ -708,6 +708,9 @@ a.barra__usuario:hover .barra__nome, a.barra__usuario[aria-current="page"] .barr
     animation: onda 1.8s var(--curva-saida) infinite;
 }
 
+/* Enquanto se mede, tocar num teto escolhe-o para a próxima captura */
+body[data-fase="medir"] .teto { cursor: pointer; }
+
 /* O teto que está a ser medido ganha um contorno âmbar */
 .teto.ativo { --anel-teto: 0 0 0 4px var(--superficie-superficie), 0 0 0 9px var(--teto-ativo); }
 /* ...e, enquanto espera a sonda, um segundo anel respira à volta dele ("é este") */

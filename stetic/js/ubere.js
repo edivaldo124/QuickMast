@@ -20,6 +20,7 @@ let tetoAtual = 0;          // 0 = nenhum teste em curso
 let leituras = {};          // {1: {temp, cond}, 2: ...}; temp só vem se a placa a medir
 let lendoAoVivo = false;    // evita pedidos /read sobrepostos
 let timerVivo = null;
+let capturando = false;     // uma captura de cada vez: a placa só atende um pedido
 
 // ---------- Elementos da página ----------
 const $ = id => document.getElementById(id);
@@ -46,6 +47,16 @@ function mudarEstado(teto, estado) {
 // Mostra só os blocos da fase: 'vaca', 'medir' ou 'resultado' (ver data-fases no HTML)
 function mostrarFase(fase) {
     document.body.dataset.fase = fase;
+    // Só enquanto se mede é que os tetos se tocam (para escolher qual capturar)
+    document.querySelectorAll('.teto').forEach(t => {
+        if (fase === 'medir') {
+            t.tabIndex = 0;
+            t.setAttribute('role', 'button');
+        } else {
+            t.removeAttribute('tabindex');
+            t.removeAttribute('role');
+        }
+    });
 }
 
 // Botão grande no estado "Carregando" (spinner + texto) ou de volta ao normal
@@ -119,18 +130,41 @@ function pararAoVivo() {
     timerVivo = null;
 }
 
-// ---------- Wizard ----------
+// ---------- Captura por teto ----------
+// Sem botão na placa, é aqui que se captura: tocar num teto escolhe-o, "Capturar teto N" lê a sonda
+// e passa ao próximo que ainda falta (qualquer ordem; capturar de novo substitui a leitura).
+// Com os 4 tetos medidos, o teste é gravado.
+const rotuloCapturar = n => 'Capturar teto ' + n;
+
+// O teto escolhido ganha o contorno âmbar (tetoAtual 0 = nenhum)
+function marcarAtivo() {
+    document.querySelectorAll('.teto').forEach(t => {
+        const ativo = Number(t.dataset.teto) === tetoAtual;
+        t.classList.toggle('ativo', ativo);
+        if (ativo) t.setAttribute('aria-current', 'true');
+        else t.removeAttribute('aria-current');
+    });
+}
+
 function mostrarPasso() {
     $('instrucao').textContent =
-        'Insira a sonda no Teto ' + tetoAtual + ' (' + NOMES[tetoAtual] + ')';
-    $('progressoTexto').textContent = tetoAtual + ' de 4';
+        'Insira a sonda no Teto ' + tetoAtual + ' (' + NOMES[tetoAtual] + ')'
+        + (leituras[tetoAtual] ? ': já medido, capturar de novo substitui a leitura' : '');
+    $('progressoTexto').textContent = Object.keys(leituras).length + ' de 4 medidos';
     document.querySelectorAll('.progresso__etapa').forEach((etapa, i) => {
-        etapa.dataset.estado = i + 1 < tetoAtual ? 'feito' : i + 1 === tetoAtual ? 'atual' : 'futuro';
+        etapa.dataset.estado = i + 1 === tetoAtual ? 'atual' : leituras[i + 1] ? 'feito' : 'futuro';
     });
-    document.querySelectorAll('.teto').forEach(t => t.classList.remove('ativo'));
-    elTeto(tetoAtual).classList.add('ativo');
+    marcarAtivo();
+    $('btnCapturar').textContent = rotuloCapturar(tetoAtual);
     vivo.length = 0;   // o gráfico ao vivo recomeça em cada teto
     desenharVivo();
+}
+
+function selecionarTeto(n) {
+    if (document.body.dataset.fase !== 'medir' || capturando || n === tetoAtual) return;
+    tetoAtual = n;
+    limparBanner($('avisoMedir'));
+    mostrarPasso();
 }
 
 // Brinco vazio: o campo fica em erro (borda vermelha e "!") com a explicação por baixo
@@ -162,17 +196,20 @@ function iniciar() {
 }
 
 async function capturar() {
+    const n = tetoAtual;   // não muda a meio: selecionarTeto espera pelo fim da captura
     const btn = $('btnCapturar');
+    capturando = true;
     carregando(btn, true, 'Capturando…');
-    const teto = elTeto(tetoAtual);
+    const teto = elTeto(n);
+    const anterior = leituras[n];   // ao refazer um teto, se falhar fica a leitura que já tinha
     mudarEstado(teto, 'a-ler');
 
     try {
         const d = await lerSensor();
         if (d.cond < LEITURA_MINIMA) {
-            throw new Error('Leitura ' + d.cond + ': a sonda parece estar fora do leite. Repita o teto ' + tetoAtual + '.');
+            throw new Error('Leitura ' + d.cond + ': a sonda parece estar fora do leite. Repita o teto ' + n + '.');
         }
-        leituras[tetoAtual] = { temp: d.temp, cond: d.cond };
+        leituras[n] = { temp: d.temp, cond: d.cond };
         // Por agora fica "capturado" (verde, com uma onda); o diagnóstico final corrige a cor
         mudarEstado(teto, 'sadio');
         teto.classList.add('capturado');
@@ -180,21 +217,25 @@ async function capturar() {
         limparBanner($('avisoMedir'));
         vibrar(30);
     } catch (e) {
-        mudarEstado(teto, 'nao-medido');
+        mudarEstado(teto, anterior ? 'sadio' : 'nao-medido');
         banner($('avisoMedir'), 'alerta', e.message);
         vibrar([60, 40, 60]);
-        carregando(btn, false, 'Capturar amostra');
+        capturando = false;
+        carregando(btn, false, rotuloCapturar(n));
         return;
     }
 
-    carregando(btn, false, 'Capturar amostra');
-    teto.classList.remove('ativo');
+    capturando = false;
+    carregando(btn, false, rotuloCapturar(n));
 
-    if (tetoAtual < 4) {
-        tetoAtual++;
+    // Passa ao próximo teto que ainda falta (a seguir a este, dando a volta); se não falta nenhum, grava
+    const proximo = [1, 2, 3].map(k => (n - 1 + k) % 4 + 1).find(m => !leituras[m]);
+    if (proximo) {
+        tetoAtual = proximo;
         mostrarPasso();
     } else {
         tetoAtual = 0;
+        marcarAtivo();
         pararAoVivo();
         finalizar();
     }
@@ -349,6 +390,16 @@ function abrirVaca(e) {
 // ---------- Ligações ----------
 $('btnIniciar').addEventListener('click', iniciar);
 $('btnCapturar').addEventListener('click', capturar);
+document.querySelectorAll('.teto').forEach(t => {
+    const escolher = () => selecionarTeto(Number(t.dataset.teto));
+    t.addEventListener('click', escolher);
+    t.addEventListener('keydown', e => {   // o teto só é focável enquanto se mede (mostrarFase)
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            escolher();
+        }
+    });
+});
 $('btnNova').addEventListener('click', novaVaca);
 $('inputVaca').addEventListener('input', () => erroVaca(false));
 $('inputProcura').addEventListener('input', filtrarHistorico);
