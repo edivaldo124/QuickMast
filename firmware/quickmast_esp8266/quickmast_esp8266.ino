@@ -3,13 +3,14 @@
 
   Hardware
     - Sensor de condutividade (módulo TDS com um resistor de 1 kΩ) no A0. Leite normal lê ~300.
-    - Botão FLASH da própria NodeMCU (GPIO0, D3): captura o teto atual.
+    - Sem botão: o teste avança com Enter no Monitor Série, ou pela página /ubere (lá, cada teto
+      tem a sua captura e pode ser feito por qualquer ordem).
     - LED da placa (GPIO2, D4): pisca depressa se houver suspeita de mastite; fica aceso 1,5 s se não.
     Sem sensor de temperatura (o DS18B20 saiu) e sem pH (ainda em análise).
 
-  Teste (Monitor Série a 115200 baud, com o fim de linha "Nova linha")
+  Teste (Monitor Série a 9600 baud, com o fim de linha "Nova linha")
     1. Escrever o brinco da vaca e Enter.
-    2. Sonda no teto pedido e botão FLASH (ou Enter). Repetir nos 4 tetos; "x" cancela o teste.
+    2. Sonda no teto pedido e Enter. Repetir nos 4 tetos; "x" cancela o teste.
     3. A placa mostra o diagnóstico e envia o teste para o servidor. Sem Wi-Fi ou sem servidor,
        o teste fica na fila (em RAM: perde-se se a placa desligar) e segue quando a ligação voltar.
 
@@ -47,13 +48,12 @@
 
 // ---------- Pinos ----------
 const int PINO_SENSOR = A0;
-const int PINO_BOTAO = 0;           // FLASH (D3): LOW enquanto carregado. Não o carregar ao ligar a placa
 const int PINO_LED = LED_BUILTIN;   // GPIO2 (D4): acende em LOW
 
 // ---------- Leitura do sensor ----------
 const int AMOSTRAS = 15;               // fica a média das 5 do meio: os picos de ruído saem
 const int INTERVALO_AMOSTRA_MS = 20;   // analogRead seguido demais faz o ESP8266 perder o Wi-Fi
-const int ESTABILIZAR_MS = 1000;       // a sonda assenta no leite depois de carregar no botão
+const int ESTABILIZAR_MS = 1000;       // a sonda assenta no leite depois do Enter
 const int LEITURA_MINIMA = 50;         // abaixo disto a sonda está fora do leite
 
 // Iguais aos da página /ubere (stetic/js/ubere.js)
@@ -144,7 +144,7 @@ void pedirBrinco() {
 }
 
 void pedirTeto() {
-  Serial.printf("Insira a sonda no teto %d (%s) e carregue no botão FLASH ou prima Enter. "
+  Serial.printf("Insira a sonda no teto %d (%s) e prima Enter. "
                 "x cancela.\n", tetoAtual + 1, NOMES_TETOS[tetoAtual]);
 }
 
@@ -234,7 +234,7 @@ void tratarLinha(String linha) {
   } else if (linha.isEmpty()) {
     capturarTeto();
   } else {
-    Serial.println("Prima Enter (ou o botão FLASH) para capturar, ou x para cancelar.");
+    Serial.println("Prima Enter para capturar, ou x para cancelar.");
   }
 }
 
@@ -254,18 +254,6 @@ bool lerLinha(String &linha) {
       return true;
     }
     if (linhaSerial.length() < 64) linhaSerial += c;
-  }
-  return false;
-}
-
-bool botaoCarregado() {
-  static int anterior = HIGH;
-  static unsigned long momentoMudanca = 0;
-  int agora = digitalRead(PINO_BOTAO);
-  if (agora != anterior && millis() - momentoMudanca > 50) {   // 50 ms: ignora o ressalto
-    momentoMudanca = millis();
-    anterior = agora;
-    return agora == LOW;
   }
   return false;
 }
@@ -539,8 +527,7 @@ void enviarFila() {
 
 
 void setup() {
-  Serial.begin(115200);
-  pinMode(PINO_BOTAO, INPUT_PULLUP);
+  Serial.begin(9600);
   pinMode(PINO_LED, OUTPUT);
   digitalWrite(PINO_LED, HIGH);
 
@@ -582,10 +569,6 @@ void loop() {
 
   String linha;
   if (lerLinha(linha)) tratarLinha(linha);
-  if (botaoCarregado()) {
-    if (fase == MEDIR) capturarTeto();
-    else Serial.println("Escreva primeiro o brinco da vaca no Monitor Série.");
-  }
 
   enviarFila();
 }
