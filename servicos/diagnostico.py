@@ -6,8 +6,7 @@ Ajustar os valores abaixo depois da calibração com dados reais, nos dois síti
 
 # Condutividade: valor bruto do analogRead (0-1023). Com o resistor de 1 kΩ no módulo TDS,
 # o leite normal lê ~300.
-COND_REF = 300.0
-MARGIN_COND = 1.20         # alerta absoluto: acima de 360
+COND_LIMIT = 340.0         # alerta absoluto: acima de 340
 REL_THRESHOLD = 0.20       # alerta relativo: 20% acima da mediana dos outros tetos...
 MIN_ABS_DIFF_COND = 40.0   # ...e pelo menos 40 pontos, para o ruído não dar alarme
 
@@ -49,7 +48,7 @@ def diagnosticar(leituras):
         diff_c, rel_c = _relativa(conds, i)
         if diff_c > MIN_ABS_DIFF_COND and rel_c > REL_THRESHOLD:
             motivos.append('condutividade acima dos outros tetos')
-        if conds[i] > COND_REF * MARGIN_COND or (com_temp and temps[i] > TEMP_REF * MARGIN_TEMP):
+        if conds[i] > COND_LIMIT or (com_temp and temps[i] > TEMP_REF * MARGIN_TEMP):
             motivos.append('acima do valor de referência')
 
         resultado.append({
