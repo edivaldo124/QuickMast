@@ -134,7 +134,7 @@ ESP8266WebServer servidorLocal(80);
 
 // Condutividade em valor bruto do analogRead (0-1023). Com o resistor de 1 kΩ no módulo TDS,
 // o leite normal lê ~300.
-const double LIMITE_COND = 340.0;       // alerta absoluto: acima de 340
+const double LIMITE_COND = 320.0;       // alerta absoluto: acima de 320
 const double LIMIAR_RELATIVO = 0.20;    // alerta relativo: 20% acima da mediana dos outros tetos...
 const double DIFERENCA_MINIMA = 40.0;   // ...e pelo menos 40 pontos, para o ruído não dar alarme
 

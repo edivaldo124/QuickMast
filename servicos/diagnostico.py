@@ -6,7 +6,7 @@ Ajustar os valores abaixo depois da calibração com dados reais, nos dois síti
 
 # Condutividade: valor bruto do analogRead (0-1023). Com o resistor de 1 kΩ no módulo TDS,
 # o leite normal lê ~300.
-COND_LIMIT = 340.0         # alerta absoluto: acima de 340
+COND_LIMIT = 320.0         # alerta absoluto: acima de 320
 REL_THRESHOLD = 0.20       # alerta relativo: 20% acima da mediana dos outros tetos...
 MIN_ABS_DIFF_COND = 40.0   # ...e pelo menos 40 pontos, para o ruído não dar alarme
 
