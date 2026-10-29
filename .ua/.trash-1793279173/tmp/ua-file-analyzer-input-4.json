@@ -1,0 +1,54 @@
+{
+ "projectRoot": "/home/edivaldo/PycharmProjects/QuickMast",
+ "batchFiles": [
+  {
+   "path": "blueprints/auth.py",
+   "language": "python",
+   "sizeLines": 194,
+   "fileCategory": "code"
+  },
+  {
+   "path": "blueprints/conta.py",
+   "language": "python",
+   "sizeLines": 98,
+   "fileCategory": "code"
+  },
+  {
+   "path": "definir_senha_admin.py",
+   "language": "python",
+   "sizeLines": 43,
+   "fileCategory": "code"
+  },
+  {
+   "path": "servicos/limite.py",
+   "language": "python",
+   "sizeLines": 43,
+   "fileCategory": "code"
+  },
+  {
+   "path": "servicos/senhas.py",
+   "language": "python",
+   "sizeLines": 22,
+   "fileCategory": "code"
+  }
+ ],
+ "batchImportData": {
+  "blueprints/auth.py": [
+   "servicos/autenticacao.py",
+   "servicos/limite.py",
+   "servicos/seguranca.py",
+   "servicos/senhas.py"
+  ],
+  "blueprints/conta.py": [
+   "blueprints/auth.py",
+   "servicos/autenticacao.py",
+   "servicos/seguranca.py",
+   "servicos/senhas.py"
+  ],
+  "definir_senha_admin.py": [
+   "servicos/senhas.py"
+  ],
+  "servicos/limite.py": [],
+  "servicos/senhas.py": []
+ }
+}

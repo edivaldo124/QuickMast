@@ -1,0 +1,983 @@
+{
+ "nodes": [
+  {
+   "id": "file:blueprints/__init__.py",
+   "type": "file",
+   "name": "__init__.py",
+   "filePath": "blueprints/__init__.py",
+   "summary": "Pacote que reúne os blueprints da aplicação (páginas, auth, conta, API de testes e utilizadores, sensor, utilitários, erros) e expõe registrar_blueprints, que os regista no app Flask; o blueprint do sensor só entra quando há PLACA_URL ou SIMULADOR_SENSOR.",
+   "tags": [
+    "blueprints",
+    "barrel",
+    "entry-point",
+    "flask",
+    "roteamento"
+   ],
+   "complexity": "simple",
+   "languageNotes": "Barrel de pacote Python: importa o objeto Blueprint de cada módulo e centraliza o registro numa função única."
+  },
+  {
+   "id": "file:blueprints/erros.py",
+   "type": "file",
+   "name": "erros.py",
+   "filePath": "blueprints/erros.py",
+   "summary": "Blueprint com handlers globais de erro: para rotas /api/ devolve JSON ({'erro': ...}) com o código HTTP correto, e nas páginas HTML mantém o tratamento padrão do Flask.",
+   "tags": [
+    "error-handling",
+    "api-handler",
+    "flask",
+    "blueprint"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:blueprints/paginas.py",
+   "type": "file",
+   "name": "paginas.py",
+   "filePath": "blueprints/paginas.py",
+   "summary": "Blueprint das páginas HTML (index, úbere, painel, histórico da vaca e usuários); os dados vêm depois da API via fetch, e as rotas protegidas usam o decorador exigir_login.",
+   "tags": [
+    "pagina-html",
+    "blueprint",
+    "flask",
+    "roteamento",
+    "autenticacao"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:blueprints/sensor.py",
+   "type": "file",
+   "name": "sensor.py",
+   "filePath": "blueprints/sensor.py",
+   "summary": "Blueprint da rota /read que alimenta a página do úbere: repassa a leitura à placa ESP8266 (PLACA_URL fixa ou 'auto' com varredura da /24 local) ou devolve valores simulados, validando a resposta da placa e serializando o acesso com um lock.",
+   "tags": [
+    "sensor",
+    "iot",
+    "esp8266",
+    "blueprint",
+    "concorrencia"
+   ],
+   "complexity": "moderate",
+   "languageNotes": "Usa ThreadPoolExecutor com até 128 workers para varrer a rede local e um threading.Lock para serializar pedidos à placa, que atende um cliente por vez."
+  },
+  {
+   "id": "file:blueprints/testes.py",
+   "type": "file",
+   "name": "testes.py",
+   "filePath": "blueprints/testes.py",
+   "summary": "API REST dos testes de mastite sob /api: validação e normalização do brinco e das 4 leituras, registro com diagnóstico automático, listagem paginada com filtros, consulta, exclusão (admin), vacas e estatísticas.",
+   "tags": [
+    "api-handler",
+    "validation",
+    "mastite",
+    "blueprint",
+    "rest"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "file:blueprints/usuarios.py",
+   "type": "file",
+   "name": "usuarios.py",
+   "filePath": "blueprints/usuarios.py",
+   "summary": "API de usuários sob /api: consulta do próprio usuário (/api/me), listagem para o admin e alteração de perfil/ativo com regras que impedem o admin de alterar a própria conta ou desativar o último admin ativo.",
+   "tags": [
+    "api-handler",
+    "usuarios",
+    "autorizacao",
+    "blueprint",
+    "auditoria"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:blueprints/__init__.py:registrar_blueprints",
+   "type": "function",
+   "name": "registrar_blueprints",
+   "filePath": "blueprints/__init__.py",
+   "lineRange": [
+    22,
+    27
+   ],
+   "summary": "Registra no app Flask os blueprints principais e, apenas quando há PLACA_URL ou SIMULADOR_SENSOR configurado, também o blueprint do sensor.",
+   "tags": [
+    "flask",
+    "blueprint",
+    "registro"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:blueprints/erros.py:erro_http",
+   "type": "function",
+   "name": "erro_http",
+   "filePath": "blueprints/erros.py",
+   "lineRange": [
+    9,
+    12
+   ],
+   "summary": "Handler de HTTPException: em /api/ responde JSON com a descrição e o código; nas demais rotas devolve a exceção para o tratamento padrão.",
+   "tags": [
+    "error-handling",
+    "api-handler",
+    "json"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:blueprints/erros.py:erro_geral",
+   "type": "function",
+   "name": "erro_geral",
+   "filePath": "blueprints/erros.py",
+   "lineRange": [
+    16,
+    20
+   ],
+   "summary": "Handler de exceções inesperadas: registra o stack trace e responde 500 em JSON na API; nas páginas relança a exceção.",
+   "tags": [
+    "error-handling",
+    "logging",
+    "api-handler"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:blueprints/paginas.py:index",
+   "type": "function",
+   "name": "index",
+   "filePath": "blueprints/paginas.py",
+   "lineRange": [
+    10,
+    11
+   ],
+   "summary": "Rota pública / que renderiza a página inicial (index.html).",
+   "tags": [
+    "pagina-html",
+    "rota-publica"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:blueprints/paginas.py:ubere",
+   "type": "function",
+   "name": "ubere",
+   "filePath": "blueprints/paginas.py",
+   "lineRange": [
+    16,
+    17
+   ],
+   "summary": "Rota /ubere (login exigido) que renderiza a página de leitura ao vivo e captura dos tetos.",
+   "tags": [
+    "pagina-html",
+    "protegida"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:blueprints/paginas.py:painel",
+   "type": "function",
+   "name": "painel",
+   "filePath": "blueprints/paginas.py",
+   "lineRange": [
+    22,
+    23
+   ],
+   "summary": "Rota /painel (login exigido) que renderiza o painel de testes e estatísticas.",
+   "tags": [
+    "pagina-html",
+    "protegida"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:blueprints/paginas.py:historico_vaca",
+   "type": "function",
+   "name": "historico_vaca",
+   "filePath": "blueprints/paginas.py",
+   "lineRange": [
+    28,
+    29
+   ],
+   "summary": "Rota /vacas/<brinco> (login exigido) que renderiza o histórico de uma vaca; os dados são buscados na API.",
+   "tags": [
+    "pagina-html",
+    "protegida",
+    "parametro-de-rota"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:blueprints/paginas.py:usuarios",
+   "type": "function",
+   "name": "usuarios",
+   "filePath": "blueprints/paginas.py",
+   "lineRange": [
+    34,
+    35
+   ],
+   "summary": "Rota /usuarios restrita ao perfil admin que renderiza a tela de gestão de usuários.",
+   "tags": [
+    "pagina-html",
+    "admin",
+    "protegida"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:blueprints/sensor.py:read",
+   "type": "function",
+   "name": "read",
+   "filePath": "blueprints/sensor.py",
+   "lineRange": [
+    38,
+    55
+   ],
+   "summary": "Rota GET /read: repassa a leitura à placa (PLACA_URL fixa ou 'auto') ou, sem placa, devolve uma condutividade simulada após 1 s; responde 504 se a placa não responder.",
+   "tags": [
+    "sensor",
+    "rota",
+    "simulador",
+    "iot"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:blueprints/sensor.py:_pedir_leitura",
+   "type": "function",
+   "name": "_pedir_leitura",
+   "filePath": "blueprints/sensor.py",
+   "lineRange": [
+    58,
+    80
+   ],
+   "summary": "Faz GET /read em um host/porta, valida que a resposta é JSON com 'cond' inteiro 0-1023 (e 'temp' opcional) e devolve a leitura ou None se não for a placa.",
+   "tags": [
+    "sensor",
+    "http-client",
+    "validation",
+    "iot"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:blueprints/sensor.py:_ler_placa_na_rede",
+   "type": "function",
+   "name": "_ler_placa_na_rede",
+   "filePath": "blueprints/sensor.py",
+   "lineRange": [
+    83,
+    100
+   ],
+   "summary": "Modo PLACA_URL=auto: lê do último IP achado e, se falhar, procura de novo na rede respeitando um intervalo mínimo entre procuras, tudo sob o lock.",
+   "tags": [
+    "sensor",
+    "descoberta-de-rede",
+    "concorrencia",
+    "cache"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:blueprints/sensor.py:_procurar_placa",
+   "type": "function",
+   "name": "_procurar_placa",
+   "filePath": "blueprints/sensor.py",
+   "lineRange": [
+    103,
+    120
+   ],
+   "summary": "Descobre o IP local por um socket UDP, varre a /24 em paralelo (128 threads) pedindo /read e devolve (ip, leitura) do primeiro que responder como placa.",
+   "tags": [
+    "sensor",
+    "descoberta-de-rede",
+    "threads",
+    "rede"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:blueprints/testes.py:_validar",
+   "type": "function",
+   "name": "_validar",
+   "filePath": "blueprints/testes.py",
+   "lineRange": [
+    20,
+    51
+   ],
+   "summary": "Valida o JSON de criação de teste: normaliza o brinco, exige 4 leituras com tetos 1-4 únicos, cond 0-1023 e temp opcional válida, e levanta ValueError com mensagem clara.",
+   "tags": [
+    "validation",
+    "mastite",
+    "regras-de-negocio"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:blueprints/testes.py:criar_teste",
+   "type": "function",
+   "name": "criar_teste",
+   "filePath": "blueprints/testes.py",
+   "lineRange": [
+    56,
+    67
+   ],
+   "summary": "POST /api/testes: valida o corpo, calcula o diagnóstico por teto e grava o teste associado ao usuário logado; responde 201 com o teste criado.",
+   "tags": [
+    "api-handler",
+    "rest",
+    "mastite",
+    "escrita"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:blueprints/testes.py:listar_testes",
+   "type": "function",
+   "name": "listar_testes",
+   "filePath": "blueprints/testes.py",
+   "lineRange": [
+    72,
+    80
+   ],
+   "summary": "GET /api/testes: lista testes paginados com filtros opcionais por brinco e suspeitos, limitando limite (1-100) e página.",
+   "tags": [
+    "api-handler",
+    "rest",
+    "paginacao",
+    "filtros"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:blueprints/testes.py:obter_teste",
+   "type": "function",
+   "name": "obter_teste",
+   "filePath": "blueprints/testes.py",
+   "lineRange": [
+    85,
+    89
+   ],
+   "summary": "GET /api/testes/<id>: devolve um teste ou 404 se não existir.",
+   "tags": [
+    "api-handler",
+    "rest",
+    "leitura"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:blueprints/testes.py:apagar_teste",
+   "type": "function",
+   "name": "apagar_teste",
+   "filePath": "blueprints/testes.py",
+   "lineRange": [
+    94,
+    98
+   ],
+   "summary": "DELETE /api/testes/<id>, restrito ao admin: apaga o teste, registra a auditoria e responde 404 se não existir.",
+   "tags": [
+    "api-handler",
+    "admin",
+    "auditoria",
+    "rest"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:blueprints/testes.py:listar_vacas",
+   "type": "function",
+   "name": "listar_vacas",
+   "filePath": "blueprints/testes.py",
+   "lineRange": [
+    103,
+    106
+   ],
+   "summary": "GET /api/vacas: lista as vacas com paginação limitada.",
+   "tags": [
+    "api-handler",
+    "rest",
+    "paginacao"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:blueprints/testes.py:testes_da_vaca",
+   "type": "function",
+   "name": "testes_da_vaca",
+   "filePath": "blueprints/testes.py",
+   "lineRange": [
+    111,
+    115
+   ],
+   "summary": "GET /api/vacas/<brinco>/testes: devolve até 100 testes de uma vaca ou 404 se ela não tiver testes.",
+   "tags": [
+    "api-handler",
+    "rest",
+    "historico"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:blueprints/testes.py:estatisticas",
+   "type": "function",
+   "name": "estatisticas",
+   "filePath": "blueprints/testes.py",
+   "lineRange": [
+    120,
+    121
+   ],
+   "summary": "GET /api/estatisticas: devolve as estatísticas agregadas calculadas pela camada de banco.",
+   "tags": [
+    "api-handler",
+    "rest",
+    "estatisticas"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:blueprints/usuarios.py:eu",
+   "type": "function",
+   "name": "eu",
+   "filePath": "blueprints/usuarios.py",
+   "lineRange": [
+    14,
+    15
+   ],
+   "summary": "GET /api/me: devolve o usuário autenticado da sessão.",
+   "tags": [
+    "api-handler",
+    "sessao",
+    "usuarios"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:blueprints/usuarios.py:listar",
+   "type": "function",
+   "name": "listar",
+   "filePath": "blueprints/usuarios.py",
+   "lineRange": [
+    20,
+    21
+   ],
+   "summary": "GET /api/usuarios (admin): lista todos os usuários.",
+   "tags": [
+    "api-handler",
+    "admin",
+    "usuarios"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:blueprints/usuarios.py:atualizar",
+   "type": "function",
+   "name": "atualizar",
+   "filePath": "blueprints/usuarios.py",
+   "lineRange": [
+    26,
+    52
+   ],
+   "summary": "PATCH /api/usuarios/<id> (admin): altera perfil e/ou ativo, validando entradas e bloqueando a autoalteração e a remoção do último admin ativo; registra auditoria.",
+   "tags": [
+    "api-handler",
+    "admin",
+    "autorizacao",
+    "auditoria"
+   ],
+   "complexity": "moderate"
+  }
+ ],
+ "edges": [
+  {
+   "source": "file:blueprints/__init__.py",
+   "target": "function:blueprints/__init__.py:registrar_blueprints",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:blueprints/erros.py",
+   "target": "function:blueprints/erros.py:erro_http",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:blueprints/erros.py",
+   "target": "function:blueprints/erros.py:erro_geral",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:blueprints/paginas.py",
+   "target": "function:blueprints/paginas.py:index",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:blueprints/paginas.py",
+   "target": "function:blueprints/paginas.py:ubere",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:blueprints/paginas.py",
+   "target": "function:blueprints/paginas.py:painel",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:blueprints/paginas.py",
+   "target": "function:blueprints/paginas.py:historico_vaca",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:blueprints/paginas.py",
+   "target": "function:blueprints/paginas.py:usuarios",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:blueprints/sensor.py",
+   "target": "function:blueprints/sensor.py:read",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:blueprints/sensor.py",
+   "target": "function:blueprints/sensor.py:_pedir_leitura",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:blueprints/sensor.py",
+   "target": "function:blueprints/sensor.py:_ler_placa_na_rede",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:blueprints/sensor.py",
+   "target": "function:blueprints/sensor.py:_procurar_placa",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:blueprints/testes.py",
+   "target": "function:blueprints/testes.py:_validar",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:blueprints/testes.py",
+   "target": "function:blueprints/testes.py:criar_teste",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:blueprints/testes.py",
+   "target": "function:blueprints/testes.py:listar_testes",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:blueprints/testes.py",
+   "target": "function:blueprints/testes.py:obter_teste",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:blueprints/testes.py",
+   "target": "function:blueprints/testes.py:apagar_teste",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:blueprints/testes.py",
+   "target": "function:blueprints/testes.py:listar_vacas",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:blueprints/testes.py",
+   "target": "function:blueprints/testes.py:testes_da_vaca",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:blueprints/testes.py",
+   "target": "function:blueprints/testes.py:estatisticas",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:blueprints/usuarios.py",
+   "target": "function:blueprints/usuarios.py:eu",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:blueprints/usuarios.py",
+   "target": "function:blueprints/usuarios.py:listar",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:blueprints/usuarios.py",
+   "target": "function:blueprints/usuarios.py:atualizar",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:blueprints/__init__.py",
+   "target": "function:blueprints/__init__.py:registrar_blueprints",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:blueprints/__init__.py",
+   "target": "file:blueprints/auth.py",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:blueprints/__init__.py",
+   "target": "file:blueprints/conta.py",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:blueprints/__init__.py",
+   "target": "file:blueprints/erros.py",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:blueprints/__init__.py",
+   "target": "file:blueprints/paginas.py",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:blueprints/__init__.py",
+   "target": "file:blueprints/sensor.py",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:blueprints/__init__.py",
+   "target": "file:blueprints/testes.py",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:blueprints/__init__.py",
+   "target": "file:blueprints/usuarios.py",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:blueprints/__init__.py",
+   "target": "file:blueprints/utilitarios.py",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:blueprints/paginas.py",
+   "target": "file:servicos/autenticacao.py",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:blueprints/sensor.py",
+   "target": "file:servicos/autenticacao.py",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:blueprints/testes.py",
+   "target": "file:servicos/autenticacao.py",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:blueprints/testes.py",
+   "target": "file:servicos/diagnostico.py",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:blueprints/testes.py",
+   "target": "file:servicos/seguranca.py",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:blueprints/usuarios.py",
+   "target": "file:modelos/usuario.py",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:blueprints/usuarios.py",
+   "target": "file:servicos/autenticacao.py",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:blueprints/usuarios.py",
+   "target": "file:servicos/seguranca.py",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:blueprints/testes.py",
+   "target": "file:dao/banco.py",
+   "type": "depends_on",
+   "direction": "forward",
+   "weight": 0.6
+  },
+  {
+   "source": "file:blueprints/usuarios.py",
+   "target": "file:dao/usuario_dao.py",
+   "type": "depends_on",
+   "direction": "forward",
+   "weight": 0.6
+  },
+  {
+   "source": "function:blueprints/paginas.py:ubere",
+   "target": "function:servicos/autenticacao.py:exigir_login",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "function:blueprints/paginas.py:painel",
+   "target": "function:servicos/autenticacao.py:exigir_login",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "function:blueprints/paginas.py:historico_vaca",
+   "target": "function:servicos/autenticacao.py:exigir_login",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "function:blueprints/paginas.py:usuarios",
+   "target": "function:servicos/autenticacao.py:exigir_login",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "function:blueprints/sensor.py:read",
+   "target": "function:servicos/autenticacao.py:exigir_login",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "function:blueprints/testes.py:criar_teste",
+   "target": "function:servicos/autenticacao.py:exigir_login",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "function:blueprints/testes.py:listar_testes",
+   "target": "function:servicos/autenticacao.py:exigir_login",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "function:blueprints/testes.py:obter_teste",
+   "target": "function:servicos/autenticacao.py:exigir_login",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "function:blueprints/testes.py:apagar_teste",
+   "target": "function:servicos/autenticacao.py:exigir_login",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "function:blueprints/testes.py:listar_vacas",
+   "target": "function:servicos/autenticacao.py:exigir_login",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "function:blueprints/testes.py:testes_da_vaca",
+   "target": "function:servicos/autenticacao.py:exigir_login",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "function:blueprints/testes.py:estatisticas",
+   "target": "function:servicos/autenticacao.py:exigir_login",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "function:blueprints/usuarios.py:eu",
+   "target": "function:servicos/autenticacao.py:exigir_login",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "function:blueprints/usuarios.py:listar",
+   "target": "function:servicos/autenticacao.py:exigir_login",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "function:blueprints/usuarios.py:atualizar",
+   "target": "function:servicos/autenticacao.py:exigir_login",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "function:blueprints/testes.py:criar_teste",
+   "target": "function:servicos/diagnostico.py:diagnosticar",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "function:blueprints/testes.py:criar_teste",
+   "target": "function:servicos/autenticacao.py:usuario_atual",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "function:blueprints/testes.py:criar_teste",
+   "target": "function:blueprints/testes.py:_validar",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "function:blueprints/testes.py:apagar_teste",
+   "target": "function:servicos/seguranca.py:auditar",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "function:blueprints/usuarios.py:eu",
+   "target": "function:servicos/autenticacao.py:usuario_atual",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "function:blueprints/usuarios.py:atualizar",
+   "target": "function:servicos/autenticacao.py:usuario_atual",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "function:blueprints/usuarios.py:atualizar",
+   "target": "function:servicos/seguranca.py:auditar",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "function:blueprints/sensor.py:read",
+   "target": "function:blueprints/sensor.py:_ler_placa_na_rede",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "function:blueprints/sensor.py:read",
+   "target": "function:blueprints/sensor.py:_pedir_leitura",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "function:blueprints/sensor.py:_ler_placa_na_rede",
+   "target": "function:blueprints/sensor.py:_pedir_leitura",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "function:blueprints/sensor.py:_ler_placa_na_rede",
+   "target": "function:blueprints/sensor.py:_procurar_placa",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "function:blueprints/sensor.py:_procurar_placa",
+   "target": "function:blueprints/sensor.py:_pedir_leitura",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:blueprints/sensor.py",
+   "target": "file:firmware/quickmast_esp8266/quickmast_esp8266.ino",
+   "type": "related",
+   "direction": "forward",
+   "weight": 0.5
+  }
+ ]
+}

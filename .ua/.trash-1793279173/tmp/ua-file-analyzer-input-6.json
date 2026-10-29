@@ -1,0 +1,7 @@
+{
+  "projectRoot": "/home/edivaldo/PycharmProjects/QuickMast",
+  "batchFiles": [
+    {"path": ".github/workflows/seguranca.yml", "language": "yaml", "sizeLines": 48, "fileCategory": "infra"}
+  ],
+  "batchImportData": {".github/workflows/seguranca.yml": []}
+}

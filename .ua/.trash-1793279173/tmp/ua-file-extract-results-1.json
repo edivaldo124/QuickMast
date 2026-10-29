@@ -1,0 +1,2133 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 11,
+  "filesSkipped": [],
+  "filesUnreadable": [],
+  "analysisOutcomes": {
+    "structure": {
+      "succeeded": 11,
+      "failed": 0
+    },
+    "callGraph": {
+      "succeeded": 11,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "results": [
+    {
+      "path": "blueprints/__init__.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 27,
+      "nonEmptyLines": 24,
+      "functions": [
+        {
+          "name": "registrar_blueprints",
+          "startLine": 22,
+          "endLine": 27,
+          "params": [
+            "app"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "registrar_blueprints",
+          "line": 22,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "registrar_blueprints",
+          "callee": "app.register_blueprint",
+          "lineNumber": 24
+        },
+        {
+          "caller": "registrar_blueprints",
+          "callee": "app.register_blueprint",
+          "lineNumber": 27
+        }
+      ],
+      "metrics": {
+        "importCount": 8,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "blueprints/erros.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 20,
+      "nonEmptyLines": 15,
+      "functions": [
+        {
+          "name": "erro_http",
+          "startLine": 9,
+          "endLine": 12,
+          "params": [
+            "e"
+          ]
+        },
+        {
+          "name": "erro_geral",
+          "startLine": 16,
+          "endLine": 20,
+          "params": [
+            "e"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "erro_http",
+          "line": 8,
+          "isDefault": false
+        },
+        {
+          "name": "erro_geral",
+          "line": 15,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "erro_http",
+          "callee": "request.path.startswith",
+          "lineNumber": 10
+        },
+        {
+          "caller": "erro_http",
+          "callee": "jsonify",
+          "lineNumber": 11
+        },
+        {
+          "caller": "erro_geral",
+          "callee": "current_app.logger.exception",
+          "lineNumber": 17
+        },
+        {
+          "caller": "erro_geral",
+          "callee": "request.path.startswith",
+          "lineNumber": 18
+        },
+        {
+          "caller": "erro_geral",
+          "callee": "jsonify",
+          "lineNumber": 19
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "blueprints/paginas.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 35,
+      "nonEmptyLines": 23,
+      "functions": [
+        {
+          "name": "index",
+          "startLine": 10,
+          "endLine": 11,
+          "params": []
+        },
+        {
+          "name": "ubere",
+          "startLine": 16,
+          "endLine": 17,
+          "params": []
+        },
+        {
+          "name": "painel",
+          "startLine": 22,
+          "endLine": 23,
+          "params": []
+        },
+        {
+          "name": "historico_vaca",
+          "startLine": 28,
+          "endLine": 29,
+          "params": [
+            "brinco"
+          ]
+        },
+        {
+          "name": "usuarios",
+          "startLine": 34,
+          "endLine": 35,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "index",
+          "line": 9,
+          "isDefault": false
+        },
+        {
+          "name": "ubere",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "painel",
+          "line": 20,
+          "isDefault": false
+        },
+        {
+          "name": "historico_vaca",
+          "line": 26,
+          "isDefault": false
+        },
+        {
+          "name": "usuarios",
+          "line": 32,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "index",
+          "callee": "render_template",
+          "lineNumber": 11
+        },
+        {
+          "caller": "ubere",
+          "callee": "render_template",
+          "lineNumber": 17
+        },
+        {
+          "caller": "painel",
+          "callee": "render_template",
+          "lineNumber": 23
+        },
+        {
+          "caller": "historico_vaca",
+          "callee": "render_template",
+          "lineNumber": 29
+        },
+        {
+          "caller": "usuarios",
+          "callee": "render_template",
+          "lineNumber": 35
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 5,
+        "functionCount": 5,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "blueprints/sensor.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 120,
+      "nonEmptyLines": 105,
+      "functions": [
+        {
+          "name": "read",
+          "startLine": 38,
+          "endLine": 55,
+          "params": []
+        },
+        {
+          "name": "_pedir_leitura",
+          "startLine": 58,
+          "endLine": 80,
+          "params": [
+            "host",
+            "porta",
+            "espera"
+          ]
+        },
+        {
+          "name": "_ler_placa_na_rede",
+          "startLine": 83,
+          "endLine": 100,
+          "params": []
+        },
+        {
+          "name": "_procurar_placa",
+          "startLine": 103,
+          "endLine": 120,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "read",
+          "line": 36,
+          "isDefault": false
+        },
+        {
+          "name": "_pedir_leitura",
+          "line": 58,
+          "isDefault": false
+        },
+        {
+          "name": "_ler_placa_na_rede",
+          "line": 83,
+          "isDefault": false
+        },
+        {
+          "name": "_procurar_placa",
+          "line": 103,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "read",
+          "callee": "_ler_placa_na_rede",
+          "lineNumber": 41
+        },
+        {
+          "caller": "read",
+          "callee": "urlsplit",
+          "lineNumber": 43
+        },
+        {
+          "caller": "read",
+          "callee": "_pedir_leitura",
+          "lineNumber": 45
+        },
+        {
+          "caller": "read",
+          "callee": "jsonify",
+          "lineNumber": 47
+        },
+        {
+          "caller": "read",
+          "callee": "jsonify",
+          "lineNumber": 48
+        },
+        {
+          "caller": "read",
+          "callee": "time.sleep",
+          "lineNumber": 50
+        },
+        {
+          "caller": "read",
+          "callee": "random.randint",
+          "lineNumber": 54
+        },
+        {
+          "caller": "read",
+          "callee": "jsonify",
+          "lineNumber": 55
+        },
+        {
+          "caller": "_pedir_leitura",
+          "callee": "HTTPConnection",
+          "lineNumber": 60
+        },
+        {
+          "caller": "_pedir_leitura",
+          "callee": "conexao.request",
+          "lineNumber": 62
+        },
+        {
+          "caller": "_pedir_leitura",
+          "callee": "conexao.getresponse",
+          "lineNumber": 63
+        },
+        {
+          "caller": "_pedir_leitura",
+          "callee": "json.loads",
+          "lineNumber": 66
+        },
+        {
+          "caller": "_pedir_leitura",
+          "callee": "resposta.read",
+          "lineNumber": 66
+        },
+        {
+          "caller": "_pedir_leitura",
+          "callee": "conexao.close",
+          "lineNumber": 70
+        },
+        {
+          "caller": "_pedir_leitura",
+          "callee": "isinstance",
+          "lineNumber": 72
+        },
+        {
+          "caller": "_pedir_leitura",
+          "callee": "dados.get",
+          "lineNumber": 74
+        },
+        {
+          "caller": "_pedir_leitura",
+          "callee": "dados.get",
+          "lineNumber": 74
+        },
+        {
+          "caller": "_pedir_leitura",
+          "callee": "type",
+          "lineNumber": 75
+        },
+        {
+          "caller": "_pedir_leitura",
+          "callee": "type",
+          "lineNumber": 78
+        },
+        {
+          "caller": "_pedir_leitura",
+          "callee": "float",
+          "lineNumber": 79
+        },
+        {
+          "caller": "_ler_placa_na_rede",
+          "callee": "_pedir_leitura",
+          "lineNumber": 88
+        },
+        {
+          "caller": "_ler_placa_na_rede",
+          "callee": "jsonify",
+          "lineNumber": 90
+        },
+        {
+          "caller": "_ler_placa_na_rede",
+          "callee": "log.info",
+          "lineNumber": 91
+        },
+        {
+          "caller": "_ler_placa_na_rede",
+          "callee": "time.monotonic",
+          "lineNumber": 93
+        },
+        {
+          "caller": "_ler_placa_na_rede",
+          "callee": "time.monotonic",
+          "lineNumber": 94
+        },
+        {
+          "caller": "_ler_placa_na_rede",
+          "callee": "_procurar_placa",
+          "lineNumber": 95
+        },
+        {
+          "caller": "_ler_placa_na_rede",
+          "callee": "log.info",
+          "lineNumber": 97
+        },
+        {
+          "caller": "_ler_placa_na_rede",
+          "callee": "jsonify",
+          "lineNumber": 98
+        },
+        {
+          "caller": "_ler_placa_na_rede",
+          "callee": "jsonify",
+          "lineNumber": 99
+        },
+        {
+          "caller": "_procurar_placa",
+          "callee": "socket.socket",
+          "lineNumber": 106
+        },
+        {
+          "caller": "_procurar_placa",
+          "callee": "s.connect",
+          "lineNumber": 107
+        },
+        {
+          "caller": "_procurar_placa",
+          "callee": "s.getsockname",
+          "lineNumber": 108
+        },
+        {
+          "caller": "_procurar_placa",
+          "callee": "ipaddress.ip_network",
+          "lineNumber": 111
+        },
+        {
+          "caller": "_procurar_placa",
+          "callee": "str",
+          "lineNumber": 112
+        },
+        {
+          "caller": "_procurar_placa",
+          "callee": "rede.hosts",
+          "lineNumber": 112
+        },
+        {
+          "caller": "_procurar_placa",
+          "callee": "str",
+          "lineNumber": 112
+        },
+        {
+          "caller": "_procurar_placa",
+          "callee": "ThreadPoolExecutor",
+          "lineNumber": 113
+        },
+        {
+          "caller": "_procurar_placa",
+          "callee": "pool.submit",
+          "lineNumber": 114
+        },
+        {
+          "caller": "_procurar_placa",
+          "callee": "as_completed",
+          "lineNumber": 115
+        },
+        {
+          "caller": "_procurar_placa",
+          "callee": "tarefa.result",
+          "lineNumber": 116
+        },
+        {
+          "caller": "_procurar_placa",
+          "callee": "pool.shutdown",
+          "lineNumber": 118
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 4,
+        "functionCount": 4,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "blueprints/testes.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 122,
+      "nonEmptyLines": 95,
+      "functions": [
+        {
+          "name": "_normalizar_brinco",
+          "startLine": 14,
+          "endLine": 17,
+          "params": [
+            "brinco"
+          ]
+        },
+        {
+          "name": "_validar",
+          "startLine": 20,
+          "endLine": 51,
+          "params": [
+            "dados"
+          ]
+        },
+        {
+          "name": "criar_teste",
+          "startLine": 56,
+          "endLine": 67,
+          "params": []
+        },
+        {
+          "name": "listar_testes",
+          "startLine": 72,
+          "endLine": 80,
+          "params": []
+        },
+        {
+          "name": "obter_teste",
+          "startLine": 85,
+          "endLine": 89,
+          "params": [
+            "teste_id"
+          ]
+        },
+        {
+          "name": "apagar_teste",
+          "startLine": 94,
+          "endLine": 98,
+          "params": [
+            "teste_id"
+          ]
+        },
+        {
+          "name": "listar_vacas",
+          "startLine": 103,
+          "endLine": 106,
+          "params": []
+        },
+        {
+          "name": "testes_da_vaca",
+          "startLine": 111,
+          "endLine": 115,
+          "params": [
+            "brinco"
+          ]
+        },
+        {
+          "name": "estatisticas",
+          "startLine": 120,
+          "endLine": 121,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "_normalizar_brinco",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "_validar",
+          "line": 20,
+          "isDefault": false
+        },
+        {
+          "name": "criar_teste",
+          "line": 54,
+          "isDefault": false
+        },
+        {
+          "name": "listar_testes",
+          "line": 70,
+          "isDefault": false
+        },
+        {
+          "name": "obter_teste",
+          "line": 83,
+          "isDefault": false
+        },
+        {
+          "name": "apagar_teste",
+          "line": 92,
+          "isDefault": false
+        },
+        {
+          "name": "listar_vacas",
+          "line": 101,
+          "isDefault": false
+        },
+        {
+          "name": "testes_da_vaca",
+          "line": 109,
+          "isDefault": false
+        },
+        {
+          "name": "estatisticas",
+          "line": 118,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "_normalizar_brinco",
+          "callee": "re.sub(r'[\\s_-]+', '-', brinco).strip('-').upper",
+          "lineNumber": 17
+        },
+        {
+          "caller": "_normalizar_brinco",
+          "callee": "re.sub(r'[\\s_-]+', '-', brinco).strip",
+          "lineNumber": 17
+        },
+        {
+          "caller": "_normalizar_brinco",
+          "callee": "re.sub",
+          "lineNumber": 17
+        },
+        {
+          "caller": "_validar",
+          "callee": "_normalizar_brinco",
+          "lineNumber": 22
+        },
+        {
+          "caller": "_validar",
+          "callee": "str",
+          "lineNumber": 22
+        },
+        {
+          "caller": "_validar",
+          "callee": "dados.get",
+          "lineNumber": 22
+        },
+        {
+          "caller": "_validar",
+          "callee": "ValueError",
+          "lineNumber": 24
+        },
+        {
+          "caller": "_validar",
+          "callee": "len",
+          "lineNumber": 25
+        },
+        {
+          "caller": "_validar",
+          "callee": "ValueError",
+          "lineNumber": 26
+        },
+        {
+          "caller": "_validar",
+          "callee": "dados.get",
+          "lineNumber": 28
+        },
+        {
+          "caller": "_validar",
+          "callee": "isinstance",
+          "lineNumber": 29
+        },
+        {
+          "caller": "_validar",
+          "callee": "len",
+          "lineNumber": 29
+        },
+        {
+          "caller": "_validar",
+          "callee": "ValueError",
+          "lineNumber": 30
+        },
+        {
+          "caller": "_validar",
+          "callee": "int",
+          "lineNumber": 35
+        },
+        {
+          "caller": "_validar",
+          "callee": "int",
+          "lineNumber": 36
+        },
+        {
+          "caller": "_validar",
+          "callee": "item.get",
+          "lineNumber": 38
+        },
+        {
+          "caller": "_validar",
+          "callee": "float",
+          "lineNumber": 39
+        },
+        {
+          "caller": "_validar",
+          "callee": "ValueError",
+          "lineNumber": 41
+        },
+        {
+          "caller": "_validar",
+          "callee": "ValueError",
+          "lineNumber": 43
+        },
+        {
+          "caller": "_validar",
+          "callee": "ValueError",
+          "lineNumber": 45
+        },
+        {
+          "caller": "_validar",
+          "callee": "ValueError",
+          "lineNumber": 47
+        },
+        {
+          "caller": "_validar",
+          "callee": "str(dados.get('observacao') or '').strip",
+          "lineNumber": 50
+        },
+        {
+          "caller": "_validar",
+          "callee": "str",
+          "lineNumber": 50
+        },
+        {
+          "caller": "_validar",
+          "callee": "dados.get",
+          "lineNumber": 50
+        },
+        {
+          "caller": "criar_teste",
+          "callee": "request.get_json",
+          "lineNumber": 57
+        },
+        {
+          "caller": "criar_teste",
+          "callee": "isinstance",
+          "lineNumber": 58
+        },
+        {
+          "caller": "criar_teste",
+          "callee": "jsonify",
+          "lineNumber": 59
+        },
+        {
+          "caller": "criar_teste",
+          "callee": "_validar",
+          "lineNumber": 61
+        },
+        {
+          "caller": "criar_teste",
+          "callee": "jsonify",
+          "lineNumber": 63
+        },
+        {
+          "caller": "criar_teste",
+          "callee": "str",
+          "lineNumber": 63
+        },
+        {
+          "caller": "criar_teste",
+          "callee": "banco.registrar_teste",
+          "lineNumber": 65
+        },
+        {
+          "caller": "criar_teste",
+          "callee": "diagnosticar",
+          "lineNumber": 65
+        },
+        {
+          "caller": "criar_teste",
+          "callee": "usuario_atual",
+          "lineNumber": 66
+        },
+        {
+          "caller": "criar_teste",
+          "callee": "jsonify",
+          "lineNumber": 67
+        },
+        {
+          "caller": "listar_testes",
+          "callee": "request.args.get('brinco', '').strip",
+          "lineNumber": 73
+        },
+        {
+          "caller": "listar_testes",
+          "callee": "request.args.get",
+          "lineNumber": 73
+        },
+        {
+          "caller": "listar_testes",
+          "callee": "{'1': True, 'true': True, '0': False, 'false': False}.get",
+          "lineNumber": 74
+        },
+        {
+          "caller": "listar_testes",
+          "callee": "request.args.get('suspeitos', '').lower",
+          "lineNumber": 75
+        },
+        {
+          "caller": "listar_testes",
+          "callee": "request.args.get",
+          "lineNumber": 75
+        },
+        {
+          "caller": "listar_testes",
+          "callee": "min",
+          "lineNumber": 76
+        },
+        {
+          "caller": "listar_testes",
+          "callee": "max",
+          "lineNumber": 76
+        },
+        {
+          "caller": "listar_testes",
+          "callee": "request.args.get",
+          "lineNumber": 76
+        },
+        {
+          "caller": "listar_testes",
+          "callee": "min",
+          "lineNumber": 77
+        },
+        {
+          "caller": "listar_testes",
+          "callee": "max",
+          "lineNumber": 77
+        },
+        {
+          "caller": "listar_testes",
+          "callee": "request.args.get",
+          "lineNumber": 77
+        },
+        {
+          "caller": "listar_testes",
+          "callee": "banco.listar_testes",
+          "lineNumber": 79
+        },
+        {
+          "caller": "listar_testes",
+          "callee": "jsonify",
+          "lineNumber": 80
+        },
+        {
+          "caller": "obter_teste",
+          "callee": "banco.obter_teste",
+          "lineNumber": 86
+        },
+        {
+          "caller": "obter_teste",
+          "callee": "jsonify",
+          "lineNumber": 88
+        },
+        {
+          "caller": "obter_teste",
+          "callee": "jsonify",
+          "lineNumber": 89
+        },
+        {
+          "caller": "apagar_teste",
+          "callee": "banco.apagar_teste",
+          "lineNumber": 95
+        },
+        {
+          "caller": "apagar_teste",
+          "callee": "jsonify",
+          "lineNumber": 96
+        },
+        {
+          "caller": "apagar_teste",
+          "callee": "auditar",
+          "lineNumber": 97
+        },
+        {
+          "caller": "apagar_teste",
+          "callee": "jsonify",
+          "lineNumber": 98
+        },
+        {
+          "caller": "listar_vacas",
+          "callee": "min",
+          "lineNumber": 104
+        },
+        {
+          "caller": "listar_vacas",
+          "callee": "max",
+          "lineNumber": 104
+        },
+        {
+          "caller": "listar_vacas",
+          "callee": "request.args.get",
+          "lineNumber": 104
+        },
+        {
+          "caller": "listar_vacas",
+          "callee": "min",
+          "lineNumber": 105
+        },
+        {
+          "caller": "listar_vacas",
+          "callee": "max",
+          "lineNumber": 105
+        },
+        {
+          "caller": "listar_vacas",
+          "callee": "request.args.get",
+          "lineNumber": 105
+        },
+        {
+          "caller": "listar_vacas",
+          "callee": "jsonify",
+          "lineNumber": 106
+        },
+        {
+          "caller": "listar_vacas",
+          "callee": "banco.listar_vacas",
+          "lineNumber": 106
+        },
+        {
+          "caller": "testes_da_vaca",
+          "callee": "banco.listar_testes",
+          "lineNumber": 112
+        },
+        {
+          "caller": "testes_da_vaca",
+          "callee": "jsonify",
+          "lineNumber": 114
+        },
+        {
+          "caller": "testes_da_vaca",
+          "callee": "jsonify",
+          "lineNumber": 115
+        },
+        {
+          "caller": "estatisticas",
+          "callee": "jsonify",
+          "lineNumber": 121
+        },
+        {
+          "caller": "estatisticas",
+          "callee": "banco.estatisticas",
+          "lineNumber": 121
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 9,
+        "functionCount": 9,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "blueprints/usuarios.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 52,
+      "nonEmptyLines": 40,
+      "functions": [
+        {
+          "name": "eu",
+          "startLine": 14,
+          "endLine": 15,
+          "params": []
+        },
+        {
+          "name": "listar",
+          "startLine": 20,
+          "endLine": 21,
+          "params": []
+        },
+        {
+          "name": "atualizar",
+          "startLine": 26,
+          "endLine": 52,
+          "params": [
+            "usuario_id"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "eu",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "listar",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "atualizar",
+          "line": 24,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "eu",
+          "callee": "jsonify",
+          "lineNumber": 15
+        },
+        {
+          "caller": "eu",
+          "callee": "usuario_atual",
+          "lineNumber": 15
+        },
+        {
+          "caller": "listar",
+          "callee": "jsonify",
+          "lineNumber": 21
+        },
+        {
+          "caller": "listar",
+          "callee": "usuario_dao.listar_usuarios",
+          "lineNumber": 21
+        },
+        {
+          "caller": "atualizar",
+          "callee": "request.get_json",
+          "lineNumber": 27
+        },
+        {
+          "caller": "atualizar",
+          "callee": "isinstance",
+          "lineNumber": 28
+        },
+        {
+          "caller": "atualizar",
+          "callee": "jsonify",
+          "lineNumber": 29
+        },
+        {
+          "caller": "atualizar",
+          "callee": "dados.get",
+          "lineNumber": 30
+        },
+        {
+          "caller": "atualizar",
+          "callee": "dados.get",
+          "lineNumber": 31
+        },
+        {
+          "caller": "atualizar",
+          "callee": "jsonify",
+          "lineNumber": 34
+        },
+        {
+          "caller": "atualizar",
+          "callee": "isinstance",
+          "lineNumber": 35
+        },
+        {
+          "caller": "atualizar",
+          "callee": "jsonify",
+          "lineNumber": 36
+        },
+        {
+          "caller": "atualizar",
+          "callee": "jsonify",
+          "lineNumber": 38
+        },
+        {
+          "caller": "atualizar",
+          "callee": "usuario_dao.obter_por_id",
+          "lineNumber": 40
+        },
+        {
+          "caller": "atualizar",
+          "callee": "jsonify",
+          "lineNumber": 42
+        },
+        {
+          "caller": "atualizar",
+          "callee": "usuario_atual",
+          "lineNumber": 45
+        },
+        {
+          "caller": "atualizar",
+          "callee": "jsonify",
+          "lineNumber": 46
+        },
+        {
+          "caller": "atualizar",
+          "callee": "usuario_dao.contar_admins_ativos",
+          "lineNumber": 48
+        },
+        {
+          "caller": "atualizar",
+          "callee": "jsonify",
+          "lineNumber": 49
+        },
+        {
+          "caller": "atualizar",
+          "callee": "auditar",
+          "lineNumber": 51
+        },
+        {
+          "caller": "atualizar",
+          "callee": "jsonify",
+          "lineNumber": 52
+        },
+        {
+          "caller": "atualizar",
+          "callee": "usuario_dao.atualizar_usuario",
+          "lineNumber": 52
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 3,
+        "functionCount": 3,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "blueprints/utilitarios.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 52,
+      "nonEmptyLines": 41,
+      "functions": [
+        {
+          "name": "_celula_segura",
+          "startLine": 14,
+          "endLine": 18,
+          "params": [
+            "valor"
+          ]
+        },
+        {
+          "name": "saude",
+          "startLine": 22,
+          "endLine": 24,
+          "params": []
+        },
+        {
+          "name": "exportar_csv",
+          "startLine": 29,
+          "endLine": 52,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "_celula_segura",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "saude",
+          "line": 21,
+          "isDefault": false
+        },
+        {
+          "name": "exportar_csv",
+          "line": 27,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "_celula_segura",
+          "callee": "isinstance",
+          "lineNumber": 16
+        },
+        {
+          "caller": "saude",
+          "callee": "banco.verificar_ligacao",
+          "lineNumber": 23
+        },
+        {
+          "caller": "saude",
+          "callee": "jsonify",
+          "lineNumber": 24
+        },
+        {
+          "caller": "exportar_csv",
+          "callee": "request.args.get('brinco', '').strip",
+          "lineNumber": 32
+        },
+        {
+          "caller": "exportar_csv",
+          "callee": "request.args.get",
+          "lineNumber": 32
+        },
+        {
+          "caller": "exportar_csv",
+          "callee": "auditar",
+          "lineNumber": 33
+        },
+        {
+          "caller": "gerar",
+          "callee": "io.StringIO",
+          "lineNumber": 36
+        },
+        {
+          "caller": "gerar",
+          "callee": "csv.writer",
+          "lineNumber": 37
+        },
+        {
+          "caller": "gerar",
+          "callee": "saida.write",
+          "lineNumber": 38
+        },
+        {
+          "caller": "gerar",
+          "callee": "escritor.writerow",
+          "lineNumber": 39
+        },
+        {
+          "caller": "gerar",
+          "callee": "banco.linhas_csv",
+          "lineNumber": 40
+        },
+        {
+          "caller": "gerar",
+          "callee": "escritor.writerow",
+          "lineNumber": 41
+        },
+        {
+          "caller": "gerar",
+          "callee": "_celula_segura",
+          "lineNumber": 41
+        },
+        {
+          "caller": "gerar",
+          "callee": "saida.tell",
+          "lineNumber": 42
+        },
+        {
+          "caller": "gerar",
+          "callee": "saida.getvalue",
+          "lineNumber": 43
+        },
+        {
+          "caller": "gerar",
+          "callee": "saida.seek",
+          "lineNumber": 44
+        },
+        {
+          "caller": "gerar",
+          "callee": "saida.truncate",
+          "lineNumber": 45
+        },
+        {
+          "caller": "gerar",
+          "callee": "saida.getvalue",
+          "lineNumber": 46
+        },
+        {
+          "caller": "exportar_csv",
+          "callee": "Response",
+          "lineNumber": 48
+        },
+        {
+          "caller": "exportar_csv",
+          "callee": "stream_with_context",
+          "lineNumber": 49
+        },
+        {
+          "caller": "exportar_csv",
+          "callee": "gerar",
+          "lineNumber": 49
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 3,
+        "functionCount": 3,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "servicos/autenticacao.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 101,
+      "nonEmptyLines": 84,
+      "functions": [
+        {
+          "name": "usuario_atual",
+          "startLine": 24,
+          "endLine": 32,
+          "params": []
+        },
+        {
+          "name": "_sem_sessao",
+          "startLine": 35,
+          "endLine": 38,
+          "params": []
+        },
+        {
+          "name": "negar_por_omissao",
+          "startLine": 41,
+          "endLine": 53,
+          "params": [
+            "app"
+          ]
+        },
+        {
+          "name": "exigir_login",
+          "startLine": 56,
+          "endLine": 72,
+          "params": [
+            "*perfis"
+          ]
+        },
+        {
+          "name": "_hash_valido",
+          "startLine": 75,
+          "endLine": 78,
+          "params": [
+            "senha_hash"
+          ]
+        },
+        {
+          "name": "garantir_admin",
+          "startLine": 81,
+          "endLine": 101,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "usuario_atual",
+          "line": 24,
+          "isDefault": false
+        },
+        {
+          "name": "_sem_sessao",
+          "line": 35,
+          "isDefault": false
+        },
+        {
+          "name": "negar_por_omissao",
+          "line": 41,
+          "isDefault": false
+        },
+        {
+          "name": "exigir_login",
+          "line": 56,
+          "isDefault": false
+        },
+        {
+          "name": "_hash_valido",
+          "line": 75,
+          "isDefault": false
+        },
+        {
+          "name": "garantir_admin",
+          "line": 81,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "usuario_atual",
+          "callee": "session.get",
+          "lineNumber": 28
+        },
+        {
+          "caller": "usuario_atual",
+          "callee": "usuario_dao.obter_por_id",
+          "lineNumber": 29
+        },
+        {
+          "caller": "usuario_atual",
+          "callee": "session.get",
+          "lineNumber": 30
+        },
+        {
+          "caller": "usuario_atual",
+          "callee": "usuario_dao.publico",
+          "lineNumber": 31
+        },
+        {
+          "caller": "_sem_sessao",
+          "callee": "request.path.startswith",
+          "lineNumber": 36
+        },
+        {
+          "caller": "_sem_sessao",
+          "callee": "jsonify",
+          "lineNumber": 37
+        },
+        {
+          "caller": "_sem_sessao",
+          "callee": "redirect",
+          "lineNumber": 38
+        },
+        {
+          "caller": "_sem_sessao",
+          "callee": "url_for",
+          "lineNumber": 38
+        },
+        {
+          "caller": "exigir_sessao",
+          "callee": "usuario_atual",
+          "lineNumber": 47
+        },
+        {
+          "caller": "exigir_sessao",
+          "callee": "_sem_sessao",
+          "lineNumber": 49
+        },
+        {
+          "caller": "exigir_sessao",
+          "callee": "request.path.startswith",
+          "lineNumber": 51
+        },
+        {
+          "caller": "exigir_sessao",
+          "callee": "jsonify",
+          "lineNumber": 52
+        },
+        {
+          "caller": "exigir_sessao",
+          "callee": "redirect",
+          "lineNumber": 53
+        },
+        {
+          "caller": "exigir_sessao",
+          "callee": "url_for",
+          "lineNumber": 53
+        },
+        {
+          "caller": "decorador",
+          "callee": "wraps",
+          "lineNumber": 60
+        },
+        {
+          "caller": "interno",
+          "callee": "usuario_atual",
+          "lineNumber": 62
+        },
+        {
+          "caller": "interno",
+          "callee": "_sem_sessao",
+          "lineNumber": 64
+        },
+        {
+          "caller": "interno",
+          "callee": "auditar",
+          "lineNumber": 66
+        },
+        {
+          "caller": "interno",
+          "callee": "request.path.startswith",
+          "lineNumber": 67
+        },
+        {
+          "caller": "interno",
+          "callee": "jsonify",
+          "lineNumber": 68
+        },
+        {
+          "caller": "interno",
+          "callee": "abort",
+          "lineNumber": 69
+        },
+        {
+          "caller": "interno",
+          "callee": "f",
+          "lineNumber": 70
+        },
+        {
+          "caller": "_hash_valido",
+          "callee": "senha_hash.split",
+          "lineNumber": 77
+        },
+        {
+          "caller": "_hash_valido",
+          "callee": "len",
+          "lineNumber": 78
+        },
+        {
+          "caller": "_hash_valido",
+          "callee": "all",
+          "lineNumber": 78
+        },
+        {
+          "caller": "_hash_valido",
+          "callee": "partes[0].split",
+          "lineNumber": 78
+        },
+        {
+          "caller": "garantir_admin",
+          "callee": "logging.getLogger",
+          "lineNumber": 85
+        },
+        {
+          "caller": "garantir_admin",
+          "callee": "os.environ.get",
+          "lineNumber": 86
+        },
+        {
+          "caller": "garantir_admin",
+          "callee": "log.warning",
+          "lineNumber": 87
+        },
+        {
+          "caller": "garantir_admin",
+          "callee": "os.environ.get('ADMIN_EMAIL', '').strip().lower",
+          "lineNumber": 88
+        },
+        {
+          "caller": "garantir_admin",
+          "callee": "os.environ.get('ADMIN_EMAIL', '').strip",
+          "lineNumber": 88
+        },
+        {
+          "caller": "garantir_admin",
+          "callee": "os.environ.get",
+          "lineNumber": 88
+        },
+        {
+          "caller": "garantir_admin",
+          "callee": "os.environ.get('ADMIN_SENHA_HASH', '').strip",
+          "lineNumber": 89
+        },
+        {
+          "caller": "garantir_admin",
+          "callee": "os.environ.get",
+          "lineNumber": 89
+        },
+        {
+          "caller": "garantir_admin",
+          "callee": "usuario_dao.contar_admins_ativos",
+          "lineNumber": 91
+        },
+        {
+          "caller": "garantir_admin",
+          "callee": "log.warning",
+          "lineNumber": 92
+        },
+        {
+          "caller": "garantir_admin",
+          "callee": "usuario_dao.obter_por_email",
+          "lineNumber": 94
+        },
+        {
+          "caller": "garantir_admin",
+          "callee": "EMAIL_RE.match",
+          "lineNumber": 96
+        },
+        {
+          "caller": "garantir_admin",
+          "callee": "_hash_valido",
+          "lineNumber": 96
+        },
+        {
+          "caller": "garantir_admin",
+          "callee": "log.warning",
+          "lineNumber": 97
+        },
+        {
+          "caller": "garantir_admin",
+          "callee": "os.environ.get('ADMIN_NOME', '').strip",
+          "lineNumber": 99
+        },
+        {
+          "caller": "garantir_admin",
+          "callee": "os.environ.get",
+          "lineNumber": 99
+        },
+        {
+          "caller": "garantir_admin",
+          "callee": "usuario_dao.criar_usuario",
+          "lineNumber": 100
+        },
+        {
+          "caller": "garantir_admin",
+          "callee": "log.info",
+          "lineNumber": 101
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 6,
+        "functionCount": 6,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "servicos/diagnostico.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 59,
+      "nonEmptyLines": 47,
+      "functions": [
+        {
+          "name": "_mediana_outros",
+          "startLine": 20,
+          "endLine": 23,
+          "params": [
+            "valores",
+            "idx"
+          ]
+        },
+        {
+          "name": "_relativa",
+          "startLine": 26,
+          "endLine": 30,
+          "params": [
+            "valores",
+            "i"
+          ]
+        },
+        {
+          "name": "diagnosticar",
+          "startLine": 33,
+          "endLine": 59,
+          "params": [
+            "leituras"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "_mediana_outros",
+          "line": 20,
+          "isDefault": false
+        },
+        {
+          "name": "_relativa",
+          "line": 26,
+          "isDefault": false
+        },
+        {
+          "name": "diagnosticar",
+          "line": 33,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "_mediana_outros",
+          "callee": "sorted",
+          "lineNumber": 22
+        },
+        {
+          "caller": "_mediana_outros",
+          "callee": "enumerate",
+          "lineNumber": 22
+        },
+        {
+          "caller": "_relativa",
+          "callee": "_mediana_outros",
+          "lineNumber": 28
+        },
+        {
+          "caller": "diagnosticar",
+          "callee": "l.get",
+          "lineNumber": 38
+        },
+        {
+          "caller": "diagnosticar",
+          "callee": "all",
+          "lineNumber": 40
+        },
+        {
+          "caller": "diagnosticar",
+          "callee": "range",
+          "lineNumber": 43
+        },
+        {
+          "caller": "diagnosticar",
+          "callee": "_relativa",
+          "lineNumber": 46
+        },
+        {
+          "caller": "diagnosticar",
+          "callee": "motivos.append",
+          "lineNumber": 48
+        },
+        {
+          "caller": "diagnosticar",
+          "callee": "_relativa",
+          "lineNumber": 49
+        },
+        {
+          "caller": "diagnosticar",
+          "callee": "motivos.append",
+          "lineNumber": 51
+        },
+        {
+          "caller": "diagnosticar",
+          "callee": "motivos.append",
+          "lineNumber": 53
+        },
+        {
+          "caller": "diagnosticar",
+          "callee": "resultado.append",
+          "lineNumber": 55
+        },
+        {
+          "caller": "diagnosticar",
+          "callee": "bool",
+          "lineNumber": 56
+        },
+        {
+          "caller": "diagnosticar",
+          "callee": "'; '.join",
+          "lineNumber": 57
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 3,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "servicos/seguranca.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 95,
+      "nonEmptyLines": 79,
+      "functions": [
+        {
+          "name": "mascarar_email",
+          "startLine": 47,
+          "endLine": 50,
+          "params": [
+            "email"
+          ]
+        },
+        {
+          "name": "auditar",
+          "startLine": 53,
+          "endLine": 61,
+          "params": [
+            "evento",
+            "**dados"
+          ]
+        },
+        {
+          "name": "_origem_valida",
+          "startLine": 64,
+          "endLine": 72,
+          "params": []
+        },
+        {
+          "name": "configurar_seguranca",
+          "startLine": 75,
+          "endLine": 95,
+          "params": [
+            "app"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "FormatoJSON",
+          "startLine": 16,
+          "endLine": 27,
+          "methods": [
+            "format"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "FormatoJSON",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "mascarar_email",
+          "line": 47,
+          "isDefault": false
+        },
+        {
+          "name": "auditar",
+          "line": 53,
+          "isDefault": false
+        },
+        {
+          "name": "_origem_valida",
+          "line": 64,
+          "isDefault": false
+        },
+        {
+          "name": "configurar_seguranca",
+          "line": 75,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "format",
+          "callee": "getattr",
+          "lineNumber": 19
+        },
+        {
+          "caller": "format",
+          "callee": "datetime.fromtimestamp(r.created, timezone.utc).isoformat",
+          "lineNumber": 23
+        },
+        {
+          "caller": "format",
+          "callee": "datetime.fromtimestamp",
+          "lineNumber": 23
+        },
+        {
+          "caller": "format",
+          "callee": "campos.get",
+          "lineNumber": 24
+        },
+        {
+          "caller": "format",
+          "callee": "r.getMessage",
+          "lineNumber": 24
+        },
+        {
+          "caller": "format",
+          "callee": "self.formatException",
+          "lineNumber": 26
+        },
+        {
+          "caller": "format",
+          "callee": "json.dumps",
+          "lineNumber": 27
+        },
+        {
+          "caller": "mascarar_email",
+          "callee": "(email or '').partition",
+          "lineNumber": 49
+        },
+        {
+          "caller": "auditar",
+          "callee": "mascarar_email",
+          "lineNumber": 56
+        },
+        {
+          "caller": "auditar",
+          "callee": "session.get",
+          "lineNumber": 57
+        },
+        {
+          "caller": "auditar",
+          "callee": "' '.join",
+          "lineNumber": 58
+        },
+        {
+          "caller": "auditar",
+          "callee": "dados.items",
+          "lineNumber": 58
+        },
+        {
+          "caller": "auditar",
+          "callee": "log.log",
+          "lineNumber": 60
+        },
+        {
+          "caller": "_origem_valida",
+          "callee": "request.headers.get",
+          "lineNumber": 66
+        },
+        {
+          "caller": "_origem_valida",
+          "callee": "request.headers.get",
+          "lineNumber": 69
+        },
+        {
+          "caller": "_origem_valida",
+          "callee": "urlparse",
+          "lineNumber": 71
+        },
+        {
+          "caller": "bloquear_pedidos_de_outros_sites",
+          "callee": "_origem_valida",
+          "lineNumber": 78
+        },
+        {
+          "caller": "bloquear_pedidos_de_outros_sites",
+          "callee": "auditar",
+          "lineNumber": 79
+        },
+        {
+          "caller": "bloquear_pedidos_de_outros_sites",
+          "callee": "request.headers.get",
+          "lineNumber": 80
+        },
+        {
+          "caller": "bloquear_pedidos_de_outros_sites",
+          "callee": "request.headers.get",
+          "lineNumber": 80
+        },
+        {
+          "caller": "bloquear_pedidos_de_outros_sites",
+          "callee": "abort",
+          "lineNumber": 81
+        },
+        {
+          "caller": "cabecalhos_de_seguranca",
+          "callee": "h.setdefault",
+          "lineNumber": 86
+        },
+        {
+          "caller": "cabecalhos_de_seguranca",
+          "callee": "h.setdefault",
+          "lineNumber": 87
+        },
+        {
+          "caller": "cabecalhos_de_seguranca",
+          "callee": "h.setdefault",
+          "lineNumber": 88
+        },
+        {
+          "caller": "cabecalhos_de_seguranca",
+          "callee": "h.setdefault",
+          "lineNumber": 89
+        },
+        {
+          "caller": "cabecalhos_de_seguranca",
+          "callee": "h.setdefault",
+          "lineNumber": 90
+        },
+        {
+          "caller": "cabecalhos_de_seguranca",
+          "callee": "h.setdefault",
+          "lineNumber": 92
+        },
+        {
+          "caller": "cabecalhos_de_seguranca",
+          "callee": "request.path.startswith",
+          "lineNumber": 93
+        },
+        {
+          "caller": "cabecalhos_de_seguranca",
+          "callee": "h.setdefault",
+          "lineNumber": 94
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 5,
+        "functionCount": 4,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "servidor.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 128,
+      "nonEmptyLines": 108,
+      "functions": [
+        {
+          "name": "iniciar",
+          "startLine": 85,
+          "endLine": 89,
+          "params": []
+        },
+        {
+          "name": "redefinir_mfa",
+          "startLine": 94,
+          "endLine": 102,
+          "params": [
+            "email"
+          ]
+        },
+        {
+          "name": "redefinir_senha",
+          "startLine": 107,
+          "endLine": 122,
+          "params": [
+            "email"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "iniciar",
+          "line": 84,
+          "isDefault": false
+        },
+        {
+          "name": "redefinir_mfa",
+          "line": 92,
+          "isDefault": false
+        },
+        {
+          "name": "redefinir_senha",
+          "line": 105,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "iniciar",
+          "callee": "banco.criar_tabela",
+          "lineNumber": 88
+        },
+        {
+          "caller": "iniciar",
+          "callee": "garantir_admin",
+          "lineNumber": 89
+        },
+        {
+          "caller": "redefinir_mfa",
+          "callee": "email.strip().lower",
+          "lineNumber": 97
+        },
+        {
+          "caller": "redefinir_mfa",
+          "callee": "email.strip",
+          "lineNumber": 97
+        },
+        {
+          "caller": "redefinir_mfa",
+          "callee": "usuario_dao.redefinir_mfa",
+          "lineNumber": 98
+        },
+        {
+          "caller": "redefinir_mfa",
+          "callee": "click.ClickException",
+          "lineNumber": 99
+        },
+        {
+          "caller": "redefinir_mfa",
+          "callee": "logging.getLogger('quickmast.seguranca').warning",
+          "lineNumber": 100
+        },
+        {
+          "caller": "redefinir_mfa",
+          "callee": "logging.getLogger",
+          "lineNumber": 100
+        },
+        {
+          "caller": "redefinir_mfa",
+          "callee": "mascarar_email",
+          "lineNumber": 101
+        },
+        {
+          "caller": "redefinir_mfa",
+          "callee": "click.echo",
+          "lineNumber": 102
+        },
+        {
+          "caller": "redefinir_senha",
+          "callee": "email.strip().lower",
+          "lineNumber": 111
+        },
+        {
+          "caller": "redefinir_senha",
+          "callee": "email.strip",
+          "lineNumber": 111
+        },
+        {
+          "caller": "redefinir_senha",
+          "callee": "usuario_dao.obter_por_email",
+          "lineNumber": 112
+        },
+        {
+          "caller": "redefinir_senha",
+          "callee": "click.ClickException",
+          "lineNumber": 114
+        },
+        {
+          "caller": "redefinir_senha",
+          "callee": "click.prompt",
+          "lineNumber": 115
+        },
+        {
+          "caller": "redefinir_senha",
+          "callee": "problema_senha",
+          "lineNumber": 116
+        },
+        {
+          "caller": "redefinir_senha",
+          "callee": "click.ClickException",
+          "lineNumber": 118
+        },
+        {
+          "caller": "redefinir_senha",
+          "callee": "usuario_dao.alterar_senha",
+          "lineNumber": 119
+        },
+        {
+          "caller": "redefinir_senha",
+          "callee": "generate_password_hash",
+          "lineNumber": 119
+        },
+        {
+          "caller": "redefinir_senha",
+          "callee": "logging.getLogger('quickmast.seguranca').warning",
+          "lineNumber": 120
+        },
+        {
+          "caller": "redefinir_senha",
+          "callee": "logging.getLogger",
+          "lineNumber": 120
+        },
+        {
+          "caller": "redefinir_senha",
+          "callee": "mascarar_email",
+          "lineNumber": 121
+        },
+        {
+          "caller": "redefinir_senha",
+          "callee": "click.echo",
+          "lineNumber": 122
+        }
+      ],
+      "metrics": {
+        "importCount": 4,
+        "exportCount": 3,
+        "functionCount": 3,
+        "classCount": 0
+      }
+    }
+  ]
+}

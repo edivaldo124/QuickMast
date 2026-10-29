@@ -1,0 +1,3228 @@
+{
+  "version": "1.0.0",
+  "gitCommitHash": "cefca36efc70b7e2ea173492a6860398781d102b",
+  "generatedAt": "2026-10-29T13:05:58.501Z",
+  "files": {
+    ".dockerignore": {
+      "filePath": ".dockerignore",
+      "contentHash": "e4c987d230a576efbbffa2c8fe85bfdc103c3e314279b4d0098f770d8efbd58b",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 22,
+      "hasStructuralAnalysis": false
+    },
+    ".env.example": {
+      "filePath": ".env.example",
+      "contentHash": "06e32005c3e7b289f5b6361421b13845a7cb8f75a0f368d7f7f9d9b23a36fcfa",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 49,
+      "hasStructuralAnalysis": false
+    },
+    ".github/workflows/seguranca.yml": {
+      "filePath": ".github/workflows/seguranca.yml",
+      "contentHash": "c2d22e038a420be198a231466f356be0e7939ecf3badeeb65164fae2b26b60f1",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 49,
+      "hasStructuralAnalysis": false
+    },
+    "CLAUDE.md": {
+      "filePath": "CLAUDE.md",
+      "contentHash": "55189e0bb8f83d9de53de3142fc8702c6ec45d01df3478da4b8224cb0d20d83c",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 11,
+      "hasStructuralAnalysis": false
+    },
+    "Dockerfile": {
+      "filePath": "Dockerfile",
+      "contentHash": "c333e47dd9b7ca09d9e09e1b1536f945bbada43583f4fd237fbe8704d2e2827b",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 25,
+      "hasStructuralAnalysis": false
+    },
+    "PROMPT_DEPLOY_GEMINI.md": {
+      "filePath": "PROMPT_DEPLOY_GEMINI.md",
+      "contentHash": "5f81eb35c35ffddac355517c524f6bd50d4e58cd531b6db1f62f696530582a7c",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 243,
+      "hasStructuralAnalysis": false
+    },
+    "README.md": {
+      "filePath": "README.md",
+      "contentHash": "297588f809eaf4af0f7659d837ee76bc3f3831a21a43702a4c5c65baca953713",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 2,
+      "hasStructuralAnalysis": false
+    },
+    "apresentacao.sh": {
+      "filePath": "apresentacao.sh",
+      "contentHash": "cff66d79e32b0906c5dd942c2b35b2447d6103d5ba69c04b7a06f8b963002e85",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 139,
+      "hasStructuralAnalysis": false
+    },
+    "blueprints/__init__.py": {
+      "filePath": "blueprints/__init__.py",
+      "contentHash": "116b42a2b7322798554832872d1c085069256af99e68af3776b75f27bcf15e04",
+      "functions": [
+        {
+          "name": "registrar_blueprints",
+          "params": [
+            "app"
+          ],
+          "exported": true,
+          "lineCount": 6
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "blueprints.auth",
+          "specifiers": [
+            "auth"
+          ]
+        },
+        {
+          "source": "blueprints.conta",
+          "specifiers": [
+            "conta"
+          ]
+        },
+        {
+          "source": "blueprints.erros",
+          "specifiers": [
+            "erros"
+          ]
+        },
+        {
+          "source": "blueprints.paginas",
+          "specifiers": [
+            "paginas"
+          ]
+        },
+        {
+          "source": "blueprints.sensor",
+          "specifiers": [
+            "sensor"
+          ]
+        },
+        {
+          "source": "blueprints.testes",
+          "specifiers": [
+            "testes_api"
+          ]
+        },
+        {
+          "source": "blueprints.usuarios",
+          "specifiers": [
+            "usuarios_api"
+          ]
+        },
+        {
+          "source": "blueprints.utilitarios",
+          "specifiers": [
+            "utilitarios"
+          ]
+        }
+      ],
+      "exports": [
+        "registrar_blueprints"
+      ],
+      "totalLines": 28,
+      "hasStructuralAnalysis": true
+    },
+    "blueprints/auth.py": {
+      "filePath": "blueprints/auth.py",
+      "contentHash": "4b200e1c17b9278dd9a9e0393f460a109fa84e74256fd69671a8c5d176fb9f1c",
+      "functions": [
+        {
+          "name": "injetar_usuario",
+          "params": [],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "_destino_seguro",
+          "params": [
+            "destino"
+          ],
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "_bloqueado",
+          "params": [
+            "ip",
+            "email"
+          ],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "_login_falhou",
+          "params": [
+            "ip",
+            "email"
+          ],
+          "exported": true,
+          "lineCount": 5
+        },
+        {
+          "name": "_iniciar_sessao",
+          "params": [
+            "u"
+          ],
+          "exported": true,
+          "lineCount": 5
+        },
+        {
+          "name": "_erro_login",
+          "params": [
+            "destino",
+            "erro",
+            "status"
+          ],
+          "exported": true,
+          "lineCount": 2
+        },
+        {
+          "name": "login",
+          "params": [],
+          "exported": true,
+          "lineCount": 5
+        },
+        {
+          "name": "login_post",
+          "params": [],
+          "exported": true,
+          "lineCount": 30
+        },
+        {
+          "name": "_mfa_pendente",
+          "params": [],
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "_erro_mfa",
+          "params": [
+            "erro",
+            "status"
+          ],
+          "exported": true,
+          "lineCount": 2
+        },
+        {
+          "name": "login_mfa",
+          "params": [],
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "login_mfa_post",
+          "params": [],
+          "exported": true,
+          "lineCount": 22
+        },
+        {
+          "name": "registrar",
+          "params": [],
+          "exported": true,
+          "lineCount": 26
+        },
+        {
+          "name": "logout",
+          "params": [],
+          "exported": true,
+          "lineCount": 7
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "time",
+          "specifiers": [
+            "time"
+          ]
+        },
+        {
+          "source": "urllib.parse",
+          "specifiers": [
+            "urlparse"
+          ]
+        },
+        {
+          "source": "flask",
+          "specifiers": [
+            "Blueprint",
+            "abort",
+            "current_app",
+            "redirect",
+            "render_template",
+            "request",
+            "session",
+            "url_for"
+          ]
+        },
+        {
+          "source": "werkzeug.security",
+          "specifiers": [
+            "check_password_hash",
+            "generate_password_hash"
+          ]
+        },
+        {
+          "source": "dao",
+          "specifiers": [
+            "usuario_dao"
+          ]
+        },
+        {
+          "source": "servicos",
+          "specifiers": [
+            "totp"
+          ]
+        },
+        {
+          "source": "servicos.autenticacao",
+          "specifiers": [
+            "EMAIL_RE",
+            "usuario_atual"
+          ]
+        },
+        {
+          "source": "servicos.limite",
+          "specifiers": [
+            "Limitador"
+          ]
+        },
+        {
+          "source": "servicos.seguranca",
+          "specifiers": [
+            "auditar"
+          ]
+        },
+        {
+          "source": "servicos.senhas",
+          "specifiers": [
+            "problema_senha"
+          ]
+        }
+      ],
+      "exports": [
+        "injetar_usuario",
+        "_destino_seguro",
+        "_bloqueado",
+        "_login_falhou",
+        "_iniciar_sessao",
+        "_erro_login",
+        "login",
+        "login_post",
+        "_mfa_pendente",
+        "_erro_mfa",
+        "login_mfa",
+        "login_mfa_post",
+        "registrar",
+        "logout"
+      ],
+      "totalLines": 195,
+      "hasStructuralAnalysis": true
+    },
+    "blueprints/conta.py": {
+      "filePath": "blueprints/conta.py",
+      "contentHash": "92d4993aaf7dc5a3b69fdeeca844e94c3870827654b3ebadf219f8e72075d3b4",
+      "functions": [
+        {
+          "name": "pagina",
+          "params": [],
+          "exported": true,
+          "lineCount": 2
+        },
+        {
+          "name": "trocar_senha",
+          "params": [],
+          "exported": true,
+          "lineCount": 29
+        },
+        {
+          "name": "_pagina_mfa",
+          "params": [
+            "u",
+            "segredo",
+            "erro",
+            "status"
+          ],
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "mfa",
+          "params": [],
+          "exported": true,
+          "lineCount": 8
+        },
+        {
+          "name": "mfa_post",
+          "params": [],
+          "exported": true,
+          "lineCount": 23
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "flask",
+          "specifiers": [
+            "Blueprint",
+            "flash",
+            "redirect",
+            "render_template",
+            "request",
+            "session",
+            "url_for"
+          ]
+        },
+        {
+          "source": "werkzeug.security",
+          "specifiers": [
+            "check_password_hash",
+            "generate_password_hash"
+          ]
+        },
+        {
+          "source": "blueprints.auth",
+          "specifiers": [
+            "MAX_FALHAS_MFA",
+            "tentativas",
+            "tentativas_mfa"
+          ]
+        },
+        {
+          "source": "dao",
+          "specifiers": [
+            "usuario_dao"
+          ]
+        },
+        {
+          "source": "servicos",
+          "specifiers": [
+            "totp"
+          ]
+        },
+        {
+          "source": "servicos.autenticacao",
+          "specifiers": [
+            "exigir_login",
+            "usuario_atual"
+          ]
+        },
+        {
+          "source": "servicos.seguranca",
+          "specifiers": [
+            "auditar"
+          ]
+        },
+        {
+          "source": "servicos.senhas",
+          "specifiers": [
+            "problema_senha"
+          ]
+        }
+      ],
+      "exports": [
+        "pagina",
+        "trocar_senha",
+        "_pagina_mfa",
+        "mfa",
+        "mfa_post"
+      ],
+      "totalLines": 99,
+      "hasStructuralAnalysis": true
+    },
+    "blueprints/erros.py": {
+      "filePath": "blueprints/erros.py",
+      "contentHash": "89016133184d78244b77d61cc5f075cef7232d248b808a77143a624879a252a4",
+      "functions": [
+        {
+          "name": "erro_http",
+          "params": [
+            "e"
+          ],
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "erro_geral",
+          "params": [
+            "e"
+          ],
+          "exported": true,
+          "lineCount": 5
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "flask",
+          "specifiers": [
+            "Blueprint",
+            "current_app",
+            "jsonify",
+            "request"
+          ]
+        },
+        {
+          "source": "werkzeug.exceptions",
+          "specifiers": [
+            "HTTPException"
+          ]
+        }
+      ],
+      "exports": [
+        "erro_http",
+        "erro_geral"
+      ],
+      "totalLines": 21,
+      "hasStructuralAnalysis": true
+    },
+    "blueprints/paginas.py": {
+      "filePath": "blueprints/paginas.py",
+      "contentHash": "1c8fa2990ab52f2cf9683bb58de379c1eb4fd13f842bab3f414eab4cfeebbefd",
+      "functions": [
+        {
+          "name": "index",
+          "params": [],
+          "exported": true,
+          "lineCount": 2
+        },
+        {
+          "name": "ubere",
+          "params": [],
+          "exported": true,
+          "lineCount": 2
+        },
+        {
+          "name": "painel",
+          "params": [],
+          "exported": true,
+          "lineCount": 2
+        },
+        {
+          "name": "historico_vaca",
+          "params": [
+            "brinco"
+          ],
+          "exported": true,
+          "lineCount": 2
+        },
+        {
+          "name": "usuarios",
+          "params": [],
+          "exported": true,
+          "lineCount": 2
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "flask",
+          "specifiers": [
+            "Blueprint",
+            "render_template"
+          ]
+        },
+        {
+          "source": "servicos.autenticacao",
+          "specifiers": [
+            "exigir_login"
+          ]
+        }
+      ],
+      "exports": [
+        "index",
+        "ubere",
+        "painel",
+        "historico_vaca",
+        "usuarios"
+      ],
+      "totalLines": 36,
+      "hasStructuralAnalysis": true
+    },
+    "blueprints/sensor.py": {
+      "filePath": "blueprints/sensor.py",
+      "contentHash": "8320985c6f6cb24f06d3d71d3192e26ee069c8a99dffc9a4e98fb247694e6576",
+      "functions": [
+        {
+          "name": "read",
+          "params": [],
+          "exported": true,
+          "lineCount": 18
+        },
+        {
+          "name": "_pedir_leitura",
+          "params": [
+            "host",
+            "porta",
+            "espera"
+          ],
+          "exported": true,
+          "lineCount": 23
+        },
+        {
+          "name": "_ler_placa_na_rede",
+          "params": [],
+          "exported": true,
+          "lineCount": 18
+        },
+        {
+          "name": "_procurar_placa",
+          "params": [],
+          "exported": true,
+          "lineCount": 18
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "ipaddress",
+          "specifiers": [
+            "ipaddress"
+          ]
+        },
+        {
+          "source": "json",
+          "specifiers": [
+            "json"
+          ]
+        },
+        {
+          "source": "logging",
+          "specifiers": [
+            "logging"
+          ]
+        },
+        {
+          "source": "random",
+          "specifiers": [
+            "random"
+          ]
+        },
+        {
+          "source": "socket",
+          "specifiers": [
+            "socket"
+          ]
+        },
+        {
+          "source": "threading",
+          "specifiers": [
+            "threading"
+          ]
+        },
+        {
+          "source": "time",
+          "specifiers": [
+            "time"
+          ]
+        },
+        {
+          "source": "concurrent.futures",
+          "specifiers": [
+            "ThreadPoolExecutor",
+            "as_completed"
+          ]
+        },
+        {
+          "source": "http.client",
+          "specifiers": [
+            "HTTPConnection",
+            "HTTPException"
+          ]
+        },
+        {
+          "source": "urllib.parse",
+          "specifiers": [
+            "urlsplit"
+          ]
+        },
+        {
+          "source": "flask",
+          "specifiers": [
+            "Blueprint",
+            "current_app",
+            "jsonify"
+          ]
+        },
+        {
+          "source": "servicos.autenticacao",
+          "specifiers": [
+            "exigir_login"
+          ]
+        }
+      ],
+      "exports": [
+        "read",
+        "_pedir_leitura",
+        "_ler_placa_na_rede",
+        "_procurar_placa"
+      ],
+      "totalLines": 121,
+      "hasStructuralAnalysis": true
+    },
+    "blueprints/testes.py": {
+      "filePath": "blueprints/testes.py",
+      "contentHash": "2641734738f2eafadb18b9ee2976bfd756e88766a28de0506693258c39ea8245",
+      "functions": [
+        {
+          "name": "_normalizar_brinco",
+          "params": [
+            "brinco"
+          ],
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "_validar",
+          "params": [
+            "dados"
+          ],
+          "exported": true,
+          "lineCount": 32
+        },
+        {
+          "name": "criar_teste",
+          "params": [],
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "listar_testes",
+          "params": [],
+          "exported": true,
+          "lineCount": 9
+        },
+        {
+          "name": "obter_teste",
+          "params": [
+            "teste_id"
+          ],
+          "exported": true,
+          "lineCount": 5
+        },
+        {
+          "name": "apagar_teste",
+          "params": [
+            "teste_id"
+          ],
+          "exported": true,
+          "lineCount": 5
+        },
+        {
+          "name": "listar_vacas",
+          "params": [],
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "testes_da_vaca",
+          "params": [
+            "brinco"
+          ],
+          "exported": true,
+          "lineCount": 5
+        },
+        {
+          "name": "estatisticas",
+          "params": [],
+          "exported": true,
+          "lineCount": 2
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "re",
+          "specifiers": [
+            "re"
+          ]
+        },
+        {
+          "source": "flask",
+          "specifiers": [
+            "Blueprint",
+            "jsonify",
+            "request"
+          ]
+        },
+        {
+          "source": "dao",
+          "specifiers": [
+            "banco"
+          ]
+        },
+        {
+          "source": "servicos.autenticacao",
+          "specifiers": [
+            "exigir_login",
+            "usuario_atual"
+          ]
+        },
+        {
+          "source": "servicos.diagnostico",
+          "specifiers": [
+            "diagnosticar"
+          ]
+        },
+        {
+          "source": "servicos.seguranca",
+          "specifiers": [
+            "auditar"
+          ]
+        }
+      ],
+      "exports": [
+        "_normalizar_brinco",
+        "_validar",
+        "criar_teste",
+        "listar_testes",
+        "obter_teste",
+        "apagar_teste",
+        "listar_vacas",
+        "testes_da_vaca",
+        "estatisticas"
+      ],
+      "totalLines": 123,
+      "hasStructuralAnalysis": true
+    },
+    "blueprints/usuarios.py": {
+      "filePath": "blueprints/usuarios.py",
+      "contentHash": "cee9bf02f16bfaa5f44aa870af37c54f8e1c934a53b244e53f59957533545a02",
+      "functions": [
+        {
+          "name": "eu",
+          "params": [],
+          "exported": true,
+          "lineCount": 2
+        },
+        {
+          "name": "listar",
+          "params": [],
+          "exported": true,
+          "lineCount": 2
+        },
+        {
+          "name": "atualizar",
+          "params": [
+            "usuario_id"
+          ],
+          "exported": true,
+          "lineCount": 27
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "flask",
+          "specifiers": [
+            "Blueprint",
+            "jsonify",
+            "request"
+          ]
+        },
+        {
+          "source": "dao",
+          "specifiers": [
+            "usuario_dao"
+          ]
+        },
+        {
+          "source": "modelos.usuario",
+          "specifiers": [
+            "PERFIS"
+          ]
+        },
+        {
+          "source": "servicos.autenticacao",
+          "specifiers": [
+            "exigir_login",
+            "usuario_atual"
+          ]
+        },
+        {
+          "source": "servicos.seguranca",
+          "specifiers": [
+            "auditar"
+          ]
+        }
+      ],
+      "exports": [
+        "eu",
+        "listar",
+        "atualizar"
+      ],
+      "totalLines": 53,
+      "hasStructuralAnalysis": true
+    },
+    "blueprints/utilitarios.py": {
+      "filePath": "blueprints/utilitarios.py",
+      "contentHash": "e338793df744dcaa066db5ddfbec1738c96d12867ccc017bb351156bb3854b29",
+      "functions": [
+        {
+          "name": "_celula_segura",
+          "params": [
+            "valor"
+          ],
+          "exported": true,
+          "lineCount": 5
+        },
+        {
+          "name": "saude",
+          "params": [],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "exportar_csv",
+          "params": [],
+          "exported": true,
+          "lineCount": 24
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "csv",
+          "specifiers": [
+            "csv"
+          ]
+        },
+        {
+          "source": "io",
+          "specifiers": [
+            "io"
+          ]
+        },
+        {
+          "source": "flask",
+          "specifiers": [
+            "Blueprint",
+            "Response",
+            "jsonify",
+            "request",
+            "stream_with_context"
+          ]
+        },
+        {
+          "source": "dao",
+          "specifiers": [
+            "banco"
+          ]
+        },
+        {
+          "source": "servicos.autenticacao",
+          "specifiers": [
+            "exigir_login"
+          ]
+        },
+        {
+          "source": "servicos.seguranca",
+          "specifiers": [
+            "auditar"
+          ]
+        }
+      ],
+      "exports": [
+        "_celula_segura",
+        "saude",
+        "exportar_csv"
+      ],
+      "totalLines": 53,
+      "hasStructuralAnalysis": true
+    },
+    "configurar_banco_app.py": {
+      "filePath": "configurar_banco_app.py",
+      "contentHash": "35d25c8ed9bdf7e7b7a3b62328ad8fccbb4fa437672df09d37ef9673203ed17e",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "os",
+          "specifiers": [
+            "os"
+          ]
+        },
+        {
+          "source": "re",
+          "specifiers": [
+            "re"
+          ]
+        },
+        {
+          "source": "secrets",
+          "specifiers": [
+            "secrets"
+          ]
+        },
+        {
+          "source": "dotenv",
+          "specifiers": [
+            "dotenv_values"
+          ]
+        },
+        {
+          "source": "sqlalchemy",
+          "specifiers": [
+            "make_url"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 51,
+      "hasStructuralAnalysis": true
+    },
+    "dao/banco.py": {
+      "filePath": "dao/banco.py",
+      "contentHash": "82ca73f01c069044fba6de5b829e36b8ffca16050d319a01761255b0e35204dd",
+      "functions": [
+        {
+          "name": "_migrar",
+          "params": [
+            "eng"
+          ],
+          "exported": true,
+          "lineCount": 20
+        },
+        {
+          "name": "_garantir_utilizador_app",
+          "params": [
+            "eng_admin"
+          ],
+          "exported": true,
+          "lineCount": 25
+        },
+        {
+          "name": "criar_tabela",
+          "params": [],
+          "exported": true,
+          "lineCount": 13
+        },
+        {
+          "name": "verificar_ligacao",
+          "params": [],
+          "exported": true,
+          "lineCount": 8
+        },
+        {
+          "name": "_teste_para_dict",
+          "params": [
+            "t"
+          ],
+          "exported": true,
+          "lineCount": 15
+        },
+        {
+          "name": "registrar_teste",
+          "params": [
+            "brinco",
+            "leituras",
+            "diagnostico",
+            "observacao",
+            "usuario_id"
+          ],
+          "exported": true,
+          "lineCount": 25
+        },
+        {
+          "name": "apagar_teste",
+          "params": [
+            "teste_id"
+          ],
+          "exported": true,
+          "lineCount": 8
+        },
+        {
+          "name": "_filtros",
+          "params": [
+            "brinco",
+            "suspeitos"
+          ],
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "listar_testes",
+          "params": [
+            "brinco",
+            "suspeitos",
+            "limite",
+            "pagina"
+          ],
+          "exported": true,
+          "lineCount": 16
+        },
+        {
+          "name": "obter_teste",
+          "params": [
+            "teste_id"
+          ],
+          "exported": true,
+          "lineCount": 9
+        },
+        {
+          "name": "listar_vacas",
+          "params": [
+            "limite",
+            "pagina"
+          ],
+          "exported": true,
+          "lineCount": 17
+        },
+        {
+          "name": "estatisticas",
+          "params": [],
+          "exported": true,
+          "lineCount": 20
+        },
+        {
+          "name": "linhas_csv",
+          "params": [
+            "brinco"
+          ],
+          "exported": true,
+          "lineCount": 15
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "logging",
+          "specifiers": [
+            "logging"
+          ]
+        },
+        {
+          "source": "os",
+          "specifiers": [
+            "os"
+          ]
+        },
+        {
+          "source": "sqlalchemy",
+          "specifiers": [
+            "create_engine",
+            "inspect",
+            "make_url",
+            "select",
+            "func",
+            "case"
+          ]
+        },
+        {
+          "source": "sqlalchemy.orm",
+          "specifiers": [
+            "Session",
+            "selectinload",
+            "contains_eager"
+          ]
+        },
+        {
+          "source": "modelos",
+          "specifiers": [
+            "Base",
+            "Vaca",
+            "Teste",
+            "Leitura"
+          ]
+        }
+      ],
+      "exports": [
+        "_migrar",
+        "_garantir_utilizador_app",
+        "criar_tabela",
+        "verificar_ligacao",
+        "_teste_para_dict",
+        "registrar_teste",
+        "apagar_teste",
+        "_filtros",
+        "listar_testes",
+        "obter_teste",
+        "listar_vacas",
+        "estatisticas",
+        "linhas_csv"
+      ],
+      "totalLines": 267,
+      "hasStructuralAnalysis": true
+    },
+    "dao/usuario_dao.py": {
+      "filePath": "dao/usuario_dao.py",
+      "contentHash": "10b93935955b3747faf71c5ea98971db7965aa56a7da712f8b9a20250dd6d5d2",
+      "functions": [
+        {
+          "name": "_para_dict",
+          "params": [
+            "u",
+            "interno"
+          ],
+          "exported": true,
+          "lineCount": 9
+        },
+        {
+          "name": "publico",
+          "params": [
+            "d"
+          ],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "criar_usuario",
+          "params": [
+            "nome",
+            "email",
+            "senha_hash",
+            "perfil"
+          ],
+          "exported": true,
+          "lineCount": 8
+        },
+        {
+          "name": "obter_por_email",
+          "params": [
+            "email"
+          ],
+          "exported": true,
+          "lineCount": 5
+        },
+        {
+          "name": "obter_por_id",
+          "params": [
+            "usuario_id",
+            "interno"
+          ],
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "listar_usuarios",
+          "params": [],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "contar_admins_ativos",
+          "params": [],
+          "exported": true,
+          "lineCount": 5
+        },
+        {
+          "name": "atualizar_usuario",
+          "params": [
+            "usuario_id",
+            "perfil",
+            "ativo"
+          ],
+          "exported": true,
+          "lineCount": 14
+        },
+        {
+          "name": "encerrar_sessoes",
+          "params": [
+            "usuario_id"
+          ],
+          "exported": true,
+          "lineCount": 10
+        },
+        {
+          "name": "alterar_senha",
+          "params": [
+            "usuario_id",
+            "senha_hash"
+          ],
+          "exported": true,
+          "lineCount": 10
+        },
+        {
+          "name": "ativar_mfa",
+          "params": [
+            "usuario_id",
+            "segredo",
+            "passo"
+          ],
+          "exported": true,
+          "lineCount": 11
+        },
+        {
+          "name": "usar_passo_totp",
+          "params": [
+            "usuario_id",
+            "passo"
+          ],
+          "exported": true,
+          "lineCount": 11
+        },
+        {
+          "name": "redefinir_mfa",
+          "params": [
+            "email"
+          ],
+          "exported": true,
+          "lineCount": 10
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "sqlalchemy",
+          "specifiers": [
+            "select",
+            "func",
+            "update",
+            "or_"
+          ]
+        },
+        {
+          "source": "sqlalchemy.orm",
+          "specifiers": [
+            "Session"
+          ]
+        },
+        {
+          "source": "dao.banco",
+          "specifiers": [
+            "engine"
+          ]
+        },
+        {
+          "source": "modelos.usuario",
+          "specifiers": [
+            "Usuario"
+          ]
+        }
+      ],
+      "exports": [
+        "_para_dict",
+        "publico",
+        "criar_usuario",
+        "obter_por_email",
+        "obter_por_id",
+        "listar_usuarios",
+        "contar_admins_ativos",
+        "atualizar_usuario",
+        "encerrar_sessoes",
+        "alterar_senha",
+        "ativar_mfa",
+        "usar_passo_totp",
+        "redefinir_mfa"
+      ],
+      "totalLines": 138,
+      "hasStructuralAnalysis": true
+    },
+    "definir_senha_admin.py": {
+      "filePath": "definir_senha_admin.py",
+      "contentHash": "bc46dc925893164e7feb0b5c027d78547cb49f00516999ffa9b54e6d9d4428ce",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "getpass",
+          "specifiers": [
+            "getpass"
+          ]
+        },
+        {
+          "source": "os",
+          "specifiers": [
+            "os"
+          ]
+        },
+        {
+          "source": "re",
+          "specifiers": [
+            "re"
+          ]
+        },
+        {
+          "source": "werkzeug.security",
+          "specifiers": [
+            "generate_password_hash"
+          ]
+        },
+        {
+          "source": "servicos.senhas",
+          "specifiers": [
+            "problema_senha"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 44,
+      "hasStructuralAnalysis": true
+    },
+    "docker-compose.simulador.yml": {
+      "filePath": "docker-compose.simulador.yml",
+      "contentHash": "9905c0d1d5064a5970feeddfc37e31b2125fbd57157fa9716effae15b0f43b2b",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 9,
+      "hasStructuralAnalysis": false
+    },
+    "docker-compose.yml": {
+      "filePath": "docker-compose.yml",
+      "contentHash": "f87a4e5985d0749224dc8494afa03657e7bdb574944c0f823b3a230f3a935e03",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 54,
+      "hasStructuralAnalysis": false
+    },
+    "firmware/quickmast_esp8266/quickmast_esp8266.ino": {
+      "filePath": "firmware/quickmast_esp8266/quickmast_esp8266.ino",
+      "contentHash": "8363bb1dd3ff3fe08dfa72bff5dfc98e26570f3c4676b5d0733567d8fe4ede92",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 630,
+      "hasStructuralAnalysis": false
+    },
+    "frontend/index.html": {
+      "filePath": "frontend/index.html",
+      "contentHash": "b8cf37193bd72a93dc57090a578d5ee4d750c0cc000f29b69903aa801a46661f",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 15,
+      "hasStructuralAnalysis": false
+    },
+    "frontend/package.json": {
+      "filePath": "frontend/package.json",
+      "contentHash": "9b055fa97deaae8c39127c36ca89c950d40bea4d8f5acf59bd9e74beb9ffdc3e",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 33,
+      "hasStructuralAnalysis": false
+    },
+    "frontend/src/Landing.tsx": {
+      "filePath": "frontend/src/Landing.tsx",
+      "contentHash": "e3c69cb4aacce5f4ffec35ad5897668f31284e6ddf045ae7c55328201c68074d",
+      "functions": [
+        {
+          "name": "classeDaManchete",
+          "params": [
+            "i",
+            "ativa"
+          ],
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "Landing",
+          "params": [],
+          "exported": true,
+          "lineCount": 153
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "lazy",
+            "Suspense",
+            "useEffect",
+            "useRef",
+            "useState"
+          ]
+        },
+        {
+          "source": "motion/react",
+          "specifiers": [
+            "useMotionValueEvent",
+            "useReducedMotion",
+            "useScroll"
+          ]
+        },
+        {
+          "source": "./LogoQuickMast",
+          "specifiers": [
+            "LogoQuickMast"
+          ]
+        },
+        {
+          "source": "./manchetes",
+          "specifiers": [
+            "MANCHETES"
+          ]
+        }
+      ],
+      "exports": [
+        "Landing"
+      ],
+      "totalLines": 170,
+      "hasStructuralAnalysis": true
+    },
+    "frontend/src/LogoQuickMast.tsx": {
+      "filePath": "frontend/src/LogoQuickMast.tsx",
+      "contentHash": "2ff28d3658dd2307859533228ca9ac4f9ec5ec3251b981b6090577ef593e631f",
+      "functions": [
+        {
+          "name": "LogoQuickMast",
+          "params": [
+            "{ className }"
+          ],
+          "exported": true,
+          "lineCount": 13
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [
+        "LogoQuickMast"
+      ],
+      "totalLines": 16,
+      "hasStructuralAnalysis": true
+    },
+    "frontend/src/landing.css": {
+      "filePath": "frontend/src/landing.css",
+      "contentHash": "10f986f952d0fd003d1430d06fb848bbde96103323d3150cd808746a17faecb0",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 405,
+      "hasStructuralAnalysis": false
+    },
+    "frontend/src/main.tsx": {
+      "filePath": "frontend/src/main.tsx",
+      "contentHash": "c5c078257632c429345b41da4dbe2daf796ca05a260665575dd73b133f4972eb",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "StrictMode"
+          ]
+        },
+        {
+          "source": "react-dom/client",
+          "specifiers": [
+            "createRoot"
+          ]
+        },
+        {
+          "source": "./Landing",
+          "specifiers": [
+            "Landing"
+          ]
+        },
+        {
+          "source": "./landing.css",
+          "specifiers": []
+        }
+      ],
+      "exports": [],
+      "totalLines": 16,
+      "hasStructuralAnalysis": true
+    },
+    "frontend/src/manchetes.ts": {
+      "filePath": "frontend/src/manchetes.ts",
+      "contentHash": "3446f172f12d07c1aca4aecfe7eea704346e174e0dd7ad2f2f73a65d4326d977",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [
+        "MANCHETES"
+      ],
+      "totalLines": 34,
+      "hasStructuralAnalysis": true
+    },
+    "frontend/src/three/UbereScene.tsx": {
+      "filePath": "frontend/src/three/UbereScene.tsx",
+      "contentHash": "ea807152e7e29c288ee0c1cd8dfd80872536de37f44c9437513753a0b1ff85c5",
+      "functions": [
+        {
+          "name": "tetoEmLeitura",
+          "params": [
+            "p"
+          ],
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "estadoDoTeto",
+          "params": [
+            "n",
+            "p"
+          ],
+          "returnType": "Estado",
+          "exported": false,
+          "lineCount": 9
+        },
+        {
+          "name": "poseEm",
+          "params": [
+            "p",
+            "alvo"
+          ],
+          "exported": false,
+          "lineCount": 9
+        },
+        {
+          "name": "criarPlaca",
+          "params": [
+            "lado",
+            "raio",
+            "espessura",
+            "chanfro"
+          ],
+          "exported": false,
+          "lineCount": 24
+        },
+        {
+          "name": "Sonda",
+          "params": [
+            "{ ref }"
+          ],
+          "exported": false,
+          "lineCount": 22
+        },
+        {
+          "name": "Reflexos",
+          "params": [],
+          "exported": false,
+          "lineCount": 17
+        },
+        {
+          "name": "Placa",
+          "params": [
+            "{ progresso, reduzir, aoPrimeiroQuadro }"
+          ],
+          "exported": false,
+          "lineCount": 107
+        },
+        {
+          "name": "UbereScene",
+          "params": [
+            "{ progresso, ativa, aoFicarPronta }"
+          ],
+          "exported": true,
+          "lineCount": 25
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@react-three/fiber",
+          "specifiers": [
+            "Canvas",
+            "useFrame",
+            "useThree"
+          ]
+        },
+        {
+          "source": "@react-three/drei",
+          "specifiers": [
+            "PerformanceMonitor"
+          ]
+        },
+        {
+          "source": "maath",
+          "specifiers": [
+            "easing"
+          ]
+        },
+        {
+          "source": "motion/react",
+          "specifiers": [
+            "useReducedMotion",
+            "MotionValue"
+          ]
+        },
+        {
+          "source": "react",
+          "specifiers": [
+            "useEffect",
+            "useMemo",
+            "useRef",
+            "useState",
+            "Ref"
+          ]
+        },
+        {
+          "source": "three",
+          "specifiers": [
+            "* as THREE"
+          ]
+        },
+        {
+          "source": "three/examples/jsm/environments/RoomEnvironment.js",
+          "specifiers": [
+            "RoomEnvironment"
+          ]
+        },
+        {
+          "source": "three/examples/jsm/utils/BufferGeometryUtils.js",
+          "specifiers": [
+            "toCreasedNormals"
+          ]
+        },
+        {
+          "source": "../manchetes",
+          "specifiers": [
+            "MANCHETES"
+          ]
+        },
+        {
+          "source": "../tokens",
+          "specifiers": [
+            "cores"
+          ]
+        }
+      ],
+      "exports": [
+        "UbereScene"
+      ],
+      "totalLines": 294,
+      "hasStructuralAnalysis": true
+    },
+    "frontend/src/tokens.ts": {
+      "filePath": "frontend/src/tokens.ts",
+      "contentHash": "4dc4ddb4a23a0665b0be2ebfdaa598e48d9ab2867adbcc8f888780aa1305454b",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [
+        "cores"
+      ],
+      "totalLines": 14,
+      "hasStructuralAnalysis": true
+    },
+    "frontend/tsconfig.json": {
+      "filePath": "frontend/tsconfig.json",
+      "contentHash": "cce339fe504e9594dfe6b626b09a886ec371831d084751fd557f5383a3db05f5",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 19,
+      "hasStructuralAnalysis": false
+    },
+    "frontend/vite.config.ts": {
+      "filePath": "frontend/vite.config.ts",
+      "contentHash": "e2114a5866a64d10d3a4546b63c6fd94ddf3741bc9bc583539c725d1ce0cd7f7",
+      "functions": [
+        {
+          "name": "parcialJinja",
+          "params": [],
+          "returnType": "Plugin",
+          "exported": false,
+          "lineCount": 23
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "node:fs",
+          "specifiers": [
+            "writeFileSync"
+          ]
+        },
+        {
+          "source": "node:url",
+          "specifiers": [
+            "fileURLToPath"
+          ]
+        },
+        {
+          "source": "@vitejs/plugin-react",
+          "specifiers": [
+            "react"
+          ]
+        },
+        {
+          "source": "vite",
+          "specifiers": [
+            "defineConfig",
+            "Plugin"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 51,
+      "hasStructuralAnalysis": true
+    },
+    "gunicorn.conf.py": {
+      "filePath": "gunicorn.conf.py",
+      "contentHash": "815e00b3aa4c2735e2dd73c6c53758c78d7b61c95eb65064c328d5aec9a05655",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 21,
+      "hasStructuralAnalysis": true
+    },
+    "modelos/__init__.py": {
+      "filePath": "modelos/__init__.py",
+      "contentHash": "aadddee5c487d76327d26f3fcf0a12853cd040f7fc357adac7701811bd592604",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "modelos.base",
+          "specifiers": [
+            "Base"
+          ]
+        },
+        {
+          "source": "modelos.usuario",
+          "specifiers": [
+            "Usuario"
+          ]
+        },
+        {
+          "source": "modelos.vaca",
+          "specifiers": [
+            "Vaca"
+          ]
+        },
+        {
+          "source": "modelos.teste",
+          "specifiers": [
+            "Teste"
+          ]
+        },
+        {
+          "source": "modelos.leitura",
+          "specifiers": [
+            "Leitura"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 11,
+      "hasStructuralAnalysis": true
+    },
+    "modelos/base.py": {
+      "filePath": "modelos/base.py",
+      "contentHash": "aabc54eaacf780c265ec100eb22c1e3e7d32cf18467253feb4e6797d762d4bde",
+      "functions": [],
+      "classes": [
+        {
+          "name": "Base",
+          "methods": [],
+          "properties": [],
+          "exported": true,
+          "lineCount": 2
+        }
+      ],
+      "imports": [
+        {
+          "source": "sqlalchemy.orm",
+          "specifiers": [
+            "DeclarativeBase"
+          ]
+        }
+      ],
+      "exports": [
+        "Base"
+      ],
+      "totalLines": 7,
+      "hasStructuralAnalysis": true
+    },
+    "modelos/leitura.py": {
+      "filePath": "modelos/leitura.py",
+      "contentHash": "f90c8dc501adb9f3328937ab5367e9f3a14a192d1781a622de164130420ebd24",
+      "functions": [],
+      "classes": [
+        {
+          "name": "Leitura",
+          "methods": [],
+          "properties": [
+            "id",
+            "teste_id",
+            "teto",
+            "temp",
+            "cond",
+            "suspeito",
+            "motivo",
+            "teste"
+          ],
+          "exported": true,
+          "lineCount": 17
+        }
+      ],
+      "imports": [
+        {
+          "source": "sqlalchemy",
+          "specifiers": [
+            "Integer",
+            "String",
+            "Float",
+            "Boolean",
+            "ForeignKey",
+            "UniqueConstraint",
+            "CheckConstraint"
+          ]
+        },
+        {
+          "source": "sqlalchemy.orm",
+          "specifiers": [
+            "Mapped",
+            "mapped_column",
+            "relationship"
+          ]
+        },
+        {
+          "source": "modelos.base",
+          "specifiers": [
+            "Base"
+          ]
+        }
+      ],
+      "exports": [
+        "Leitura"
+      ],
+      "totalLines": 24,
+      "hasStructuralAnalysis": true
+    },
+    "modelos/teste.py": {
+      "filePath": "modelos/teste.py",
+      "contentHash": "7907a860ac7c32ec23af54eb3af52bce46568dc7c9af9d0289ecac148b9fca7e",
+      "functions": [],
+      "classes": [
+        {
+          "name": "Teste",
+          "methods": [],
+          "properties": [
+            "id",
+            "vaca_id",
+            "data",
+            "tem_mastite",
+            "tetos_afetados",
+            "observacao",
+            "usuario_id",
+            "vaca",
+            "usuario",
+            "leituras"
+          ],
+          "exported": true,
+          "lineCount": 19
+        }
+      ],
+      "imports": [
+        {
+          "source": "datetime",
+          "specifiers": [
+            "datetime"
+          ]
+        },
+        {
+          "source": "sqlalchemy",
+          "specifiers": [
+            "Integer",
+            "String",
+            "Boolean",
+            "DateTime",
+            "ForeignKey",
+            "func"
+          ]
+        },
+        {
+          "source": "sqlalchemy.orm",
+          "specifiers": [
+            "Mapped",
+            "mapped_column",
+            "relationship"
+          ]
+        },
+        {
+          "source": "modelos.base",
+          "specifiers": [
+            "Base"
+          ]
+        }
+      ],
+      "exports": [
+        "Teste"
+      ],
+      "totalLines": 29,
+      "hasStructuralAnalysis": true
+    },
+    "modelos/usuario.py": {
+      "filePath": "modelos/usuario.py",
+      "contentHash": "a2f15aee586a75cd27fddfa386419d7f0e7ae4fe81703d84802203841fc68990",
+      "functions": [],
+      "classes": [
+        {
+          "name": "Usuario",
+          "methods": [],
+          "properties": [
+            "id",
+            "nome",
+            "email",
+            "senha_hash",
+            "perfil",
+            "ativo",
+            "criado_em",
+            "sessao_versao",
+            "totp_segredo",
+            "totp_ultimo_passo"
+          ],
+          "exported": true,
+          "lineCount": 18
+        }
+      ],
+      "imports": [
+        {
+          "source": "datetime",
+          "specifiers": [
+            "datetime"
+          ]
+        },
+        {
+          "source": "sqlalchemy",
+          "specifiers": [
+            "Integer",
+            "String",
+            "Boolean",
+            "DateTime",
+            "CheckConstraint",
+            "func",
+            "text"
+          ]
+        },
+        {
+          "source": "sqlalchemy.orm",
+          "specifiers": [
+            "Mapped",
+            "mapped_column"
+          ]
+        },
+        {
+          "source": "modelos.base",
+          "specifiers": [
+            "Base"
+          ]
+        }
+      ],
+      "exports": [
+        "Usuario"
+      ],
+      "totalLines": 31,
+      "hasStructuralAnalysis": true
+    },
+    "modelos/vaca.py": {
+      "filePath": "modelos/vaca.py",
+      "contentHash": "7fc742ff411e821644d296f3e42606b38451b558251528b35884334a0dc1884f",
+      "functions": [],
+      "classes": [
+        {
+          "name": "Vaca",
+          "methods": [],
+          "properties": [
+            "id",
+            "brinco",
+            "criada_em",
+            "testes"
+          ],
+          "exported": true,
+          "lineCount": 11
+        }
+      ],
+      "imports": [
+        {
+          "source": "datetime",
+          "specifiers": [
+            "datetime"
+          ]
+        },
+        {
+          "source": "sqlalchemy",
+          "specifiers": [
+            "Integer",
+            "String",
+            "DateTime",
+            "func"
+          ]
+        },
+        {
+          "source": "sqlalchemy.orm",
+          "specifiers": [
+            "Mapped",
+            "mapped_column",
+            "relationship"
+          ]
+        },
+        {
+          "source": "modelos.base",
+          "specifiers": [
+            "Base"
+          ]
+        }
+      ],
+      "exports": [
+        "Vaca"
+      ],
+      "totalLines": 21,
+      "hasStructuralAnalysis": true
+    },
+    "requirements.in": {
+      "filePath": "requirements.in",
+      "contentHash": "13a362a46e428cfcb0cba1991eb11f35bbf1c0b99d258cf41258ee65ef8fcd0b",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 12,
+      "hasStructuralAnalysis": false
+    },
+    "requirements.txt": {
+      "filePath": "requirements.txt",
+      "contentHash": "1259e716b3eaa7bf9d8762e67f3fc84d5527256bbfed6b2a87c76c12fae14934",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 423,
+      "hasStructuralAnalysis": false
+    },
+    "servicos/autenticacao.py": {
+      "filePath": "servicos/autenticacao.py",
+      "contentHash": "de23e8503718d91a4007758a116634dc6ba1a56240a2d80fa9c3f477aac7ff54",
+      "functions": [
+        {
+          "name": "usuario_atual",
+          "params": [],
+          "exported": true,
+          "lineCount": 9
+        },
+        {
+          "name": "_sem_sessao",
+          "params": [],
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "negar_por_omissao",
+          "params": [
+            "app"
+          ],
+          "exported": true,
+          "lineCount": 13
+        },
+        {
+          "name": "exigir_login",
+          "params": [
+            "*perfis"
+          ],
+          "exported": true,
+          "lineCount": 17
+        },
+        {
+          "name": "_hash_valido",
+          "params": [
+            "senha_hash"
+          ],
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "garantir_admin",
+          "params": [],
+          "exported": true,
+          "lineCount": 21
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "logging",
+          "specifiers": [
+            "logging"
+          ]
+        },
+        {
+          "source": "os",
+          "specifiers": [
+            "os"
+          ]
+        },
+        {
+          "source": "re",
+          "specifiers": [
+            "re"
+          ]
+        },
+        {
+          "source": "functools",
+          "specifiers": [
+            "wraps"
+          ]
+        },
+        {
+          "source": "flask",
+          "specifiers": [
+            "abort",
+            "g",
+            "jsonify",
+            "redirect",
+            "request",
+            "session",
+            "url_for"
+          ]
+        },
+        {
+          "source": "dao",
+          "specifiers": [
+            "usuario_dao"
+          ]
+        },
+        {
+          "source": "servicos.seguranca",
+          "specifiers": [
+            "auditar"
+          ]
+        }
+      ],
+      "exports": [
+        "usuario_atual",
+        "_sem_sessao",
+        "negar_por_omissao",
+        "exigir_login",
+        "_hash_valido",
+        "garantir_admin"
+      ],
+      "totalLines": 102,
+      "hasStructuralAnalysis": true
+    },
+    "servicos/diagnostico.py": {
+      "filePath": "servicos/diagnostico.py",
+      "contentHash": "5a1f658ca15d82e0350adb47e3bd8b73e9136a26997b245f5b3f1feedadc87d7",
+      "functions": [
+        {
+          "name": "_mediana_outros",
+          "params": [
+            "valores",
+            "idx"
+          ],
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "_relativa",
+          "params": [
+            "valores",
+            "i"
+          ],
+          "exported": true,
+          "lineCount": 5
+        },
+        {
+          "name": "diagnosticar",
+          "params": [
+            "leituras"
+          ],
+          "exported": true,
+          "lineCount": 27
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [
+        "_mediana_outros",
+        "_relativa",
+        "diagnosticar"
+      ],
+      "totalLines": 60,
+      "hasStructuralAnalysis": true
+    },
+    "servicos/limite.py": {
+      "filePath": "servicos/limite.py",
+      "contentHash": "1ccf17ea1adbc5b5de0c022164f58bc4b868ee81cde2263935bcc86b5b38d59e",
+      "functions": [],
+      "classes": [
+        {
+          "name": "Limitador",
+          "methods": [
+            "__init__",
+            "_recentes",
+            "quantas",
+            "excedido",
+            "contar",
+            "limpar"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 34
+        }
+      ],
+      "imports": [
+        {
+          "source": "threading",
+          "specifiers": [
+            "threading"
+          ]
+        },
+        {
+          "source": "time",
+          "specifiers": [
+            "time"
+          ]
+        }
+      ],
+      "exports": [
+        "Limitador"
+      ],
+      "totalLines": 44,
+      "hasStructuralAnalysis": true
+    },
+    "servicos/mfa.py": {
+      "filePath": "servicos/mfa.py",
+      "contentHash": "8fcaeb6dfb4bce23a1fe8a3e72d3a57c14ce40ad6f8197588797873838e7cb8c",
+      "functions": [
+        {
+          "name": "novo_segredo",
+          "params": [],
+          "exported": true,
+          "lineCount": 2
+        },
+        {
+          "name": "qr_svg",
+          "params": [
+            "segredo",
+            "email"
+          ],
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "segredo_formatado",
+          "params": [
+            "segredo"
+          ],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "verificar",
+          "params": [
+            "segredo",
+            "codigo",
+            "ultimo_passo"
+          ],
+          "exported": true,
+          "lineCount": 16
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "hmac",
+          "specifiers": [
+            "hmac"
+          ]
+        },
+        {
+          "source": "re",
+          "specifiers": [
+            "re"
+          ]
+        },
+        {
+          "source": "time",
+          "specifiers": [
+            "time"
+          ]
+        },
+        {
+          "source": "pyotp",
+          "specifiers": [
+            "pyotp"
+          ]
+        },
+        {
+          "source": "segno",
+          "specifiers": [
+            "segno"
+          ]
+        }
+      ],
+      "exports": [
+        "novo_segredo",
+        "qr_svg",
+        "segredo_formatado",
+        "verificar"
+      ],
+      "totalLines": 44,
+      "hasStructuralAnalysis": true
+    },
+    "servicos/seguranca.py": {
+      "filePath": "servicos/seguranca.py",
+      "contentHash": "dba3683380dba20c81cda6ca9010e90413ede37f1fcb2b8ae2ebdf82e7a09fba",
+      "functions": [
+        {
+          "name": "mascarar_email",
+          "params": [
+            "email"
+          ],
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "auditar",
+          "params": [
+            "evento",
+            "**dados"
+          ],
+          "exported": true,
+          "lineCount": 9
+        },
+        {
+          "name": "_origem_valida",
+          "params": [],
+          "exported": true,
+          "lineCount": 9
+        },
+        {
+          "name": "configurar_seguranca",
+          "params": [
+            "app"
+          ],
+          "exported": true,
+          "lineCount": 21
+        }
+      ],
+      "classes": [
+        {
+          "name": "FormatoJSON",
+          "methods": [
+            "format"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 12
+        }
+      ],
+      "imports": [
+        {
+          "source": "json",
+          "specifiers": [
+            "json"
+          ]
+        },
+        {
+          "source": "logging",
+          "specifiers": [
+            "logging"
+          ]
+        },
+        {
+          "source": "datetime",
+          "specifiers": [
+            "datetime",
+            "timezone"
+          ]
+        },
+        {
+          "source": "urllib.parse",
+          "specifiers": [
+            "urlparse"
+          ]
+        },
+        {
+          "source": "flask",
+          "specifiers": [
+            "abort",
+            "request",
+            "session"
+          ]
+        }
+      ],
+      "exports": [
+        "FormatoJSON",
+        "mascarar_email",
+        "auditar",
+        "_origem_valida",
+        "configurar_seguranca"
+      ],
+      "totalLines": 96,
+      "hasStructuralAnalysis": true
+    },
+    "servicos/senhas.py": {
+      "filePath": "servicos/senhas.py",
+      "contentHash": "c32077598bb64ab447ebf492ef72da5f45329aedff455b523408303127e4a39a",
+      "functions": [
+        {
+          "name": "problema_senha",
+          "params": [
+            "senha",
+            "email"
+          ],
+          "exported": true,
+          "lineCount": 11
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "os",
+          "specifiers": [
+            "os"
+          ]
+        },
+        {
+          "source": "re",
+          "specifiers": [
+            "re"
+          ]
+        }
+      ],
+      "exports": [
+        "problema_senha"
+      ],
+      "totalLines": 23,
+      "hasStructuralAnalysis": true
+    },
+    "servicos/senhas_comuns.txt": {
+      "filePath": "servicos/senhas_comuns.txt",
+      "contentHash": "238002dc8f096f334bbc758c8a1f33bc1c3a15040a5380a50e7a00d61001c7c4",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 10072,
+      "hasStructuralAnalysis": false
+    },
+    "servidor.py": {
+      "filePath": "servidor.py",
+      "contentHash": "8f7b0f4772378f10d7e761b3863e613c0159af871325d4da511f66dc03075d6e",
+      "functions": [
+        {
+          "name": "iniciar",
+          "params": [],
+          "exported": true,
+          "lineCount": 5
+        },
+        {
+          "name": "redefinir_mfa",
+          "params": [
+            "email"
+          ],
+          "exported": true,
+          "lineCount": 9
+        },
+        {
+          "name": "redefinir_senha",
+          "params": [
+            "email"
+          ],
+          "exported": true,
+          "lineCount": 25
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "logging",
+          "specifiers": [
+            "logging"
+          ]
+        },
+        {
+          "source": "os",
+          "specifiers": [
+            "os"
+          ]
+        },
+        {
+          "source": "re",
+          "specifiers": [
+            "re"
+          ]
+        },
+        {
+          "source": "secrets",
+          "specifiers": [
+            "secrets"
+          ]
+        },
+        {
+          "source": "datetime",
+          "specifiers": [
+            "timedelta"
+          ]
+        },
+        {
+          "source": "click",
+          "specifiers": [
+            "click"
+          ]
+        },
+        {
+          "source": "dotenv",
+          "specifiers": [
+            "load_dotenv"
+          ]
+        },
+        {
+          "source": "flask",
+          "specifiers": [
+            "Flask"
+          ]
+        },
+        {
+          "source": "werkzeug.middleware.proxy_fix",
+          "specifiers": [
+            "ProxyFix"
+          ]
+        },
+        {
+          "source": "werkzeug.security",
+          "specifiers": [
+            "generate_password_hash"
+          ]
+        },
+        {
+          "source": "blueprints",
+          "specifiers": [
+            "registrar_blueprints"
+          ]
+        },
+        {
+          "source": "dao",
+          "specifiers": [
+            "banco",
+            "usuario_dao"
+          ]
+        },
+        {
+          "source": "servicos.autenticacao",
+          "specifiers": [
+            "garantir_admin",
+            "negar_por_omissao"
+          ]
+        },
+        {
+          "source": "servicos.seguranca",
+          "specifiers": [
+            "FormatoJSON",
+            "configurar_seguranca",
+            "mascarar_email"
+          ]
+        },
+        {
+          "source": "servicos.senhas",
+          "specifiers": [
+            "problema_senha"
+          ]
+        }
+      ],
+      "exports": [
+        "iniciar",
+        "redefinir_mfa",
+        "redefinir_senha"
+      ],
+      "totalLines": 138,
+      "hasStructuralAnalysis": true
+    },
+    "skills-lock.json": {
+      "filePath": "skills-lock.json",
+      "contentHash": "5ed60b687968a0c644820f9d751bd7f94a8409408de4066d061472e413625973",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 60,
+      "hasStructuralAnalysis": false
+    },
+    "stetic/css/quickmast.css": {
+      "filePath": "stetic/css/quickmast.css",
+      "contentHash": "810cb32f4280c52b24205d70278f01eea6039ea4d11dc30d32fc5955faf38cca",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 1449,
+      "hasStructuralAnalysis": false
+    },
+    "stetic/fonts/OFL.txt": {
+      "filePath": "stetic/fonts/OFL.txt",
+      "contentHash": "426ef06df3fa0af49e84ec5c89908fa9234a756e6872deeae0016bb1822f0544",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 94,
+      "hasStructuralAnalysis": false
+    },
+    "stetic/js/componentes.js": {
+      "filePath": "stetic/js/componentes.js",
+      "contentHash": "ceb1a26876a29657767fe251379513a42af0469d5281d678b2e39ee2fae94fc6",
+      "functions": [
+        {
+          "name": "criar",
+          "params": [
+            "tag",
+            "classe",
+            "texto"
+          ],
+          "exported": false,
+          "lineCount": 6
+        },
+        {
+          "name": "icone",
+          "params": [
+            "classe"
+          ],
+          "exported": false,
+          "lineCount": 5
+        },
+        {
+          "name": "banner",
+          "params": [
+            "el",
+            "tipo",
+            "mensagem",
+            "detalhes"
+          ],
+          "exported": false,
+          "lineCount": 8
+        },
+        {
+          "name": "limparBanner",
+          "params": [
+            "el"
+          ],
+          "exported": false,
+          "lineCount": 5
+        },
+        {
+          "name": "formatarData",
+          "params": [
+            "iso"
+          ],
+          "exported": false,
+          "lineCount": 6
+        },
+        {
+          "name": "itemHistorico",
+          "params": [
+            "t",
+            "comLink"
+          ],
+          "exported": false,
+          "lineCount": 18
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 63,
+      "hasStructuralAnalysis": true
+    },
+    "stetic/js/formularios.js": {
+      "filePath": "stetic/js/formularios.js",
+      "contentHash": "861a6897c53775419b8d3878d85bf20505873790fe8ea3e97d18a607ef024e34",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 69,
+      "hasStructuralAnalysis": true
+    },
+    "stetic/js/login.js": {
+      "filePath": "stetic/js/login.js",
+      "contentHash": "167e8e408b2ce2bae8309e96b8eb2acb2badaeb4f3612b025a3ecb5a07bc51e0",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 18,
+      "hasStructuralAnalysis": true
+    },
+    "stetic/js/movimento.js": {
+      "filePath": "stetic/js/movimento.js",
+      "contentHash": "ecc6f698197d4bf25da8bf962a714247f7f56519b34727263050809bd27d510d",
+      "functions": [
+        {
+          "name": "reduzirMovimento",
+          "params": [],
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "contar",
+          "params": [
+            "el",
+            "valor"
+          ],
+          "exported": false,
+          "lineCount": 17
+        },
+        {
+          "name": "vibrar",
+          "params": [
+            "padrao"
+          ],
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "revelar",
+          "params": [
+            "el",
+            "classe"
+          ],
+          "exported": false,
+          "lineCount": 6
+        },
+        {
+          "name": "primeiraEntrada",
+          "params": [
+            "lista"
+          ],
+          "exported": false,
+          "lineCount": 3
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 62,
+      "hasStructuralAnalysis": true
+    },
+    "stetic/js/painel.js": {
+      "filePath": "stetic/js/painel.js",
+      "contentHash": "8fc1c8e9e354d31856d564487402992f84c610b77b19e4e6811815bb983b6895",
+      "functions": [
+        {
+          "name": "$",
+          "params": [],
+          "exported": false,
+          "lineCount": 1
+        },
+        {
+          "name": "corTexto",
+          "params": [
+            "alfa"
+          ],
+          "exported": false,
+          "lineCount": 10
+        },
+        {
+          "name": "mostrarDetalhe",
+          "params": [
+            "escolhido",
+            "n",
+            "total"
+          ],
+          "exported": false,
+          "lineCount": 7
+        },
+        {
+          "name": "carregar",
+          "params": [],
+          "exported": false,
+          "lineCount": 32
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 67,
+      "hasStructuralAnalysis": true
+    },
+    "stetic/js/ubere.js": {
+      "filePath": "stetic/js/ubere.js",
+      "contentHash": "baeb45b004e556e0da0bdbb5b1c679ee39dc12a03cdc4f9602b3d46612c76a41",
+      "functions": [
+        {
+          "name": "$",
+          "params": [],
+          "exported": false,
+          "lineCount": 1
+        },
+        {
+          "name": "temTemp",
+          "params": [],
+          "exported": false,
+          "lineCount": 1
+        },
+        {
+          "name": "normalizarBrinco",
+          "params": [],
+          "exported": false,
+          "lineCount": 1
+        },
+        {
+          "name": "elTeto",
+          "params": [
+            "n"
+          ],
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "mudarEstado",
+          "params": [
+            "teto",
+            "estado"
+          ],
+          "exported": false,
+          "lineCount": 5
+        },
+        {
+          "name": "mostrarFase",
+          "params": [
+            "fase"
+          ],
+          "exported": false,
+          "lineCount": 13
+        },
+        {
+          "name": "carregando",
+          "params": [
+            "btn",
+            "sim",
+            "rotulo"
+          ],
+          "exported": false,
+          "lineCount": 5
+        },
+        {
+          "name": "lerSensor",
+          "params": [],
+          "exported": false,
+          "lineCount": 14
+        },
+        {
+          "name": "desenharVivo",
+          "params": [
+            "cond"
+          ],
+          "exported": false,
+          "lineCount": 17
+        },
+        {
+          "name": "lerAoVivo",
+          "params": [],
+          "exported": false,
+          "lineCount": 14
+        },
+        {
+          "name": "iniciarAoVivo",
+          "params": [],
+          "exported": false,
+          "lineCount": 5
+        },
+        {
+          "name": "pararAoVivo",
+          "params": [],
+          "exported": false,
+          "lineCount": 4
+        },
+        {
+          "name": "rotuloCapturar",
+          "params": [],
+          "exported": false,
+          "lineCount": 1
+        },
+        {
+          "name": "marcarAtivo",
+          "params": [],
+          "exported": false,
+          "lineCount": 8
+        },
+        {
+          "name": "mostrarPasso",
+          "params": [],
+          "exported": false,
+          "lineCount": 13
+        },
+        {
+          "name": "selecionarTeto",
+          "params": [
+            "n"
+          ],
+          "exported": false,
+          "lineCount": 6
+        },
+        {
+          "name": "erroVaca",
+          "params": [
+            "sim"
+          ],
+          "exported": false,
+          "lineCount": 4
+        },
+        {
+          "name": "iniciar",
+          "params": [],
+          "exported": false,
+          "lineCount": 21
+        },
+        {
+          "name": "capturar",
+          "params": [],
+          "exported": false,
+          "lineCount": 45
+        },
+        {
+          "name": "finalizar",
+          "params": [],
+          "exported": false,
+          "lineCount": 32
+        },
+        {
+          "name": "mostrarResultado",
+          "params": [
+            "teste"
+          ],
+          "exported": false,
+          "lineCount": 22
+        },
+        {
+          "name": "novaVaca",
+          "params": [],
+          "exported": false,
+          "lineCount": 14
+        },
+        {
+          "name": "carregarHistorico",
+          "params": [],
+          "exported": false,
+          "lineCount": 19
+        },
+        {
+          "name": "carregarVacas",
+          "params": [],
+          "exported": false,
+          "lineCount": 12
+        },
+        {
+          "name": "carregarEstatisticas",
+          "params": [],
+          "exported": false,
+          "lineCount": 14
+        },
+        {
+          "name": "filtrarHistorico",
+          "params": [],
+          "exported": false,
+          "lineCount": 10
+        },
+        {
+          "name": "abrirVaca",
+          "params": [
+            "e"
+          ],
+          "exported": false,
+          "lineCount": 9
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 408,
+      "hasStructuralAnalysis": true
+    },
+    "stetic/js/usuarios.js": {
+      "filePath": "stetic/js/usuarios.js",
+      "contentHash": "702367d98eca5089acf0763efe3f9c41037919bac9436547d9245cf54feb1f00",
+      "functions": [
+        {
+          "name": "alterar",
+          "params": [
+            "id",
+            "campos"
+          ],
+          "exported": false,
+          "lineCount": 18
+        },
+        {
+          "name": "cartao",
+          "params": [
+            "u"
+          ],
+          "exported": false,
+          "lineCount": 43
+        },
+        {
+          "name": "carregar",
+          "params": [],
+          "exported": false,
+          "lineCount": 11
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 84,
+      "hasStructuralAnalysis": true
+    },
+    "stetic/js/vaca.js": {
+      "filePath": "stetic/js/vaca.js",
+      "contentHash": "db22007acc8309d773231f027ac42b4fa6a443844dc4504e225a0c1403a1ae12",
+      "functions": [
+        {
+          "name": "resumir",
+          "params": [
+            "testes"
+          ],
+          "exported": false,
+          "lineCount": 9
+        },
+        {
+          "name": "carregar",
+          "params": [],
+          "exported": false,
+          "lineCount": 23
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 41,
+      "hasStructuralAnalysis": true
+    },
+    "templates/_componentes.html": {
+      "filePath": "templates/_componentes.html",
+      "contentHash": "3be92a101dc685ab9efbd3c6bfc47680c067306097ec38857e6d208cdcd12341",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 95,
+      "hasStructuralAnalysis": false
+    },
+    "templates/_landing_assets.html": {
+      "filePath": "templates/_landing_assets.html",
+      "contentHash": "2389e6d27008da6c15a23b298dbcd3c1dd62e03512cc4bd0eccc22c4ba0b8831",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 8,
+      "hasStructuralAnalysis": false
+    },
+    "templates/base.html": {
+      "filePath": "templates/base.html",
+      "contentHash": "d6487d9399a022fab3d573fdef12dd376c1c51e41a5c5abc1995c774f9304ad3",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 23,
+      "hasStructuralAnalysis": false
+    },
+    "templates/conta.html": {
+      "filePath": "templates/conta.html",
+      "contentHash": "7a1610631b87991f238e2703a312b314350bc7dfb2d37c75d58dbb60295325b6",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 46,
+      "hasStructuralAnalysis": false
+    },
+    "templates/index.html": {
+      "filePath": "templates/index.html",
+      "contentHash": "e8cd370c2e36f13d1bf04cb93936611951ab1d827f739563999900a9840337c3",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 35,
+      "hasStructuralAnalysis": false
+    },
+    "templates/login.html": {
+      "filePath": "templates/login.html",
+      "contentHash": "c46dd6e5db6f2872280770e61af5558e6b516343d0a22c0b1e4a382100cf1600",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 70,
+      "hasStructuralAnalysis": false
+    },
+    "templates/mfa.html": {
+      "filePath": "templates/mfa.html",
+      "contentHash": "0b1b12477abdb58e453e011ee8d3c8c12257f025b662ab144b2088cdd9e7416e",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 56,
+      "hasStructuralAnalysis": false
+    },
+    "templates/painel.html": {
+      "filePath": "templates/painel.html",
+      "contentHash": "4c5927cec673968fa2bd20e914e3451c51cb9b08d434101ce177bb8718958428",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 52,
+      "hasStructuralAnalysis": false
+    },
+    "templates/ubere.html": {
+      "filePath": "templates/ubere.html",
+      "contentHash": "86b44711043de9d03a550ed8c2ed9226762ee749ce91a1e60864566f65f4bd7e",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 90,
+      "hasStructuralAnalysis": false
+    },
+    "templates/usuarios.html": {
+      "filePath": "templates/usuarios.html",
+      "contentHash": "8df5d077efd201c52bbeb9b9896f72e0474919ffae0c24e44a45dfdfde6c168f",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 22,
+      "hasStructuralAnalysis": false
+    },
+    "templates/vaca.html": {
+      "filePath": "templates/vaca.html",
+      "contentHash": "eb149663481f161035da716d8fabc9e80d48712b5eaeae23d91efbc26fad5ea2",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 31,
+      "hasStructuralAnalysis": false
+    }
+  }
+}

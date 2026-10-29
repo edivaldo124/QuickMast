@@ -1,6 +1,6 @@
 """Regras de diagnóstico de mastite.
 
-Espelha a função diagnosticar() do firmware do ESP8266 (firmware/quickmast_esp8266/diagnostico.h).
+Espelha a função diagnosticar() do firmware do ESP8266 (secção Diagnóstico de firmware/quickmast_esp8266/quickmast_esp8266.ino).
 Ajustar os valores abaixo depois da calibração com dados reais, nos dois sítios ao mesmo tempo.
 """
 

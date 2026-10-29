@@ -1,0 +1,769 @@
+{
+  "scriptCompleted": true,
+  "commonPrefix": "",
+  "directoryGroups": {
+    "blueprints": [
+      "file:blueprints/__init__.py",
+      "file:blueprints/erros.py",
+      "file:blueprints/paginas.py",
+      "file:blueprints/sensor.py",
+      "file:blueprints/testes.py",
+      "file:blueprints/usuarios.py",
+      "file:blueprints/utilitarios.py",
+      "file:blueprints/auth.py",
+      "file:blueprints/conta.py"
+    ],
+    "servicos": [
+      "file:servicos/autenticacao.py",
+      "file:servicos/diagnostico.py",
+      "file:servicos/seguranca.py",
+      "file:servicos/limite.py",
+      "file:servicos/senhas.py",
+      "file:servicos/mfa.py",
+      "document:servicos/senhas_comuns.txt"
+    ],
+    "(raiz)": [
+      "file:servidor.py",
+      "file:definir_senha_admin.py",
+      "config:.dockerignore",
+      "service:Dockerfile",
+      "service:Dockerfile:python",
+      "service:docker-compose.yml",
+      "service:docker-compose.yml:db",
+      "service:docker-compose.yml:app",
+      "service:docker-compose.simulador.yml",
+      "config:.env.example",
+      "document:CLAUDE.md",
+      "document:PROMPT_DEPLOY_GEMINI.md",
+      "document:README.md",
+      "file:apresentacao.sh",
+      "document:requirements.txt",
+      "config:skills-lock.json",
+      "file:configurar_banco_app.py",
+      "file:gunicorn.conf.py",
+      "config:requirements.in"
+    ],
+    "dao": [
+      "file:dao/banco.py",
+      "file:dao/usuario_dao.py"
+    ],
+    "modelos": [
+      "file:modelos/__init__.py",
+      "file:modelos/base.py",
+      "file:modelos/leitura.py",
+      "file:modelos/teste.py",
+      "file:modelos/usuario.py",
+      "file:modelos/vaca.py"
+    ],
+    "frontend": [
+      "file:frontend/src/Landing.tsx",
+      "file:frontend/src/LogoQuickMast.tsx",
+      "file:frontend/src/main.tsx",
+      "file:frontend/src/manchetes.ts",
+      "file:frontend/src/three/UbereScene.tsx",
+      "file:frontend/src/tokens.ts",
+      "file:frontend/index.html",
+      "config:frontend/package.json",
+      "config:frontend/tsconfig.json",
+      "file:frontend/src/landing.css",
+      "file:frontend/vite.config.ts"
+    ],
+    ".github": [
+      "pipeline:.github/workflows/seguranca.yml"
+    ],
+    "templates": [
+      "file:templates/_componentes.html",
+      "file:templates/_landing_assets.html",
+      "file:templates/base.html",
+      "file:templates/conta.html",
+      "file:templates/index.html",
+      "file:templates/login.html",
+      "file:templates/mfa.html",
+      "file:templates/painel.html",
+      "file:templates/ubere.html",
+      "file:templates/usuarios.html",
+      "file:templates/vaca.html"
+    ],
+    "firmware": [
+      "file:firmware/quickmast_esp8266/quickmast_esp8266.ino"
+    ],
+    "stetic": [
+      "file:stetic/css/quickmast.css",
+      "document:stetic/fonts/OFL.txt",
+      "file:stetic/js/componentes.js",
+      "file:stetic/js/formularios.js",
+      "file:stetic/js/login.js",
+      "file:stetic/js/movimento.js",
+      "file:stetic/js/painel.js",
+      "file:stetic/js/ubere.js",
+      "file:stetic/js/usuarios.js",
+      "file:stetic/js/vaca.js"
+    ]
+  },
+  "nodeTypeGroups": {
+    "file": [
+      "file:blueprints/__init__.py",
+      "file:blueprints/erros.py",
+      "file:blueprints/paginas.py",
+      "file:blueprints/sensor.py",
+      "file:blueprints/testes.py",
+      "file:blueprints/usuarios.py",
+      "file:blueprints/utilitarios.py",
+      "file:servicos/autenticacao.py",
+      "file:servicos/diagnostico.py",
+      "file:servicos/seguranca.py",
+      "file:servidor.py",
+      "file:dao/banco.py",
+      "file:dao/usuario_dao.py",
+      "file:modelos/__init__.py",
+      "file:modelos/base.py",
+      "file:modelos/leitura.py",
+      "file:modelos/teste.py",
+      "file:modelos/usuario.py",
+      "file:modelos/vaca.py",
+      "file:frontend/src/Landing.tsx",
+      "file:frontend/src/LogoQuickMast.tsx",
+      "file:frontend/src/main.tsx",
+      "file:frontend/src/manchetes.ts",
+      "file:frontend/src/three/UbereScene.tsx",
+      "file:frontend/src/tokens.ts",
+      "file:blueprints/auth.py",
+      "file:blueprints/conta.py",
+      "file:definir_senha_admin.py",
+      "file:servicos/limite.py",
+      "file:servicos/senhas.py",
+      "file:apresentacao.sh",
+      "file:frontend/index.html",
+      "file:templates/_componentes.html",
+      "file:templates/_landing_assets.html",
+      "file:templates/base.html",
+      "file:templates/conta.html",
+      "file:templates/index.html",
+      "file:templates/login.html",
+      "file:templates/mfa.html",
+      "file:templates/painel.html",
+      "file:templates/ubere.html",
+      "file:templates/usuarios.html",
+      "file:templates/vaca.html",
+      "file:configurar_banco_app.py",
+      "file:firmware/quickmast_esp8266/quickmast_esp8266.ino",
+      "file:frontend/src/landing.css",
+      "file:frontend/vite.config.ts",
+      "file:gunicorn.conf.py",
+      "file:servicos/mfa.py",
+      "file:stetic/css/quickmast.css",
+      "file:stetic/js/componentes.js",
+      "file:stetic/js/formularios.js",
+      "file:stetic/js/login.js",
+      "file:stetic/js/movimento.js",
+      "file:stetic/js/painel.js",
+      "file:stetic/js/ubere.js",
+      "file:stetic/js/usuarios.js",
+      "file:stetic/js/vaca.js"
+    ],
+    "config": [
+      "config:.dockerignore",
+      "config:.env.example",
+      "config:skills-lock.json",
+      "config:frontend/package.json",
+      "config:frontend/tsconfig.json",
+      "config:requirements.in"
+    ],
+    "service": [
+      "service:Dockerfile",
+      "service:Dockerfile:python",
+      "service:docker-compose.yml",
+      "service:docker-compose.yml:db",
+      "service:docker-compose.yml:app",
+      "service:docker-compose.simulador.yml"
+    ],
+    "pipeline": [
+      "pipeline:.github/workflows/seguranca.yml"
+    ],
+    "document": [
+      "document:CLAUDE.md",
+      "document:PROMPT_DEPLOY_GEMINI.md",
+      "document:README.md",
+      "document:requirements.txt",
+      "document:servicos/senhas_comuns.txt",
+      "document:stetic/fonts/OFL.txt"
+    ]
+  },
+  "crossCategoryEdges": [
+    {
+      "fromType": "config",
+      "toType": "file",
+      "edgeType": "configures",
+      "count": 7
+    },
+    {
+      "fromType": "document",
+      "toType": "file",
+      "edgeType": "documents",
+      "count": 5
+    },
+    {
+      "fromType": "pipeline",
+      "toType": "file",
+      "edgeType": "triggers",
+      "count": 4
+    },
+    {
+      "fromType": "config",
+      "toType": "file",
+      "edgeType": "related",
+      "count": 4
+    },
+    {
+      "fromType": "service",
+      "toType": "file",
+      "edgeType": "deploys",
+      "count": 3
+    },
+    {
+      "fromType": "config",
+      "toType": "service",
+      "edgeType": "configures",
+      "count": 2
+    },
+    {
+      "fromType": "file",
+      "toType": "service",
+      "edgeType": "depends_on",
+      "count": 2
+    },
+    {
+      "fromType": "service",
+      "toType": "document",
+      "edgeType": "depends_on",
+      "count": 1
+    },
+    {
+      "fromType": "service",
+      "toType": "config",
+      "edgeType": "depends_on",
+      "count": 1
+    },
+    {
+      "fromType": "service",
+      "toType": "file",
+      "edgeType": "related",
+      "count": 1
+    },
+    {
+      "fromType": "pipeline",
+      "toType": "document",
+      "edgeType": "depends_on",
+      "count": 1
+    },
+    {
+      "fromType": "document",
+      "toType": "config",
+      "edgeType": "documents",
+      "count": 1
+    },
+    {
+      "fromType": "file",
+      "toType": "config",
+      "edgeType": "depends_on",
+      "count": 1
+    },
+    {
+      "fromType": "document",
+      "toType": "config",
+      "edgeType": "related",
+      "count": 1
+    },
+    {
+      "fromType": "document",
+      "toType": "file",
+      "edgeType": "related",
+      "count": 1
+    }
+  ],
+  "nonCodeLinks": {
+    "service:Dockerfile": [
+      {
+        "to": "file:servidor.py",
+        "type": "deploys"
+      },
+      {
+        "to": "file:gunicorn.conf.py",
+        "type": "deploys"
+      }
+    ],
+    "service:docker-compose.yml:app": [
+      {
+        "to": "file:servidor.py",
+        "type": "deploys"
+      }
+    ],
+    "service:docker-compose.simulador.yml": [
+      {
+        "to": "file:apresentacao.sh",
+        "type": "related"
+      }
+    ],
+    "pipeline:.github/workflows/seguranca.yml": [
+      {
+        "to": "file:servidor.py",
+        "type": "triggers"
+      },
+      {
+        "to": "file:definir_senha_admin.py",
+        "type": "triggers"
+      },
+      {
+        "to": "file:configurar_banco_app.py",
+        "type": "triggers"
+      },
+      {
+        "to": "file:dao/banco.py",
+        "type": "triggers"
+      }
+    ],
+    "config:.env.example": [
+      {
+        "to": "file:servidor.py",
+        "type": "configures"
+      },
+      {
+        "to": "file:definir_senha_admin.py",
+        "type": "related"
+      },
+      {
+        "to": "file:configurar_banco_app.py",
+        "type": "related"
+      },
+      {
+        "to": "file:firmware/quickmast_esp8266/quickmast_esp8266.ino",
+        "type": "related"
+      }
+    ],
+    "document:README.md": [
+      {
+        "to": "file:servidor.py",
+        "type": "documents"
+      }
+    ],
+    "document:PROMPT_DEPLOY_GEMINI.md": [
+      {
+        "to": "file:servidor.py",
+        "type": "documents"
+      },
+      {
+        "to": "file:gunicorn.conf.py",
+        "type": "documents"
+      },
+      {
+        "to": "file:definir_senha_admin.py",
+        "type": "documents"
+      }
+    ],
+    "config:frontend/package.json": [
+      {
+        "to": "file:frontend/src/main.tsx",
+        "type": "configures"
+      },
+      {
+        "to": "file:frontend/vite.config.ts",
+        "type": "configures"
+      },
+      {
+        "to": "file:frontend/index.html",
+        "type": "configures"
+      }
+    ],
+    "config:frontend/tsconfig.json": [
+      {
+        "to": "file:frontend/src/main.tsx",
+        "type": "configures"
+      },
+      {
+        "to": "file:frontend/vite.config.ts",
+        "type": "related"
+      }
+    ],
+    "config:requirements.in": [
+      {
+        "to": "file:servidor.py",
+        "type": "configures"
+      },
+      {
+        "to": "file:servicos/mfa.py",
+        "type": "configures"
+      }
+    ],
+    "document:servicos/senhas_comuns.txt": [
+      {
+        "to": "file:servicos/senhas.py",
+        "type": "related"
+      }
+    ],
+    "document:stetic/fonts/OFL.txt": [
+      {
+        "to": "file:stetic/css/quickmast.css",
+        "type": "documents"
+      }
+    ]
+  },
+  "interGroupImports": [
+    {
+      "from": "blueprints",
+      "to": "servicos",
+      "count": 16
+    },
+    {
+      "from": "(raiz)",
+      "to": "servicos",
+      "count": 4
+    },
+    {
+      "from": "dao",
+      "to": "modelos",
+      "count": 2
+    },
+    {
+      "from": "blueprints",
+      "to": "modelos",
+      "count": 1
+    },
+    {
+      "from": "(raiz)",
+      "to": "blueprints",
+      "count": 1
+    }
+  ],
+  "intraGroupDensity": {
+    "blueprints": {
+      "internalEdges": 9,
+      "totalEdges": 27,
+      "density": 0.33
+    },
+    "servicos": {
+      "internalEdges": 1,
+      "totalEdges": 21,
+      "density": 0.05
+    },
+    "(raiz)": {
+      "internalEdges": 0,
+      "totalEdges": 5,
+      "density": 0
+    },
+    "dao": {
+      "internalEdges": 1,
+      "totalEdges": 3,
+      "density": 0.33
+    },
+    "modelos": {
+      "internalEdges": 9,
+      "totalEdges": 12,
+      "density": 0.75
+    },
+    "frontend": {
+      "internalEdges": 6,
+      "totalEdges": 6,
+      "density": 1
+    },
+    ".github": {
+      "internalEdges": 0,
+      "totalEdges": 0,
+      "density": 0
+    },
+    "templates": {
+      "internalEdges": 0,
+      "totalEdges": 0,
+      "density": 0
+    },
+    "firmware": {
+      "internalEdges": 0,
+      "totalEdges": 0,
+      "density": 0
+    },
+    "stetic": {
+      "internalEdges": 0,
+      "totalEdges": 0,
+      "density": 0
+    }
+  },
+  "patternMatches": {
+    "blueprints": "api",
+    "servicos": "service",
+    "dao": "data",
+    "modelos": "data",
+    "frontend": "ui",
+    ".github": "ci-cd",
+    "templates": "ui",
+    "firmware": "firmware",
+    "stetic": "assets"
+  },
+  "filePatternMatches": {
+    "file:blueprints/__init__.py": "entry",
+    "file:modelos/__init__.py": "entry",
+    "service:Dockerfile": "infrastructure",
+    "service:Dockerfile:python": "infrastructure",
+    "service:docker-compose.yml": "infrastructure",
+    "service:docker-compose.yml:db": "infrastructure",
+    "service:docker-compose.yml:app": "infrastructure",
+    "service:docker-compose.simulador.yml": "infrastructure",
+    "pipeline:.github/workflows/seguranca.yml": "ci-cd",
+    "document:CLAUDE.md": "documentation",
+    "document:PROMPT_DEPLOY_GEMINI.md": "documentation",
+    "document:README.md": "documentation",
+    "file:firmware/quickmast_esp8266/quickmast_esp8266.ino": "firmware"
+  },
+  "deploymentTopology": {
+    "hasDockerfile": true,
+    "hasCompose": true,
+    "hasK8s": false,
+    "hasTerraform": false,
+    "hasCI": true,
+    "infraFiles": [
+      "Dockerfile",
+      "docker-compose.yml",
+      "docker-compose.simulador.yml",
+      ".github/workflows/seguranca.yml",
+      "apresentacao.sh",
+      "gunicorn.conf.py"
+    ]
+  },
+  "dataPipeline": {
+    "schemaFiles": [],
+    "migrationFiles": [],
+    "dataModelFiles": [
+      "dao/banco.py",
+      "dao/usuario_dao.py",
+      "modelos/__init__.py",
+      "modelos/base.py",
+      "modelos/leitura.py",
+      "modelos/teste.py",
+      "modelos/usuario.py",
+      "modelos/vaca.py"
+    ],
+    "apiHandlerFiles": [
+      "blueprints/__init__.py",
+      "blueprints/erros.py",
+      "blueprints/paginas.py",
+      "blueprints/sensor.py",
+      "blueprints/testes.py",
+      "blueprints/usuarios.py",
+      "blueprints/utilitarios.py",
+      "blueprints/auth.py",
+      "blueprints/conta.py"
+    ]
+  },
+  "docCoverage": {
+    "groupsWithDocs": 1,
+    "totalGroups": 9,
+    "coverageRatio": 0.11,
+    "undocumentedGroups": [
+      "blueprints",
+      "servicos",
+      "dao",
+      "modelos",
+      "frontend",
+      ".github",
+      "templates",
+      "firmware"
+    ]
+  },
+  "dependencyDirection": [
+    {
+      "dependent": "blueprints",
+      "dependsOn": "servicos",
+      "count": 16,
+      "reverse": 0
+    },
+    {
+      "dependent": "(raiz)",
+      "dependsOn": "servicos",
+      "count": 4,
+      "reverse": 0
+    },
+    {
+      "dependent": "dao",
+      "dependsOn": "modelos",
+      "count": 2,
+      "reverse": 0
+    },
+    {
+      "dependent": "blueprints",
+      "dependsOn": "modelos",
+      "count": 1,
+      "reverse": 0
+    },
+    {
+      "dependent": "(raiz)",
+      "dependsOn": "blueprints",
+      "count": 1,
+      "reverse": 0
+    }
+  ],
+  "fileStats": {
+    "totalFileNodes": 77,
+    "filesPerGroup": {
+      "blueprints": 9,
+      "servicos": 7,
+      "(raiz)": 19,
+      "dao": 2,
+      "modelos": 6,
+      "frontend": 11,
+      ".github": 1,
+      "templates": 11,
+      "firmware": 1,
+      "stetic": 10
+    },
+    "nodeTypeCounts": {
+      "file": 58,
+      "config": 6,
+      "service": 6,
+      "pipeline": 1,
+      "document": 6
+    }
+  },
+  "fileFanIn": {
+    "file:blueprints/auth.py": 2,
+    "file:blueprints/conta.py": 1,
+    "file:blueprints/erros.py": 1,
+    "file:blueprints/paginas.py": 1,
+    "file:blueprints/sensor.py": 1,
+    "file:blueprints/testes.py": 1,
+    "file:blueprints/usuarios.py": 1,
+    "file:blueprints/utilitarios.py": 1,
+    "file:servicos/autenticacao.py": 8,
+    "file:servicos/diagnostico.py": 1,
+    "file:servicos/seguranca.py": 7,
+    "file:modelos/usuario.py": 3,
+    "file:blueprints/__init__.py": 1,
+    "file:servicos/senhas.py": 4,
+    "file:modelos/__init__.py": 1,
+    "file:dao/banco.py": 1,
+    "file:modelos/base.py": 5,
+    "file:modelos/leitura.py": 1,
+    "file:modelos/teste.py": 1,
+    "file:modelos/vaca.py": 1,
+    "file:frontend/src/LogoQuickMast.tsx": 1,
+    "file:frontend/src/manchetes.ts": 2,
+    "file:frontend/src/Landing.tsx": 1,
+    "file:frontend/src/landing.css": 1,
+    "file:frontend/src/tokens.ts": 1,
+    "file:servicos/limite.py": 1
+  },
+  "fileFanOut": {
+    "file:blueprints/__init__.py": 8,
+    "file:blueprints/paginas.py": 1,
+    "file:blueprints/sensor.py": 1,
+    "file:blueprints/testes.py": 3,
+    "file:blueprints/usuarios.py": 3,
+    "file:blueprints/utilitarios.py": 2,
+    "file:servicos/autenticacao.py": 1,
+    "file:servidor.py": 4,
+    "file:dao/banco.py": 1,
+    "file:dao/usuario_dao.py": 2,
+    "file:modelos/__init__.py": 5,
+    "file:modelos/leitura.py": 1,
+    "file:modelos/teste.py": 1,
+    "file:modelos/usuario.py": 1,
+    "file:modelos/vaca.py": 1,
+    "file:frontend/src/Landing.tsx": 2,
+    "file:frontend/src/main.tsx": 2,
+    "file:frontend/src/three/UbereScene.tsx": 2,
+    "file:blueprints/auth.py": 4,
+    "file:blueprints/conta.py": 4,
+    "file:definir_senha_admin.py": 1
+  },
+  "adjacency": {
+    "file:blueprints/__init__.py": [
+      "file:blueprints/auth.py",
+      "file:blueprints/conta.py",
+      "file:blueprints/erros.py",
+      "file:blueprints/paginas.py",
+      "file:blueprints/sensor.py",
+      "file:blueprints/testes.py",
+      "file:blueprints/usuarios.py",
+      "file:blueprints/utilitarios.py"
+    ],
+    "file:blueprints/paginas.py": [
+      "file:servicos/autenticacao.py"
+    ],
+    "file:blueprints/sensor.py": [
+      "file:servicos/autenticacao.py"
+    ],
+    "file:blueprints/testes.py": [
+      "file:servicos/autenticacao.py",
+      "file:servicos/diagnostico.py",
+      "file:servicos/seguranca.py"
+    ],
+    "file:blueprints/usuarios.py": [
+      "file:modelos/usuario.py",
+      "file:servicos/autenticacao.py",
+      "file:servicos/seguranca.py"
+    ],
+    "file:blueprints/utilitarios.py": [
+      "file:servicos/autenticacao.py",
+      "file:servicos/seguranca.py"
+    ],
+    "file:servicos/autenticacao.py": [
+      "file:servicos/seguranca.py"
+    ],
+    "file:servidor.py": [
+      "file:blueprints/__init__.py",
+      "file:servicos/autenticacao.py",
+      "file:servicos/seguranca.py",
+      "file:servicos/senhas.py"
+    ],
+    "file:dao/banco.py": [
+      "file:modelos/__init__.py"
+    ],
+    "file:dao/usuario_dao.py": [
+      "file:dao/banco.py",
+      "file:modelos/usuario.py"
+    ],
+    "file:modelos/__init__.py": [
+      "file:modelos/base.py",
+      "file:modelos/leitura.py",
+      "file:modelos/teste.py",
+      "file:modelos/usuario.py",
+      "file:modelos/vaca.py"
+    ],
+    "file:modelos/leitura.py": [
+      "file:modelos/base.py"
+    ],
+    "file:modelos/teste.py": [
+      "file:modelos/base.py"
+    ],
+    "file:modelos/usuario.py": [
+      "file:modelos/base.py"
+    ],
+    "file:modelos/vaca.py": [
+      "file:modelos/base.py"
+    ],
+    "file:frontend/src/Landing.tsx": [
+      "file:frontend/src/LogoQuickMast.tsx",
+      "file:frontend/src/manchetes.ts"
+    ],
+    "file:frontend/src/main.tsx": [
+      "file:frontend/src/Landing.tsx",
+      "file:frontend/src/landing.css"
+    ],
+    "file:frontend/src/three/UbereScene.tsx": [
+      "file:frontend/src/manchetes.ts",
+      "file:frontend/src/tokens.ts"
+    ],
+    "file:blueprints/auth.py": [
+      "file:servicos/autenticacao.py",
+      "file:servicos/limite.py",
+      "file:servicos/seguranca.py",
+      "file:servicos/senhas.py"
+    ],
+    "file:blueprints/conta.py": [
+      "file:blueprints/auth.py",
+      "file:servicos/autenticacao.py",
+      "file:servicos/seguranca.py",
+      "file:servicos/senhas.py"
+    ],
+    "file:definir_senha_admin.py": [
+      "file:servicos/senhas.py"
+    ]
+  }
+}

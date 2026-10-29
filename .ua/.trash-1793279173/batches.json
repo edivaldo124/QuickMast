@@ -1,0 +1,1078 @@
+{
+  "schemaVersion": 1,
+  "algorithm": "louvain",
+  "totalFiles": 74,
+  "totalBatches": 10,
+  "exportsByPath": {
+    "blueprints/__init__.py": [
+      "registrar_blueprints"
+    ],
+    "blueprints/auth.py": [
+      "injetar_usuario",
+      "_destino_seguro",
+      "_bloqueado",
+      "_login_falhou",
+      "_iniciar_sessao",
+      "_erro_login",
+      "login",
+      "login_post",
+      "_mfa_pendente",
+      "_erro_mfa",
+      "login_mfa",
+      "login_mfa_post",
+      "registrar",
+      "logout"
+    ],
+    "blueprints/conta.py": [
+      "pagina",
+      "trocar_senha",
+      "_pagina_mfa",
+      "mfa",
+      "mfa_post"
+    ],
+    "blueprints/erros.py": [
+      "erro_http",
+      "erro_geral"
+    ],
+    "blueprints/paginas.py": [
+      "index",
+      "ubere",
+      "painel",
+      "historico_vaca",
+      "usuarios"
+    ],
+    "blueprints/sensor.py": [
+      "read",
+      "_pedir_leitura",
+      "_ler_placa_na_rede",
+      "_procurar_placa"
+    ],
+    "blueprints/testes.py": [
+      "_normalizar_brinco",
+      "_validar",
+      "criar_teste",
+      "listar_testes",
+      "obter_teste",
+      "apagar_teste",
+      "listar_vacas",
+      "testes_da_vaca",
+      "estatisticas"
+    ],
+    "blueprints/usuarios.py": [
+      "eu",
+      "listar",
+      "atualizar"
+    ],
+    "blueprints/utilitarios.py": [
+      "_celula_segura",
+      "saude",
+      "exportar_csv"
+    ],
+    "configurar_banco_app.py": [],
+    "dao/banco.py": [
+      "_migrar",
+      "_garantir_utilizador_app",
+      "criar_tabela",
+      "verificar_ligacao",
+      "_teste_para_dict",
+      "registrar_teste",
+      "apagar_teste",
+      "_filtros",
+      "listar_testes",
+      "obter_teste",
+      "listar_vacas",
+      "estatisticas",
+      "linhas_csv"
+    ],
+    "dao/usuario_dao.py": [
+      "_para_dict",
+      "publico",
+      "criar_usuario",
+      "obter_por_email",
+      "obter_por_id",
+      "listar_usuarios",
+      "contar_admins_ativos",
+      "atualizar_usuario",
+      "encerrar_sessoes",
+      "alterar_senha",
+      "ativar_mfa",
+      "usar_passo_totp",
+      "redefinir_mfa"
+    ],
+    "definir_senha_admin.py": [],
+    "firmware/quickmast_esp8266/quickmast_esp8266.ino": [],
+    "frontend/src/Landing.tsx": [
+      "Landing"
+    ],
+    "frontend/src/LogoQuickMast.tsx": [
+      "LogoQuickMast"
+    ],
+    "frontend/src/main.tsx": [],
+    "frontend/src/manchetes.ts": [
+      "MANCHETES"
+    ],
+    "frontend/src/three/UbereScene.tsx": [
+      "UbereScene"
+    ],
+    "frontend/src/tokens.ts": [
+      "cores"
+    ],
+    "frontend/vite.config.ts": [],
+    "gunicorn.conf.py": [],
+    "modelos/__init__.py": [],
+    "modelos/base.py": [
+      "Base"
+    ],
+    "modelos/leitura.py": [
+      "Leitura"
+    ],
+    "modelos/teste.py": [
+      "Teste"
+    ],
+    "modelos/usuario.py": [
+      "Usuario"
+    ],
+    "modelos/vaca.py": [
+      "Vaca"
+    ],
+    "requirements.in": [],
+    "servicos/autenticacao.py": [
+      "usuario_atual",
+      "_sem_sessao",
+      "negar_por_omissao",
+      "exigir_login",
+      "_hash_valido",
+      "garantir_admin"
+    ],
+    "servicos/diagnostico.py": [
+      "_mediana_outros",
+      "_relativa",
+      "diagnosticar"
+    ],
+    "servicos/limite.py": [
+      "Limitador"
+    ],
+    "servicos/mfa.py": [
+      "novo_segredo",
+      "qr_svg",
+      "segredo_formatado",
+      "verificar"
+    ],
+    "servicos/seguranca.py": [
+      "FormatoJSON",
+      "mascarar_email",
+      "auditar",
+      "_origem_valida",
+      "configurar_seguranca"
+    ],
+    "servicos/senhas.py": [
+      "problema_senha"
+    ],
+    "servidor.py": [
+      "iniciar",
+      "redefinir_mfa",
+      "redefinir_senha"
+    ],
+    "stetic/js/componentes.js": [],
+    "stetic/js/formularios.js": [],
+    "stetic/js/login.js": [],
+    "stetic/js/movimento.js": [],
+    "stetic/js/painel.js": [],
+    "stetic/js/ubere.js": [],
+    "stetic/js/usuarios.js": [],
+    "stetic/js/vaca.js": []
+  },
+  "batches": [
+    {
+      "batchIndex": 1,
+      "files": [
+        {
+          "path": "blueprints/__init__.py",
+          "language": "python",
+          "sizeLines": 27,
+          "fileCategory": "code"
+        },
+        {
+          "path": "blueprints/erros.py",
+          "language": "python",
+          "sizeLines": 20,
+          "fileCategory": "code"
+        },
+        {
+          "path": "blueprints/paginas.py",
+          "language": "python",
+          "sizeLines": 35,
+          "fileCategory": "code"
+        },
+        {
+          "path": "blueprints/sensor.py",
+          "language": "python",
+          "sizeLines": 120,
+          "fileCategory": "code"
+        },
+        {
+          "path": "blueprints/testes.py",
+          "language": "python",
+          "sizeLines": 122,
+          "fileCategory": "code"
+        },
+        {
+          "path": "blueprints/usuarios.py",
+          "language": "python",
+          "sizeLines": 52,
+          "fileCategory": "code"
+        },
+        {
+          "path": "blueprints/utilitarios.py",
+          "language": "python",
+          "sizeLines": 52,
+          "fileCategory": "code"
+        },
+        {
+          "path": "servicos/autenticacao.py",
+          "language": "python",
+          "sizeLines": 101,
+          "fileCategory": "code"
+        },
+        {
+          "path": "servicos/diagnostico.py",
+          "language": "python",
+          "sizeLines": 59,
+          "fileCategory": "code"
+        },
+        {
+          "path": "servicos/seguranca.py",
+          "language": "python",
+          "sizeLines": 95,
+          "fileCategory": "code"
+        },
+        {
+          "path": "servidor.py",
+          "language": "python",
+          "sizeLines": 128,
+          "fileCategory": "code"
+        }
+      ],
+      "batchImportData": {
+        "blueprints/__init__.py": [
+          "blueprints/auth.py",
+          "blueprints/conta.py",
+          "blueprints/erros.py",
+          "blueprints/paginas.py",
+          "blueprints/sensor.py",
+          "blueprints/testes.py",
+          "blueprints/usuarios.py",
+          "blueprints/utilitarios.py"
+        ],
+        "blueprints/erros.py": [],
+        "blueprints/paginas.py": [
+          "servicos/autenticacao.py"
+        ],
+        "blueprints/sensor.py": [
+          "servicos/autenticacao.py"
+        ],
+        "blueprints/testes.py": [
+          "servicos/autenticacao.py",
+          "servicos/diagnostico.py",
+          "servicos/seguranca.py"
+        ],
+        "blueprints/usuarios.py": [
+          "modelos/usuario.py",
+          "servicos/autenticacao.py",
+          "servicos/seguranca.py"
+        ],
+        "blueprints/utilitarios.py": [
+          "servicos/autenticacao.py",
+          "servicos/seguranca.py"
+        ],
+        "servicos/autenticacao.py": [
+          "servicos/seguranca.py"
+        ],
+        "servicos/diagnostico.py": [],
+        "servicos/seguranca.py": [],
+        "servidor.py": [
+          "blueprints/__init__.py",
+          "servicos/autenticacao.py",
+          "servicos/seguranca.py",
+          "servicos/senhas.py"
+        ]
+      },
+      "neighborMap": {
+        "blueprints/__init__.py": [
+          {
+            "path": "blueprints/auth.py",
+            "batchIndex": 4,
+            "symbols": [
+              "injetar_usuario",
+              "_destino_seguro",
+              "_bloqueado",
+              "_login_falhou",
+              "_iniciar_sessao",
+              "_erro_login",
+              "login",
+              "login_post",
+              "_mfa_pendente",
+              "_erro_mfa",
+              "login_mfa",
+              "login_mfa_post",
+              "registrar",
+              "logout"
+            ]
+          },
+          {
+            "path": "blueprints/conta.py",
+            "batchIndex": 4,
+            "symbols": [
+              "pagina",
+              "trocar_senha",
+              "_pagina_mfa",
+              "mfa",
+              "mfa_post"
+            ]
+          }
+        ],
+        "blueprints/usuarios.py": [
+          {
+            "path": "modelos/usuario.py",
+            "batchIndex": 2,
+            "symbols": [
+              "Usuario"
+            ]
+          }
+        ],
+        "servicos/autenticacao.py": [
+          {
+            "path": "blueprints/auth.py",
+            "batchIndex": 4,
+            "symbols": [
+              "injetar_usuario",
+              "_destino_seguro",
+              "_bloqueado",
+              "_login_falhou",
+              "_iniciar_sessao",
+              "_erro_login",
+              "login",
+              "login_post",
+              "_mfa_pendente",
+              "_erro_mfa",
+              "login_mfa",
+              "login_mfa_post",
+              "registrar",
+              "logout"
+            ]
+          },
+          {
+            "path": "blueprints/conta.py",
+            "batchIndex": 4,
+            "symbols": [
+              "pagina",
+              "trocar_senha",
+              "_pagina_mfa",
+              "mfa",
+              "mfa_post"
+            ]
+          }
+        ],
+        "servicos/seguranca.py": [
+          {
+            "path": "blueprints/auth.py",
+            "batchIndex": 4,
+            "symbols": [
+              "injetar_usuario",
+              "_destino_seguro",
+              "_bloqueado",
+              "_login_falhou",
+              "_iniciar_sessao",
+              "_erro_login",
+              "login",
+              "login_post",
+              "_mfa_pendente",
+              "_erro_mfa",
+              "login_mfa",
+              "login_mfa_post",
+              "registrar",
+              "logout"
+            ]
+          },
+          {
+            "path": "blueprints/conta.py",
+            "batchIndex": 4,
+            "symbols": [
+              "pagina",
+              "trocar_senha",
+              "_pagina_mfa",
+              "mfa",
+              "mfa_post"
+            ]
+          }
+        ],
+        "servidor.py": [
+          {
+            "path": "servicos/senhas.py",
+            "batchIndex": 4,
+            "symbols": [
+              "problema_senha"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "batchIndex": 2,
+      "files": [
+        {
+          "path": "dao/banco.py",
+          "language": "python",
+          "sizeLines": 266,
+          "fileCategory": "code"
+        },
+        {
+          "path": "dao/usuario_dao.py",
+          "language": "python",
+          "sizeLines": 137,
+          "fileCategory": "code"
+        },
+        {
+          "path": "modelos/__init__.py",
+          "language": "python",
+          "sizeLines": 10,
+          "fileCategory": "code"
+        },
+        {
+          "path": "modelos/base.py",
+          "language": "python",
+          "sizeLines": 6,
+          "fileCategory": "code"
+        },
+        {
+          "path": "modelos/leitura.py",
+          "language": "python",
+          "sizeLines": 23,
+          "fileCategory": "code"
+        },
+        {
+          "path": "modelos/teste.py",
+          "language": "python",
+          "sizeLines": 28,
+          "fileCategory": "code"
+        },
+        {
+          "path": "modelos/usuario.py",
+          "language": "python",
+          "sizeLines": 30,
+          "fileCategory": "code"
+        },
+        {
+          "path": "modelos/vaca.py",
+          "language": "python",
+          "sizeLines": 20,
+          "fileCategory": "code"
+        }
+      ],
+      "batchImportData": {
+        "dao/banco.py": [
+          "modelos/__init__.py"
+        ],
+        "dao/usuario_dao.py": [
+          "dao/banco.py",
+          "modelos/usuario.py"
+        ],
+        "modelos/__init__.py": [
+          "modelos/base.py",
+          "modelos/leitura.py",
+          "modelos/teste.py",
+          "modelos/usuario.py",
+          "modelos/vaca.py"
+        ],
+        "modelos/base.py": [],
+        "modelos/leitura.py": [
+          "modelos/base.py"
+        ],
+        "modelos/teste.py": [
+          "modelos/base.py"
+        ],
+        "modelos/usuario.py": [
+          "modelos/base.py"
+        ],
+        "modelos/vaca.py": [
+          "modelos/base.py"
+        ]
+      },
+      "neighborMap": {
+        "modelos/usuario.py": [
+          {
+            "path": "blueprints/usuarios.py",
+            "batchIndex": 1,
+            "symbols": [
+              "eu",
+              "listar",
+              "atualizar"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "batchIndex": 3,
+      "files": [
+        {
+          "path": "frontend/src/Landing.tsx",
+          "language": "typescript",
+          "sizeLines": 169,
+          "fileCategory": "code"
+        },
+        {
+          "path": "frontend/src/LogoQuickMast.tsx",
+          "language": "typescript",
+          "sizeLines": 15,
+          "fileCategory": "code"
+        },
+        {
+          "path": "frontend/src/main.tsx",
+          "language": "typescript",
+          "sizeLines": 15,
+          "fileCategory": "code"
+        },
+        {
+          "path": "frontend/src/manchetes.ts",
+          "language": "typescript",
+          "sizeLines": 33,
+          "fileCategory": "code"
+        },
+        {
+          "path": "frontend/src/three/UbereScene.tsx",
+          "language": "typescript",
+          "sizeLines": 293,
+          "fileCategory": "code"
+        },
+        {
+          "path": "frontend/src/tokens.ts",
+          "language": "typescript",
+          "sizeLines": 13,
+          "fileCategory": "code"
+        }
+      ],
+      "batchImportData": {
+        "frontend/src/Landing.tsx": [
+          "frontend/src/LogoQuickMast.tsx",
+          "frontend/src/manchetes.ts"
+        ],
+        "frontend/src/LogoQuickMast.tsx": [],
+        "frontend/src/main.tsx": [
+          "frontend/src/Landing.tsx",
+          "frontend/src/landing.css"
+        ],
+        "frontend/src/manchetes.ts": [],
+        "frontend/src/three/UbereScene.tsx": [
+          "frontend/src/manchetes.ts",
+          "frontend/src/tokens.ts"
+        ],
+        "frontend/src/tokens.ts": []
+      },
+      "neighborMap": {
+        "frontend/src/main.tsx": [
+          {
+            "path": "frontend/src/landing.css",
+            "batchIndex": 10,
+            "symbols": []
+          }
+        ]
+      }
+    },
+    {
+      "batchIndex": 4,
+      "files": [
+        {
+          "path": "blueprints/auth.py",
+          "language": "python",
+          "sizeLines": 194,
+          "fileCategory": "code"
+        },
+        {
+          "path": "blueprints/conta.py",
+          "language": "python",
+          "sizeLines": 98,
+          "fileCategory": "code"
+        },
+        {
+          "path": "definir_senha_admin.py",
+          "language": "python",
+          "sizeLines": 43,
+          "fileCategory": "code"
+        },
+        {
+          "path": "servicos/limite.py",
+          "language": "python",
+          "sizeLines": 43,
+          "fileCategory": "code"
+        },
+        {
+          "path": "servicos/senhas.py",
+          "language": "python",
+          "sizeLines": 22,
+          "fileCategory": "code"
+        }
+      ],
+      "batchImportData": {
+        "blueprints/auth.py": [
+          "servicos/autenticacao.py",
+          "servicos/limite.py",
+          "servicos/seguranca.py",
+          "servicos/senhas.py"
+        ],
+        "blueprints/conta.py": [
+          "blueprints/auth.py",
+          "servicos/autenticacao.py",
+          "servicos/seguranca.py",
+          "servicos/senhas.py"
+        ],
+        "definir_senha_admin.py": [
+          "servicos/senhas.py"
+        ],
+        "servicos/limite.py": [],
+        "servicos/senhas.py": []
+      },
+      "neighborMap": {
+        "blueprints/auth.py": [
+          {
+            "path": "servicos/autenticacao.py",
+            "batchIndex": 1,
+            "symbols": [
+              "usuario_atual",
+              "_sem_sessao",
+              "negar_por_omissao",
+              "exigir_login",
+              "_hash_valido",
+              "garantir_admin"
+            ]
+          },
+          {
+            "path": "servicos/seguranca.py",
+            "batchIndex": 1,
+            "symbols": [
+              "FormatoJSON",
+              "mascarar_email",
+              "auditar",
+              "_origem_valida",
+              "configurar_seguranca"
+            ]
+          },
+          {
+            "path": "blueprints/__init__.py",
+            "batchIndex": 1,
+            "symbols": [
+              "registrar_blueprints"
+            ]
+          }
+        ],
+        "blueprints/conta.py": [
+          {
+            "path": "servicos/autenticacao.py",
+            "batchIndex": 1,
+            "symbols": [
+              "usuario_atual",
+              "_sem_sessao",
+              "negar_por_omissao",
+              "exigir_login",
+              "_hash_valido",
+              "garantir_admin"
+            ]
+          },
+          {
+            "path": "servicos/seguranca.py",
+            "batchIndex": 1,
+            "symbols": [
+              "FormatoJSON",
+              "mascarar_email",
+              "auditar",
+              "_origem_valida",
+              "configurar_seguranca"
+            ]
+          },
+          {
+            "path": "blueprints/__init__.py",
+            "batchIndex": 1,
+            "symbols": [
+              "registrar_blueprints"
+            ]
+          }
+        ],
+        "servicos/senhas.py": [
+          {
+            "path": "servidor.py",
+            "batchIndex": 1,
+            "symbols": [
+              "iniciar",
+              "redefinir_mfa",
+              "redefinir_senha"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "batchIndex": 5,
+      "files": [
+        {
+          "path": ".dockerignore",
+          "language": "unknown",
+          "sizeLines": 21,
+          "fileCategory": "infra"
+        },
+        {
+          "path": "Dockerfile",
+          "language": "dockerfile",
+          "sizeLines": 24,
+          "fileCategory": "infra"
+        },
+        {
+          "path": "docker-compose.simulador.yml",
+          "language": "yaml",
+          "sizeLines": 8,
+          "fileCategory": "infra"
+        },
+        {
+          "path": "docker-compose.yml",
+          "language": "yaml",
+          "sizeLines": 53,
+          "fileCategory": "infra"
+        }
+      ],
+      "batchImportData": {
+        ".dockerignore": [],
+        "Dockerfile": [],
+        "docker-compose.simulador.yml": [],
+        "docker-compose.yml": []
+      },
+      "neighborMap": {}
+    },
+    {
+      "batchIndex": 6,
+      "files": [
+        {
+          "path": ".github/workflows/seguranca.yml",
+          "language": "yaml",
+          "sizeLines": 48,
+          "fileCategory": "infra"
+        }
+      ],
+      "batchImportData": {
+        ".github/workflows/seguranca.yml": []
+      },
+      "neighborMap": {}
+    },
+    {
+      "batchIndex": 7,
+      "files": [
+        {
+          "path": ".env.example",
+          "language": "config",
+          "sizeLines": 48,
+          "fileCategory": "config"
+        },
+        {
+          "path": "CLAUDE.md",
+          "language": "markdown",
+          "sizeLines": 10,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "PROMPT_DEPLOY_GEMINI.md",
+          "language": "markdown",
+          "sizeLines": 242,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "README.md",
+          "language": "markdown",
+          "sizeLines": 1,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "apresentacao.sh",
+          "language": "shell",
+          "sizeLines": 138,
+          "fileCategory": "script"
+        },
+        {
+          "path": "requirements.txt",
+          "language": "txt",
+          "sizeLines": 422,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "skills-lock.json",
+          "language": "json",
+          "sizeLines": 59,
+          "fileCategory": "config"
+        }
+      ],
+      "batchImportData": {
+        ".env.example": [],
+        "CLAUDE.md": [],
+        "PROMPT_DEPLOY_GEMINI.md": [],
+        "README.md": [],
+        "apresentacao.sh": [],
+        "requirements.txt": [],
+        "skills-lock.json": []
+      },
+      "neighborMap": {}
+    },
+    {
+      "batchIndex": 8,
+      "files": [
+        {
+          "path": "frontend/index.html",
+          "language": "html",
+          "sizeLines": 14,
+          "fileCategory": "markup"
+        },
+        {
+          "path": "frontend/package.json",
+          "language": "json",
+          "sizeLines": 32,
+          "fileCategory": "config"
+        },
+        {
+          "path": "frontend/tsconfig.json",
+          "language": "json",
+          "sizeLines": 18,
+          "fileCategory": "config"
+        }
+      ],
+      "batchImportData": {
+        "frontend/index.html": [],
+        "frontend/package.json": [],
+        "frontend/tsconfig.json": []
+      },
+      "neighborMap": {}
+    },
+    {
+      "batchIndex": 9,
+      "files": [
+        {
+          "path": "templates/_componentes.html",
+          "language": "html",
+          "sizeLines": 94,
+          "fileCategory": "markup"
+        },
+        {
+          "path": "templates/_landing_assets.html",
+          "language": "html",
+          "sizeLines": 7,
+          "fileCategory": "markup"
+        },
+        {
+          "path": "templates/base.html",
+          "language": "html",
+          "sizeLines": 22,
+          "fileCategory": "markup"
+        },
+        {
+          "path": "templates/conta.html",
+          "language": "html",
+          "sizeLines": 45,
+          "fileCategory": "markup"
+        },
+        {
+          "path": "templates/index.html",
+          "language": "html",
+          "sizeLines": 34,
+          "fileCategory": "markup"
+        },
+        {
+          "path": "templates/login.html",
+          "language": "html",
+          "sizeLines": 69,
+          "fileCategory": "markup"
+        },
+        {
+          "path": "templates/mfa.html",
+          "language": "html",
+          "sizeLines": 55,
+          "fileCategory": "markup"
+        },
+        {
+          "path": "templates/painel.html",
+          "language": "html",
+          "sizeLines": 51,
+          "fileCategory": "markup"
+        },
+        {
+          "path": "templates/ubere.html",
+          "language": "html",
+          "sizeLines": 89,
+          "fileCategory": "markup"
+        },
+        {
+          "path": "templates/usuarios.html",
+          "language": "html",
+          "sizeLines": 21,
+          "fileCategory": "markup"
+        },
+        {
+          "path": "templates/vaca.html",
+          "language": "html",
+          "sizeLines": 30,
+          "fileCategory": "markup"
+        }
+      ],
+      "batchImportData": {
+        "templates/_componentes.html": [],
+        "templates/_landing_assets.html": [],
+        "templates/base.html": [],
+        "templates/conta.html": [],
+        "templates/index.html": [],
+        "templates/login.html": [],
+        "templates/mfa.html": [],
+        "templates/painel.html": [],
+        "templates/ubere.html": [],
+        "templates/usuarios.html": [],
+        "templates/vaca.html": []
+      },
+      "neighborMap": {}
+    },
+    {
+      "batchIndex": 10,
+      "files": [
+        {
+          "path": "configurar_banco_app.py",
+          "language": "python",
+          "sizeLines": 50,
+          "fileCategory": "code"
+        },
+        {
+          "path": "firmware/quickmast_esp8266/quickmast_esp8266.ino",
+          "language": "ino",
+          "sizeLines": 629,
+          "fileCategory": "code"
+        },
+        {
+          "path": "frontend/src/landing.css",
+          "language": "css",
+          "sizeLines": 404,
+          "fileCategory": "markup"
+        },
+        {
+          "path": "frontend/vite.config.ts",
+          "language": "typescript",
+          "sizeLines": 50,
+          "fileCategory": "code"
+        },
+        {
+          "path": "gunicorn.conf.py",
+          "language": "python",
+          "sizeLines": 20,
+          "fileCategory": "code"
+        },
+        {
+          "path": "requirements.in",
+          "language": "in",
+          "sizeLines": 11,
+          "fileCategory": "code"
+        },
+        {
+          "path": "servicos/mfa.py",
+          "language": "python",
+          "sizeLines": 43,
+          "fileCategory": "code"
+        },
+        {
+          "path": "servicos/senhas_comuns.txt",
+          "language": "txt",
+          "sizeLines": 10071,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "stetic/css/quickmast.css",
+          "language": "css",
+          "sizeLines": 1448,
+          "fileCategory": "markup"
+        },
+        {
+          "path": "stetic/fonts/OFL.txt",
+          "language": "txt",
+          "sizeLines": 93,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "stetic/js/componentes.js",
+          "language": "javascript",
+          "sizeLines": 62,
+          "fileCategory": "code"
+        },
+        {
+          "path": "stetic/js/formularios.js",
+          "language": "javascript",
+          "sizeLines": 68,
+          "fileCategory": "code"
+        },
+        {
+          "path": "stetic/js/login.js",
+          "language": "javascript",
+          "sizeLines": 17,
+          "fileCategory": "code"
+        },
+        {
+          "path": "stetic/js/movimento.js",
+          "language": "javascript",
+          "sizeLines": 61,
+          "fileCategory": "code"
+        },
+        {
+          "path": "stetic/js/painel.js",
+          "language": "javascript",
+          "sizeLines": 66,
+          "fileCategory": "code"
+        },
+        {
+          "path": "stetic/js/ubere.js",
+          "language": "javascript",
+          "sizeLines": 407,
+          "fileCategory": "code"
+        },
+        {
+          "path": "stetic/js/usuarios.js",
+          "language": "javascript",
+          "sizeLines": 83,
+          "fileCategory": "code"
+        },
+        {
+          "path": "stetic/js/vaca.js",
+          "language": "javascript",
+          "sizeLines": 40,
+          "fileCategory": "code"
+        }
+      ],
+      "batchImportData": {
+        "configurar_banco_app.py": [],
+        "firmware/quickmast_esp8266/quickmast_esp8266.ino": [],
+        "frontend/src/landing.css": [],
+        "frontend/vite.config.ts": [],
+        "gunicorn.conf.py": [],
+        "requirements.in": [],
+        "servicos/mfa.py": [],
+        "servicos/senhas_comuns.txt": [],
+        "stetic/css/quickmast.css": [],
+        "stetic/fonts/OFL.txt": [],
+        "stetic/js/componentes.js": [],
+        "stetic/js/formularios.js": [],
+        "stetic/js/login.js": [],
+        "stetic/js/movimento.js": [],
+        "stetic/js/painel.js": [],
+        "stetic/js/ubere.js": [],
+        "stetic/js/usuarios.js": [],
+        "stetic/js/vaca.js": []
+      },
+      "neighborMap": {
+        "frontend/src/landing.css": [
+          {
+            "path": "frontend/src/main.tsx",
+            "batchIndex": 3,
+            "symbols": []
+          }
+        ]
+      }
+    }
+  ]
+}

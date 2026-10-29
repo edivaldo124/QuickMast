@@ -1,0 +1,1005 @@
+{
+  "nodes": [
+    {
+      "id": "file:configurar_banco_app.py",
+      "type": "file",
+      "name": "configurar_banco_app.py",
+      "filePath": "configurar_banco_app.py",
+      "summary": "Script de uso único que separa o utilizador da aplicação do dono do banco (menor privilégio): reescreve o .env movendo o DATABASE_URL original para DATABASE_URL_ADMIN e criando um novo DATABASE_URL com o utilizador quickmast_app e uma senha aleatória, sem mostrar senhas no ecrã.",
+      "tags": [
+        "script",
+        "database",
+        "security",
+        "least-privilege",
+        "setup"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Usa python-dotenv para ler o .env já com as variáveis expandidas, make_url do SQLAlchemy para trocar utilizador e senha, e secrets.token_urlsafe para a senha; grava o .env com permissão 0600."
+    },
+    {
+      "id": "file:firmware/quickmast_esp8266/quickmast_esp8266.ino",
+      "type": "file",
+      "name": "quickmast_esp8266.ino",
+      "filePath": "firmware/quickmast_esp8266/quickmast_esp8266.ino",
+      "summary": "Firmware do medidor de condutividade (NodeMCU/ESP8266): lê o sensor TDS no A0, conduz o teste dos 4 tetos pelo Monitor Série ou pela página /ubere via GET /read, calcula o diagnóstico de mastite com as mesmas regras do servidor e envia os testes à API do QuickMast com sessão por cookie e fila circular em RAM.",
+      "tags": [
+        "firmware",
+        "esp8266",
+        "iot",
+        "sensor",
+        "wifi"
+      ],
+      "complexity": "complex",
+      "languageNotes": "Sketch Arduino (.ino, C++) com setup()/loop(); a configuração de rede e conta fica num bloco de #define no topo, escolhendo entre rede própria (ponto de acesso para apresentações) e Wi-Fi de produção. Os limites de diagnóstico são duplicados em servicos/diagnostico.py e precisam mudar juntos."
+    },
+    {
+      "id": "file:frontend/src/landing.css",
+      "type": "file",
+      "name": "landing.css",
+      "filePath": "frontend/src/landing.css",
+      "summary": "Estilos da landing page sem sessão: hero preso ao ecrã com trilho de scroll de 500svh, véu sobre a cena 3D, manchetes que sobem por máscaras, medidor de scroll de 00 a 100, tela de abertura, rodapé e ajustes para ecrã em pé e ecrã baixo. Reaproveita as variáveis do quickmast.css.",
+      "tags": [
+        "css",
+        "landing-page",
+        "scroll-animation",
+        "styling",
+        "responsive"
+      ],
+      "complexity": "complex",
+      "languageNotes": "Usa unidades svh, clamp(), container-type e custom properties com prefixo --landing-; importado por frontend/src/main.tsx e empacotado pelo Vite."
+    },
+    {
+      "id": "file:frontend/vite.config.ts",
+      "type": "file",
+      "name": "vite.config.ts",
+      "filePath": "frontend/vite.config.ts",
+      "summary": "Configuração do Vite para a landing React: build em stetic/landing com base relativa, alvo es2022 e entrada em src/main.tsx, mais um plugin que gera o parcial Jinja templates/_landing_assets.html com os nomes (com hash) dos arquivos do build.",
+      "tags": [
+        "build-system",
+        "vite",
+        "configuration",
+        "jinja",
+        "react"
+      ],
+      "complexity": "simple",
+      "languageNotes": "O plugin parcialJinja usa o hook writeBundle e o viteMetadata do chunk de entrada para escrever macros Jinja (estilos e scripts) com url_for; no modo dev o stetic/ serve de publicDir."
+    },
+    {
+      "id": "file:gunicorn.conf.py",
+      "type": "file",
+      "name": "gunicorn.conf.py",
+      "filePath": "gunicorn.conf.py",
+      "summary": "Configuração do gunicorn em produção: escuta só em 127.0.0.1:8000 atrás do Nginx, usa 1 worker com 8 threads (o contador de tentativas falhadas vive na memória), timeouts de 30 s, limites de linha e campos de cabeçalho e logs em stdout.",
+      "tags": [
+        "configuration",
+        "gunicorn",
+        "deployment",
+        "production",
+        "security"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:requirements.in",
+      "type": "config",
+      "name": "requirements.in",
+      "filePath": "requirements.in",
+      "summary": "Lista das dependências Python diretas com versões fixas (Flask, Werkzeug, SQLAlchemy, psycopg2, python-dotenv, gunicorn, pyotp, segno); o requirements.txt com hashes é gerado a partir dela com pip-compile.",
+      "tags": [
+        "dependencies",
+        "python",
+        "pip-compile",
+        "configuration",
+        "build-system"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:servicos/mfa.py",
+      "type": "file",
+      "name": "mfa.py",
+      "filePath": "servicos/mfa.py",
+      "summary": "Serviço de verificação em dois passos (TOTP, RFC 6238): gera o segredo, produz o QR code como data URI SVG, formata o segredo para digitação manual e valida códigos de 6 dígitos com tolerância de ±30 s e proteção contra reuso.",
+      "tags": [
+        "service",
+        "mfa",
+        "totp",
+        "security",
+        "authentication"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Usa pyotp para TOTP e segno para o QR em SVG; a comparação do código usa hmac.compare_digest (tempo constante)."
+    },
+    {
+      "id": "document:servicos/senhas_comuns.txt",
+      "type": "document",
+      "name": "senhas_comuns.txt",
+      "filePath": "servicos/senhas_comuns.txt",
+      "summary": "Arquivo de dados com cerca de 10 mil senhas comuns, uma por linha, usado como lista de bloqueio para recusar senhas fáceis de adivinhar; consumido por servicos/senhas.py.",
+      "tags": [
+        "data",
+        "wordlist",
+        "security",
+        "password-policy",
+        "blocklist"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:stetic/css/quickmast.css",
+      "type": "file",
+      "name": "quickmast.css",
+      "filePath": "stetic/css/quickmast.css",
+      "summary": "Folha de estilo principal do app, pensada para telemóvel: declara a fonte Inter local, as variáveis de design e os componentes (ícones de estado, botões, campos, banners, barra superior, cartões), o úbere 2x2 com os estados dos tetos, legenda, medição ao vivo, histórico, utilizadores, painel de estatísticas e linha do tempo da vaca.",
+      "tags": [
+        "css",
+        "design-system",
+        "styling",
+        "components",
+        "responsive"
+      ],
+      "complexity": "complex",
+      "languageNotes": "Organizada em secções numeradas (0 a 15) com custom properties; usa classes de estado (nao-medido, a-ler, sadio, mastite) alternadas pelo JavaScript e atributos data-* (data-fase, data-entrada, data-tilt) para animações."
+    },
+    {
+      "id": "function:servicos/mfa.py:novo_segredo",
+      "type": "function",
+      "name": "novo_segredo",
+      "filePath": "servicos/mfa.py",
+      "lineRange": [
+        13,
+        14
+      ],
+      "summary": "Gera um segredo TOTP aleatório em base32 (160 bits, 32 caracteres) com pyotp.",
+      "tags": [
+        "mfa",
+        "totp",
+        "secret-generation",
+        "security"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:servicos/mfa.py:qr_svg",
+      "type": "function",
+      "name": "qr_svg",
+      "filePath": "servicos/mfa.py",
+      "lineRange": [
+        17,
+        20
+      ],
+      "summary": "Monta a URI de provisionamento TOTP (emissor QuickMast) e devolve o código QR como data URI SVG, que a CSP aceita sem HTML inline.",
+      "tags": [
+        "mfa",
+        "qr-code",
+        "svg",
+        "totp"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:servicos/mfa.py:segredo_formatado",
+      "type": "function",
+      "name": "segredo_formatado",
+      "filePath": "servicos/mfa.py",
+      "lineRange": [
+        23,
+        25
+      ],
+      "summary": "Divide o segredo em grupos de 4 caracteres para quem precisa digitá-lo à mão na app autenticadora.",
+      "tags": [
+        "mfa",
+        "formatting",
+        "utility"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:servicos/mfa.py:verificar",
+      "type": "function",
+      "name": "verificar",
+      "filePath": "servicos/mfa.py",
+      "lineRange": [
+        28,
+        43
+      ],
+      "summary": "Valida um código TOTP de 6 dígitos aceitando ±30 s de desvio do relógio, com comparação em tempo constante, e recusa passos iguais ou anteriores ao último usado (anti-reuso); devolve o passo válido ou None.",
+      "tags": [
+        "mfa",
+        "totp",
+        "validation",
+        "security",
+        "replay-protection"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:frontend/vite.config.ts:parcialJinja",
+      "type": "function",
+      "name": "parcialJinja",
+      "filePath": "frontend/vite.config.ts",
+      "lineRange": [
+        11,
+        33
+      ],
+      "summary": "Plugin Vite (apenas no build) que, em writeBundle, localiza o chunk de entrada e escreve templates/_landing_assets.html com macros Jinja estilos() e scripts() que apontam, via url_for, para os arquivos com hash.",
+      "tags": [
+        "vite-plugin",
+        "build-system",
+        "jinja",
+        "code-generation"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:diagnosticar",
+      "type": "function",
+      "name": "diagnosticar",
+      "filePath": "firmware/quickmast_esp8266/quickmast_esp8266.ino",
+      "lineRange": [
+        89,
+        102
+      ],
+      "summary": "Aplica as regras de diagnóstico de mastite aos 4 tetos: é suspeito o teto acima de COND_REF vezes a margem (absoluto) ou o que excede a mediana dos outros três por limiar relativo e diferença mínima; espelha servicos/diagnostico.py.",
+      "tags": [
+        "diagnosis",
+        "mastitis",
+        "algorithm",
+        "firmware"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:lerCondutividade",
+      "type": "function",
+      "name": "lerCondutividade",
+      "filePath": "firmware/quickmast_esp8266/quickmast_esp8266.ino",
+      "lineRange": [
+        167,
+        184
+      ],
+      "summary": "Lê 15 amostras do sensor TDS no A0 com intervalo entre elas, ordena por inserção e devolve a média das 5 do meio, descartando picos de ruído.",
+      "tags": [
+        "sensor",
+        "adc",
+        "signal-filtering",
+        "firmware"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:sinalizar",
+      "type": "function",
+      "name": "sinalizar",
+      "filePath": "firmware/quickmast_esp8266/quickmast_esp8266.ino",
+      "lineRange": [
+        206,
+        219
+      ],
+      "summary": "Sinaliza o resultado no LED da placa: pisca depressa 10 vezes se houver suspeita de mastite, ou fica aceso 1,5 s se estiver normal.",
+      "tags": [
+        "led",
+        "feedback",
+        "hardware",
+        "firmware"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:finalizarTeste",
+      "type": "function",
+      "name": "finalizarTeste",
+      "filePath": "firmware/quickmast_esp8266/quickmast_esp8266.ino",
+      "lineRange": [
+        221,
+        251
+      ],
+      "summary": "Fecha o teste dos 4 tetos: roda diagnosticar, imprime o resultado e os motivos no Monitor Série, sinaliza no LED e coloca o teste na fila circular de envio.",
+      "tags": [
+        "diagnosis",
+        "serial",
+        "queue",
+        "firmware"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:capturarTeto",
+      "type": "function",
+      "name": "capturarTeto",
+      "filePath": "firmware/quickmast_esp8266/quickmast_esp8266.ino",
+      "lineRange": [
+        253,
+        267
+      ],
+      "summary": "Lê o teto atual após a espera de estabilização, recusa valores abaixo de LEITURA_MINIMA (sonda fora do leite) e avança para o próximo teto ou finaliza o teste.",
+      "tags": [
+        "sensor",
+        "state-machine",
+        "serial",
+        "firmware"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:tratarLinha",
+      "type": "function",
+      "name": "tratarLinha",
+      "filePath": "firmware/quickmast_esp8266/quickmast_esp8266.ino",
+      "lineRange": [
+        269,
+        294
+      ],
+      "summary": "Máquina de estados do Monitor Série: na fase PEDIR_BRINCO valida e guarda o brinco (e recusa se a fila estiver cheia); na fase MEDIR captura com Enter ou cancela com x.",
+      "tags": [
+        "state-machine",
+        "serial",
+        "input-handling",
+        "firmware"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:lerLinha",
+      "type": "function",
+      "name": "lerLinha",
+      "filePath": "firmware/quickmast_esp8266/quickmast_esp8266.ino",
+      "lineRange": [
+        297,
+        314
+      ],
+      "summary": "Acumula caracteres do Monitor Série até formar uma linha completa, aceitando \\n, \\r e \\r\\n, com limite de 64 caracteres.",
+      "tags": [
+        "serial",
+        "parser",
+        "input-handling",
+        "firmware"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:manterWifi",
+      "type": "function",
+      "name": "manterWifi",
+      "filePath": "firmware/quickmast_esp8266/quickmast_esp8266.ino",
+      "lineRange": [
+        320,
+        343
+      ],
+      "summary": "Mantém o Wi-Fi sem bloquear: detecta mudanças de ligação, avisa quando a rede cai ou a senha está errada e reconecta com espera crescente (backoff exponencial).",
+      "tags": [
+        "wifi",
+        "reconnect",
+        "backoff",
+        "firmware"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:criarRedePropria",
+      "type": "function",
+      "name": "criarRedePropria",
+      "filePath": "firmware/quickmast_esp8266/quickmast_esp8266.ino",
+      "lineRange": [
+        346,
+        358
+      ],
+      "summary": "Cria a rede própria da placa como ponto de acesso (192.168.4.1) para apresentações, avisando no Monitor Série como configurar o PC.",
+      "tags": [
+        "wifi",
+        "access-point",
+        "setup",
+        "firmware"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:codificarUrl",
+      "type": "function",
+      "name": "codificarUrl",
+      "filePath": "firmware/quickmast_esp8266/quickmast_esp8266.ino",
+      "lineRange": [
+        376,
+        390
+      ],
+      "summary": "Codifica uma string em percent-encoding para uso no corpo do login.",
+      "tags": [
+        "url-encoding",
+        "utility",
+        "http",
+        "firmware"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:escaparJson",
+      "type": "function",
+      "name": "escaparJson",
+      "filePath": "firmware/quickmast_esp8266/quickmast_esp8266.ino",
+      "lineRange": [
+        392,
+        408
+      ],
+      "summary": "Escapa caracteres especiais de uma string para inseri-la com segurança num JSON montado à mão.",
+      "tags": [
+        "json",
+        "escaping",
+        "utility",
+        "firmware"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:montarJson",
+      "type": "function",
+      "name": "montarJson",
+      "filePath": "firmware/quickmast_esp8266/quickmast_esp8266.ino",
+      "lineRange": [
+        411,
+        422
+      ],
+      "summary": "Monta o JSON do POST /api/testes (brinco e leituras por teto com a condutividade), no formato esperado por blueprints/testes.py.",
+      "tags": [
+        "json",
+        "serialization",
+        "api-client",
+        "firmware"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:entrar",
+      "type": "function",
+      "name": "entrar",
+      "filePath": "firmware/quickmast_esp8266/quickmast_esp8266.ino",
+      "lineRange": [
+        443,
+        486
+      ],
+      "summary": "Entra no QuickMast como o formulário de /login (conta de operador), interpreta o redirecionamento e guarda o cookie de sessão; marca a conta como recusada em configuração errada.",
+      "tags": [
+        "authentication",
+        "http-client",
+        "session",
+        "firmware"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:compararComServidor",
+      "type": "function",
+      "name": "compararComServidor",
+      "filePath": "firmware/quickmast_esp8266/quickmast_esp8266.ino",
+      "lineRange": [
+        489,
+        508
+      ],
+      "summary": "Lê a resposta do servidor ao teste gravado e avisa no Monitor Série se os tetos afetados diferirem do diagnóstico da placa (vale o do servidor).",
+      "tags": [
+        "diagnosis",
+        "consistency-check",
+        "parser",
+        "firmware"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:publicar",
+      "type": "function",
+      "name": "publicar",
+      "filePath": "firmware/quickmast_esp8266/quickmast_esp8266.ino",
+      "lineRange": [
+        510,
+        547
+      ],
+      "summary": "Envia um teste por POST /api/testes com o cookie de sessão, renova o cookie e traduz o código HTTP num Resultado (sucesso, falha de rede, sessão expirada, dados ou conta recusados).",
+      "tags": [
+        "http-client",
+        "api-client",
+        "error-handling",
+        "firmware"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:enviarTeste",
+      "type": "function",
+      "name": "enviarTeste",
+      "filePath": "firmware/quickmast_esp8266/quickmast_esp8266.ino",
+      "lineRange": [
+        549,
+        562
+      ],
+      "summary": "Garante a sessão (entra se preciso) e publica o teste; se a sessão expirou, entra de novo uma única vez e repete o envio.",
+      "tags": [
+        "http-client",
+        "session",
+        "retry",
+        "firmware"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:enviarFila",
+      "type": "function",
+      "name": "enviarFila",
+      "filePath": "firmware/quickmast_esp8266/quickmast_esp8266.ino",
+      "lineRange": [
+        565,
+        581
+      ],
+      "summary": "Envia o teste mais antigo da fila circular; remove-o em sucesso ou dados recusados e, em falha de rede, espera 5 s, 10 s, 20 s... até 5 min (backoff).",
+      "tags": [
+        "queue",
+        "retry",
+        "backoff",
+        "http-client"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:setup",
+      "type": "function",
+      "name": "setup",
+      "filePath": "firmware/quickmast_esp8266/quickmast_esp8266.ino",
+      "lineRange": [
+        584,
+        614
+      ],
+      "summary": "Inicializa a placa: Serial a 9600, LED, rede própria ou Wi-Fi de produção (com HTTPS opcional), registra a rota GET /read no servidor local e pede o primeiro brinco.",
+      "tags": [
+        "entry-point",
+        "initialization",
+        "wifi",
+        "firmware"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:loop",
+      "type": "function",
+      "name": "loop",
+      "filePath": "firmware/quickmast_esp8266/quickmast_esp8266.ino",
+      "lineRange": [
+        616,
+        629
+      ],
+      "summary": "Laço principal sem bloqueios: vigia ou mantém o Wi-Fi, atende pedidos do servidor local (/read), trata linhas do Monitor Série e tenta enviar a fila.",
+      "tags": [
+        "entry-point",
+        "main-loop",
+        "firmware"
+      ],
+      "complexity": "moderate"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:servicos/mfa.py",
+      "target": "function:servicos/mfa.py:novo_segredo",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:servicos/mfa.py",
+      "target": "function:servicos/mfa.py:qr_svg",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:servicos/mfa.py",
+      "target": "function:servicos/mfa.py:segredo_formatado",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:servicos/mfa.py",
+      "target": "function:servicos/mfa.py:verificar",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:frontend/vite.config.ts",
+      "target": "function:frontend/vite.config.ts:parcialJinja",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:firmware/quickmast_esp8266/quickmast_esp8266.ino",
+      "target": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:diagnosticar",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:firmware/quickmast_esp8266/quickmast_esp8266.ino",
+      "target": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:lerCondutividade",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:firmware/quickmast_esp8266/quickmast_esp8266.ino",
+      "target": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:sinalizar",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:firmware/quickmast_esp8266/quickmast_esp8266.ino",
+      "target": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:finalizarTeste",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:firmware/quickmast_esp8266/quickmast_esp8266.ino",
+      "target": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:capturarTeto",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:firmware/quickmast_esp8266/quickmast_esp8266.ino",
+      "target": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:tratarLinha",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:firmware/quickmast_esp8266/quickmast_esp8266.ino",
+      "target": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:lerLinha",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:firmware/quickmast_esp8266/quickmast_esp8266.ino",
+      "target": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:manterWifi",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:firmware/quickmast_esp8266/quickmast_esp8266.ino",
+      "target": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:criarRedePropria",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:firmware/quickmast_esp8266/quickmast_esp8266.ino",
+      "target": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:codificarUrl",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:firmware/quickmast_esp8266/quickmast_esp8266.ino",
+      "target": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:escaparJson",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:firmware/quickmast_esp8266/quickmast_esp8266.ino",
+      "target": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:montarJson",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:firmware/quickmast_esp8266/quickmast_esp8266.ino",
+      "target": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:entrar",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:firmware/quickmast_esp8266/quickmast_esp8266.ino",
+      "target": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:compararComServidor",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:firmware/quickmast_esp8266/quickmast_esp8266.ino",
+      "target": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:publicar",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:firmware/quickmast_esp8266/quickmast_esp8266.ino",
+      "target": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:enviarTeste",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:firmware/quickmast_esp8266/quickmast_esp8266.ino",
+      "target": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:enviarFila",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:firmware/quickmast_esp8266/quickmast_esp8266.ino",
+      "target": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:setup",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:firmware/quickmast_esp8266/quickmast_esp8266.ino",
+      "target": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:loop",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:finalizarTeste",
+      "target": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:diagnosticar",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:finalizarTeste",
+      "target": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:sinalizar",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:capturarTeto",
+      "target": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:lerCondutividade",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:capturarTeto",
+      "target": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:finalizarTeste",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:tratarLinha",
+      "target": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:capturarTeto",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:montarJson",
+      "target": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:escaparJson",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:entrar",
+      "target": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:codificarUrl",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:publicar",
+      "target": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:montarJson",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:publicar",
+      "target": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:compararComServidor",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:enviarTeste",
+      "target": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:entrar",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:enviarTeste",
+      "target": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:publicar",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:enviarFila",
+      "target": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:enviarTeste",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:setup",
+      "target": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:criarRedePropria",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:loop",
+      "target": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:tratarLinha",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:loop",
+      "target": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:lerLinha",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:loop",
+      "target": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:manterWifi",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:loop",
+      "target": "function:firmware/quickmast_esp8266/quickmast_esp8266.ino:enviarFila",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:servicos/mfa.py",
+      "target": "function:servicos/mfa.py:novo_segredo",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:servicos/mfa.py",
+      "target": "function:servicos/mfa.py:qr_svg",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:servicos/mfa.py",
+      "target": "function:servicos/mfa.py:segredo_formatado",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:servicos/mfa.py",
+      "target": "function:servicos/mfa.py:verificar",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:stetic/css/quickmast.css",
+      "target": "file:templates/base.html",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:frontend/src/landing.css",
+      "target": "file:stetic/css/quickmast.css",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:frontend/src/landing.css",
+      "target": "file:templates/index.html",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:frontend/vite.config.ts",
+      "target": "file:frontend/src/main.tsx",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:frontend/vite.config.ts",
+      "target": "file:templates/_landing_assets.html",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:gunicorn.conf.py",
+      "target": "file:servidor.py",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:gunicorn.conf.py",
+      "target": "file:servicos/limite.py",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "config:requirements.in",
+      "target": "file:servidor.py",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:requirements.in",
+      "target": "file:servicos/mfa.py",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:configurar_banco_app.py",
+      "target": "file:servidor.py",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:servicos/senhas_comuns.txt",
+      "target": "file:servicos/senhas.py",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:firmware/quickmast_esp8266/quickmast_esp8266.ino",
+      "target": "file:servicos/diagnostico.py",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:firmware/quickmast_esp8266/quickmast_esp8266.ino",
+      "target": "file:blueprints/testes.py",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:firmware/quickmast_esp8266/quickmast_esp8266.ino",
+      "target": "file:blueprints/sensor.py",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:firmware/quickmast_esp8266/quickmast_esp8266.ino",
+      "target": "file:blueprints/auth.py",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:firmware/quickmast_esp8266/quickmast_esp8266.ino",
+      "target": "file:stetic/js/ubere.js",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

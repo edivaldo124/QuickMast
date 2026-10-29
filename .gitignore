@@ -3,9 +3,6 @@
 .env.*
 !.env.example
 
-# Firmware: senhas do Wi-Fi e da conta da placa (o modelo configuracao.example.h vai)
-firmware/**/configuracao.h
-
 # Python
 __pycache__/
 *.py[cod]

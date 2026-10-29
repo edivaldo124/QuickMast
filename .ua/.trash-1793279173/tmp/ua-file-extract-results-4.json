@@ -1,0 +1,1197 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 5,
+  "filesSkipped": [],
+  "filesUnreadable": [],
+  "analysisOutcomes": {
+    "structure": {
+      "succeeded": 5,
+      "failed": 0
+    },
+    "callGraph": {
+      "succeeded": 5,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "results": [
+    {
+      "path": "blueprints/auth.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 194,
+      "nonEmptyLines": 153,
+      "functions": [
+        {
+          "name": "injetar_usuario",
+          "startLine": 36,
+          "endLine": 38,
+          "params": []
+        },
+        {
+          "name": "_destino_seguro",
+          "startLine": 41,
+          "endLine": 46,
+          "params": [
+            "destino"
+          ]
+        },
+        {
+          "name": "_bloqueado",
+          "startLine": 49,
+          "endLine": 51,
+          "params": [
+            "ip",
+            "email"
+          ]
+        },
+        {
+          "name": "_login_falhou",
+          "startLine": 54,
+          "endLine": 58,
+          "params": [
+            "ip",
+            "email"
+          ]
+        },
+        {
+          "name": "_iniciar_sessao",
+          "startLine": 61,
+          "endLine": 65,
+          "params": [
+            "u"
+          ]
+        },
+        {
+          "name": "_erro_login",
+          "startLine": 68,
+          "endLine": 69,
+          "params": [
+            "destino",
+            "erro",
+            "status"
+          ]
+        },
+        {
+          "name": "login",
+          "startLine": 73,
+          "endLine": 77,
+          "params": []
+        },
+        {
+          "name": "login_post",
+          "startLine": 81,
+          "endLine": 110,
+          "params": []
+        },
+        {
+          "name": "_mfa_pendente",
+          "startLine": 113,
+          "endLine": 119,
+          "params": []
+        },
+        {
+          "name": "_erro_mfa",
+          "startLine": 122,
+          "endLine": 123,
+          "params": [
+            "erro",
+            "status"
+          ]
+        },
+        {
+          "name": "login_mfa",
+          "startLine": 127,
+          "endLine": 130,
+          "params": []
+        },
+        {
+          "name": "login_mfa_post",
+          "startLine": 134,
+          "endLine": 155,
+          "params": []
+        },
+        {
+          "name": "registrar",
+          "startLine": 159,
+          "endLine": 184,
+          "params": []
+        },
+        {
+          "name": "logout",
+          "startLine": 188,
+          "endLine": 194,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "injetar_usuario",
+          "line": 35,
+          "isDefault": false
+        },
+        {
+          "name": "_destino_seguro",
+          "line": 41,
+          "isDefault": false
+        },
+        {
+          "name": "_bloqueado",
+          "line": 49,
+          "isDefault": false
+        },
+        {
+          "name": "_login_falhou",
+          "line": 54,
+          "isDefault": false
+        },
+        {
+          "name": "_iniciar_sessao",
+          "line": 61,
+          "isDefault": false
+        },
+        {
+          "name": "_erro_login",
+          "line": 68,
+          "isDefault": false
+        },
+        {
+          "name": "login",
+          "line": 72,
+          "isDefault": false
+        },
+        {
+          "name": "login_post",
+          "line": 80,
+          "isDefault": false
+        },
+        {
+          "name": "_mfa_pendente",
+          "line": 113,
+          "isDefault": false
+        },
+        {
+          "name": "_erro_mfa",
+          "line": 122,
+          "isDefault": false
+        },
+        {
+          "name": "login_mfa",
+          "line": 126,
+          "isDefault": false
+        },
+        {
+          "name": "login_mfa_post",
+          "line": 133,
+          "isDefault": false
+        },
+        {
+          "name": "registrar",
+          "line": 158,
+          "isDefault": false
+        },
+        {
+          "name": "logout",
+          "line": 187,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "injetar_usuario",
+          "callee": "usuario_atual",
+          "lineNumber": 38
+        },
+        {
+          "caller": "_destino_seguro",
+          "callee": "destino.startswith",
+          "lineNumber": 43
+        },
+        {
+          "caller": "_destino_seguro",
+          "callee": "destino.startswith",
+          "lineNumber": 43
+        },
+        {
+          "caller": "_destino_seguro",
+          "callee": "urlparse",
+          "lineNumber": 45
+        },
+        {
+          "caller": "_bloqueado",
+          "callee": "tentativas.excedido",
+          "lineNumber": 50
+        },
+        {
+          "caller": "_bloqueado",
+          "callee": "tentativas.excedido",
+          "lineNumber": 51
+        },
+        {
+          "caller": "_login_falhou",
+          "callee": "tentativas.contar",
+          "lineNumber": 55
+        },
+        {
+          "caller": "_login_falhou",
+          "callee": "auditar",
+          "lineNumber": 56
+        },
+        {
+          "caller": "_login_falhou",
+          "callee": "tentativas.quantas",
+          "lineNumber": 57
+        },
+        {
+          "caller": "_login_falhou",
+          "callee": "auditar",
+          "lineNumber": 58
+        },
+        {
+          "caller": "_iniciar_sessao",
+          "callee": "session.clear",
+          "lineNumber": 62
+        },
+        {
+          "caller": "_erro_login",
+          "callee": "render_template",
+          "lineNumber": 69
+        },
+        {
+          "caller": "login",
+          "callee": "usuario_atual",
+          "lineNumber": 74
+        },
+        {
+          "caller": "login",
+          "callee": "redirect",
+          "lineNumber": 75
+        },
+        {
+          "caller": "login",
+          "callee": "render_template",
+          "lineNumber": 76
+        },
+        {
+          "caller": "login",
+          "callee": "request.args.get",
+          "lineNumber": 77
+        },
+        {
+          "caller": "login_post",
+          "callee": "request.form.get('email', '')[:120].strip().lower",
+          "lineNumber": 83
+        },
+        {
+          "caller": "login_post",
+          "callee": "request.form.get('email', '')[:120].strip",
+          "lineNumber": 83
+        },
+        {
+          "caller": "login_post",
+          "callee": "request.form.get",
+          "lineNumber": 83
+        },
+        {
+          "caller": "login_post",
+          "callee": "request.form.get",
+          "lineNumber": 84
+        },
+        {
+          "caller": "login_post",
+          "callee": "request.form.get",
+          "lineNumber": 85
+        },
+        {
+          "caller": "login_post",
+          "callee": "_bloqueado",
+          "lineNumber": 88
+        },
+        {
+          "caller": "login_post",
+          "callee": "auditar",
+          "lineNumber": 89
+        },
+        {
+          "caller": "login_post",
+          "callee": "_erro_login",
+          "lineNumber": 90
+        },
+        {
+          "caller": "login_post",
+          "callee": "usuario_dao.obter_por_email",
+          "lineNumber": 92
+        },
+        {
+          "caller": "login_post",
+          "callee": "check_password_hash",
+          "lineNumber": 93
+        },
+        {
+          "caller": "login_post",
+          "callee": "_login_falhou",
+          "lineNumber": 95
+        },
+        {
+          "caller": "login_post",
+          "callee": "_erro_login",
+          "lineNumber": 96
+        },
+        {
+          "caller": "login_post",
+          "callee": "tentativas.limpar",
+          "lineNumber": 98
+        },
+        {
+          "caller": "login_post",
+          "callee": "session.clear",
+          "lineNumber": 101
+        },
+        {
+          "caller": "login_post",
+          "callee": "time.time",
+          "lineNumber": 103
+        },
+        {
+          "caller": "login_post",
+          "callee": "_destino_seguro",
+          "lineNumber": 104
+        },
+        {
+          "caller": "login_post",
+          "callee": "auditar",
+          "lineNumber": 105
+        },
+        {
+          "caller": "login_post",
+          "callee": "redirect",
+          "lineNumber": 106
+        },
+        {
+          "caller": "login_post",
+          "callee": "url_for",
+          "lineNumber": 106
+        },
+        {
+          "caller": "login_post",
+          "callee": "_iniciar_sessao",
+          "lineNumber": 108
+        },
+        {
+          "caller": "login_post",
+          "callee": "auditar",
+          "lineNumber": 109
+        },
+        {
+          "caller": "login_post",
+          "callee": "redirect",
+          "lineNumber": 110
+        },
+        {
+          "caller": "login_post",
+          "callee": "_destino_seguro",
+          "lineNumber": 110
+        },
+        {
+          "caller": "_mfa_pendente",
+          "callee": "session.get",
+          "lineNumber": 115
+        },
+        {
+          "caller": "_mfa_pendente",
+          "callee": "time.time",
+          "lineNumber": 116
+        },
+        {
+          "caller": "_mfa_pendente",
+          "callee": "session.get",
+          "lineNumber": 116
+        },
+        {
+          "caller": "_mfa_pendente",
+          "callee": "usuario_dao.obter_por_id",
+          "lineNumber": 118
+        },
+        {
+          "caller": "_erro_mfa",
+          "callee": "render_template",
+          "lineNumber": 123
+        },
+        {
+          "caller": "login_mfa",
+          "callee": "_mfa_pendente",
+          "lineNumber": 128
+        },
+        {
+          "caller": "login_mfa",
+          "callee": "redirect",
+          "lineNumber": 129
+        },
+        {
+          "caller": "login_mfa",
+          "callee": "url_for",
+          "lineNumber": 129
+        },
+        {
+          "caller": "login_mfa",
+          "callee": "render_template",
+          "lineNumber": 130
+        },
+        {
+          "caller": "login_mfa_post",
+          "callee": "_mfa_pendente",
+          "lineNumber": 135
+        },
+        {
+          "caller": "login_mfa_post",
+          "callee": "session.clear",
+          "lineNumber": 137
+        },
+        {
+          "caller": "login_mfa_post",
+          "callee": "redirect",
+          "lineNumber": 138
+        },
+        {
+          "caller": "login_mfa_post",
+          "callee": "url_for",
+          "lineNumber": 138
+        },
+        {
+          "caller": "login_mfa_post",
+          "callee": "tentativas.excedido",
+          "lineNumber": 140
+        },
+        {
+          "caller": "login_mfa_post",
+          "callee": "tentativas_mfa.excedido",
+          "lineNumber": 140
+        },
+        {
+          "caller": "login_mfa_post",
+          "callee": "auditar",
+          "lineNumber": 141
+        },
+        {
+          "caller": "login_mfa_post",
+          "callee": "_erro_mfa",
+          "lineNumber": 142
+        },
+        {
+          "caller": "login_mfa_post",
+          "callee": "totp.verificar",
+          "lineNumber": 144
+        },
+        {
+          "caller": "login_mfa_post",
+          "callee": "request.form.get",
+          "lineNumber": 144
+        },
+        {
+          "caller": "login_mfa_post",
+          "callee": "usuario_dao.usar_passo_totp",
+          "lineNumber": 145
+        },
+        {
+          "caller": "login_mfa_post",
+          "callee": "tentativas.contar",
+          "lineNumber": 146
+        },
+        {
+          "caller": "login_mfa_post",
+          "callee": "tentativas_mfa.contar",
+          "lineNumber": 147
+        },
+        {
+          "caller": "login_mfa_post",
+          "callee": "auditar",
+          "lineNumber": 148
+        },
+        {
+          "caller": "login_mfa_post",
+          "callee": "_erro_mfa",
+          "lineNumber": 149
+        },
+        {
+          "caller": "login_mfa_post",
+          "callee": "tentativas_mfa.limpar",
+          "lineNumber": 151
+        },
+        {
+          "caller": "login_mfa_post",
+          "callee": "session.get",
+          "lineNumber": 152
+        },
+        {
+          "caller": "login_mfa_post",
+          "callee": "_iniciar_sessao",
+          "lineNumber": 153
+        },
+        {
+          "caller": "login_mfa_post",
+          "callee": "auditar",
+          "lineNumber": 154
+        },
+        {
+          "caller": "login_mfa_post",
+          "callee": "redirect",
+          "lineNumber": 155
+        },
+        {
+          "caller": "registrar",
+          "callee": "abort",
+          "lineNumber": 161
+        },
+        {
+          "caller": "registrar",
+          "callee": "_bloqueado",
+          "lineNumber": 162
+        },
+        {
+          "caller": "registrar",
+          "callee": "render_template",
+          "lineNumber": 163
+        },
+        {
+          "caller": "registrar",
+          "callee": "tentativas.contar",
+          "lineNumber": 165
+        },
+        {
+          "caller": "registrar",
+          "callee": "request.form.get('nome', '').strip",
+          "lineNumber": 166
+        },
+        {
+          "caller": "registrar",
+          "callee": "request.form.get",
+          "lineNumber": 166
+        },
+        {
+          "caller": "registrar",
+          "callee": "request.form.get('email', '').strip().lower",
+          "lineNumber": 167
+        },
+        {
+          "caller": "registrar",
+          "callee": "request.form.get('email', '').strip",
+          "lineNumber": 167
+        },
+        {
+          "caller": "registrar",
+          "callee": "request.form.get",
+          "lineNumber": 167
+        },
+        {
+          "caller": "registrar",
+          "callee": "request.form.get",
+          "lineNumber": 168
+        },
+        {
+          "caller": "registrar",
+          "callee": "len",
+          "lineNumber": 170
+        },
+        {
+          "caller": "registrar",
+          "callee": "len",
+          "lineNumber": 172
+        },
+        {
+          "caller": "registrar",
+          "callee": "EMAIL_RE.match",
+          "lineNumber": 172
+        },
+        {
+          "caller": "registrar",
+          "callee": "problema_senha",
+          "lineNumber": 175
+        },
+        {
+          "caller": "registrar",
+          "callee": "usuario_dao.obter_por_email",
+          "lineNumber": 176
+        },
+        {
+          "caller": "registrar",
+          "callee": "render_template",
+          "lineNumber": 179
+        },
+        {
+          "caller": "registrar",
+          "callee": "usuario_dao.criar_usuario",
+          "lineNumber": 181
+        },
+        {
+          "caller": "registrar",
+          "callee": "generate_password_hash",
+          "lineNumber": 181
+        },
+        {
+          "caller": "registrar",
+          "callee": "_iniciar_sessao",
+          "lineNumber": 182
+        },
+        {
+          "caller": "registrar",
+          "callee": "auditar",
+          "lineNumber": 183
+        },
+        {
+          "caller": "registrar",
+          "callee": "redirect",
+          "lineNumber": 184
+        },
+        {
+          "caller": "logout",
+          "callee": "auditar",
+          "lineNumber": 189
+        },
+        {
+          "caller": "logout",
+          "callee": "usuario_atual",
+          "lineNumber": 190
+        },
+        {
+          "caller": "logout",
+          "callee": "usuario_dao.encerrar_sessoes",
+          "lineNumber": 192
+        },
+        {
+          "caller": "logout",
+          "callee": "session.clear",
+          "lineNumber": 193
+        },
+        {
+          "caller": "logout",
+          "callee": "redirect",
+          "lineNumber": 194
+        },
+        {
+          "caller": "logout",
+          "callee": "url_for",
+          "lineNumber": 194
+        }
+      ],
+      "metrics": {
+        "importCount": 4,
+        "exportCount": 14,
+        "functionCount": 14,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "blueprints/conta.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 98,
+      "nonEmptyLines": 81,
+      "functions": [
+        {
+          "name": "pagina",
+          "startLine": 19,
+          "endLine": 20,
+          "params": []
+        },
+        {
+          "name": "trocar_senha",
+          "startLine": 25,
+          "endLine": 53,
+          "params": []
+        },
+        {
+          "name": "_pagina_mfa",
+          "startLine": 56,
+          "endLine": 59,
+          "params": [
+            "u",
+            "segredo",
+            "erro",
+            "status"
+          ]
+        },
+        {
+          "name": "mfa",
+          "startLine": 64,
+          "endLine": 71,
+          "params": []
+        },
+        {
+          "name": "mfa_post",
+          "startLine": 76,
+          "endLine": 98,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "pagina",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "trocar_senha",
+          "line": 23,
+          "isDefault": false
+        },
+        {
+          "name": "_pagina_mfa",
+          "line": 56,
+          "isDefault": false
+        },
+        {
+          "name": "mfa",
+          "line": 62,
+          "isDefault": false
+        },
+        {
+          "name": "mfa_post",
+          "line": 74,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "pagina",
+          "callee": "render_template",
+          "lineNumber": 20
+        },
+        {
+          "caller": "trocar_senha",
+          "callee": "usuario_atual",
+          "lineNumber": 26
+        },
+        {
+          "caller": "trocar_senha",
+          "callee": "tentativas.excedido",
+          "lineNumber": 28
+        },
+        {
+          "caller": "trocar_senha",
+          "callee": "auditar",
+          "lineNumber": 29
+        },
+        {
+          "caller": "trocar_senha",
+          "callee": "render_template",
+          "lineNumber": 30
+        },
+        {
+          "caller": "trocar_senha",
+          "callee": "request.form.get",
+          "lineNumber": 32
+        },
+        {
+          "caller": "trocar_senha",
+          "callee": "request.form.get",
+          "lineNumber": 33
+        },
+        {
+          "caller": "trocar_senha",
+          "callee": "usuario_dao.obter_por_id",
+          "lineNumber": 34
+        },
+        {
+          "caller": "trocar_senha",
+          "callee": "check_password_hash",
+          "lineNumber": 35
+        },
+        {
+          "caller": "trocar_senha",
+          "callee": "tentativas.contar",
+          "lineNumber": 36
+        },
+        {
+          "caller": "trocar_senha",
+          "callee": "auditar",
+          "lineNumber": 37
+        },
+        {
+          "caller": "trocar_senha",
+          "callee": "request.form.get",
+          "lineNumber": 39
+        },
+        {
+          "caller": "trocar_senha",
+          "callee": "problema_senha",
+          "lineNumber": 44
+        },
+        {
+          "caller": "trocar_senha",
+          "callee": "render_template",
+          "lineNumber": 46
+        },
+        {
+          "caller": "trocar_senha",
+          "callee": "usuario_dao.alterar_senha",
+          "lineNumber": 49
+        },
+        {
+          "caller": "trocar_senha",
+          "callee": "generate_password_hash",
+          "lineNumber": 49
+        },
+        {
+          "caller": "trocar_senha",
+          "callee": "tentativas.limpar",
+          "lineNumber": 50
+        },
+        {
+          "caller": "trocar_senha",
+          "callee": "auditar",
+          "lineNumber": 51
+        },
+        {
+          "caller": "trocar_senha",
+          "callee": "flash",
+          "lineNumber": 52
+        },
+        {
+          "caller": "trocar_senha",
+          "callee": "redirect",
+          "lineNumber": 53
+        },
+        {
+          "caller": "trocar_senha",
+          "callee": "url_for",
+          "lineNumber": 53
+        },
+        {
+          "caller": "_pagina_mfa",
+          "callee": "render_template",
+          "lineNumber": 57
+        },
+        {
+          "caller": "_pagina_mfa",
+          "callee": "totp.qr_svg",
+          "lineNumber": 58
+        },
+        {
+          "caller": "_pagina_mfa",
+          "callee": "totp.segredo_formatado",
+          "lineNumber": 59
+        },
+        {
+          "caller": "mfa",
+          "callee": "usuario_atual",
+          "lineNumber": 65
+        },
+        {
+          "caller": "mfa",
+          "callee": "redirect",
+          "lineNumber": 67
+        },
+        {
+          "caller": "mfa",
+          "callee": "url_for",
+          "lineNumber": 67
+        },
+        {
+          "caller": "mfa",
+          "callee": "session.get",
+          "lineNumber": 69
+        },
+        {
+          "caller": "mfa",
+          "callee": "totp.novo_segredo",
+          "lineNumber": 69
+        },
+        {
+          "caller": "mfa",
+          "callee": "_pagina_mfa",
+          "lineNumber": 71
+        },
+        {
+          "caller": "mfa_post",
+          "callee": "usuario_atual",
+          "lineNumber": 77
+        },
+        {
+          "caller": "mfa_post",
+          "callee": "session.get",
+          "lineNumber": 78
+        },
+        {
+          "caller": "mfa_post",
+          "callee": "redirect",
+          "lineNumber": 80
+        },
+        {
+          "caller": "mfa_post",
+          "callee": "url_for",
+          "lineNumber": 80
+        },
+        {
+          "caller": "mfa_post",
+          "callee": "tentativas_mfa.excedido",
+          "lineNumber": 82
+        },
+        {
+          "caller": "mfa_post",
+          "callee": "auditar",
+          "lineNumber": 83
+        },
+        {
+          "caller": "mfa_post",
+          "callee": "_pagina_mfa",
+          "lineNumber": 84
+        },
+        {
+          "caller": "mfa_post",
+          "callee": "totp.verificar",
+          "lineNumber": 86
+        },
+        {
+          "caller": "mfa_post",
+          "callee": "request.form.get",
+          "lineNumber": 86
+        },
+        {
+          "caller": "mfa_post",
+          "callee": "tentativas_mfa.contar",
+          "lineNumber": 88
+        },
+        {
+          "caller": "mfa_post",
+          "callee": "_pagina_mfa",
+          "lineNumber": 89
+        },
+        {
+          "caller": "mfa_post",
+          "callee": "usuario_dao.ativar_mfa",
+          "lineNumber": 92
+        },
+        {
+          "caller": "mfa_post",
+          "callee": "session.pop",
+          "lineNumber": 93
+        },
+        {
+          "caller": "mfa_post",
+          "callee": "auditar",
+          "lineNumber": 96
+        },
+        {
+          "caller": "mfa_post",
+          "callee": "flash",
+          "lineNumber": 97
+        },
+        {
+          "caller": "mfa_post",
+          "callee": "redirect",
+          "lineNumber": 98
+        },
+        {
+          "caller": "mfa_post",
+          "callee": "url_for",
+          "lineNumber": 98
+        }
+      ],
+      "metrics": {
+        "importCount": 4,
+        "exportCount": 5,
+        "functionCount": 5,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "definir_senha_admin.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 43,
+      "nonEmptyLines": 34,
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "servicos/limite.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 43,
+      "nonEmptyLines": 35,
+      "classes": [
+        {
+          "name": "Limitador",
+          "startLine": 10,
+          "endLine": 43,
+          "methods": [
+            "__init__",
+            "_recentes",
+            "quantas",
+            "excedido",
+            "contar",
+            "limpar"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "Limitador",
+          "line": 10,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "__init__",
+          "callee": "threading.Lock",
+          "lineNumber": 15
+        },
+        {
+          "caller": "_recentes",
+          "callee": "self._falhas.get",
+          "lineNumber": 18
+        },
+        {
+          "caller": "_recentes",
+          "callee": "self._falhas.pop",
+          "lineNumber": 22
+        },
+        {
+          "caller": "_recentes",
+          "callee": "len",
+          "lineNumber": 23
+        },
+        {
+          "caller": "quantas",
+          "callee": "self._recentes",
+          "lineNumber": 27
+        },
+        {
+          "caller": "quantas",
+          "callee": "time.time",
+          "lineNumber": 27
+        },
+        {
+          "caller": "excedido",
+          "callee": "self.quantas",
+          "lineNumber": 30
+        },
+        {
+          "caller": "contar",
+          "callee": "time.time",
+          "lineNumber": 33
+        },
+        {
+          "caller": "contar",
+          "callee": "len",
+          "lineNumber": 35
+        },
+        {
+          "caller": "contar",
+          "callee": "list",
+          "lineNumber": 36
+        },
+        {
+          "caller": "contar",
+          "callee": "self._recentes",
+          "lineNumber": 37
+        },
+        {
+          "caller": "contar",
+          "callee": "self._falhas.setdefault(chave, []).append",
+          "lineNumber": 39
+        },
+        {
+          "caller": "contar",
+          "callee": "self._falhas.setdefault",
+          "lineNumber": 39
+        },
+        {
+          "caller": "limpar",
+          "callee": "self._falhas.pop",
+          "lineNumber": 43
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "servicos/senhas.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 22,
+      "nonEmptyLines": 18,
+      "functions": [
+        {
+          "name": "problema_senha",
+          "startLine": 12,
+          "endLine": 22,
+          "params": [
+            "senha",
+            "email"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "problema_senha",
+          "line": 12,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "problema_senha",
+          "callee": "len",
+          "lineNumber": 14
+        },
+        {
+          "caller": "problema_senha",
+          "callee": "senha.lower",
+          "lineNumber": 16
+        },
+        {
+          "caller": "problema_senha",
+          "callee": "re.sub",
+          "lineNumber": 17
+        },
+        {
+          "caller": "problema_senha",
+          "callee": "email.split('@')[0].lower",
+          "lineNumber": 18
+        },
+        {
+          "caller": "problema_senha",
+          "callee": "email.split",
+          "lineNumber": 18
+        },
+        {
+          "caller": "problema_senha",
+          "callee": "len",
+          "lineNumber": 19
+        },
+        {
+          "caller": "problema_senha",
+          "callee": "len",
+          "lineNumber": 19
+        },
+        {
+          "caller": "problema_senha",
+          "callee": "set",
+          "lineNumber": 19
+        },
+        {
+          "caller": "problema_senha",
+          "callee": "len",
+          "lineNumber": 20
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    }
+  ]
+}

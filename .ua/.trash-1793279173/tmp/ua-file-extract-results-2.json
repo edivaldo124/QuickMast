@@ -1,0 +1,1684 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 8,
+  "filesSkipped": [],
+  "filesUnreadable": [],
+  "analysisOutcomes": {
+    "structure": {
+      "succeeded": 8,
+      "failed": 0
+    },
+    "callGraph": {
+      "succeeded": 8,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "results": [
+    {
+      "path": "dao/banco.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 267,
+      "nonEmptyLines": 231,
+      "functions": [
+        {
+          "name": "_migrar",
+          "startLine": 38,
+          "endLine": 57,
+          "params": [
+            "eng"
+          ]
+        },
+        {
+          "name": "_garantir_utilizador_app",
+          "startLine": 60,
+          "endLine": 84,
+          "params": [
+            "eng_admin"
+          ]
+        },
+        {
+          "name": "criar_tabela",
+          "startLine": 87,
+          "endLine": 99,
+          "params": []
+        },
+        {
+          "name": "verificar_ligacao",
+          "startLine": 102,
+          "endLine": 109,
+          "params": []
+        },
+        {
+          "name": "_teste_para_dict",
+          "startLine": 113,
+          "endLine": 127,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "registrar_teste",
+          "startLine": 131,
+          "endLine": 155,
+          "params": [
+            "brinco",
+            "leituras",
+            "diagnostico",
+            "observacao",
+            "usuario_id"
+          ]
+        },
+        {
+          "name": "apagar_teste",
+          "startLine": 158,
+          "endLine": 165,
+          "params": [
+            "teste_id"
+          ]
+        },
+        {
+          "name": "_filtros",
+          "startLine": 169,
+          "endLine": 175,
+          "params": [
+            "brinco",
+            "suspeitos"
+          ]
+        },
+        {
+          "name": "listar_testes",
+          "startLine": 178,
+          "endLine": 193,
+          "params": [
+            "brinco",
+            "suspeitos",
+            "limite",
+            "pagina"
+          ]
+        },
+        {
+          "name": "obter_teste",
+          "startLine": 196,
+          "endLine": 204,
+          "params": [
+            "teste_id"
+          ]
+        },
+        {
+          "name": "listar_vacas",
+          "startLine": 207,
+          "endLine": 223,
+          "params": [
+            "limite",
+            "pagina"
+          ]
+        },
+        {
+          "name": "estatisticas",
+          "startLine": 226,
+          "endLine": 245,
+          "params": []
+        },
+        {
+          "name": "linhas_csv",
+          "startLine": 248,
+          "endLine": 262,
+          "params": [
+            "brinco"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "_migrar",
+          "line": 38,
+          "isDefault": false
+        },
+        {
+          "name": "_garantir_utilizador_app",
+          "line": 60,
+          "isDefault": false
+        },
+        {
+          "name": "criar_tabela",
+          "line": 87,
+          "isDefault": false
+        },
+        {
+          "name": "verificar_ligacao",
+          "line": 102,
+          "isDefault": false
+        },
+        {
+          "name": "_teste_para_dict",
+          "line": 113,
+          "isDefault": false
+        },
+        {
+          "name": "registrar_teste",
+          "line": 131,
+          "isDefault": false
+        },
+        {
+          "name": "apagar_teste",
+          "line": 158,
+          "isDefault": false
+        },
+        {
+          "name": "_filtros",
+          "line": 169,
+          "isDefault": false
+        },
+        {
+          "name": "listar_testes",
+          "line": 178,
+          "isDefault": false
+        },
+        {
+          "name": "obter_teste",
+          "line": 196,
+          "isDefault": false
+        },
+        {
+          "name": "listar_vacas",
+          "line": 207,
+          "isDefault": false
+        },
+        {
+          "name": "estatisticas",
+          "line": 226,
+          "isDefault": false
+        },
+        {
+          "name": "linhas_csv",
+          "line": 248,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "_migrar",
+          "callee": "inspect",
+          "lineNumber": 39
+        },
+        {
+          "caller": "_migrar",
+          "callee": "eng.begin",
+          "lineNumber": 40
+        },
+        {
+          "caller": "_migrar",
+          "callee": "_COLUNAS_NOVAS.items",
+          "lineNumber": 41
+        },
+        {
+          "caller": "_migrar",
+          "callee": "insp.get_columns",
+          "lineNumber": 42
+        },
+        {
+          "caller": "_migrar",
+          "callee": "con.exec_driver_sql",
+          "lineNumber": 45
+        },
+        {
+          "caller": "_migrar",
+          "callee": "log.info",
+          "lineNumber": 46
+        },
+        {
+          "caller": "_migrar",
+          "callee": "_COLUNAS_OPCIONAIS.items",
+          "lineNumber": 47
+        },
+        {
+          "caller": "_migrar",
+          "callee": "insp.get_columns",
+          "lineNumber": 48
+        },
+        {
+          "caller": "_migrar",
+          "callee": "log.warning",
+          "lineNumber": 53
+        },
+        {
+          "caller": "_migrar",
+          "callee": "con.exec_driver_sql",
+          "lineNumber": 56
+        },
+        {
+          "caller": "_migrar",
+          "callee": "log.info",
+          "lineNumber": 57
+        },
+        {
+          "caller": "_garantir_utilizador_app",
+          "callee": "make_url",
+          "lineNumber": 62
+        },
+        {
+          "caller": "_garantir_utilizador_app",
+          "callee": "log.warning",
+          "lineNumber": 65
+        },
+        {
+          "caller": "_garantir_utilizador_app",
+          "callee": "RuntimeError",
+          "lineNumber": 69
+        },
+        {
+          "caller": "_garantir_utilizador_app",
+          "callee": "eng_admin.begin",
+          "lineNumber": 71
+        },
+        {
+          "caller": "_garantir_utilizador_app",
+          "callee": "con.exec_driver_sql('SELECT 1 FROM pg_roles WHERE rolname = %(r)s', {'r': utilizador}).scalar",
+          "lineNumber": 72
+        },
+        {
+          "caller": "_garantir_utilizador_app",
+          "callee": "con.exec_driver_sql",
+          "lineNumber": 72
+        },
+        {
+          "caller": "_garantir_utilizador_app",
+          "callee": "con.exec_driver_sql",
+          "lineNumber": 75
+        },
+        {
+          "caller": "_garantir_utilizador_app",
+          "callee": "q",
+          "lineNumber": 75
+        },
+        {
+          "caller": "_garantir_utilizador_app",
+          "callee": "con.exec_driver_sql('SELECT current_database()').scalar",
+          "lineNumber": 77
+        },
+        {
+          "caller": "_garantir_utilizador_app",
+          "callee": "con.exec_driver_sql",
+          "lineNumber": 77
+        },
+        {
+          "caller": "_garantir_utilizador_app",
+          "callee": "q",
+          "lineNumber": 78
+        },
+        {
+          "caller": "_garantir_utilizador_app",
+          "callee": "q",
+          "lineNumber": 78
+        },
+        {
+          "caller": "_garantir_utilizador_app",
+          "callee": "q",
+          "lineNumber": 79
+        },
+        {
+          "caller": "_garantir_utilizador_app",
+          "callee": "q",
+          "lineNumber": 80
+        },
+        {
+          "caller": "_garantir_utilizador_app",
+          "callee": "q",
+          "lineNumber": 81
+        },
+        {
+          "caller": "_garantir_utilizador_app",
+          "callee": "q",
+          "lineNumber": 82
+        },
+        {
+          "caller": "_garantir_utilizador_app",
+          "callee": "con.exec_driver_sql",
+          "lineNumber": 83
+        },
+        {
+          "caller": "_garantir_utilizador_app",
+          "callee": "log.info",
+          "lineNumber": 84
+        },
+        {
+          "caller": "criar_tabela",
+          "callee": "os.environ.get",
+          "lineNumber": 90
+        },
+        {
+          "caller": "criar_tabela",
+          "callee": "create_engine",
+          "lineNumber": 91
+        },
+        {
+          "caller": "criar_tabela",
+          "callee": "Base.metadata.create_all",
+          "lineNumber": 93
+        },
+        {
+          "caller": "criar_tabela",
+          "callee": "_migrar",
+          "lineNumber": 94
+        },
+        {
+          "caller": "criar_tabela",
+          "callee": "_garantir_utilizador_app",
+          "lineNumber": 96
+        },
+        {
+          "caller": "criar_tabela",
+          "callee": "eng.dispose",
+          "lineNumber": 99
+        },
+        {
+          "caller": "verificar_ligacao",
+          "callee": "engine.connect",
+          "lineNumber": 105
+        },
+        {
+          "caller": "verificar_ligacao",
+          "callee": "con.exec_driver_sql",
+          "lineNumber": 106
+        },
+        {
+          "caller": "_teste_para_dict",
+          "callee": "t.data.isoformat",
+          "lineNumber": 117
+        },
+        {
+          "caller": "_teste_para_dict",
+          "callee": "int",
+          "lineNumber": 119
+        },
+        {
+          "caller": "_teste_para_dict",
+          "callee": "t.tetos_afetados.split",
+          "lineNumber": 119
+        },
+        {
+          "caller": "registrar_teste",
+          "callee": "str",
+          "lineNumber": 133
+        },
+        {
+          "caller": "registrar_teste",
+          "callee": "enumerate",
+          "lineNumber": 133
+        },
+        {
+          "caller": "registrar_teste",
+          "callee": "Session",
+          "lineNumber": 134
+        },
+        {
+          "caller": "registrar_teste",
+          "callee": "sessao.scalar",
+          "lineNumber": 135
+        },
+        {
+          "caller": "registrar_teste",
+          "callee": "select(Vaca).where",
+          "lineNumber": 135
+        },
+        {
+          "caller": "registrar_teste",
+          "callee": "select",
+          "lineNumber": 135
+        },
+        {
+          "caller": "registrar_teste",
+          "callee": "Vaca",
+          "lineNumber": 137
+        },
+        {
+          "caller": "registrar_teste",
+          "callee": "sessao.add",
+          "lineNumber": 138
+        },
+        {
+          "caller": "registrar_teste",
+          "callee": "Teste",
+          "lineNumber": 140
+        },
+        {
+          "caller": "registrar_teste",
+          "callee": "bool",
+          "lineNumber": 142
+        },
+        {
+          "caller": "registrar_teste",
+          "callee": "','.join",
+          "lineNumber": 143
+        },
+        {
+          "caller": "registrar_teste",
+          "callee": "enumerate",
+          "lineNumber": 147
+        },
+        {
+          "caller": "registrar_teste",
+          "callee": "zip",
+          "lineNumber": 147
+        },
+        {
+          "caller": "registrar_teste",
+          "callee": "teste.leituras.append",
+          "lineNumber": 148
+        },
+        {
+          "caller": "registrar_teste",
+          "callee": "Leitura",
+          "lineNumber": 148
+        },
+        {
+          "caller": "registrar_teste",
+          "callee": "sessao.add",
+          "lineNumber": 152
+        },
+        {
+          "caller": "registrar_teste",
+          "callee": "sessao.commit",
+          "lineNumber": 153
+        },
+        {
+          "caller": "registrar_teste",
+          "callee": "sessao.refresh",
+          "lineNumber": 154
+        },
+        {
+          "caller": "registrar_teste",
+          "callee": "_teste_para_dict",
+          "lineNumber": 155
+        },
+        {
+          "caller": "apagar_teste",
+          "callee": "Session",
+          "lineNumber": 159
+        },
+        {
+          "caller": "apagar_teste",
+          "callee": "sessao.get",
+          "lineNumber": 160
+        },
+        {
+          "caller": "apagar_teste",
+          "callee": "sessao.delete",
+          "lineNumber": 163
+        },
+        {
+          "caller": "apagar_teste",
+          "callee": "sessao.commit",
+          "lineNumber": 164
+        },
+        {
+          "caller": "_filtros",
+          "callee": "filtros.append",
+          "lineNumber": 172
+        },
+        {
+          "caller": "_filtros",
+          "callee": "filtros.append",
+          "lineNumber": 174
+        },
+        {
+          "caller": "listar_testes",
+          "callee": "_filtros",
+          "lineNumber": 180
+        },
+        {
+          "caller": "listar_testes",
+          "callee": "Session",
+          "lineNumber": 181
+        },
+        {
+          "caller": "listar_testes",
+          "callee": "sessao.scalar",
+          "lineNumber": 182
+        },
+        {
+          "caller": "listar_testes",
+          "callee": "select(func.count(Teste.id)).join(Teste.vaca).where",
+          "lineNumber": 183
+        },
+        {
+          "caller": "listar_testes",
+          "callee": "select(func.count(Teste.id)).join",
+          "lineNumber": 183
+        },
+        {
+          "caller": "listar_testes",
+          "callee": "select",
+          "lineNumber": 183
+        },
+        {
+          "caller": "listar_testes",
+          "callee": "func.count",
+          "lineNumber": 183
+        },
+        {
+          "caller": "listar_testes",
+          "callee": "select(Teste).join(Teste.vaca)\n            .options(contains_eager(Teste.vaca), selectinload(Teste.leituras),\n                     selectinload(Teste.usuario))\n            .where(*filtros)\n            .order_by(Teste.id.desc())\n            .limit(limite).offset",
+          "lineNumber": 186
+        },
+        {
+          "caller": "listar_testes",
+          "callee": "select(Teste).join(Teste.vaca)\n            .options(contains_eager(Teste.vaca), selectinload(Teste.leituras),\n                     selectinload(Teste.usuario))\n            .where(*filtros)\n            .order_by(Teste.id.desc())\n            .limit",
+          "lineNumber": 186
+        },
+        {
+          "caller": "listar_testes",
+          "callee": "select(Teste).join(Teste.vaca)\n            .options(contains_eager(Teste.vaca), selectinload(Teste.leituras),\n                     selectinload(Teste.usuario))\n            .where(*filtros)\n            .order_by",
+          "lineNumber": 186
+        },
+        {
+          "caller": "listar_testes",
+          "callee": "select(Teste).join(Teste.vaca)\n            .options(contains_eager(Teste.vaca), selectinload(Teste.leituras),\n                     selectinload(Teste.usuario))\n            .where",
+          "lineNumber": 186
+        },
+        {
+          "caller": "listar_testes",
+          "callee": "select(Teste).join(Teste.vaca)\n            .options",
+          "lineNumber": 186
+        },
+        {
+          "caller": "listar_testes",
+          "callee": "select(Teste).join",
+          "lineNumber": 186
+        },
+        {
+          "caller": "listar_testes",
+          "callee": "select",
+          "lineNumber": 186
+        },
+        {
+          "caller": "listar_testes",
+          "callee": "contains_eager",
+          "lineNumber": 187
+        },
+        {
+          "caller": "listar_testes",
+          "callee": "selectinload",
+          "lineNumber": 187
+        },
+        {
+          "caller": "listar_testes",
+          "callee": "selectinload",
+          "lineNumber": 188
+        },
+        {
+          "caller": "listar_testes",
+          "callee": "Teste.id.desc",
+          "lineNumber": 190
+        },
+        {
+          "caller": "listar_testes",
+          "callee": "_teste_para_dict",
+          "lineNumber": 193
+        },
+        {
+          "caller": "listar_testes",
+          "callee": "sessao.scalars",
+          "lineNumber": 193
+        },
+        {
+          "caller": "obter_teste",
+          "callee": "Session",
+          "lineNumber": 197
+        },
+        {
+          "caller": "obter_teste",
+          "callee": "select(Teste).where(Teste.id == teste_id)\n            .options",
+          "lineNumber": 199
+        },
+        {
+          "caller": "obter_teste",
+          "callee": "select(Teste).where",
+          "lineNumber": 199
+        },
+        {
+          "caller": "obter_teste",
+          "callee": "select",
+          "lineNumber": 199
+        },
+        {
+          "caller": "obter_teste",
+          "callee": "selectinload",
+          "lineNumber": 200
+        },
+        {
+          "caller": "obter_teste",
+          "callee": "selectinload",
+          "lineNumber": 200
+        },
+        {
+          "caller": "obter_teste",
+          "callee": "selectinload",
+          "lineNumber": 201
+        },
+        {
+          "caller": "obter_teste",
+          "callee": "sessao.scalar",
+          "lineNumber": 203
+        },
+        {
+          "caller": "obter_teste",
+          "callee": "_teste_para_dict",
+          "lineNumber": 204
+        },
+        {
+          "caller": "listar_vacas",
+          "callee": "Session",
+          "lineNumber": 208
+        },
+        {
+          "caller": "listar_vacas",
+          "callee": "select(\n                Vaca.brinco,\n                func.count(Teste.id),\n                func.max(Teste.data),\n                func.coalesce(func.sum(case((Teste.tem_mastite, 1), else_=0)), 0),\n            )\n            .outerjoin(Teste).group_by(Vaca.id).order_by(Vaca.brinco)\n            .limit(limite).offset",
+          "lineNumber": 210
+        },
+        {
+          "caller": "listar_vacas",
+          "callee": "select(\n                Vaca.brinco,\n                func.count(Teste.id),\n                func.max(Teste.data),\n                func.coalesce(func.sum(case((Teste.tem_mastite, 1), else_=0)), 0),\n            )\n            .outerjoin(Teste).group_by(Vaca.id).order_by(Vaca.brinco)\n            .limit",
+          "lineNumber": 210
+        },
+        {
+          "caller": "listar_vacas",
+          "callee": "select(\n                Vaca.brinco,\n                func.count(Teste.id),\n                func.max(Teste.data),\n                func.coalesce(func.sum(case((Teste.tem_mastite, 1), else_=0)), 0),\n            )\n            .outerjoin(Teste).group_by(Vaca.id).order_by",
+          "lineNumber": 210
+        },
+        {
+          "caller": "listar_vacas",
+          "callee": "select(\n                Vaca.brinco,\n                func.count(Teste.id),\n                func.max(Teste.data),\n                func.coalesce(func.sum(case((Teste.tem_mastite, 1), else_=0)), 0),\n            )\n            .outerjoin(Teste).group_by",
+          "lineNumber": 210
+        },
+        {
+          "caller": "listar_vacas",
+          "callee": "select(\n                Vaca.brinco,\n                func.count(Teste.id),\n                func.max(Teste.data),\n                func.coalesce(func.sum(case((Teste.tem_mastite, 1), else_=0)), 0),\n            )\n            .outerjoin",
+          "lineNumber": 210
+        },
+        {
+          "caller": "listar_vacas",
+          "callee": "select",
+          "lineNumber": 210
+        },
+        {
+          "caller": "listar_vacas",
+          "callee": "func.count",
+          "lineNumber": 212
+        },
+        {
+          "caller": "listar_vacas",
+          "callee": "func.max",
+          "lineNumber": 213
+        },
+        {
+          "caller": "listar_vacas",
+          "callee": "func.coalesce",
+          "lineNumber": 214
+        },
+        {
+          "caller": "listar_vacas",
+          "callee": "func.sum",
+          "lineNumber": 214
+        },
+        {
+          "caller": "listar_vacas",
+          "callee": "case",
+          "lineNumber": 214
+        },
+        {
+          "caller": "listar_vacas",
+          "callee": "u.isoformat",
+          "lineNumber": 220
+        },
+        {
+          "caller": "listar_vacas",
+          "callee": "int",
+          "lineNumber": 221
+        },
+        {
+          "caller": "listar_vacas",
+          "callee": "sessao.execute",
+          "lineNumber": 222
+        },
+        {
+          "caller": "estatisticas",
+          "callee": "Session",
+          "lineNumber": 227
+        },
+        {
+          "caller": "estatisticas",
+          "callee": "sessao.scalar",
+          "lineNumber": 228
+        },
+        {
+          "caller": "estatisticas",
+          "callee": "select",
+          "lineNumber": 228
+        },
+        {
+          "caller": "estatisticas",
+          "callee": "func.count",
+          "lineNumber": 228
+        },
+        {
+          "caller": "estatisticas",
+          "callee": "sessao.scalar",
+          "lineNumber": 229
+        },
+        {
+          "caller": "estatisticas",
+          "callee": "select(func.count(Teste.id)).where",
+          "lineNumber": 229
+        },
+        {
+          "caller": "estatisticas",
+          "callee": "select",
+          "lineNumber": 229
+        },
+        {
+          "caller": "estatisticas",
+          "callee": "func.count",
+          "lineNumber": 229
+        },
+        {
+          "caller": "estatisticas",
+          "callee": "sessao.scalar",
+          "lineNumber": 230
+        },
+        {
+          "caller": "estatisticas",
+          "callee": "select",
+          "lineNumber": 230
+        },
+        {
+          "caller": "estatisticas",
+          "callee": "func.count",
+          "lineNumber": 230
+        },
+        {
+          "caller": "estatisticas",
+          "callee": "sessao.execute(\n            select(func.avg(Leitura.temp), func.avg(Leitura.cond))\n        ).one",
+          "lineNumber": 231
+        },
+        {
+          "caller": "estatisticas",
+          "callee": "sessao.execute",
+          "lineNumber": 231
+        },
+        {
+          "caller": "estatisticas",
+          "callee": "select",
+          "lineNumber": 232
+        },
+        {
+          "caller": "estatisticas",
+          "callee": "func.avg",
+          "lineNumber": 232
+        },
+        {
+          "caller": "estatisticas",
+          "callee": "func.avg",
+          "lineNumber": 232
+        },
+        {
+          "caller": "estatisticas",
+          "callee": "dict",
+          "lineNumber": 234
+        },
+        {
+          "caller": "estatisticas",
+          "callee": "sessao.execute(\n            select(Leitura.teto, func.count()).where(Leitura.suspeito).group_by(Leitura.teto)\n        ).all",
+          "lineNumber": 234
+        },
+        {
+          "caller": "estatisticas",
+          "callee": "sessao.execute",
+          "lineNumber": 234
+        },
+        {
+          "caller": "estatisticas",
+          "callee": "select(Leitura.teto, func.count()).where(Leitura.suspeito).group_by",
+          "lineNumber": 235
+        },
+        {
+          "caller": "estatisticas",
+          "callee": "select(Leitura.teto, func.count()).where",
+          "lineNumber": 235
+        },
+        {
+          "caller": "estatisticas",
+          "callee": "select",
+          "lineNumber": 235
+        },
+        {
+          "caller": "estatisticas",
+          "callee": "func.count",
+          "lineNumber": 235
+        },
+        {
+          "caller": "estatisticas",
+          "callee": "round",
+          "lineNumber": 241
+        },
+        {
+          "caller": "estatisticas",
+          "callee": "round",
+          "lineNumber": 242
+        },
+        {
+          "caller": "estatisticas",
+          "callee": "round",
+          "lineNumber": 243
+        },
+        {
+          "caller": "estatisticas",
+          "callee": "str",
+          "lineNumber": 244
+        },
+        {
+          "caller": "estatisticas",
+          "callee": "por_teto.get",
+          "lineNumber": 244
+        },
+        {
+          "caller": "linhas_csv",
+          "callee": "Session",
+          "lineNumber": 250
+        },
+        {
+          "caller": "linhas_csv",
+          "callee": "select(Teste.id, Vaca.brinco, Teste.data, Leitura.teto, Leitura.temp,\n                   Leitura.cond, Leitura.suspeito, Leitura.motivo)\n            .join(Leitura, Leitura.teste_id == Teste.id)\n            .join(Vaca, Vaca.id == Teste.vaca_id)\n            .where(*_filtros(brinco))\n            .order_by(Teste.id, Leitura.teto)\n            .execution_options",
+          "lineNumber": 252
+        },
+        {
+          "caller": "linhas_csv",
+          "callee": "select(Teste.id, Vaca.brinco, Teste.data, Leitura.teto, Leitura.temp,\n                   Leitura.cond, Leitura.suspeito, Leitura.motivo)\n            .join(Leitura, Leitura.teste_id == Teste.id)\n            .join(Vaca, Vaca.id == Teste.vaca_id)\n            .where(*_filtros(brinco))\n            .order_by",
+          "lineNumber": 252
+        },
+        {
+          "caller": "linhas_csv",
+          "callee": "select(Teste.id, Vaca.brinco, Teste.data, Leitura.teto, Leitura.temp,\n                   Leitura.cond, Leitura.suspeito, Leitura.motivo)\n            .join(Leitura, Leitura.teste_id == Teste.id)\n            .join(Vaca, Vaca.id == Teste.vaca_id)\n            .where",
+          "lineNumber": 252
+        },
+        {
+          "caller": "linhas_csv",
+          "callee": "select(Teste.id, Vaca.brinco, Teste.data, Leitura.teto, Leitura.temp,\n                   Leitura.cond, Leitura.suspeito, Leitura.motivo)\n            .join(Leitura, Leitura.teste_id == Teste.id)\n            .join",
+          "lineNumber": 252
+        },
+        {
+          "caller": "linhas_csv",
+          "callee": "select(Teste.id, Vaca.brinco, Teste.data, Leitura.teto, Leitura.temp,\n                   Leitura.cond, Leitura.suspeito, Leitura.motivo)\n            .join",
+          "lineNumber": 252
+        },
+        {
+          "caller": "linhas_csv",
+          "callee": "select",
+          "lineNumber": 252
+        },
+        {
+          "caller": "linhas_csv",
+          "callee": "_filtros",
+          "lineNumber": 256
+        },
+        {
+          "caller": "linhas_csv",
+          "callee": "sessao.execute",
+          "lineNumber": 260
+        },
+        {
+          "caller": "linhas_csv",
+          "callee": "d.astimezone().strftime",
+          "lineNumber": 261
+        },
+        {
+          "caller": "linhas_csv",
+          "callee": "d.astimezone",
+          "lineNumber": 261
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 13,
+        "functionCount": 13,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "dao/usuario_dao.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 137,
+      "nonEmptyLines": 109,
+      "functions": [
+        {
+          "name": "_para_dict",
+          "startLine": 11,
+          "endLine": 19,
+          "params": [
+            "u",
+            "interno"
+          ]
+        },
+        {
+          "name": "publico",
+          "startLine": 22,
+          "endLine": 24,
+          "params": [
+            "d"
+          ]
+        },
+        {
+          "name": "criar_usuario",
+          "startLine": 27,
+          "endLine": 34,
+          "params": [
+            "nome",
+            "email",
+            "senha_hash",
+            "perfil"
+          ]
+        },
+        {
+          "name": "obter_por_email",
+          "startLine": 37,
+          "endLine": 41,
+          "params": [
+            "email"
+          ]
+        },
+        {
+          "name": "obter_por_id",
+          "startLine": 44,
+          "endLine": 47,
+          "params": [
+            "usuario_id",
+            "interno"
+          ]
+        },
+        {
+          "name": "listar_usuarios",
+          "startLine": 50,
+          "endLine": 52,
+          "params": []
+        },
+        {
+          "name": "contar_admins_ativos",
+          "startLine": 55,
+          "endLine": 59,
+          "params": []
+        },
+        {
+          "name": "atualizar_usuario",
+          "startLine": 62,
+          "endLine": 75,
+          "params": [
+            "usuario_id",
+            "perfil",
+            "ativo"
+          ]
+        },
+        {
+          "name": "encerrar_sessoes",
+          "startLine": 78,
+          "endLine": 87,
+          "params": [
+            "usuario_id"
+          ]
+        },
+        {
+          "name": "alterar_senha",
+          "startLine": 90,
+          "endLine": 99,
+          "params": [
+            "usuario_id",
+            "senha_hash"
+          ]
+        },
+        {
+          "name": "ativar_mfa",
+          "startLine": 102,
+          "endLine": 112,
+          "params": [
+            "usuario_id",
+            "segredo",
+            "passo"
+          ]
+        },
+        {
+          "name": "usar_passo_totp",
+          "startLine": 115,
+          "endLine": 125,
+          "params": [
+            "usuario_id",
+            "passo"
+          ]
+        },
+        {
+          "name": "redefinir_mfa",
+          "startLine": 128,
+          "endLine": 137,
+          "params": [
+            "email"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "_para_dict",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "publico",
+          "line": 22,
+          "isDefault": false
+        },
+        {
+          "name": "criar_usuario",
+          "line": 27,
+          "isDefault": false
+        },
+        {
+          "name": "obter_por_email",
+          "line": 37,
+          "isDefault": false
+        },
+        {
+          "name": "obter_por_id",
+          "line": 44,
+          "isDefault": false
+        },
+        {
+          "name": "listar_usuarios",
+          "line": 50,
+          "isDefault": false
+        },
+        {
+          "name": "contar_admins_ativos",
+          "line": 55,
+          "isDefault": false
+        },
+        {
+          "name": "atualizar_usuario",
+          "line": 62,
+          "isDefault": false
+        },
+        {
+          "name": "encerrar_sessoes",
+          "line": 78,
+          "isDefault": false
+        },
+        {
+          "name": "alterar_senha",
+          "line": 90,
+          "isDefault": false
+        },
+        {
+          "name": "ativar_mfa",
+          "line": 102,
+          "isDefault": false
+        },
+        {
+          "name": "usar_passo_totp",
+          "line": 115,
+          "isDefault": false
+        },
+        {
+          "name": "redefinir_mfa",
+          "line": 128,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "_para_dict",
+          "callee": "u.criado_em.isoformat",
+          "lineNumber": 14
+        },
+        {
+          "caller": "_para_dict",
+          "callee": "d.update",
+          "lineNumber": 18
+        },
+        {
+          "caller": "_para_dict",
+          "callee": "getattr",
+          "lineNumber": 18
+        },
+        {
+          "caller": "publico",
+          "callee": "d.items",
+          "lineNumber": 24
+        },
+        {
+          "caller": "criar_usuario",
+          "callee": "Session",
+          "lineNumber": 29
+        },
+        {
+          "caller": "criar_usuario",
+          "callee": "Usuario",
+          "lineNumber": 30
+        },
+        {
+          "caller": "criar_usuario",
+          "callee": "sessao.add",
+          "lineNumber": 31
+        },
+        {
+          "caller": "criar_usuario",
+          "callee": "sessao.commit",
+          "lineNumber": 32
+        },
+        {
+          "caller": "criar_usuario",
+          "callee": "sessao.refresh",
+          "lineNumber": 33
+        },
+        {
+          "caller": "criar_usuario",
+          "callee": "_para_dict",
+          "lineNumber": 34
+        },
+        {
+          "caller": "obter_por_email",
+          "callee": "Session",
+          "lineNumber": 39
+        },
+        {
+          "caller": "obter_por_email",
+          "callee": "sessao.scalar",
+          "lineNumber": 40
+        },
+        {
+          "caller": "obter_por_email",
+          "callee": "select(Usuario).where",
+          "lineNumber": 40
+        },
+        {
+          "caller": "obter_por_email",
+          "callee": "select",
+          "lineNumber": 40
+        },
+        {
+          "caller": "obter_por_email",
+          "callee": "_para_dict",
+          "lineNumber": 41
+        },
+        {
+          "caller": "obter_por_id",
+          "callee": "Session",
+          "lineNumber": 45
+        },
+        {
+          "caller": "obter_por_id",
+          "callee": "sessao.get",
+          "lineNumber": 46
+        },
+        {
+          "caller": "obter_por_id",
+          "callee": "_para_dict",
+          "lineNumber": 47
+        },
+        {
+          "caller": "listar_usuarios",
+          "callee": "Session",
+          "lineNumber": 51
+        },
+        {
+          "caller": "listar_usuarios",
+          "callee": "_para_dict",
+          "lineNumber": 52
+        },
+        {
+          "caller": "listar_usuarios",
+          "callee": "sessao.scalars",
+          "lineNumber": 52
+        },
+        {
+          "caller": "listar_usuarios",
+          "callee": "select(Usuario).order_by",
+          "lineNumber": 52
+        },
+        {
+          "caller": "listar_usuarios",
+          "callee": "select",
+          "lineNumber": 52
+        },
+        {
+          "caller": "contar_admins_ativos",
+          "callee": "Session",
+          "lineNumber": 56
+        },
+        {
+          "caller": "contar_admins_ativos",
+          "callee": "sessao.scalar",
+          "lineNumber": 57
+        },
+        {
+          "caller": "contar_admins_ativos",
+          "callee": "select(func.count(Usuario.id)).where",
+          "lineNumber": 58
+        },
+        {
+          "caller": "contar_admins_ativos",
+          "callee": "select",
+          "lineNumber": 58
+        },
+        {
+          "caller": "contar_admins_ativos",
+          "callee": "func.count",
+          "lineNumber": 58
+        },
+        {
+          "caller": "atualizar_usuario",
+          "callee": "Session",
+          "lineNumber": 63
+        },
+        {
+          "caller": "atualizar_usuario",
+          "callee": "sessao.get",
+          "lineNumber": 64
+        },
+        {
+          "caller": "atualizar_usuario",
+          "callee": "sessao.commit",
+          "lineNumber": 73
+        },
+        {
+          "caller": "atualizar_usuario",
+          "callee": "sessao.refresh",
+          "lineNumber": 74
+        },
+        {
+          "caller": "atualizar_usuario",
+          "callee": "_para_dict",
+          "lineNumber": 75
+        },
+        {
+          "caller": "encerrar_sessoes",
+          "callee": "Session",
+          "lineNumber": 80
+        },
+        {
+          "caller": "encerrar_sessoes",
+          "callee": "sessao.scalar",
+          "lineNumber": 81
+        },
+        {
+          "caller": "encerrar_sessoes",
+          "callee": "update(Usuario).where(Usuario.id == usuario_id)\n            .values(sessao_versao=Usuario.sessao_versao + 1)\n            .returning",
+          "lineNumber": 82
+        },
+        {
+          "caller": "encerrar_sessoes",
+          "callee": "update(Usuario).where(Usuario.id == usuario_id)\n            .values",
+          "lineNumber": 82
+        },
+        {
+          "caller": "encerrar_sessoes",
+          "callee": "update(Usuario).where",
+          "lineNumber": 82
+        },
+        {
+          "caller": "encerrar_sessoes",
+          "callee": "update",
+          "lineNumber": 82
+        },
+        {
+          "caller": "encerrar_sessoes",
+          "callee": "sessao.commit",
+          "lineNumber": 86
+        },
+        {
+          "caller": "alterar_senha",
+          "callee": "Session",
+          "lineNumber": 92
+        },
+        {
+          "caller": "alterar_senha",
+          "callee": "sessao.scalar",
+          "lineNumber": 93
+        },
+        {
+          "caller": "alterar_senha",
+          "callee": "update(Usuario).where(Usuario.id == usuario_id)\n            .values(senha_hash=senha_hash, sessao_versao=Usuario.sessao_versao + 1)\n            .returning",
+          "lineNumber": 94
+        },
+        {
+          "caller": "alterar_senha",
+          "callee": "update(Usuario).where(Usuario.id == usuario_id)\n            .values",
+          "lineNumber": 94
+        },
+        {
+          "caller": "alterar_senha",
+          "callee": "update(Usuario).where",
+          "lineNumber": 94
+        },
+        {
+          "caller": "alterar_senha",
+          "callee": "update",
+          "lineNumber": 94
+        },
+        {
+          "caller": "alterar_senha",
+          "callee": "sessao.commit",
+          "lineNumber": 98
+        },
+        {
+          "caller": "ativar_mfa",
+          "callee": "Session",
+          "lineNumber": 104
+        },
+        {
+          "caller": "ativar_mfa",
+          "callee": "sessao.scalar",
+          "lineNumber": 105
+        },
+        {
+          "caller": "ativar_mfa",
+          "callee": "update(Usuario).where(Usuario.id == usuario_id, Usuario.totp_segredo.is_(None))\n            .values(totp_segredo=segredo, totp_ultimo_passo=passo,\n                    sessao_versao=Usuario.sessao_versao + 1)\n            .returning",
+          "lineNumber": 106
+        },
+        {
+          "caller": "ativar_mfa",
+          "callee": "update(Usuario).where(Usuario.id == usuario_id, Usuario.totp_segredo.is_(None))\n            .values",
+          "lineNumber": 106
+        },
+        {
+          "caller": "ativar_mfa",
+          "callee": "update(Usuario).where",
+          "lineNumber": 106
+        },
+        {
+          "caller": "ativar_mfa",
+          "callee": "update",
+          "lineNumber": 106
+        },
+        {
+          "caller": "ativar_mfa",
+          "callee": "Usuario.totp_segredo.is_",
+          "lineNumber": 106
+        },
+        {
+          "caller": "ativar_mfa",
+          "callee": "sessao.commit",
+          "lineNumber": 111
+        },
+        {
+          "caller": "usar_passo_totp",
+          "callee": "Session",
+          "lineNumber": 117
+        },
+        {
+          "caller": "usar_passo_totp",
+          "callee": "sessao.execute",
+          "lineNumber": 118
+        },
+        {
+          "caller": "usar_passo_totp",
+          "callee": "update(Usuario)\n            .where(Usuario.id == usuario_id,\n                   or_(Usuario.totp_ultimo_passo.is_(None), Usuario.totp_ultimo_passo < passo))\n            .values",
+          "lineNumber": 119
+        },
+        {
+          "caller": "usar_passo_totp",
+          "callee": "update(Usuario)\n            .where",
+          "lineNumber": 119
+        },
+        {
+          "caller": "usar_passo_totp",
+          "callee": "update",
+          "lineNumber": 119
+        },
+        {
+          "caller": "usar_passo_totp",
+          "callee": "or_",
+          "lineNumber": 121
+        },
+        {
+          "caller": "usar_passo_totp",
+          "callee": "Usuario.totp_ultimo_passo.is_",
+          "lineNumber": 121
+        },
+        {
+          "caller": "usar_passo_totp",
+          "callee": "sessao.commit",
+          "lineNumber": 124
+        },
+        {
+          "caller": "redefinir_mfa",
+          "callee": "Session",
+          "lineNumber": 130
+        },
+        {
+          "caller": "redefinir_mfa",
+          "callee": "sessao.execute",
+          "lineNumber": 131
+        },
+        {
+          "caller": "redefinir_mfa",
+          "callee": "update(Usuario).where(Usuario.email == email)\n            .values",
+          "lineNumber": 132
+        },
+        {
+          "caller": "redefinir_mfa",
+          "callee": "update(Usuario).where",
+          "lineNumber": 132
+        },
+        {
+          "caller": "redefinir_mfa",
+          "callee": "update",
+          "lineNumber": 132
+        },
+        {
+          "caller": "redefinir_mfa",
+          "callee": "sessao.commit",
+          "lineNumber": 136
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 13,
+        "functionCount": 13,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "modelos/__init__.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 10,
+      "nonEmptyLines": 8,
+      "metrics": {
+        "importCount": 5,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "modelos/base.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 6,
+      "nonEmptyLines": 3,
+      "classes": [
+        {
+          "name": "Base",
+          "startLine": 4,
+          "endLine": 5,
+          "methods": [],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "Base",
+          "line": 4,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "modelos/leitura.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 23,
+      "nonEmptyLines": 18,
+      "classes": [
+        {
+          "name": "Leitura",
+          "startLine": 7,
+          "endLine": 23,
+          "methods": [],
+          "properties": [
+            "id",
+            "teste_id",
+            "teto",
+            "temp",
+            "cond",
+            "suspeito",
+            "motivo",
+            "teste"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Leitura",
+          "line": 7,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "modelos/teste.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 28,
+      "nonEmptyLines": 21,
+      "classes": [
+        {
+          "name": "Teste",
+          "startLine": 9,
+          "endLine": 27,
+          "methods": [],
+          "properties": [
+            "id",
+            "vaca_id",
+            "data",
+            "tem_mastite",
+            "tetos_afetados",
+            "observacao",
+            "usuario_id",
+            "vaca",
+            "usuario",
+            "leituras"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Teste",
+          "line": 9,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "modelos/usuario.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 30,
+      "nonEmptyLines": 23,
+      "classes": [
+        {
+          "name": "Usuario",
+          "startLine": 12,
+          "endLine": 29,
+          "methods": [],
+          "properties": [
+            "id",
+            "nome",
+            "email",
+            "senha_hash",
+            "perfil",
+            "ativo",
+            "criado_em",
+            "sessao_versao",
+            "totp_segredo",
+            "totp_ultimo_passo"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Usuario",
+          "line": 12,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "modelos/vaca.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 20,
+      "nonEmptyLines": 13,
+      "classes": [
+        {
+          "name": "Vaca",
+          "startLine": 9,
+          "endLine": 19,
+          "methods": [],
+          "properties": [
+            "id",
+            "brinco",
+            "criada_em",
+            "testes"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Vaca",
+          "line": 9,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "nodes": [
+    {
+      "id": "pipeline:.github/workflows/seguranca.yml",
+      "type": "pipeline",
+      "name": "seguranca.yml",
+      "filePath": ".github/workflows/seguranca.yml",
+      "summary": "Workflow do GitHub Actions executado em cada push e pull request, com um job único de auditoria: instala as dependências com hashes verificados, roda pip-audit (falhas conhecidas), bandit (análise estática), um teste de que o servidor arranca com SQLite e o gitleaks (segredos no histórico).",
+      "tags": [
+        "ci-cd",
+        "security",
+        "sast",
+        "dependency-audit",
+        "secret-scanning"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "As actions estão fixadas pelo SHA do commit (e não por tag), o que evita que uma tag movida injete código; permissions limita o GITHUB_TOKEN a contents: read e persist-credentials: false evita deixar credenciais no checkout. O fetch-depth: 0 baixa o histórico inteiro para o gitleaks."
+    }
+  ],
+  "edges": [
+    {
+      "source": "pipeline:.github/workflows/seguranca.yml",
+      "target": "document:requirements.txt",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "pipeline:.github/workflows/seguranca.yml",
+      "target": "file:servidor.py",
+      "type": "triggers",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "pipeline:.github/workflows/seguranca.yml",
+      "target": "file:definir_senha_admin.py",
+      "type": "triggers",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "pipeline:.github/workflows/seguranca.yml",
+      "target": "file:configurar_banco_app.py",
+      "type": "triggers",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "pipeline:.github/workflows/seguranca.yml",
+      "target": "file:dao/banco.py",
+      "type": "triggers",
+      "direction": "forward",
+      "weight": 0.6
+    }
+  ]
+}

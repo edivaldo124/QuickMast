@@ -1,0 +1,1010 @@
+{
+  "nodes": [
+    {
+      "id": "document:stetic/fonts/OFL.txt",
+      "type": "document",
+      "name": "OFL.txt",
+      "filePath": "stetic/fonts/OFL.txt",
+      "summary": "Texto da licença SIL Open Font License 1.1 da fonte Inter (Inter Project Authors), distribuída em stetic/fonts e declarada via @font-face no quickmast.css.",
+      "tags": [
+        "license",
+        "font",
+        "documentation",
+        "legal"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:stetic/js/componentes.js",
+      "type": "file",
+      "name": "componentes.js",
+      "filePath": "stetic/js/componentes.js",
+      "summary": "Biblioteca de componentes DOM criados em JavaScript (criar, icone, banner, limparBanner, formatarData, itemHistorico), partilhada pelas páginas ubere, painel, usuarios e vaca; usa textContent para nunca injetar HTML.",
+      "tags": [
+        "component",
+        "dom",
+        "utility",
+        "ui",
+        "accessibility"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Script clássico (sem módulos): as funções ficam globais e são usadas por outros scripts carregados depois na mesma página."
+    },
+    {
+      "id": "file:stetic/js/formularios.js",
+      "type": "file",
+      "name": "formularios.js",
+      "filePath": "stetic/js/formularios.js",
+      "summary": "Comportamento dos formulários de entrada, conta e MFA: botão mostrar/ocultar senha com aria-pressed, estado \"a enviar\" que impede duplo envio, restauração ao voltar pela cache e botão de copiar a chave do MFA com alternativa execCommand.",
+      "tags": [
+        "forms",
+        "accessibility",
+        "dom",
+        "event-handler",
+        "ui"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Tudo corre dentro de um bloco { } para que os nomes não colidam com os de outros scripts globais da página."
+    },
+    {
+      "id": "file:stetic/js/login.js",
+      "type": "file",
+      "name": "login.js",
+      "filePath": "stetic/js/login.js",
+      "summary": "Alterna na página de login entre os formulários \"Entrar\" e \"Criar conta\" (este só existe quando o registo público está ligado).",
+      "tags": [
+        "event-handler",
+        "login",
+        "dom",
+        "ui"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:stetic/js/movimento.js",
+      "type": "file",
+      "name": "movimento.js",
+      "filePath": "stetic/js/movimento.js",
+      "summary": "Movimento e retorno ao toque partilhados por todas as páginas (carregado no base.html): contagem animada de números, vibração, reinício de animações, entrada em cascata de listas e inclinação 3D que segue o rato, tudo respeitando prefers-reduced-motion.",
+      "tags": [
+        "animation",
+        "utility",
+        "accessibility",
+        "dom",
+        "ui"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:stetic/js/painel.js",
+      "type": "file",
+      "name": "painel.js",
+      "filePath": "stetic/js/painel.js",
+      "summary": "Script do painel de estatísticas: lê GET /api/estatisticas, anima as médias de temperatura e condutividade, pinta o mapa dos quatro tetos pela intensidade relativa de suspeitas e mostra o detalhe do teto tocado.",
+      "tags": [
+        "dashboard",
+        "statistics",
+        "api-client",
+        "dom",
+        "accessibility"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:stetic/js/ubere.js",
+      "type": "file",
+      "name": "ubere.js",
+      "filePath": "stetic/js/ubere.js",
+      "summary": "Script da página principal /ubere que conduz o teste de mastite no navegador: captura a condutividade teto a teto via GET /read com leitura ao vivo e mini-gráfico, envia as 4 leituras a POST /api/testes, mostra o diagnóstico do servidor e gere histórico, estatísticas, sugestões de vacas e procura por brinco.",
+      "tags": [
+        "entry-point",
+        "sensor",
+        "api-client",
+        "state-machine",
+        "ui"
+      ],
+      "complexity": "complex",
+      "languageNotes": "Script clássico com estado em variáveis globais (vaca, tetoAtual, leituras) e fases controladas por body[data-fase]; depende das funções globais de componentes.js e movimento.js."
+    },
+    {
+      "id": "file:stetic/js/usuarios.js",
+      "type": "file",
+      "name": "usuarios.js",
+      "filePath": "stetic/js/usuarios.js",
+      "summary": "Script da página de gestão de utilizadores (admin): lista os utilizadores em cartões, permite alterar perfil e ativar/desativar por PATCH /api/usuarios/<id> e mostra banner de sucesso ou erro.",
+      "tags": [
+        "user-management",
+        "api-client",
+        "admin",
+        "dom",
+        "ui"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:stetic/js/vaca.js",
+      "type": "file",
+      "name": "vaca.js",
+      "filePath": "stetic/js/vaca.js",
+      "summary": "Script da página de histórico de uma vaca: lê GET /api/vacas/<brinco>/testes, desenha a linha do tempo com marcadores sadio/suspeita e mostra o resumo (total de testes, suspeitas e data do último).",
+      "tags": [
+        "history",
+        "timeline",
+        "api-client",
+        "dom",
+        "ui"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:stetic/js/componentes.js:itemHistorico",
+      "type": "function",
+      "name": "itemHistorico",
+      "filePath": "stetic/js/componentes.js",
+      "lineRange": [
+        45,
+        62
+      ],
+      "summary": "Cria o cartão de um teste do histórico (data, operador, brinco e selo Normal ou Suspeita com os tetos afetados); com comLink vira um link para /vacas/<brinco>.",
+      "tags": [
+        "component",
+        "dom",
+        "history",
+        "ui"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:stetic/js/movimento.js:contar",
+      "type": "function",
+      "name": "contar",
+      "filePath": "stetic/js/movimento.js",
+      "lineRange": [
+        10,
+        26
+      ],
+      "summary": "Anima um número do valor atual até o novo em 700 ms com desaceleração cúbica via requestAnimationFrame, preservando as casas decimais; salta direto ao final com prefers-reduced-motion.",
+      "tags": [
+        "animation",
+        "counter",
+        "accessibility",
+        "ui"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:stetic/js/painel.js:corTexto",
+      "type": "function",
+      "name": "corTexto",
+      "filePath": "stetic/js/painel.js",
+      "lineRange": [
+        13,
+        22
+      ],
+      "summary": "Calcula o contraste WCAG do vermelho de suspeita misturado ao fundo na opacidade dada e escolhe texto branco ou escuro, o que contrastar mais.",
+      "tags": [
+        "accessibility",
+        "color-contrast",
+        "utility"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:stetic/js/painel.js:carregar",
+      "type": "function",
+      "name": "carregar",
+      "filePath": "stetic/js/painel.js",
+      "lineRange": [
+        33,
+        64
+      ],
+      "summary": "Busca GET /api/estatisticas, anima as médias, colore cada teto do mapa pela intensidade relativa de suspeitas e liga o clique de detalhe; em falha mostra banner de erro.",
+      "tags": [
+        "api-client",
+        "dashboard",
+        "async",
+        "statistics"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:stetic/js/ubere.js:mostrarFase",
+      "type": "function",
+      "name": "mostrarFase",
+      "filePath": "stetic/js/ubere.js",
+      "lineRange": [
+        48,
+        60
+      ],
+      "summary": "Alterna a fase da página (vaca, medir ou resultado) por body[data-fase] e torna os tetos focáveis e clicáveis só durante a medição.",
+      "tags": [
+        "state-machine",
+        "dom",
+        "accessibility"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:stetic/js/ubere.js:lerSensor",
+      "type": "function",
+      "name": "lerSensor",
+      "filePath": "stetic/js/ubere.js",
+      "lineRange": [
+        71,
+        84
+      ],
+      "summary": "Pede GET /read ao servidor (que busca a leitura na placa) e valida que veio uma condutividade numérica; lança erro com a explicação do servidor em falha.",
+      "tags": [
+        "api-client",
+        "sensor",
+        "async",
+        "error-handling"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:stetic/js/ubere.js:desenharVivo",
+      "type": "function",
+      "name": "desenharVivo",
+      "filePath": "stetic/js/ubere.js",
+      "lineRange": [
+        89,
+        105
+      ],
+      "summary": "Guarda as últimas 20 condutividades e desenha o mini-gráfico ao vivo como pontos de uma polyline SVG, com faixa mínima de 30 para o ruído não virar montanha.",
+      "tags": [
+        "chart",
+        "svg",
+        "visualization",
+        "sensor"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:stetic/js/ubere.js:lerAoVivo",
+      "type": "function",
+      "name": "lerAoVivo",
+      "filePath": "stetic/js/ubere.js",
+      "lineRange": [
+        107,
+        120
+      ],
+      "summary": "Lê o sensor a cada ciclo da leitura em tempo real, sem pedidos sobrepostos, atualizando temperatura, condutividade e o mini-gráfico.",
+      "tags": [
+        "polling",
+        "sensor",
+        "async",
+        "ui"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:stetic/js/ubere.js:mostrarPasso",
+      "type": "function",
+      "name": "mostrarPasso",
+      "filePath": "stetic/js/ubere.js",
+      "lineRange": [
+        149,
+        161
+      ],
+      "summary": "Atualiza a instrução do teto atual, o progresso (N de 4 medidos), o destaque, o rótulo do botão de captura e reinicia o gráfico ao vivo.",
+      "tags": [
+        "ui",
+        "progress",
+        "dom",
+        "accessibility"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:stetic/js/ubere.js:iniciar",
+      "type": "function",
+      "name": "iniciar",
+      "filePath": "stetic/js/ubere.js",
+      "lineRange": [
+        176,
+        196
+      ],
+      "summary": "Normaliza e valida o brinco, zera as leituras, passa à fase de medição no teto 1 e liga a leitura ao vivo; com brinco vazio marca o campo em erro e vibra.",
+      "tags": [
+        "validation",
+        "state-machine",
+        "event-handler",
+        "ui"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:stetic/js/ubere.js:capturar",
+      "type": "function",
+      "name": "capturar",
+      "filePath": "stetic/js/ubere.js",
+      "lineRange": [
+        198,
+        242
+      ],
+      "summary": "Captura a leitura do teto atual, recusa valores abaixo de LEITURA_MINIMA (sonda fora do leite), atualiza o estado visual, avança para o próximo teto em falta e, com os 4 medidos, chama finalizar.",
+      "tags": [
+        "sensor",
+        "async",
+        "state-machine",
+        "error-handling",
+        "event-handler"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:stetic/js/ubere.js:finalizar",
+      "type": "function",
+      "name": "finalizar",
+      "filePath": "stetic/js/ubere.js",
+      "lineRange": [
+        245,
+        276
+      ],
+      "summary": "Envia as 4 leituras por POST /api/testes, mostra o diagnóstico calculado pelo servidor e confirma a gravação; em erro exibe alerta, volta os tetos a \"não medido\" e recarrega o histórico.",
+      "tags": [
+        "api-client",
+        "async",
+        "diagnosis",
+        "error-handling"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:stetic/js/ubere.js:mostrarResultado",
+      "type": "function",
+      "name": "mostrarResultado",
+      "filePath": "stetic/js/ubere.js",
+      "lineRange": [
+        278,
+        299
+      ],
+      "summary": "Pinta cada teto como sadio ou mastite, revelando-os um a um, e mostra o banner de alerta com os motivos e vibração ou a mensagem de todos normais.",
+      "tags": [
+        "diagnosis",
+        "ui",
+        "animation",
+        "accessibility"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:stetic/js/ubere.js:novaVaca",
+      "type": "function",
+      "name": "novaVaca",
+      "filePath": "stetic/js/ubere.js",
+      "lineRange": [
+        302,
+        315
+      ],
+      "summary": "Reinicia a página para um novo teste: limpa campo, tetos, títulos e banners e volta à fase da vaca.",
+      "tags": [
+        "state-machine",
+        "reset",
+        "dom"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:stetic/js/ubere.js:carregarHistorico",
+      "type": "function",
+      "name": "carregarHistorico",
+      "filePath": "stetic/js/ubere.js",
+      "lineRange": [
+        318,
+        336
+      ],
+      "summary": "Carrega os 10 testes mais recentes de /api/testes, desenha a lista com itemHistorico, reaplica o filtro e dispara o recarregamento de estatísticas e sugestões de vacas.",
+      "tags": [
+        "api-client",
+        "history",
+        "async",
+        "ui"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:stetic/js/ubere.js:carregarVacas",
+      "type": "function",
+      "name": "carregarVacas",
+      "filePath": "stetic/js/ubere.js",
+      "lineRange": [
+        339,
+        350
+      ],
+      "summary": "Preenche as sugestões do campo de brinco com as vacas de /api/vacas e o respetivo número de testes.",
+      "tags": [
+        "api-client",
+        "autocomplete",
+        "async"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:stetic/js/ubere.js:carregarEstatisticas",
+      "type": "function",
+      "name": "carregarEstatisticas",
+      "filePath": "stetic/js/ubere.js",
+      "lineRange": [
+        352,
+        365
+      ],
+      "summary": "Busca /api/estatisticas e anima os quatro números de resumo (vacas, testes, suspeitas e percentual); esconde a caixa se falhar.",
+      "tags": [
+        "api-client",
+        "statistics",
+        "animation",
+        "async"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:stetic/js/ubere.js:filtrarHistorico",
+      "type": "function",
+      "name": "filtrarHistorico",
+      "filePath": "stetic/js/ubere.js",
+      "lineRange": [
+        369,
+        378
+      ],
+      "summary": "Filtra os itens visíveis do histórico pelo brinco digitado e mostra a mensagem de procura vazia quando nada confere.",
+      "tags": [
+        "search",
+        "filter",
+        "dom",
+        "ui"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:stetic/js/usuarios.js:alterar",
+      "type": "function",
+      "name": "alterar",
+      "filePath": "stetic/js/usuarios.js",
+      "lineRange": [
+        7,
+        24
+      ],
+      "summary": "Envia PATCH /api/usuarios/<id> com perfil ou ativo, mostra banner de sucesso (some em 4 s) ou erro, recarrega a lista e destaca o cartão guardado.",
+      "tags": [
+        "api-client",
+        "user-management",
+        "async",
+        "feedback"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:stetic/js/usuarios.js:cartao",
+      "type": "function",
+      "name": "cartao",
+      "filePath": "stetic/js/usuarios.js",
+      "lineRange": [
+        27,
+        69
+      ],
+      "summary": "Constrói o cartão de um utilizador com nome, email, seletor de Perfil e interruptor Ativo; os controles ficam desativados para o próprio utilizador.",
+      "tags": [
+        "component",
+        "user-management",
+        "dom",
+        "accessibility"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:stetic/js/usuarios.js:carregar",
+      "type": "function",
+      "name": "carregar",
+      "filePath": "stetic/js/usuarios.js",
+      "lineRange": [
+        71,
+        81
+      ],
+      "summary": "Carrega GET /api/usuarios e desenha os cartões em lista; sem permissão mostra um alerta.",
+      "tags": [
+        "api-client",
+        "user-management",
+        "async"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:stetic/js/vaca.js:carregar",
+      "type": "function",
+      "name": "carregar",
+      "filePath": "stetic/js/vaca.js",
+      "lineRange": [
+        16,
+        38
+      ],
+      "summary": "Busca GET /api/vacas/<brinco>/testes, desenha a linha do tempo com marcador sadio ou suspeita, mostra o resumo e trata erros da API com banner.",
+      "tags": [
+        "api-client",
+        "timeline",
+        "async",
+        "history"
+      ],
+      "complexity": "moderate"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:stetic/js/componentes.js",
+      "target": "function:stetic/js/componentes.js:itemHistorico",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:stetic/js/movimento.js",
+      "target": "function:stetic/js/movimento.js:contar",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:stetic/js/painel.js",
+      "target": "function:stetic/js/painel.js:corTexto",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:stetic/js/painel.js",
+      "target": "function:stetic/js/painel.js:carregar",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:stetic/js/ubere.js",
+      "target": "function:stetic/js/ubere.js:mostrarFase",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:stetic/js/ubere.js",
+      "target": "function:stetic/js/ubere.js:lerSensor",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:stetic/js/ubere.js",
+      "target": "function:stetic/js/ubere.js:desenharVivo",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:stetic/js/ubere.js",
+      "target": "function:stetic/js/ubere.js:lerAoVivo",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:stetic/js/ubere.js",
+      "target": "function:stetic/js/ubere.js:mostrarPasso",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:stetic/js/ubere.js",
+      "target": "function:stetic/js/ubere.js:iniciar",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:stetic/js/ubere.js",
+      "target": "function:stetic/js/ubere.js:capturar",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:stetic/js/ubere.js",
+      "target": "function:stetic/js/ubere.js:finalizar",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:stetic/js/ubere.js",
+      "target": "function:stetic/js/ubere.js:mostrarResultado",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:stetic/js/ubere.js",
+      "target": "function:stetic/js/ubere.js:novaVaca",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:stetic/js/ubere.js",
+      "target": "function:stetic/js/ubere.js:carregarHistorico",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:stetic/js/ubere.js",
+      "target": "function:stetic/js/ubere.js:carregarVacas",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:stetic/js/ubere.js",
+      "target": "function:stetic/js/ubere.js:carregarEstatisticas",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:stetic/js/ubere.js",
+      "target": "function:stetic/js/ubere.js:filtrarHistorico",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:stetic/js/usuarios.js",
+      "target": "function:stetic/js/usuarios.js:alterar",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:stetic/js/usuarios.js",
+      "target": "function:stetic/js/usuarios.js:cartao",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:stetic/js/usuarios.js",
+      "target": "function:stetic/js/usuarios.js:carregar",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:stetic/js/vaca.js",
+      "target": "function:stetic/js/vaca.js:carregar",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "function:stetic/js/painel.js:carregar",
+      "target": "function:stetic/js/movimento.js:contar",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:stetic/js/painel.js:carregar",
+      "target": "function:stetic/js/painel.js:corTexto",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:stetic/js/ubere.js:lerAoVivo",
+      "target": "function:stetic/js/ubere.js:lerSensor",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:stetic/js/ubere.js:lerAoVivo",
+      "target": "function:stetic/js/ubere.js:desenharVivo",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:stetic/js/ubere.js:mostrarPasso",
+      "target": "function:stetic/js/ubere.js:desenharVivo",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:stetic/js/ubere.js:iniciar",
+      "target": "function:stetic/js/ubere.js:mostrarFase",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:stetic/js/ubere.js:iniciar",
+      "target": "function:stetic/js/ubere.js:mostrarPasso",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:stetic/js/ubere.js:capturar",
+      "target": "function:stetic/js/ubere.js:lerSensor",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:stetic/js/ubere.js:capturar",
+      "target": "function:stetic/js/ubere.js:mostrarPasso",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:stetic/js/ubere.js:capturar",
+      "target": "function:stetic/js/ubere.js:finalizar",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:stetic/js/ubere.js:finalizar",
+      "target": "function:stetic/js/ubere.js:mostrarFase",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:stetic/js/ubere.js:finalizar",
+      "target": "function:stetic/js/ubere.js:mostrarResultado",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:stetic/js/ubere.js:finalizar",
+      "target": "function:stetic/js/ubere.js:carregarHistorico",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:stetic/js/ubere.js:novaVaca",
+      "target": "function:stetic/js/ubere.js:mostrarFase",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:stetic/js/ubere.js:carregarHistorico",
+      "target": "function:stetic/js/componentes.js:itemHistorico",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:stetic/js/ubere.js:carregarHistorico",
+      "target": "function:stetic/js/ubere.js:filtrarHistorico",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:stetic/js/ubere.js:carregarHistorico",
+      "target": "function:stetic/js/ubere.js:carregarEstatisticas",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:stetic/js/ubere.js:carregarHistorico",
+      "target": "function:stetic/js/ubere.js:carregarVacas",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:stetic/js/ubere.js:carregarEstatisticas",
+      "target": "function:stetic/js/movimento.js:contar",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:stetic/js/usuarios.js:alterar",
+      "target": "function:stetic/js/usuarios.js:carregar",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:stetic/js/usuarios.js:cartao",
+      "target": "function:stetic/js/usuarios.js:alterar",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:stetic/js/vaca.js:carregar",
+      "target": "function:stetic/js/componentes.js:itemHistorico",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:stetic/js/ubere.js",
+      "target": "file:stetic/js/componentes.js",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:stetic/js/ubere.js",
+      "target": "file:stetic/js/movimento.js",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:stetic/js/painel.js",
+      "target": "file:stetic/js/componentes.js",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:stetic/js/painel.js",
+      "target": "file:stetic/js/movimento.js",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:stetic/js/usuarios.js",
+      "target": "file:stetic/js/componentes.js",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:stetic/js/usuarios.js",
+      "target": "file:stetic/js/movimento.js",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:stetic/js/vaca.js",
+      "target": "file:stetic/js/componentes.js",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:stetic/js/vaca.js",
+      "target": "file:stetic/js/movimento.js",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:stetic/js/ubere.js",
+      "target": "file:templates/ubere.html",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:stetic/js/ubere.js",
+      "target": "file:blueprints/testes.py",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:stetic/js/ubere.js",
+      "target": "file:blueprints/sensor.py",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:stetic/js/ubere.js",
+      "target": "file:servicos/diagnostico.py",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:stetic/js/painel.js",
+      "target": "file:templates/painel.html",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:stetic/js/usuarios.js",
+      "target": "file:templates/usuarios.html",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:stetic/js/usuarios.js",
+      "target": "file:blueprints/usuarios.py",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:stetic/js/vaca.js",
+      "target": "file:templates/vaca.html",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:stetic/js/vaca.js",
+      "target": "file:blueprints/testes.py",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:stetic/js/login.js",
+      "target": "file:templates/login.html",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:stetic/js/formularios.js",
+      "target": "file:templates/login.html",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:stetic/js/formularios.js",
+      "target": "file:templates/conta.html",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:stetic/js/formularios.js",
+      "target": "file:templates/mfa.html",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:stetic/js/movimento.js",
+      "target": "file:templates/base.html",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:stetic/js/componentes.js",
+      "target": "file:templates/_componentes.html",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:stetic/fonts/OFL.txt",
+      "target": "file:stetic/css/quickmast.css",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

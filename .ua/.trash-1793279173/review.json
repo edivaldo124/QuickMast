@@ -1,0 +1,34 @@
+{
+  "issues": [],
+  "warnings": [
+    "Node 'document:CLAUDE.md' has no edges (orphan)",
+    "Node 'config:skills-lock.json' has no edges (orphan)"
+  ],
+  "stats": {
+    "totalNodes": 229,
+    "totalEdges": 545,
+    "totalLayers": 9,
+    "tourSteps": 13,
+    "nodeTypes": {
+      "file": 58,
+      "function": 145,
+      "class": 7,
+      "config": 6,
+      "service": 6,
+      "pipeline": 1,
+      "document": 6
+    },
+    "edgeTypes": {
+      "contains": 155,
+      "exports": 56,
+      "imports": 50,
+      "depends_on": 68,
+      "calls": 143,
+      "related": 48,
+      "configures": 11,
+      "deploys": 3,
+      "triggers": 4,
+      "documents": 7
+    }
+  }
+}

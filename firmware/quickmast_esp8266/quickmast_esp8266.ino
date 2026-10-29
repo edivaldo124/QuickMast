@@ -22,29 +22,84 @@
     - Continua a responder a GET /read com {"cond": N}: a página /ubere usa-o (o Nginx da box
       encaminha o /read para esta placa), para quem prefere conduzir o teste pelo telemóvel.
 
-  Rede própria (REDE_PROPRIA 1 no configuracao.h): para apresentações e lugares sem um Wi-Fi de
+  Rede própria (REDE_PROPRIA 1, no bloco CONFIGURAÇÃO): para apresentações e lugares sem um Wi-Fi de
   confiança. A placa cria a rede REDE_PROPRIA_SSID e fica sempre em 192.168.4.1; o PC liga-se a
   ela e o QuickMast vai buscar as leituras (PLACA_URL=http://192.168.4.1 no .env). Quem chama é o
   PC, por isso a placa não precisa de saber o IP dele nem de entrar com a conta. O teste é conduzido
   pela página /ubere; os do Monitor Série dão o diagnóstico na placa mas ficam na fila (sem envio).
 
-  Configuração: copiar configuracao.example.h para configuracao.h e preencher.
+  Tudo está neste arquivo só. O que se muda (rede, senhas, servidor) fica no bloco
+  CONFIGURAÇÃO, logo abaixo deste comentário.
   Placa no Arduino IDE: "NodeMCU 1.0 (ESP-12E Module)" (core esp8266 3.x).
 */
+// ============================ CONFIGURAÇÃO ============================
+// É o único sítio a editar. Para a apresentação basta ter REDE_PROPRIA 1.
+
+// 1 = a placa cria a rede Wi-Fi REDE_PROPRIA_SSID (sempre em 192.168.4.1) e o notebook liga-se a ela.
+//     O teste é conduzido pela página /ubere; a placa só responde às leituras.
+// 0 = a placa entra no Wi-Fi de casa (WIFI_*) e envia os testes ao servidor (SERVIDOR_URL, API_*).
+#define REDE_PROPRIA        1
+
+// --- Com REDE_PROPRIA 1 ---
+#define REDE_PROPRIA_SSID   "QuickMast"
+#define REDE_PROPRIA_SENHA  "qm-bh9zkvgk"   // WPA2: 8 a 63 caracteres
+
+// --- Só com REDE_PROPRIA 0 (produção) ---
+// Não ponha aqui as senhas verdadeiras se este arquivo for para o GitHub.
+#define WIFI_SSID           "nome-da-rede"
+#define WIFI_SENHA          "senha-da-rede"
+#define SERVIDOR_URL        "http://192.168.1.50"   // endereço do QuickMast (o Nginx), sem barra no fim
+#define API_EMAIL           "sensor@quickmast.local"   // conta de OPERADOR (o admin pede 2.º passo)
+#define API_SENHA           "senha-da-conta-da-placa"
+#define USAR_HTTPS          0   // 1 se o SERVIDOR_URL for https://
+#define HTTPS_FINGERPRINT   "00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00"   // SHA-1 do certificado
+// ======================================================================
+
 #include <ESP8266WiFi.h>
 #include <ESP8266HTTPClient.h>
 #include <ESP8266WebServer.h>
 #include <WiFiClientSecureBearSSL.h>
 
-#if __has_include("configuracao.h")
-#include "configuracao.h"
-#else
-#error "Falta o configuracao.h: copie configuracao.example.h para configuracao.h e preencha a rede e a conta."
-#endif
-#ifndef REDE_PROPRIA
-#error "O configuracao.h é anterior à rede própria: copie as linhas REDE_PROPRIA do configuracao.example.h."
-#endif
-#include "diagnostico.h"
+// ---------- Diagnóstico ----------
+// Regras de diagnóstico de mastite: as mesmas de servicos/diagnostico.py no servidor.
+// O servidor recalcula sempre e é o diagnóstico dele que fica no histórico; a placa calcula
+// para dar o resultado na hora, mesmo sem rede. Mudar os valores nos dois sítios ao mesmo tempo.
+
+// Condutividade em valor bruto do analogRead (0-1023). Com o resistor de 1 kΩ no módulo TDS,
+// o leite normal lê ~300.
+const double COND_REF = 300.0;
+const double MARGEM_COND = 1.30;        // alerta absoluto: acima de 390
+const double LIMIAR_RELATIVO = 0.20;    // alerta relativo: 20% acima da mediana dos outros tetos...
+const double DIFERENCA_MINIMA = 40.0;   // ...e pelo menos 40 pontos, para o ruído não dar alarme
+
+struct DiagnosticoTeto {
+  bool relativo;   // condutividade acima dos outros tetos
+  bool absoluto;   // acima do valor de referência
+  bool suspeito;   // um dos dois
+};
+
+inline int mediana3(int a, int b, int c) {
+  if (a > b) { int t = a; a = b; b = t; }   // a <= b
+  if (b > c) b = c;                         // b = min(b, c)
+  return a > b ? a : b;                     // max(a, min(b, c))
+}
+
+// cond: leituras dos tetos 1 a 4, por ordem. Os cálculos são em double, como no Python,
+// para os dois lados darem o mesmo resultado mesmo nos valores de fronteira.
+inline void diagnosticar(const int cond[4], DiagnosticoTeto res[4]) {
+  for (int i = 0; i < 4; i++) {
+    int outros[3], k = 0;
+    for (int j = 0; j < 4; j++) {
+      if (j != i) outros[k++] = cond[j];
+    }
+    double med = mediana3(outros[0], outros[1], outros[2]);
+    double diff = cond[i] - med;
+    double rel = med != 0 ? diff / med : 0;
+    res[i].relativo = diff > DIFERENCA_MINIMA && rel > LIMIAR_RELATIVO;
+    res[i].absoluto = cond[i] > COND_REF * MARGEM_COND;
+    res[i].suspeito = res[i].relativo || res[i].absoluto;
+  }
+}
 
 // ---------- Pinos ----------
 const int PINO_SENSOR = A0;
@@ -278,7 +333,7 @@ void manterWifi() {
   }
   if (!ligado && millis() - momentoWifi >= esperaWifi) {
     if (estado == WL_NO_SSID_AVAIL) Serial.printf("Rede \"%s\" não encontrada.\n", WIFI_SSID);
-    else if (estado == WL_WRONG_PASSWORD) Serial.println("Senha do Wi-Fi errada (WIFI_SENHA no configuracao.h).");
+    else if (estado == WL_WRONG_PASSWORD) Serial.println("Senha do Wi-Fi errada (WIFI_SENHA, no bloco CONFIGURAÇÃO).");
     Serial.println("A religar ao Wi-Fi...");
     WiFi.disconnect();
     WiFi.begin(WIFI_SSID, WIFI_SENHA);
@@ -291,7 +346,7 @@ void manterWifi() {
 void criarRedePropria() {
   WiFi.mode(WIFI_AP);
   if (!WiFi.softAP(REDE_PROPRIA_SSID, REDE_PROPRIA_SENHA)) {
-    Serial.println("Não foi possível criar a rede própria: a REDE_PROPRIA_SENHA (configuracao.h) "
+    Serial.println("Não foi possível criar a rede própria: a REDE_PROPRIA_SENHA (bloco CONFIGURAÇÃO) "
                    "precisa de 8 a 63 caracteres.");
     return;
   }
@@ -413,7 +468,7 @@ Resultado entrar() {
     return SUCESSO;
   }
   if (codigo == 401) {
-    Serial.println("Login: email ou senha errados (API_EMAIL/API_SENHA no configuracao.h), ou conta desativada.");
+    Serial.println("Login: email ou senha errados (API_EMAIL/API_SENHA, no bloco CONFIGURAÇÃO), ou conta desativada.");
     contaRecusada = true;
     return CONTA_RECUSADA;
   }
@@ -446,7 +501,7 @@ void compararComServidor(const Teste &t, const String &resposta) {
   for (int i = 0; i < 4; i++) {
     if (servidor[i] != t.suspeito[i]) {
       Serial.println("Atenção: o diagnóstico do servidor é diferente do da placa (vale o do servidor). "
-                     "Confira se diagnostico.h e servicos/diagnostico.py têm os mesmos limites.");
+                     "Confira se a secção Diagnóstico deste arquivo e servicos/diagnostico.py têm os mesmos limites.");
       return;
     }
   }
@@ -520,7 +575,7 @@ void enviarFila() {
     momentoFalhaEnvio = millis();
     esperaEnvio = esperaEnvio ? min(esperaEnvio * 2, ESPERA_ENVIO_MAX_MS) : ESPERA_ENVIO_MIN_MS;
     Serial.printf("Nova tentativa em %lu s (%d teste(s) na fila).\n", esperaEnvio / 1000, filaTotal);
-  } else {   // CONTA_RECUSADA: a fila fica guardada até corrigir o configuracao.h e reiniciar a placa
+  } else {   // CONTA_RECUSADA: a fila fica guardada até corrigir o bloco CONFIGURAÇÃO e gravar a placa de novo
     Serial.printf("Envio parado: %d teste(s) ficam na fila.\n", filaTotal);
   }
 }
@@ -539,7 +594,7 @@ void setup() {
 #else
   Serial.printf("Servidor %s, conta %s\n", SERVIDOR_URL, API_EMAIL);
   if ((strncmp(SERVIDOR_URL, "https://", 8) == 0) != (USAR_HTTPS == 1)) {
-    Serial.println("Aviso: SERVIDOR_URL e USAR_HTTPS não combinam (configuracao.h).");
+    Serial.println("Aviso: SERVIDOR_URL e USAR_HTTPS não combinam (bloco CONFIGURAÇÃO).");
   }
 #if USAR_HTTPS
   cliente.setFingerprint(HTTPS_FINGERPRINT);

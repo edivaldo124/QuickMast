@@ -1,0 +1,13 @@
+{
+  "projectRoot": "/home/edivaldo/PycharmProjects/QuickMast",
+  "batchFiles": [
+    {"path": ".env.example", "language": "config", "sizeLines": 48, "fileCategory": "config"},
+    {"path": "CLAUDE.md", "language": "markdown", "sizeLines": 10, "fileCategory": "docs"},
+    {"path": "PROMPT_DEPLOY_GEMINI.md", "language": "markdown", "sizeLines": 242, "fileCategory": "docs"},
+    {"path": "README.md", "language": "markdown", "sizeLines": 1, "fileCategory": "docs"},
+    {"path": "apresentacao.sh", "language": "shell", "sizeLines": 138, "fileCategory": "script"},
+    {"path": "requirements.txt", "language": "txt", "sizeLines": 422, "fileCategory": "docs"},
+    {"path": "skills-lock.json", "language": "json", "sizeLines": 59, "fileCategory": "config"}
+  ],
+  "batchImportData": {".env.example":[],"CLAUDE.md":[],"PROMPT_DEPLOY_GEMINI.md":[],"README.md":[],"apresentacao.sh":[],"requirements.txt":[],"skills-lock.json":[]}
+}

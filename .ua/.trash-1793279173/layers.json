@@ -1,0 +1,142 @@
+[
+  {
+    "id": "layer:api",
+    "name": "Camada de Rotas (Blueprints Flask)",
+    "description": "Blueprints Flask que expõem as páginas HTML, a autenticação, a conta com MFA, a API de testes de mastite, a gestão de usuários, o recebimento do sensor ESP8266, o health check, a exportação CSV e o tratamento de erros.",
+    "nodeIds": [
+      "file:blueprints/__init__.py",
+      "file:blueprints/erros.py",
+      "file:blueprints/paginas.py",
+      "file:blueprints/sensor.py",
+      "file:blueprints/testes.py",
+      "file:blueprints/usuarios.py",
+      "file:blueprints/utilitarios.py",
+      "file:blueprints/auth.py",
+      "file:blueprints/conta.py"
+    ]
+  },
+  {
+    "id": "layer:service",
+    "name": "Camada de Serviços",
+    "description": "Regras de negócio e de segurança usadas pelas rotas: autenticação e sessão, MFA/TOTP, política de senhas (com lista de senhas comuns), limite de tentativas, proteções globais (CSRF, cabeçalhos, auditoria) e diagnóstico de mastite.",
+    "nodeIds": [
+      "file:servicos/autenticacao.py",
+      "file:servicos/diagnostico.py",
+      "file:servicos/seguranca.py",
+      "file:servicos/limite.py",
+      "file:servicos/senhas.py",
+      "file:servicos/mfa.py",
+      "document:servicos/senhas_comuns.txt"
+    ]
+  },
+  {
+    "id": "layer:data",
+    "name": "Camada de Dados e Persistência",
+    "description": "Modelos ORM do SQLAlchemy (usuário, vaca, teste e leitura) e DAOs que cuidam do engine, da migração do esquema e do acesso ao PostgreSQL.",
+    "nodeIds": [
+      "file:dao/banco.py",
+      "file:dao/usuario_dao.py",
+      "file:modelos/__init__.py",
+      "file:modelos/base.py",
+      "file:modelos/leitura.py",
+      "file:modelos/teste.py",
+      "file:modelos/usuario.py",
+      "file:modelos/vaca.py"
+    ]
+  },
+  {
+    "id": "layer:core",
+    "name": "Núcleo da Aplicação e Scripts de Administração",
+    "description": "Ponto de entrada servidor.py (configuração do Flask, logs, sessão, registro dos blueprints e comandos de CLI) e scripts de uso único para definir a senha do admin e separar o usuário do banco com menor privilégio.",
+    "nodeIds": [
+      "file:servidor.py",
+      "file:definir_senha_admin.py",
+      "file:configurar_banco_app.py"
+    ]
+  },
+  {
+    "id": "layer:web-ui",
+    "name": "Interface Web (Templates Jinja e Estáticos)",
+    "description": "Páginas Jinja renderizadas pelo Flask (layout base, login, MFA, painel, histórico da vaca, usuários, úbere) e os arquivos estáticos de stetic/ (CSS do design system, JavaScript do navegador e fontes).",
+    "nodeIds": [
+      "file:templates/_componentes.html",
+      "file:templates/_landing_assets.html",
+      "file:templates/base.html",
+      "file:templates/conta.html",
+      "file:templates/index.html",
+      "file:templates/login.html",
+      "file:templates/mfa.html",
+      "file:templates/painel.html",
+      "file:templates/ubere.html",
+      "file:templates/usuarios.html",
+      "file:templates/vaca.html",
+      "file:stetic/css/quickmast.css",
+      "document:stetic/fonts/OFL.txt",
+      "file:stetic/js/componentes.js",
+      "file:stetic/js/formularios.js",
+      "file:stetic/js/login.js",
+      "file:stetic/js/movimento.js",
+      "file:stetic/js/painel.js",
+      "file:stetic/js/ubere.js",
+      "file:stetic/js/usuarios.js",
+      "file:stetic/js/vaca.js"
+    ]
+  },
+  {
+    "id": "layer:landing-react",
+    "name": "Landing Page React com Cena 3D",
+    "description": "Aplicação React + Vite em frontend/ com a landing page, a cena 3D em Three.js (React Three Fiber), manchetes, tokens de design e a configuração de build (package.json, tsconfig, vite.config) que gera os assets servidos pelo Flask.",
+    "nodeIds": [
+      "file:frontend/src/Landing.tsx",
+      "file:frontend/src/LogoQuickMast.tsx",
+      "file:frontend/src/main.tsx",
+      "file:frontend/src/manchetes.ts",
+      "file:frontend/src/three/UbereScene.tsx",
+      "file:frontend/src/tokens.ts",
+      "file:frontend/index.html",
+      "config:frontend/package.json",
+      "config:frontend/tsconfig.json",
+      "file:frontend/src/landing.css",
+      "file:frontend/vite.config.ts"
+    ]
+  },
+  {
+    "id": "layer:firmware",
+    "name": "Firmware do Sensor (ESP8266)",
+    "description": "Sketch Arduino do NodeMCU/ESP8266 que lê o sensor TDS de condutividade, conduz o teste dos 4 tetos, calcula o diagnóstico de mastite e envia os testes à API do QuickMast (também responde ao GET /read usado pela página do úbere).",
+    "nodeIds": [
+      "file:firmware/quickmast_esp8266/quickmast_esp8266.ino"
+    ]
+  },
+  {
+    "id": "layer:infrastructure",
+    "name": "Infraestrutura, CI/CD e Configuração de Ambiente",
+    "description": "Dockerfile, Docker Compose (app, banco e simulador), configuração do gunicorn, script de apresentação, pipeline de segurança no GitHub Actions, modelo de variáveis de ambiente e dependências Python fixadas com hashes.",
+    "nodeIds": [
+      "service:Dockerfile",
+      "service:Dockerfile:python",
+      "service:docker-compose.yml",
+      "service:docker-compose.yml:db",
+      "service:docker-compose.yml:app",
+      "service:docker-compose.simulador.yml",
+      "config:.dockerignore",
+      "file:gunicorn.conf.py",
+      "file:apresentacao.sh",
+      "config:.env.example",
+      "config:requirements.in",
+      "document:requirements.txt",
+      "pipeline:.github/workflows/seguranca.yml"
+    ]
+  },
+  {
+    "id": "layer:documentation",
+    "name": "Documentação e Ferramentas de IA",
+    "description": "README, guia de deploy para IA (PROMPT_DEPLOY_GEMINI), instruções do CLAUDE.md e o lockfile de skills do agente, que são metadados de documentação e de ferramentas fora do código da aplicação.",
+    "nodeIds": [
+      "document:README.md",
+      "document:PROMPT_DEPLOY_GEMINI.md",
+      "document:CLAUDE.md",
+      "config:skills-lock.json"
+    ]
+  }
+]

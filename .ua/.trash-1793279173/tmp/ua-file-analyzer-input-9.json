@@ -1,0 +1,84 @@
+{
+ "projectRoot": "/home/edivaldo/PycharmProjects/QuickMast",
+ "batchFiles": [
+  {
+   "path": "templates/_componentes.html",
+   "language": "html",
+   "sizeLines": 94,
+   "fileCategory": "markup"
+  },
+  {
+   "path": "templates/_landing_assets.html",
+   "language": "html",
+   "sizeLines": 7,
+   "fileCategory": "markup"
+  },
+  {
+   "path": "templates/base.html",
+   "language": "html",
+   "sizeLines": 22,
+   "fileCategory": "markup"
+  },
+  {
+   "path": "templates/conta.html",
+   "language": "html",
+   "sizeLines": 45,
+   "fileCategory": "markup"
+  },
+  {
+   "path": "templates/index.html",
+   "language": "html",
+   "sizeLines": 34,
+   "fileCategory": "markup"
+  },
+  {
+   "path": "templates/login.html",
+   "language": "html",
+   "sizeLines": 69,
+   "fileCategory": "markup"
+  },
+  {
+   "path": "templates/mfa.html",
+   "language": "html",
+   "sizeLines": 55,
+   "fileCategory": "markup"
+  },
+  {
+   "path": "templates/painel.html",
+   "language": "html",
+   "sizeLines": 51,
+   "fileCategory": "markup"
+  },
+  {
+   "path": "templates/ubere.html",
+   "language": "html",
+   "sizeLines": 89,
+   "fileCategory": "markup"
+  },
+  {
+   "path": "templates/usuarios.html",
+   "language": "html",
+   "sizeLines": 21,
+   "fileCategory": "markup"
+  },
+  {
+   "path": "templates/vaca.html",
+   "language": "html",
+   "sizeLines": 30,
+   "fileCategory": "markup"
+  }
+ ],
+ "batchImportData": {
+  "templates/_componentes.html": [],
+  "templates/_landing_assets.html": [],
+  "templates/base.html": [],
+  "templates/conta.html": [],
+  "templates/index.html": [],
+  "templates/login.html": [],
+  "templates/mfa.html": [],
+  "templates/painel.html": [],
+  "templates/ubere.html": [],
+  "templates/usuarios.html": [],
+  "templates/vaca.html": []
+ }
+}
