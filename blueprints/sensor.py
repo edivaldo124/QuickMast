@@ -49,7 +49,7 @@ def read():
 
     time.sleep(1)  # simulador: finge que o sensor demora 1 segundo a estabilizar
     # random serve: são valores de teste, não segredos (por isso o nosec do bandit).
-    # cond como o analogRead (inteiro 0-1023): leite normal ~300, mastite acima de 340.
+    # cond como o analogRead (inteiro 0-1023): leite normal ~300, mastite acima de 320.
     # Sem temp, como a placa atual (firmware/quickmast_esp8266)
     cond = random.randint(270, 420)               # nosec B311
     return jsonify({'cond': cond})
