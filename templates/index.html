@@ -1,30 +1,34 @@
 {% extends 'base.html' %}
+{% from '_componentes.html' import logo_inicio %}
+{# Sem sessão: a landing com a cena 3D (ilha React em frontend/; o build gera _landing_assets.html).
+   Com sessão: o início de sempre, direto para as medições. #}
+{% import '_landing_assets.html' as landing %}
 {% block lang %}pt-br{% endblock %}
 {% block titulo %}Quick Mast{% endblock %}
-{% block classe_pagina %} pagina--inicio{% endblock %}
+{% block cor_tema %}{% if usuario %}{{ super() }}{% else %}#0B110D{% endif %}{% endblock %}
+{% block estilos %}{% if not usuario %}{{ landing.estilos() }}{% endif %}{% endblock %}
+{% block atributos_body %}{% if not usuario %} class="corpo--landing"{% endif %}{% endblock %}
+{% block classe_pagina %}{% if usuario %} pagina--inicio{% else %} pagina--landing{% endif %}{% endblock %}
 
 {% block conteudo %}
-    {# Logo em linha (e não <img>) para os tetos poderem surgir um a um #}
-    <div class="inicio__icone" aria-hidden="true">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="104" height="104">
-            <rect class="logo__placa" width="120" height="120" rx="30" fill="#2E7D32"/>
-            <circle class="logo__teto logo__teto--ae" cx="41" cy="41" r="19" fill="#FFFFFF"/>
-            <circle class="logo__teto logo__teto--ad" cx="79" cy="41" r="19" fill="#FFFFFF"/>
-            <circle class="logo__teto logo__teto--pe" cx="41" cy="79" r="19" fill="#FFFFFF"/>
-            <g class="logo__teto logo__teto--alerta">
-                <circle cx="79" cy="79" r="21" fill="#C62828" stroke="#FFFFFF" stroke-width="5"/>
-                <rect x="76" y="66" width="6" height="16" rx="3" fill="#FFFFFF"/>
-                <circle cx="79" cy="89" r="3.4" fill="#FFFFFF"/>
-            </g>
-        </svg>
-    </div>
-    <h1>Quick <span class="marca__mast">Mast</span></h1>
-    <p class="inicio__subtitulo">Detetor rápido de mastite</p>
-
     {% if usuario %}
+        {{ logo_inicio() }}
+        <h1>Quick <span class="marca__mast">Mast</span></h1>
+        <p class="inicio__subtitulo">Detetor rápido de mastite</p>
         <p class="inicio__ola">Olá, {{ usuario.nome }}!</p>
         <a class="btn btn--verde" href="/ubere">Iniciar medições</a>
     {% else %}
-        <a class="btn btn--verde" href="/login">Entrar</a>
+        {# Fica assim sem JavaScript; o frontend/src/main.tsx troca pela landing completa #}
+        <div id="landing">
+            <div class="pagina pagina--inicio landing-reserva">
+                {{ logo_inicio() }}
+                <h1>Quick <span class="marca__mast">Mast</span></h1>
+                <p class="inicio__subtitulo">Detetor rápido de mastite</p>
+                <a class="btn btn--verde" href="/login">Entrar</a>
+            </div>
+        </div>
     {% endif %}
 {% endblock %}
+
+{% block script_base %}{% if usuario %}{{ super() }}{% endif %}{% endblock %}
+{% block scripts %}{% if not usuario %}{{ landing.scripts() }}{% endif %}{% endblock %}

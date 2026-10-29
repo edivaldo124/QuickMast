@@ -1,0 +1,32 @@
+{
+  "name": "quickmast-frontend",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Página inicial do QuickMast sem sessão: ilha React com a cena 3D. O build vai para stetic/landing e templates/_landing_assets.html.",
+  "engines": {
+    "node": ">=22.13"
+  },
+  "scripts": {
+    "dev": "vite",
+    "typecheck": "tsc --noEmit",
+    "build": "tsc --noEmit && vite build"
+  },
+  "dependencies": {
+    "@react-three/drei": "10.7.9",
+    "@react-three/fiber": "9.8.2",
+    "maath": "0.10.8",
+    "motion": "14.7.1",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "three": "0.186.1"
+  },
+  "devDependencies": {
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@types/three": "0.186.0",
+    "@vitejs/plugin-react": "6.1.2",
+    "typescript": "7.0.2",
+    "vite": "8.3.5"
+  }
+}

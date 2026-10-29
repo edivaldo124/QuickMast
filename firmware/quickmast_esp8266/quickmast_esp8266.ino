@@ -21,6 +21,12 @@
     - Continua a responder a GET /read com {"cond": N}: a página /ubere usa-o (o Nginx da box
       encaminha o /read para esta placa), para quem prefere conduzir o teste pelo telemóvel.
 
+  Rede própria (REDE_PROPRIA 1 no configuracao.h): para apresentações e lugares sem um Wi-Fi de
+  confiança. A placa cria a rede REDE_PROPRIA_SSID e fica sempre em 192.168.4.1; o PC liga-se a
+  ela e o QuickMast vai buscar as leituras (PLACA_URL=http://192.168.4.1 no .env). Quem chama é o
+  PC, por isso a placa não precisa de saber o IP dele nem de entrar com a conta. O teste é conduzido
+  pela página /ubere; os do Monitor Série dão o diagnóstico na placa mas ficam na fila (sem envio).
+
   Configuração: copiar configuracao.example.h para configuracao.h e preencher.
   Placa no Arduino IDE: "NodeMCU 1.0 (ESP-12E Module)" (core esp8266 3.x).
 */
@@ -33,6 +39,9 @@
 #include "configuracao.h"
 #else
 #error "Falta o configuracao.h: copie configuracao.example.h para configuracao.h e preencha a rede e a conta."
+#endif
+#ifndef REDE_PROPRIA
+#error "O configuracao.h é anterior à rede própria: copie as linhas REDE_PROPRIA do configuracao.example.h."
 #endif
 #include "diagnostico.h"
 
@@ -290,6 +299,31 @@ void manterWifi() {
   }
 }
 
+// REDE_PROPRIA: a placa é o ponto de acesso (192.168.4.1) e o PC liga-se a ela
+void criarRedePropria() {
+  WiFi.mode(WIFI_AP);
+  if (!WiFi.softAP(REDE_PROPRIA_SSID, REDE_PROPRIA_SENHA)) {
+    Serial.println("Não foi possível criar a rede própria: a REDE_PROPRIA_SENHA (configuracao.h) "
+                   "precisa de 8 a 63 caracteres.");
+    return;
+  }
+  String ip = WiFi.softAPIP().toString();
+  Serial.printf("Rede própria \"%s\" criada. Ligue o PC a ela; no .env do PC: PLACA_URL=http://%s\n",
+                REDE_PROPRIA_SSID, ip.c_str());
+  Serial.printf("Teste no browser do PC: http://%s/read deve mostrar {\"cond\":...}\n", ip.c_str());
+  Serial.println("Conduza o teste pela página /ubere: daqui a placa não envia testes ao servidor.");
+}
+
+// Avisa no Monitor Série quando o PC (ou outro aparelho) entra ou sai da rede própria
+void vigiarRedePropria() {
+  static int anteriores = 0;
+  int agora = WiFi.softAPgetStationNum();
+  if (agora != anteriores) {
+    Serial.printf("Aparelhos ligados à rede própria: %d\n", agora);
+    anteriores = agora;
+  }
+}
+
 
 // ---------- Pedidos ao servidor ----------
 String urlServidor(const char *caminho) {
@@ -512,6 +546,10 @@ void setup() {
 
   Serial.println();
   Serial.println("QuickMast: medidor de condutividade");
+  WiFi.persistent(false);   // não grava a rede na flash a cada arranque
+#if REDE_PROPRIA
+  criarRedePropria();
+#else
   Serial.printf("Servidor %s, conta %s\n", SERVIDOR_URL, API_EMAIL);
   if ((strncmp(SERVIDOR_URL, "https://", 8) == 0) != (USAR_HTTPS == 1)) {
     Serial.println("Aviso: SERVIDOR_URL e USAR_HTTPS não combinam (configuracao.h).");
@@ -520,12 +558,12 @@ void setup() {
   cliente.setFingerprint(HTTPS_FINGERPRINT);
 #endif
 
-  WiFi.persistent(false);   // não grava a rede na flash a cada arranque
   WiFi.mode(WIFI_STA);
   WiFi.hostname("quickmast-sensor");
   WiFi.setAutoReconnect(true);
   WiFi.begin(WIFI_SSID, WIFI_SENHA);
   momentoWifi = millis();
+#endif
 
   servidorLocal.on("/read", HTTP_GET, responderRead);
   servidorLocal.begin();
@@ -534,7 +572,12 @@ void setup() {
 }
 
 void loop() {
-  manterWifi();
+#if REDE_PROPRIA
+  vigiarRedePropria();
+#else
+  manterWifi();   // fora da rede própria: o WiFi.begin dele poria a placa a procurar o WIFI_SSID
+                  // e o ponto de acesso ficava instável (o ESP8266 tem um rádio só)
+#endif
   servidorLocal.handleClient();
 
   String linha;

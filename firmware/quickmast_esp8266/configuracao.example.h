@@ -7,6 +7,14 @@
 //   - Não use uma conta admin: o admin tem verificação em dois passos, que a placa não faz.
 //   - A senha fica na flash da placa. Se a placa se perder, desative a conta em /usuarios.
 
+// Rede própria: 1 = a placa cria a rede REDE_PROPRIA_SSID (fica em 192.168.4.1) e o PC liga-se a ela.
+// Para apresentações e lugares sem Wi-Fi de confiança. No .env do PC: PLACA_URL=http://192.168.4.1
+// e o teste é conduzido pela página /ubere. 0 = a placa entra na rede WIFI_SSID e envia os testes
+// ao SERVIDOR_URL (as linhas abaixo da rede própria só contam com 0).
+#define REDE_PROPRIA        0
+#define REDE_PROPRIA_SSID   "QuickMast"
+#define REDE_PROPRIA_SENHA  "senha-com-8-ou-mais"   // WPA2: 8 a 63 caracteres
+
 #define WIFI_SSID   "nome-da-rede"
 #define WIFI_SENHA  "senha-da-rede"
 

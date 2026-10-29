@@ -1,4 +1,6 @@
 """API dos testes de mastite: registar, consultar, vacas e estatísticas."""
+import re
+
 from flask import Blueprint, jsonify, request
 
 from dao import banco
@@ -9,9 +11,15 @@ from servicos.seguranca import auditar
 testes_api = Blueprint('testes_api', __name__, url_prefix='/api')
 
 
+def _normalizar_brinco(brinco):
+    """Uma forma só para cada brinco: 'br 102', 'Br_102' e 'BR-102' são a mesma vaca (BR-102).
+    A página /ubere faz o mesmo (normalizarBrinco em ubere.js) para mostrar o brinco como fica gravado."""
+    return re.sub(r'[\s_-]+', '-', brinco).strip('-').upper()
+
+
 def _validar(dados):
     """Valida o JSON recebido. Levanta ValueError com mensagem clara."""
-    brinco = str(dados.get('brinco', '')).strip()
+    brinco = _normalizar_brinco(str(dados.get('brinco', '')))
     if not brinco:
         raise ValueError('brinco da vaca em falta')
     if len(brinco) > 50:

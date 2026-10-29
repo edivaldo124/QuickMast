@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% from '_componentes.html' import banner, campo %}
+{% from '_componentes.html' import banner, campo, marca_entrada %}
 {% block titulo %}QuickMast - Entrar{% endblock %}
 {% block classe_pagina %} pagina--entrada{% endblock %}
 
@@ -14,6 +14,8 @@
         'Essa senha é muito comum ou fácil de adivinhar. Escolha outra.': 'senha'
     }.get(erro) if aba == 'criar' else none %}
 
+    {{ marca_entrada() }}
+    <div class="entrada__conteudo">
     {% if erro %}{{ banner('alerta', erro) }}{% endif %}
 
     <section id="formEntrar" class="entrada {{ '' if aba == 'entrar' else 'escondido' }}">
@@ -58,8 +60,10 @@
         <a class="link-texto" href="#" id="irEntrar">Já tenho conta</a>
     </section>
     {% endif %}
+    </div>
 {% endblock %}
 
 {% block scripts %}
     <script src="{{ url_for('static', filename='js/login.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/formularios.js') }}"></script>
 {% endblock %}

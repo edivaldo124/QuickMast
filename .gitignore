@@ -22,6 +22,11 @@ venv/
 .vscode/
 .DS_Store
 
+# Front-end da página inicial (frontend/): as dependências instalam-se com npm ci.
+# O build (stetic/landing e templates/_landing_assets.html) vai para o repositório:
+# a TV box não tem Node.
+frontend/node_modules/
+
 # Saída gerada pelo graphify
 graphify-out/
 

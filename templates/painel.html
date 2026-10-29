@@ -10,13 +10,14 @@
     {{ voltar() }}
     <div id="mensagem" class="oculto-se-vazio" aria-live="polite"></div>
 
-    <div class="painel">
+    {# aria-busy: até a API responder, os números são esqueletos (o painel.js tira-o) #}
+    <div class="painel" aria-busy="true">
         <div class="medias">
-            <div class="cartao media media--temp">
+            <div class="cartao media media--temp" data-tilt>
                 <p class="media__rotulo">Temperatura média</p>
                 <p id="tempMedia" class="media__valor">--</p>
             </div>
-            <div class="cartao media media--cond">
+            <div class="cartao media media--cond" data-tilt>
                 <p class="media__rotulo">Condutividade média</p>
                 <p id="condMedia" class="media__valor">--</p>
             </div>
@@ -24,15 +25,16 @@
 
         <section class="cartao painel__mapa" aria-labelledby="tituloMapa">
             <h2 id="tituloMapa" class="titulo-secao">Suspeitas por teto</h2>
-            <!-- Mesma posição do úbere; data-teto = número do teto no firmware -->
+            <!-- Mesma posição do úbere; data-teto = número do teto no firmware. Tocar mostra o detalhe. -->
             <div class="mapa">
                 {% for teto, sigla in [(2, 'AE'), (1, 'AD'), (4, 'PE'), (3, 'PD')] %}
-                <div class="mapa__teto" data-teto="{{ teto }}">
+                <button type="button" class="mapa__teto" data-teto="{{ teto }}" aria-pressed="false" aria-controls="detalheTeto">
                     <span class="mapa__rotulo">{{ sigla }} · T{{ teto }}</span>
                     <span class="mapa__numero">--</span>
-                </div>
+                </button>
                 {% endfor %}
             </div>
+            <p id="detalheTeto" class="mapa__detalhe" aria-live="polite">Toque num teto para ver a parte das suspeitas que é dele.</p>
             {# A intensidade de cada passo está no CSS (.escala__passo:nth-child) #}
             <div class="escala" aria-hidden="true">
                 <span>0</span>

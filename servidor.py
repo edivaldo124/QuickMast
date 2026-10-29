@@ -1,5 +1,6 @@
 import logging
 import os
+import re
 import secrets
 from datetime import timedelta
 
@@ -47,6 +48,12 @@ if not _chave:
         raise RuntimeError('SECRET_KEY não definida no .env (obrigatória fora do modo debug).')
     _chave = secrets.token_hex(32)   # aleatória: as sessões perdem-se ao reiniciar
     app.logger.warning('SECRET_KEY não definida: a usar chave temporária!')
+
+# Placa de verdade no PC, sem o Nginx da produção: o /read da página do úbere é repassado para ela
+_placa_url = os.environ.get('PLACA_URL', '').strip().rstrip('/')
+if _placa_url not in ('', 'auto') and not re.fullmatch(r'http://[\w.-]+(:\d{1,5})?', _placa_url):
+    raise RuntimeError('PLACA_URL tem de ser "auto" ou http://<ip da placa> (a placa não tem HTTPS).')
+
 app.config.update(
     SECRET_KEY=_chave,
     SESSION_COOKIE_HTTPONLY=True,      # o JavaScript não consegue ler o cookie
@@ -60,6 +67,9 @@ app.config.update(
     PERMITIR_REGISTO=os.environ.get('PERMITIR_REGISTO', '0') == '1',
     # Simulador do sensor em /read: só no seu PC. Em produção o /read é do ESP8266.
     SIMULADOR_SENSOR=os.environ.get('SIMULADOR_SENSOR', '1' if DEBUG else '0') == '1',
+    # http://<ip da placa>, ou "auto" para a procurar na rede local (blueprints/sensor.py).
+    # Em produção fica vazio: quem repassa o /read para o ESP8266 é o Nginx.
+    PLACA_URL=_placa_url,
 )
 
 configurar_seguranca(app)
