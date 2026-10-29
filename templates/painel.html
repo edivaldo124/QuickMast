@@ -44,6 +44,7 @@
         </section>
 
         {# As listas: cada vaca e cada teste abrem o histórico da vaca (/vacas/<brinco>) #}
+        <div class="painel__listas">
         <section class="painel__lista" aria-labelledby="tituloVacas">
             <h2 id="tituloVacas" class="titulo-secao">Vacas <span id="totalVacas" class="titulo-secao__total"></span></h2>
             <ul id="listaVacas" class="lista" data-entrada>{{ esqueletos(3) }}</ul>
@@ -55,6 +56,7 @@
             <ul id="listaTestes" class="lista" data-entrada>{{ esqueletos(3) }}</ul>
             <button id="maisTestes" type="button" class="btn btn--cinza escondido">Ver mais testes</button>
         </section>
+        </div>
     </div>
 {% endblock %}
 
