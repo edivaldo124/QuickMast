@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% from '_componentes.html' import barra, voltar %}
+{% from '_componentes.html' import barra, voltar, esqueletos %}
 {% block titulo %}QuickMast - Painel de estatísticas{% endblock %}
 {% block classe_pagina %} pagina--painel{% endblock %}
 
@@ -41,6 +41,19 @@
                 {% for _ in range(5) %}<span class="escala__passo"></span>{% endfor %}
                 <span id="escalaMax">--</span>
             </div>
+        </section>
+
+        {# As listas: cada vaca e cada teste abrem o histórico da vaca (/vacas/<brinco>) #}
+        <section class="painel__lista" aria-labelledby="tituloVacas">
+            <h2 id="tituloVacas" class="titulo-secao">Vacas <span id="totalVacas" class="titulo-secao__total"></span></h2>
+            <ul id="listaVacas" class="lista" data-entrada>{{ esqueletos(3) }}</ul>
+            <button id="maisVacas" type="button" class="btn btn--cinza escondido">Ver mais vacas</button>
+        </section>
+
+        <section class="painel__lista" aria-labelledby="tituloTestes">
+            <h2 id="tituloTestes" class="titulo-secao">Testes <span id="totalTestes" class="titulo-secao__total"></span></h2>
+            <ul id="listaTestes" class="lista" data-entrada>{{ esqueletos(3) }}</ul>
+            <button id="maisTestes" type="button" class="btn btn--cinza escondido">Ver mais testes</button>
         </section>
     </div>
 {% endblock %}

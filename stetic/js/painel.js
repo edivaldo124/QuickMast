@@ -1,5 +1,6 @@
-// Painel de estatísticas: só lê GET /api/estatisticas.
+// Painel de estatísticas: só lê GET /api/estatisticas, /api/vacas e /api/testes.
 const $ = id => document.getElementById(id);
+const POR_PAGINA = 10;
 
 const NOMES = {
     1: 'Anterior Direito',
@@ -63,4 +64,95 @@ async function carregar() {
     }
 }
 
+// ---------- Listas: as vacas (GET /api/vacas) e os testes (GET /api/testes) ----------
+// Cada item abre o histórico da vaca. Ver mais acrescenta mais POR_PAGINA itens.
+function itemVaca(v) {
+    const item = criar('a', 'cartao item');
+    item.href = '/vacas/' + encodeURIComponent(v.brinco);
+    item.append(
+        criar('span', 'item__data', v.ultimo_teste ? 'Último: ' + formatarData(v.ultimo_teste) : 'Sem testes'),
+        criar('span', 'item__operador', v.testes + (v.testes === 1 ? ' teste' : ' testes')),
+        criar('span', 'item__vaca', v.brinco)
+    );
+    if (v.testes) {
+        const n = v.testes_com_suspeita;
+        const selo = criar('span', 'selo ' + (n ? 'selo--suspeita' : 'selo--normal'));
+        selo.append(
+            icone(n ? 'ic--alerta' : 'ic--check'),
+            criar('span', null, n ? n + (n === 1 ? ' suspeita' : ' suspeitas') : 'Sem suspeitas')
+        );
+        item.append(selo);
+    }
+    return item;
+}
+
+// Troca os esqueletos por um aviso (erro ou lista vazia)
+function avisarLista(lista, tipo, mensagem) {
+    const li = criar('li');
+    if (tipo) banner(li, tipo, mensagem);
+    else { li.className = 'procura__vazio'; li.textContent = mensagem; }
+    lista.replaceChildren(li);
+}
+
+function acrescentar(lista, itens, primeira) {
+    const lis = itens.map(conteudo => {
+        const li = criar('li');
+        li.append(conteudo);
+        return li;
+    });
+    if (primeira) { lista.replaceChildren(...lis); primeiraEntrada(lista); }
+    else lista.append(...lis);
+}
+
+async function carregarVacas() {
+    const lista = $('listaVacas'), mais = $('maisVacas');
+    try {
+        const r = await fetch('/api/vacas');
+        const vacas = await r.json();
+        if (!r.ok) throw new Error();
+        $('totalVacas').textContent = '· ' + vacas.length;
+        if (!vacas.length) return avisarLista(lista, null, 'Ainda não há vacas registadas.');
+
+        let mostradas = 0;
+        const maisItens = () => {
+            const fatia = vacas.slice(mostradas, mostradas + POR_PAGINA);
+            acrescentar(lista, fatia.map(itemVaca), mostradas === 0);
+            mostradas += fatia.length;
+            mais.classList.toggle('escondido', mostradas >= vacas.length);
+        };
+        mais.addEventListener('click', maisItens);
+        maisItens();
+    } catch (e) {
+        avisarLista(lista, 'alerta', 'Erro ao carregar as vacas');
+    }
+}
+
+async function carregarTestes() {
+    const lista = $('listaTestes'), mais = $('maisTestes');
+    let pagina = 0;
+    async function maisItens() {
+        mais.disabled = true;
+        try {
+            const r = await fetch('/api/testes?limite=' + POR_PAGINA + '&pagina=' + (pagina + 1));
+            const dados = await r.json();
+            if (!r.ok) throw new Error();
+            acrescentar(lista, dados.testes.map(t => itemHistorico(t, true)), pagina === 0);
+            pagina = dados.pagina;
+            $('totalTestes').textContent = '· ' + dados.total;
+            if (!dados.total) avisarLista(lista, null, 'Ainda não há testes registados.');
+            mais.classList.toggle('escondido', pagina * dados.limite >= dados.total);
+        } catch (e) {
+            // na 1.ª página o aviso ocupa o lugar dos esqueletos; depois vai para o banner do topo
+            if (pagina === 0) avisarLista(lista, 'alerta', 'Erro ao carregar os testes');
+            else banner($('mensagem'), 'alerta', 'Não foi possível carregar mais testes');
+        } finally {
+            mais.disabled = false;
+        }
+    }
+    mais.addEventListener('click', maisItens);
+    maisItens();
+}
+
 carregar();
+carregarVacas();
+carregarTestes();

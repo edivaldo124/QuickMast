@@ -134,8 +134,7 @@ ESP8266WebServer servidorLocal(80);
 
 // Condutividade em valor bruto do analogRead (0-1023). Com o resistor de 1 kΩ no módulo TDS,
 // o leite normal lê ~300.
-const double COND_REF = 300.0;
-const double MARGEM_COND = 1.20;        // alerta absoluto: acima de 360
+const double LIMITE_COND = 340.0;       // alerta absoluto: acima de 340
 const double LIMIAR_RELATIVO = 0.20;    // alerta relativo: 20% acima da mediana dos outros tetos...
 const double DIFERENCA_MINIMA = 40.0;   // ...e pelo menos 40 pontos, para o ruído não dar alarme
 
@@ -163,7 +162,7 @@ inline void diagnosticar(const int cond[4], DiagnosticoTeto res[4]) {
     double diff = cond[i] - med;
     double rel = med != 0 ? diff / med : 0;
     res[i].relativo = diff > DIFERENCA_MINIMA && rel > LIMIAR_RELATIVO;
-    res[i].absoluto = cond[i] > COND_REF * MARGEM_COND;
+    res[i].absoluto = cond[i] > LIMITE_COND;
     res[i].suspeito = res[i].relativo || res[i].absoluto;
   }
 }
