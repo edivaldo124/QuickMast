@@ -1,0 +1,58 @@
+{
+ "projectRoot": "/home/edivaldo/PycharmProjects/QuickMast",
+ "batchFiles": [
+  {
+   "path": "frontend/src/Landing.tsx",
+   "language": "typescript",
+   "sizeLines": 169,
+   "fileCategory": "code"
+  },
+  {
+   "path": "frontend/src/LogoQuickMast.tsx",
+   "language": "typescript",
+   "sizeLines": 15,
+   "fileCategory": "code"
+  },
+  {
+   "path": "frontend/src/main.tsx",
+   "language": "typescript",
+   "sizeLines": 15,
+   "fileCategory": "code"
+  },
+  {
+   "path": "frontend/src/manchetes.ts",
+   "language": "typescript",
+   "sizeLines": 33,
+   "fileCategory": "code"
+  },
+  {
+   "path": "frontend/src/three/UbereScene.tsx",
+   "language": "typescript",
+   "sizeLines": 293,
+   "fileCategory": "code"
+  },
+  {
+   "path": "frontend/src/tokens.ts",
+   "language": "typescript",
+   "sizeLines": 13,
+   "fileCategory": "code"
+  }
+ ],
+ "batchImportData": {
+  "frontend/src/Landing.tsx": [
+   "frontend/src/LogoQuickMast.tsx",
+   "frontend/src/manchetes.ts"
+  ],
+  "frontend/src/LogoQuickMast.tsx": [],
+  "frontend/src/main.tsx": [
+   "frontend/src/Landing.tsx",
+   "frontend/src/landing.css"
+  ],
+  "frontend/src/manchetes.ts": [],
+  "frontend/src/three/UbereScene.tsx": [
+   "frontend/src/manchetes.ts",
+   "frontend/src/tokens.ts"
+  ],
+  "frontend/src/tokens.ts": []
+ }
+}

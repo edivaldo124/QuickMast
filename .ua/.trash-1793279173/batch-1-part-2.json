@@ -1,0 +1,688 @@
+{
+ "nodes": [
+  {
+   "id": "file:blueprints/utilitarios.py",
+   "type": "file",
+   "name": "utilitarios.py",
+   "filePath": "blueprints/utilitarios.py",
+   "summary": "Blueprint utilitário com o health check /saude (verifica a ligação ao banco) e a exportação /exportar.csv em streaming, com BOM para Excel e proteção contra injeção de fórmulas nas células.",
+   "tags": [
+    "utility",
+    "health-check",
+    "csv-export",
+    "seguranca",
+    "blueprint"
+   ],
+   "complexity": "simple",
+   "languageNotes": "A exportação usa generator com stream_with_context e descarrega o buffer a cada ~16 KB, para a memória não crescer com o número de testes."
+  },
+  {
+   "id": "file:servicos/autenticacao.py",
+   "type": "file",
+   "name": "autenticacao.py",
+   "filePath": "servicos/autenticacao.py",
+   "summary": "Serviço de sessão e proteção de rotas: resolve o usuário da sessão (invalidando cookies antigos), nega por omissão toda rota fora da lista pública, força o MFA do admin, fornece o decorador exigir_login e cria o admin inicial a partir do ambiente.",
+   "tags": [
+    "autenticacao",
+    "autorizacao",
+    "sessao",
+    "seguranca",
+    "service"
+   ],
+   "complexity": "moderate",
+   "languageNotes": "Usa g do Flask para cachear o usuário por pedido e um before_request que aplica 'negar por omissão' mesmo se faltar o decorador numa rota nova."
+  },
+  {
+   "id": "file:servicos/diagnostico.py",
+   "type": "file",
+   "name": "diagnostico.py",
+   "filePath": "servicos/diagnostico.py",
+   "summary": "Regras puras de diagnóstico de mastite: compara a condutividade (e a temperatura, quando disponível) de cada teto com a mediana dos outros três e com valores de referência; espelha a lógica do firmware ESP8266.",
+   "tags": [
+    "domain-logic",
+    "diagnostico",
+    "mastite",
+    "service",
+    "calibracao"
+   ],
+   "complexity": "simple",
+   "languageNotes": "Constantes de calibração (COND_REF, REL_THRESHOLD etc.) precisam ser mantidas em sincronia com o firmware."
+  },
+  {
+   "id": "file:servicos/seguranca.py",
+   "type": "file",
+   "name": "seguranca.py",
+   "filePath": "servicos/seguranca.py",
+   "summary": "Proteções globais da aplicação: proteção anti-CSRF por Sec-Fetch-Site/Origin, cabeçalhos de segurança (CSP, HSTS, nosniff etc.), formatador de log em JSON e auditoria de eventos com mascaramento de email.",
+   "tags": [
+    "seguranca",
+    "csrf",
+    "auditoria",
+    "logging",
+    "middleware"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "file:servidor.py",
+   "type": "file",
+   "name": "servidor.py",
+   "filePath": "servidor.py",
+   "summary": "Ponto de entrada da aplicação Flask: carrega o .env, configura logs em JSON, ProxyFix, cookies de sessão e opções (registro, simulador, PLACA_URL), aplica as proteções, registra os blueprints e define os comandos de CLI iniciar, redefinir-mfa e redefinir-senha.",
+   "tags": [
+    "entry-point",
+    "flask",
+    "configuracao",
+    "cli",
+    "seguranca"
+   ],
+   "complexity": "moderate",
+   "languageNotes": "Falha a inicialização sem SECRET_KEY fora do modo debug, e valida o formato de PLACA_URL com regex antes de aceitá-lo."
+  },
+  {
+   "id": "function:blueprints/utilitarios.py:saude",
+   "type": "function",
+   "name": "saude",
+   "filePath": "blueprints/utilitarios.py",
+   "lineRange": [
+    22,
+    24
+   ],
+   "summary": "GET /saude (pública): informa se o servidor está de pé e se o banco responde, com 503 quando o banco está indisponível.",
+   "tags": [
+    "health-check",
+    "monitoramento",
+    "rota-publica"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:blueprints/utilitarios.py:exportar_csv",
+   "type": "function",
+   "name": "exportar_csv",
+   "filePath": "blueprints/utilitarios.py",
+   "lineRange": [
+    29,
+    52
+   ],
+   "summary": "GET /exportar.csv: exporta as leituras (filtro opcional por brinco) em CSV via streaming, com BOM, células sanitizadas e auditoria do evento.",
+   "tags": [
+    "csv-export",
+    "streaming",
+    "auditoria",
+    "seguranca"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:servicos/autenticacao.py:usuario_atual",
+   "type": "function",
+   "name": "usuario_atual",
+   "filePath": "servicos/autenticacao.py",
+   "lineRange": [
+    24,
+    32
+   ],
+   "summary": "Resolve o usuário da sessão uma vez por pedido (cache em g), recusando contas inativas e cookies de versão antiga após logout ou troca de senha.",
+   "tags": [
+    "sessao",
+    "autenticacao",
+    "cache-por-pedido"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:servicos/autenticacao.py:negar_por_omissao",
+   "type": "function",
+   "name": "negar_por_omissao",
+   "filePath": "servicos/autenticacao.py",
+   "lineRange": [
+    41,
+    53
+   ],
+   "summary": "Instala um before_request que exige sessão em toda rota fora de _PUBLICAS e confina admins sem MFA à configuração do MFA.",
+   "tags": [
+    "middleware",
+    "autorizacao",
+    "mfa",
+    "seguranca"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:servicos/autenticacao.py:exigir_login",
+   "type": "function",
+   "name": "exigir_login",
+   "filePath": "servicos/autenticacao.py",
+   "lineRange": [
+    56,
+    72
+   ],
+   "summary": "Fábrica de decorador que protege rotas: exige sessão, aceita perfis permitidos (admin sempre passa) e responde 401/403 em JSON na API ou redireciona/aborta nas páginas.",
+   "tags": [
+    "decorator",
+    "autorizacao",
+    "perfis",
+    "seguranca"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:servicos/autenticacao.py:garantir_admin",
+   "type": "function",
+   "name": "garantir_admin",
+   "filePath": "servicos/autenticacao.py",
+   "lineRange": [
+    81,
+    101
+   ],
+   "summary": "Cria o admin inicial a partir de ADMIN_EMAIL/ADMIN_SENHA_HASH do ambiente se o email ainda não existe, validando formato e avisando sobre configurações inseguras.",
+   "tags": [
+    "bootstrap",
+    "admin",
+    "configuracao",
+    "seguranca"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:servicos/diagnostico.py:diagnosticar",
+   "type": "function",
+   "name": "diagnosticar",
+   "filePath": "servicos/diagnostico.py",
+   "lineRange": [
+    33,
+    59
+   ],
+   "summary": "Recebe 4 leituras e devolve, para cada teto, se é suspeito e o motivo, comparando com a mediana dos outros tetos e com limites absolutos de referência.",
+   "tags": [
+    "domain-logic",
+    "mastite",
+    "diagnostico",
+    "algoritmo"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:servicos/seguranca.py:FormatoJSON",
+   "type": "class",
+   "name": "FormatoJSON",
+   "filePath": "servicos/seguranca.py",
+   "lineRange": [
+    16,
+    27
+   ],
+   "summary": "Formatter de logging que emite uma linha JSON por registro com data UTC, nível, logger, mensagem e os campos do evento de auditoria.",
+   "tags": [
+    "logging",
+    "json",
+    "formatter"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:servicos/seguranca.py:mascarar_email",
+   "type": "function",
+   "name": "mascarar_email",
+   "filePath": "servicos/seguranca.py",
+   "lineRange": [
+    47,
+    50
+   ],
+   "summary": "Mascara um email (a***@dominio) para permitir investigar ataques sem guardar o endereço completo nos logs.",
+   "tags": [
+    "privacidade",
+    "logging",
+    "utility"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:servicos/seguranca.py:auditar",
+   "type": "function",
+   "name": "auditar",
+   "filePath": "servicos/seguranca.py",
+   "lineRange": [
+    53,
+    61
+   ],
+   "summary": "Registra um evento de segurança estruturado (ip, uid, campos extras) com nível WARNING para eventos de alerta e INFO para os demais, mascarando emails.",
+   "tags": [
+    "auditoria",
+    "logging",
+    "seguranca"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:servicos/seguranca.py:configurar_seguranca",
+   "type": "function",
+   "name": "configurar_seguranca",
+   "filePath": "servicos/seguranca.py",
+   "lineRange": [
+    75,
+    95
+   ],
+   "summary": "Instala no app o bloqueio de pedidos de outras origens em métodos não seguros (anti-CSRF) e os cabeçalhos de segurança (CSP, nosniff, HSTS, no-store na API).",
+   "tags": [
+    "middleware",
+    "csrf",
+    "csp",
+    "seguranca"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:servidor.py:iniciar",
+   "type": "function",
+   "name": "iniciar",
+   "filePath": "servidor.py",
+   "lineRange": [
+    85,
+    89
+   ],
+   "summary": "Comando de CLI 'flask iniciar': cria/atualiza as tabelas e garante o admin inicial.",
+   "tags": [
+    "cli",
+    "bootstrap",
+    "banco-de-dados"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:servidor.py:redefinir_mfa",
+   "type": "function",
+   "name": "redefinir_mfa",
+   "filePath": "servidor.py",
+   "lineRange": [
+    94,
+    102
+   ],
+   "summary": "Comando de CLI que apaga o MFA de uma conta (telemóvel perdido) e termina as sessões, registrando o evento com email mascarado.",
+   "tags": [
+    "cli",
+    "mfa",
+    "administracao",
+    "auditoria"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:servidor.py:redefinir_senha",
+   "type": "function",
+   "name": "redefinir_senha",
+   "filePath": "servidor.py",
+   "lineRange": [
+    107,
+    122
+   ],
+   "summary": "Comando de CLI que pede a nova senha no terminal, valida a política de senha e a troca, terminando as sessões abertas.",
+   "tags": [
+    "cli",
+    "senha",
+    "administracao",
+    "seguranca"
+   ],
+   "complexity": "simple"
+  }
+ ],
+ "edges": [
+  {
+   "source": "file:blueprints/utilitarios.py",
+   "target": "function:blueprints/utilitarios.py:saude",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:blueprints/utilitarios.py",
+   "target": "function:blueprints/utilitarios.py:exportar_csv",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:servicos/autenticacao.py",
+   "target": "function:servicos/autenticacao.py:usuario_atual",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:servicos/autenticacao.py",
+   "target": "function:servicos/autenticacao.py:negar_por_omissao",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:servicos/autenticacao.py",
+   "target": "function:servicos/autenticacao.py:exigir_login",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:servicos/autenticacao.py",
+   "target": "function:servicos/autenticacao.py:garantir_admin",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:servicos/diagnostico.py",
+   "target": "function:servicos/diagnostico.py:diagnosticar",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:servicos/seguranca.py",
+   "target": "class:servicos/seguranca.py:FormatoJSON",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:servicos/seguranca.py",
+   "target": "function:servicos/seguranca.py:mascarar_email",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:servicos/seguranca.py",
+   "target": "function:servicos/seguranca.py:auditar",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:servicos/seguranca.py",
+   "target": "function:servicos/seguranca.py:configurar_seguranca",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:servidor.py",
+   "target": "function:servidor.py:iniciar",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:servidor.py",
+   "target": "function:servidor.py:redefinir_mfa",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:servidor.py",
+   "target": "function:servidor.py:redefinir_senha",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:servicos/autenticacao.py",
+   "target": "function:servicos/autenticacao.py:usuario_atual",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:servicos/autenticacao.py",
+   "target": "function:servicos/autenticacao.py:negar_por_omissao",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:servicos/autenticacao.py",
+   "target": "function:servicos/autenticacao.py:exigir_login",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:servicos/autenticacao.py",
+   "target": "function:servicos/autenticacao.py:garantir_admin",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:servicos/diagnostico.py",
+   "target": "function:servicos/diagnostico.py:diagnosticar",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:servicos/seguranca.py",
+   "target": "class:servicos/seguranca.py:FormatoJSON",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:servicos/seguranca.py",
+   "target": "function:servicos/seguranca.py:mascarar_email",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:servicos/seguranca.py",
+   "target": "function:servicos/seguranca.py:auditar",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:servicos/seguranca.py",
+   "target": "function:servicos/seguranca.py:configurar_seguranca",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:blueprints/utilitarios.py",
+   "target": "file:servicos/autenticacao.py",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:blueprints/utilitarios.py",
+   "target": "file:servicos/seguranca.py",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:servicos/autenticacao.py",
+   "target": "file:servicos/seguranca.py",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:servidor.py",
+   "target": "file:blueprints/__init__.py",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:servidor.py",
+   "target": "file:servicos/autenticacao.py",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:servidor.py",
+   "target": "file:servicos/seguranca.py",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:servidor.py",
+   "target": "file:servicos/senhas.py",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:blueprints/utilitarios.py",
+   "target": "file:dao/banco.py",
+   "type": "depends_on",
+   "direction": "forward",
+   "weight": 0.6
+  },
+  {
+   "source": "file:servicos/autenticacao.py",
+   "target": "file:dao/usuario_dao.py",
+   "type": "depends_on",
+   "direction": "forward",
+   "weight": 0.6
+  },
+  {
+   "source": "file:servidor.py",
+   "target": "file:dao/banco.py",
+   "type": "depends_on",
+   "direction": "forward",
+   "weight": 0.6
+  },
+  {
+   "source": "file:servidor.py",
+   "target": "file:dao/usuario_dao.py",
+   "type": "depends_on",
+   "direction": "forward",
+   "weight": 0.6
+  },
+  {
+   "source": "function:blueprints/utilitarios.py:exportar_csv",
+   "target": "function:servicos/autenticacao.py:exigir_login",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "function:blueprints/utilitarios.py:exportar_csv",
+   "target": "function:servicos/seguranca.py:auditar",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "function:servicos/autenticacao.py:exigir_login",
+   "target": "function:servicos/seguranca.py:auditar",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "function:servicos/autenticacao.py:exigir_login",
+   "target": "function:servicos/autenticacao.py:usuario_atual",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "function:servicos/autenticacao.py:negar_por_omissao",
+   "target": "function:servicos/autenticacao.py:usuario_atual",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "function:servicos/seguranca.py:auditar",
+   "target": "function:servicos/seguranca.py:mascarar_email",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "function:servicos/seguranca.py:configurar_seguranca",
+   "target": "function:servicos/seguranca.py:auditar",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "function:servidor.py:iniciar",
+   "target": "function:servicos/autenticacao.py:garantir_admin",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "function:servidor.py:redefinir_mfa",
+   "target": "function:servicos/seguranca.py:mascarar_email",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "function:servidor.py:redefinir_senha",
+   "target": "function:servicos/seguranca.py:mascarar_email",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "function:servidor.py:redefinir_senha",
+   "target": "function:servicos/senhas.py:problema_senha",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:servidor.py",
+   "target": "function:servicos/seguranca.py:configurar_seguranca",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:servidor.py",
+   "target": "function:servicos/autenticacao.py:negar_por_omissao",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:servidor.py",
+   "target": "function:blueprints/__init__.py:registrar_blueprints",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:servidor.py",
+   "target": "class:servicos/seguranca.py:FormatoJSON",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:servidor.py",
+   "target": "function:servicos/autenticacao.py:garantir_admin",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:servicos/diagnostico.py",
+   "target": "file:firmware/quickmast_esp8266/quickmast_esp8266.ino",
+   "type": "related",
+   "direction": "forward",
+   "weight": 0.5
+  }
+ ]
+}

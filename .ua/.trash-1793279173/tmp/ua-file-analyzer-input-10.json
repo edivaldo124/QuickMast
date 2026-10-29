@@ -1,0 +1,133 @@
+{
+ "projectRoot": "/home/edivaldo/PycharmProjects/QuickMast",
+ "batchFiles": [
+  {
+   "path": "configurar_banco_app.py",
+   "language": "python",
+   "sizeLines": 50,
+   "fileCategory": "code"
+  },
+  {
+   "path": "firmware/quickmast_esp8266/quickmast_esp8266.ino",
+   "language": "ino",
+   "sizeLines": 629,
+   "fileCategory": "code"
+  },
+  {
+   "path": "frontend/src/landing.css",
+   "language": "css",
+   "sizeLines": 404,
+   "fileCategory": "markup"
+  },
+  {
+   "path": "frontend/vite.config.ts",
+   "language": "typescript",
+   "sizeLines": 50,
+   "fileCategory": "code"
+  },
+  {
+   "path": "gunicorn.conf.py",
+   "language": "python",
+   "sizeLines": 20,
+   "fileCategory": "code"
+  },
+  {
+   "path": "requirements.in",
+   "language": "in",
+   "sizeLines": 11,
+   "fileCategory": "code"
+  },
+  {
+   "path": "servicos/mfa.py",
+   "language": "python",
+   "sizeLines": 43,
+   "fileCategory": "code"
+  },
+  {
+   "path": "servicos/senhas_comuns.txt",
+   "language": "txt",
+   "sizeLines": 10071,
+   "fileCategory": "docs"
+  },
+  {
+   "path": "stetic/css/quickmast.css",
+   "language": "css",
+   "sizeLines": 1448,
+   "fileCategory": "markup"
+  },
+  {
+   "path": "stetic/fonts/OFL.txt",
+   "language": "txt",
+   "sizeLines": 93,
+   "fileCategory": "docs"
+  },
+  {
+   "path": "stetic/js/componentes.js",
+   "language": "javascript",
+   "sizeLines": 62,
+   "fileCategory": "code"
+  },
+  {
+   "path": "stetic/js/formularios.js",
+   "language": "javascript",
+   "sizeLines": 68,
+   "fileCategory": "code"
+  },
+  {
+   "path": "stetic/js/login.js",
+   "language": "javascript",
+   "sizeLines": 17,
+   "fileCategory": "code"
+  },
+  {
+   "path": "stetic/js/movimento.js",
+   "language": "javascript",
+   "sizeLines": 61,
+   "fileCategory": "code"
+  },
+  {
+   "path": "stetic/js/painel.js",
+   "language": "javascript",
+   "sizeLines": 66,
+   "fileCategory": "code"
+  },
+  {
+   "path": "stetic/js/ubere.js",
+   "language": "javascript",
+   "sizeLines": 407,
+   "fileCategory": "code"
+  },
+  {
+   "path": "stetic/js/usuarios.js",
+   "language": "javascript",
+   "sizeLines": 83,
+   "fileCategory": "code"
+  },
+  {
+   "path": "stetic/js/vaca.js",
+   "language": "javascript",
+   "sizeLines": 40,
+   "fileCategory": "code"
+  }
+ ],
+ "batchImportData": {
+  "configurar_banco_app.py": [],
+  "firmware/quickmast_esp8266/quickmast_esp8266.ino": [],
+  "frontend/src/landing.css": [],
+  "frontend/vite.config.ts": [],
+  "gunicorn.conf.py": [],
+  "requirements.in": [],
+  "servicos/mfa.py": [],
+  "servicos/senhas_comuns.txt": [],
+  "stetic/css/quickmast.css": [],
+  "stetic/fonts/OFL.txt": [],
+  "stetic/js/componentes.js": [],
+  "stetic/js/formularios.js": [],
+  "stetic/js/login.js": [],
+  "stetic/js/movimento.js": [],
+  "stetic/js/painel.js": [],
+  "stetic/js/ubere.js": [],
+  "stetic/js/usuarios.js": [],
+  "stetic/js/vaca.js": []
+ }
+}

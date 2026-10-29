@@ -1,0 +1,767 @@
+{
+ "nodes": [
+  {
+   "id": "file:blueprints/auth.py",
+   "type": "file",
+   "name": "auth.py",
+   "filePath": "blueprints/auth.py",
+   "summary": "Blueprint Flask 'auth' com as páginas de entrada: login por senha, segundo passo MFA (TOTP), registo e logout. Aplica limites de tentativas por IP, e-mail e conta, mitiga open redirect e user enumeration (hash falso) e audita eventos de segurança.",
+   "tags": [
+    "blueprint",
+    "autenticacao",
+    "seguranca",
+    "mfa",
+    "rate-limiting"
+   ],
+   "complexity": "complex",
+   "languageNotes": "Usa decoradores de rota do Flask 2 (@auth.get/@auth.post), um context processor global e estado de sessão em cookie assinado (uid, ver, mfa_uid, mfa_ate) com versão de sessão para invalidar cookies copiados."
+  },
+  {
+   "id": "file:blueprints/conta.py",
+   "type": "file",
+   "name": "conta.py",
+   "filePath": "blueprints/conta.py",
+   "summary": "Blueprint Flask 'conta' (área 'A minha conta'): troca de senha com verificação da senha atual e limite de tentativas, e configuração da verificação em dois passos (TOTP) com QR code. Reaproveita os limitadores definidos em blueprints/auth.py.",
+   "tags": [
+    "blueprint",
+    "conta-usuario",
+    "mfa",
+    "seguranca",
+    "troca-de-senha"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "file:definir_senha_admin.py",
+   "type": "file",
+   "name": "definir_senha_admin.py",
+   "filePath": "definir_senha_admin.py",
+   "summary": "Script de linha de comando que pede a senha do admin inicial, valida-a com problema_senha e grava apenas o hash (ADMIN_SENHA_HASH) no .env, substituindo qualquer ADMIN_SENHA em texto simples e restringindo o arquivo a chmod 600.",
+   "tags": [
+    "script",
+    "cli",
+    "admin",
+    "seguranca",
+    "configuracao"
+   ],
+   "complexity": "simple",
+   "languageNotes": "Script executado no nível do módulo (sem funções). O hash é escrito entre aspas simples para que python-dotenv e docker compose não interpretem o '$'."
+  },
+  {
+   "id": "file:servicos/limite.py",
+   "type": "file",
+   "name": "limite.py",
+   "filePath": "servicos/limite.py",
+   "summary": "Limitador em memória de tentativas falhadas numa janela de tempo deslizante, protegido por threading.Lock; usado no login, no código MFA e na troca de senha. Pensado para 1 worker gunicorn com threads; para vários servidores deve ser trocado por Flask-Limiter + Redis.",
+   "tags": [
+    "rate-limiting",
+    "seguranca",
+    "utilitario",
+    "thread-safe"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:servicos/senhas.py",
+   "type": "file",
+   "name": "senhas.py",
+   "filePath": "servicos/senhas.py",
+   "summary": "Regras de qualidade de senha (tamanho de 8 a 128 e recusa de senhas comuns ou derivadas do e-mail), carregando a lista servicos/senhas_comuns.txt na importação; implementa a recomendação ASVS 6.2.4.",
+   "tags": [
+    "validacao",
+    "senhas",
+    "seguranca",
+    "utilitario"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:blueprints/auth.py:injetar_usuario",
+   "type": "function",
+   "name": "injetar_usuario",
+   "filePath": "blueprints/auth.py",
+   "lineRange": [
+    36,
+    38
+   ],
+   "summary": "Context processor global que disponibiliza a variável 'usuario' (usuário autenticado ou None) em todos os templates.",
+   "tags": [
+    "context-processor",
+    "template",
+    "autenticacao"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:blueprints/auth.py:_destino_seguro",
+   "type": "function",
+   "name": "_destino_seguro",
+   "filePath": "blueprints/auth.py",
+   "lineRange": [
+    41,
+    46
+   ],
+   "summary": "Valida o parâmetro 'next' do login aceitando só caminhos internos e devolvendo '/ubere' caso contrário, para evitar open redirect.",
+   "tags": [
+    "seguranca",
+    "open-redirect",
+    "validacao"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:blueprints/auth.py:_bloqueado",
+   "type": "function",
+   "name": "_bloqueado",
+   "filePath": "blueprints/auth.py",
+   "lineRange": [
+    49,
+    51
+   ],
+   "summary": "Indica se o IP (ou a combinação IP+e-mail) excedeu o limite de falhas na janela atual.",
+   "tags": [
+    "rate-limiting",
+    "seguranca"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:blueprints/auth.py:_login_falhou",
+   "type": "function",
+   "name": "_login_falhou",
+   "filePath": "blueprints/auth.py",
+   "lineRange": [
+    54,
+    58
+   ],
+   "summary": "Regista uma falha de login nos contadores por IP, IP+e-mail e conta, audita o evento e emite alerta 'conta_sob_ataque' à 20.ª falha.",
+   "tags": [
+    "rate-limiting",
+    "auditoria",
+    "seguranca"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:blueprints/auth.py:_iniciar_sessao",
+   "type": "function",
+   "name": "_iniciar_sessao",
+   "filePath": "blueprints/auth.py",
+   "lineRange": [
+    61,
+    65
+   ],
+   "summary": "Cria a sessão autenticada: limpa a sessão antiga, grava uid e versão da sessão e a torna permanente.",
+   "tags": [
+    "sessao",
+    "autenticacao",
+    "seguranca"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:blueprints/auth.py:login",
+   "type": "function",
+   "name": "login",
+   "filePath": "blueprints/auth.py",
+   "lineRange": [
+    73,
+    77
+   ],
+   "summary": "Rota GET /login: redireciona quem já está autenticado ou renderiza a página de login.",
+   "tags": [
+    "rota",
+    "api-handler",
+    "autenticacao"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:blueprints/auth.py:login_post",
+   "type": "function",
+   "name": "login_post",
+   "filePath": "blueprints/auth.py",
+   "lineRange": [
+    81,
+    110
+   ],
+   "summary": "Rota POST /login: normaliza e limita as entradas, aplica limites de tentativas, compara a senha em tempo constante (hash falso se o e-mail não existe) e inicia a sessão ou o fluxo MFA.",
+   "tags": [
+    "rota",
+    "api-handler",
+    "autenticacao",
+    "seguranca"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:blueprints/auth.py:_mfa_pendente",
+   "type": "function",
+   "name": "_mfa_pendente",
+   "filePath": "blueprints/auth.py",
+   "lineRange": [
+    113,
+    119
+   ],
+   "summary": "Devolve o usuário que acertou a senha e ainda não confirmou o código MFA, ou None se não há pendência ou se ela expirou.",
+   "tags": [
+    "mfa",
+    "sessao",
+    "autenticacao"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:blueprints/auth.py:login_mfa",
+   "type": "function",
+   "name": "login_mfa",
+   "filePath": "blueprints/auth.py",
+   "lineRange": [
+    127,
+    130
+   ],
+   "summary": "Rota GET /login/mfa: mostra a página do código MFA se há login pendente, senão volta ao login.",
+   "tags": [
+    "rota",
+    "api-handler",
+    "mfa"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:blueprints/auth.py:login_mfa_post",
+   "type": "function",
+   "name": "login_mfa_post",
+   "filePath": "blueprints/auth.py",
+   "lineRange": [
+    134,
+    155
+   ],
+   "summary": "Rota POST /login/mfa: verifica o código TOTP com limites de tentativas e proteção contra reuso do passo, e conclui o login auditando o resultado.",
+   "tags": [
+    "rota",
+    "api-handler",
+    "mfa",
+    "seguranca"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:blueprints/auth.py:registrar",
+   "type": "function",
+   "name": "registrar",
+   "filePath": "blueprints/auth.py",
+   "lineRange": [
+    159,
+    184
+   ],
+   "summary": "Rota POST /registrar: valida nome, e-mail e senha, impede e-mails duplicados, cria o usuário com hash da senha e inicia a sessão (só se PERMITIR_REGISTO estiver ativo).",
+   "tags": [
+    "rota",
+    "api-handler",
+    "registo",
+    "validacao"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:blueprints/auth.py:logout",
+   "type": "function",
+   "name": "logout",
+   "filePath": "blueprints/auth.py",
+   "lineRange": [
+    188,
+    194
+   ],
+   "summary": "Rota POST /logout: audita, encerra as sessões do usuário no banco (invalidando cópias do cookie) e limpa a sessão.",
+   "tags": [
+    "rota",
+    "api-handler",
+    "sessao",
+    "autenticacao"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:blueprints/conta.py:pagina",
+   "type": "function",
+   "name": "pagina",
+   "filePath": "blueprints/conta.py",
+   "lineRange": [
+    19,
+    20
+   ],
+   "summary": "Rota GET /conta: renderiza a página 'A minha conta' para o usuário autenticado.",
+   "tags": [
+    "rota",
+    "api-handler",
+    "conta-usuario"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:blueprints/conta.py:trocar_senha",
+   "type": "function",
+   "name": "trocar_senha",
+   "filePath": "blueprints/conta.py",
+   "lineRange": [
+    25,
+    53
+   ],
+   "summary": "Rota POST /conta/senha: confere a senha atual, valida a nova, altera o hash e sobe a versão da sessão para derrubar os outros dispositivos, com limite de tentativas e auditoria.",
+   "tags": [
+    "rota",
+    "api-handler",
+    "troca-de-senha",
+    "seguranca"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:blueprints/conta.py:_pagina_mfa",
+   "type": "function",
+   "name": "_pagina_mfa",
+   "filePath": "blueprints/conta.py",
+   "lineRange": [
+    56,
+    59
+   ],
+   "summary": "Renderiza a página de configuração MFA com o QR code SVG e o segredo formatado para digitação manual.",
+   "tags": [
+    "mfa",
+    "template",
+    "helper"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:blueprints/conta.py:mfa",
+   "type": "function",
+   "name": "mfa",
+   "filePath": "blueprints/conta.py",
+   "lineRange": [
+    64,
+    71
+   ],
+   "summary": "Rota GET /conta/mfa: gera (e mantém na sessão até confirmar) um novo segredo TOTP e mostra o QR code de configuração.",
+   "tags": [
+    "rota",
+    "api-handler",
+    "mfa"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:blueprints/conta.py:mfa_post",
+   "type": "function",
+   "name": "mfa_post",
+   "filePath": "blueprints/conta.py",
+   "lineRange": [
+    76,
+    98
+   ],
+   "summary": "Rota POST /conta/mfa: confirma o código TOTP com limite de tentativas, ativa o MFA no banco e atualiza a versão da sessão para encerrar sessões abertas só com a senha.",
+   "tags": [
+    "rota",
+    "api-handler",
+    "mfa",
+    "seguranca"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "class:servicos/limite.py:Limitador",
+   "type": "class",
+   "name": "Limitador",
+   "filePath": "servicos/limite.py",
+   "lineRange": [
+    10,
+    43
+   ],
+   "summary": "Contador thread-safe de falhas por chave numa janela deslizante, com métodos quantas, excedido, contar (várias chaves de uma vez) e limpar, e limpeza de chaves expiradas quando passa de max_chaves.",
+   "tags": [
+    "rate-limiting",
+    "classe",
+    "thread-safe",
+    "seguranca"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:servicos/senhas.py:problema_senha",
+   "type": "function",
+   "name": "problema_senha",
+   "filePath": "servicos/senhas.py",
+   "lineRange": [
+    12,
+    22
+   ],
+   "summary": "Devolve a mensagem de erro se a senha não cumpre o tamanho, é comum, tem poucos caracteres distintos ou contém o nome do e-mail; devolve None se a senha serve.",
+   "tags": [
+    "validacao",
+    "senhas",
+    "seguranca"
+   ],
+   "complexity": "simple"
+  }
+ ],
+ "edges": [
+  {
+   "source": "file:blueprints/auth.py",
+   "target": "function:blueprints/auth.py:injetar_usuario",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:blueprints/auth.py",
+   "target": "function:blueprints/auth.py:_destino_seguro",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:blueprints/auth.py",
+   "target": "function:blueprints/auth.py:_bloqueado",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:blueprints/auth.py",
+   "target": "function:blueprints/auth.py:_login_falhou",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:blueprints/auth.py",
+   "target": "function:blueprints/auth.py:_iniciar_sessao",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:blueprints/auth.py",
+   "target": "function:blueprints/auth.py:login",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:blueprints/auth.py",
+   "target": "function:blueprints/auth.py:login_post",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:blueprints/auth.py",
+   "target": "function:blueprints/auth.py:_mfa_pendente",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:blueprints/auth.py",
+   "target": "function:blueprints/auth.py:login_mfa",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:blueprints/auth.py",
+   "target": "function:blueprints/auth.py:login_mfa_post",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:blueprints/auth.py",
+   "target": "function:blueprints/auth.py:registrar",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:blueprints/auth.py",
+   "target": "function:blueprints/auth.py:logout",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:blueprints/conta.py",
+   "target": "function:blueprints/conta.py:pagina",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:blueprints/conta.py",
+   "target": "function:blueprints/conta.py:trocar_senha",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:blueprints/conta.py",
+   "target": "function:blueprints/conta.py:_pagina_mfa",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:blueprints/conta.py",
+   "target": "function:blueprints/conta.py:mfa",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:blueprints/conta.py",
+   "target": "function:blueprints/conta.py:mfa_post",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:servicos/limite.py",
+   "target": "class:servicos/limite.py:Limitador",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:servicos/senhas.py",
+   "target": "function:servicos/senhas.py:problema_senha",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:blueprints/auth.py",
+   "target": "file:servicos/autenticacao.py",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:blueprints/auth.py",
+   "target": "file:servicos/limite.py",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:blueprints/auth.py",
+   "target": "file:servicos/seguranca.py",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:blueprints/auth.py",
+   "target": "file:servicos/senhas.py",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:blueprints/conta.py",
+   "target": "file:blueprints/auth.py",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:blueprints/conta.py",
+   "target": "file:servicos/autenticacao.py",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:blueprints/conta.py",
+   "target": "file:servicos/seguranca.py",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:blueprints/conta.py",
+   "target": "file:servicos/senhas.py",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:definir_senha_admin.py",
+   "target": "file:servicos/senhas.py",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:servicos/limite.py",
+   "target": "class:servicos/limite.py:Limitador",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:servicos/senhas.py",
+   "target": "function:servicos/senhas.py:problema_senha",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "function:blueprints/auth.py:injetar_usuario",
+   "target": "function:servicos/autenticacao.py:usuario_atual",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "function:blueprints/auth.py:login",
+   "target": "function:servicos/autenticacao.py:usuario_atual",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "function:blueprints/auth.py:logout",
+   "target": "function:servicos/autenticacao.py:usuario_atual",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "function:blueprints/auth.py:_login_falhou",
+   "target": "function:servicos/seguranca.py:auditar",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "function:blueprints/auth.py:login_post",
+   "target": "function:servicos/seguranca.py:auditar",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "function:blueprints/auth.py:login_mfa_post",
+   "target": "function:servicos/seguranca.py:auditar",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "function:blueprints/auth.py:logout",
+   "target": "function:servicos/seguranca.py:auditar",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "function:blueprints/auth.py:registrar",
+   "target": "function:servicos/senhas.py:problema_senha",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:blueprints/auth.py",
+   "target": "class:servicos/limite.py:Limitador",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "function:blueprints/conta.py:trocar_senha",
+   "target": "function:servicos/autenticacao.py:usuario_atual",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "function:blueprints/conta.py:mfa",
+   "target": "function:servicos/autenticacao.py:usuario_atual",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "function:blueprints/conta.py:mfa_post",
+   "target": "function:servicos/autenticacao.py:usuario_atual",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "function:blueprints/conta.py:trocar_senha",
+   "target": "function:servicos/seguranca.py:auditar",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "function:blueprints/conta.py:mfa_post",
+   "target": "function:servicos/seguranca.py:auditar",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "function:blueprints/conta.py:trocar_senha",
+   "target": "function:servicos/senhas.py:problema_senha",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:blueprints/conta.py",
+   "target": "function:servicos/autenticacao.py:exigir_login",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:definir_senha_admin.py",
+   "target": "function:servicos/senhas.py:problema_senha",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:blueprints/auth.py",
+   "target": "file:dao/usuario_dao.py",
+   "type": "depends_on",
+   "direction": "forward",
+   "weight": 0.6
+  },
+  {
+   "source": "file:blueprints/auth.py",
+   "target": "file:servicos/mfa.py",
+   "type": "depends_on",
+   "direction": "forward",
+   "weight": 0.6
+  },
+  {
+   "source": "file:blueprints/conta.py",
+   "target": "file:dao/usuario_dao.py",
+   "type": "depends_on",
+   "direction": "forward",
+   "weight": 0.6
+  },
+  {
+   "source": "file:blueprints/conta.py",
+   "target": "file:servicos/mfa.py",
+   "type": "depends_on",
+   "direction": "forward",
+   "weight": 0.6
+  }
+ ]
+}

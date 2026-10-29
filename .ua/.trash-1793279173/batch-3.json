@@ -1,0 +1,159 @@
+{
+  "nodes": [
+    {
+      "id": "file:frontend/src/Landing.tsx",
+      "type": "file",
+      "name": "Landing.tsx",
+      "filePath": "frontend/src/Landing.tsx",
+      "summary": "Componente React da landing page do QuickMast: tela de abertura, hero com manchetes que trocam conforme o progresso do scroll, medidor lateral e carregamento tardio (lazy) da cena 3D.",
+      "tags": ["componente", "landing-page", "scroll", "react", "ui"],
+      "complexity": "moderate",
+      "languageNotes": "Usa React.lazy + Suspense para adiar o bundle do three/R3F e o hook useScroll do pacote motion/react. O progresso do scroll atualiza o medidor por ref (sem setState a cada quadro) e só chama setState quando a manchete ativa muda."
+    },
+    {
+      "id": "function:frontend/src/Landing.tsx:Landing",
+      "type": "function",
+      "name": "Landing",
+      "filePath": "frontend/src/Landing.tsx",
+      "lineRange": [17, 169],
+      "summary": "Componente principal da landing: controla a abertura (espera load e fontes, com limite de 2,5 s), mapeia o scroll do trilho para a manchete ativa e o medidor, pausa a cena fora do ecrã via IntersectionObserver e oferece o botão Continuar com scroll suave.",
+      "tags": ["componente", "scroll", "hook", "acessibilidade", "landing-page"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:frontend/src/LogoQuickMast.tsx",
+      "type": "file",
+      "name": "LogoQuickMast.tsx",
+      "filePath": "frontend/src/LogoQuickMast.tsx",
+      "summary": "Componente SVG em linha com o ícone do QuickMast (placa verde com quatro tetos e o da suspeita em vermelho), usado na navegação, na abertura e como reserva enquanto a cena 3D carrega.",
+      "tags": ["componente", "svg", "logo", "marca", "fallback"],
+      "complexity": "simple",
+      "languageNotes": "O SVG fica embutido no componente para não depender do caminho /stetic e para funcionar mesmo sem WebGL."
+    },
+    {
+      "id": "function:frontend/src/LogoQuickMast.tsx:LogoQuickMast",
+      "type": "function",
+      "name": "LogoQuickMast",
+      "filePath": "frontend/src/LogoQuickMast.tsx",
+      "lineRange": [3, 15],
+      "summary": "Renderiza o ícone do QuickMast em SVG 120x120 e aceita uma className opcional para ajustar o tamanho conforme o contexto.",
+      "tags": ["componente", "svg", "logo", "ui"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:frontend/src/main.tsx",
+      "type": "file",
+      "name": "main.tsx",
+      "filePath": "frontend/src/main.tsx",
+      "summary": "Ponto de entrada do frontend: monta o componente Landing em #landing dentro de StrictMode, substituindo a versão simples (sem JavaScript) fornecida por templates/index.html, e importa o landing.css.",
+      "tags": ["entry-point", "react", "bootstrap", "landing-page"],
+      "complexity": "simple",
+      "languageNotes": "Faz hidratação por substituição: o conteúdo estático do template serve de fallback sem JS e o createRoot o troca no primeiro render."
+    },
+    {
+      "id": "file:frontend/src/manchetes.ts",
+      "type": "file",
+      "name": "manchetes.ts",
+      "filePath": "frontend/src/manchetes.ts",
+      "summary": "Define o tipo Manchete e a lista MANCHETES com os quatro textos do hero (sobretítulo, título em duas linhas e detalhe). Serve de fonte única para o texto da landing e para a divisão do scroll na cena 3D.",
+      "tags": ["conteudo", "dados", "tipos", "landing-page", "constantes"],
+      "complexity": "simple",
+      "languageNotes": "Título tipado como tupla [string, string] para forçar exatamente duas linhas."
+    },
+    {
+      "id": "file:frontend/src/three/UbereScene.tsx",
+      "type": "file",
+      "name": "UbereScene.tsx",
+      "filePath": "frontend/src/three/UbereScene.tsx",
+      "summary": "Cena 3D em React Three Fiber do ícone do QuickMast: placa verde com quatro tetos e uma sonda que mede cada teto conforme o scroll, terminando de frente como o logo com o teto 3 em suspeita. Inclui iluminação, reflexos gerados localmente e degradação de qualidade pelo desempenho.",
+      "tags": ["three-js", "r3f", "3d", "animacao", "componente"],
+      "complexity": "complex",
+      "languageNotes": "Usa useFrame com amortecimento (maath/easing) em vez de estado do React, para animar a cada quadro sem re-render. O ambiente de reflexos vem de RoomEnvironment em vez do <Environment> do drei, evitando HDRI baixado de CDN e leitores extras."
+    },
+    {
+      "id": "function:frontend/src/three/UbereScene.tsx:criarPlaca",
+      "type": "function",
+      "name": "criarPlaca",
+      "filePath": "frontend/src/three/UbereScene.tsx",
+      "lineRange": [82, 105],
+      "summary": "Gera a geometria da placa quadrada com cantos arredondados do logo, extrudada com arestas chanfradas e normais vincadas (toCreasedNormals).",
+      "tags": ["three-js", "geometria", "3d", "factory"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:frontend/src/three/UbereScene.tsx:Sonda",
+      "type": "function",
+      "name": "Sonda",
+      "filePath": "frontend/src/three/UbereScene.tsx",
+      "lineRange": [112, 133],
+      "summary": "Componente que modela a sonda de medição: haste e ponta metálicas, anel azul emissivo e pega escura, orientados na diagonal por um quaternion fixo.",
+      "tags": ["componente", "three-js", "3d", "malha"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/three/UbereScene.tsx:Reflexos",
+      "type": "function",
+      "name": "Reflexos",
+      "filePath": "frontend/src/three/UbereScene.tsx",
+      "lineRange": [137, 153],
+      "summary": "Componente sem saída visual que gera o mapa de ambiente com PMREMGenerator a partir de RoomEnvironment e o aplica à cena, liberando os recursos ao desmontar.",
+      "tags": ["componente", "three-js", "iluminacao", "efeito-colateral", "3d"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:frontend/src/three/UbereScene.tsx:Placa",
+      "type": "function",
+      "name": "Placa",
+      "filePath": "frontend/src/three/UbereScene.tsx",
+      "lineRange": [161, 267],
+      "summary": "Componente central da cena: a cada quadro lê o progresso do scroll para enquadrar e rotacionar a placa, colorir cada teto conforme seu estado (vazio, a ler, sadio, suspeita), mover a sonda de teto em teto e fechar o logo com o anel branco; avisa quando desenha o primeiro quadro.",
+      "tags": ["componente", "three-js", "animacao", "useframe", "3d"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:frontend/src/three/UbereScene.tsx:UbereScene",
+      "type": "function",
+      "name": "UbereScene",
+      "filePath": "frontend/src/three/UbereScene.tsx",
+      "lineRange": [269, 293],
+      "summary": "Export default da cena: monta o Canvas do R3F com câmera, luzes, tone mapping e PerformanceMonitor (baixa o DPR se o aparelho não aguentar) e pausa o frameloop quando a cena está fora do ecrã.",
+      "tags": ["componente", "three-js", "canvas", "desempenho", "entry-point"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:frontend/src/tokens.ts",
+      "type": "file",
+      "name": "tokens.ts",
+      "filePath": "frontend/src/tokens.ts",
+      "summary": "Paleta de cores em hex usada pela cena 3D (THREE.Color não lê variáveis CSS), espelhando as variáveis de stetic/css/quickmast.css e do landing.css.",
+      "tags": ["design-tokens", "cores", "constantes", "three-js", "tema"],
+      "complexity": "simple",
+      "languageNotes": "Objeto marcado com as const para manter os valores como literais imutáveis; precisa ser mantido em sincronia manual com o CSS."
+    }
+  ],
+  "edges": [
+    { "source": "file:frontend/src/Landing.tsx", "target": "file:frontend/src/LogoQuickMast.tsx", "type": "imports", "direction": "forward", "weight": 0.7 },
+    { "source": "file:frontend/src/Landing.tsx", "target": "file:frontend/src/manchetes.ts", "type": "imports", "direction": "forward", "weight": 0.7 },
+    { "source": "file:frontend/src/main.tsx", "target": "file:frontend/src/Landing.tsx", "type": "imports", "direction": "forward", "weight": 0.7 },
+    { "source": "file:frontend/src/main.tsx", "target": "file:frontend/src/landing.css", "type": "imports", "direction": "forward", "weight": 0.7 },
+    { "source": "file:frontend/src/three/UbereScene.tsx", "target": "file:frontend/src/manchetes.ts", "type": "imports", "direction": "forward", "weight": 0.7 },
+    { "source": "file:frontend/src/three/UbereScene.tsx", "target": "file:frontend/src/tokens.ts", "type": "imports", "direction": "forward", "weight": 0.7 },
+    { "source": "file:frontend/src/Landing.tsx", "target": "file:frontend/src/three/UbereScene.tsx", "type": "depends_on", "direction": "forward", "weight": 0.6 },
+    { "source": "file:frontend/src/Landing.tsx", "target": "function:frontend/src/Landing.tsx:Landing", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "file:frontend/src/LogoQuickMast.tsx", "target": "function:frontend/src/LogoQuickMast.tsx:LogoQuickMast", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "file:frontend/src/three/UbereScene.tsx", "target": "function:frontend/src/three/UbereScene.tsx:criarPlaca", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "file:frontend/src/three/UbereScene.tsx", "target": "function:frontend/src/three/UbereScene.tsx:Sonda", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "file:frontend/src/three/UbereScene.tsx", "target": "function:frontend/src/three/UbereScene.tsx:Reflexos", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "file:frontend/src/three/UbereScene.tsx", "target": "function:frontend/src/three/UbereScene.tsx:Placa", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "file:frontend/src/three/UbereScene.tsx", "target": "function:frontend/src/three/UbereScene.tsx:UbereScene", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "file:frontend/src/Landing.tsx", "target": "function:frontend/src/Landing.tsx:Landing", "type": "exports", "direction": "forward", "weight": 0.8 },
+    { "source": "file:frontend/src/LogoQuickMast.tsx", "target": "function:frontend/src/LogoQuickMast.tsx:LogoQuickMast", "type": "exports", "direction": "forward", "weight": 0.8 },
+    { "source": "file:frontend/src/three/UbereScene.tsx", "target": "function:frontend/src/three/UbereScene.tsx:UbereScene", "type": "exports", "direction": "forward", "weight": 0.8 },
+    { "source": "function:frontend/src/Landing.tsx:Landing", "target": "function:frontend/src/LogoQuickMast.tsx:LogoQuickMast", "type": "calls", "direction": "forward", "weight": 0.8 },
+    { "source": "function:frontend/src/Landing.tsx:Landing", "target": "function:frontend/src/three/UbereScene.tsx:UbereScene", "type": "calls", "direction": "forward", "weight": 0.8 },
+    { "source": "function:frontend/src/three/UbereScene.tsx:UbereScene", "target": "function:frontend/src/three/UbereScene.tsx:Placa", "type": "calls", "direction": "forward", "weight": 0.8 },
+    { "source": "function:frontend/src/three/UbereScene.tsx:UbereScene", "target": "function:frontend/src/three/UbereScene.tsx:Reflexos", "type": "calls", "direction": "forward", "weight": 0.8 },
+    { "source": "function:frontend/src/three/UbereScene.tsx:Placa", "target": "function:frontend/src/three/UbereScene.tsx:criarPlaca", "type": "calls", "direction": "forward", "weight": 0.8 },
+    { "source": "function:frontend/src/three/UbereScene.tsx:Placa", "target": "function:frontend/src/three/UbereScene.tsx:Sonda", "type": "calls", "direction": "forward", "weight": 0.8 }
+  ]
+}

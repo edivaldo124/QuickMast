@@ -1,0 +1,879 @@
+{
+  "scriptCompleted": true,
+  "entryPointCandidates": [
+    {
+      "id": "document:README.md",
+      "score": 5,
+      "name": "README.md",
+      "summary": "README mínimo, com apenas o título 'QuickMast' e sem descrição, instruções de instalação ou uso."
+    },
+    {
+      "id": "file:blueprints/__init__.py",
+      "score": 3,
+      "name": "__init__.py",
+      "summary": "Pacote que reúne os blueprints da aplicação (páginas, auth, conta, API de testes e usuários, sensor, utilitários, erros) e expõe registrar_blueprints, que os registra no app Flask; o blueprint do sensor só entra quando há PLACA_URL ou SIMULADOR_SENSOR."
+    },
+    {
+      "id": "file:modelos/__init__.py",
+      "score": 3,
+      "name": "__init__.py",
+      "summary": "Pacote de modelos: importa e reexporta Base, Usuario, Vaca, Teste e Leitura para que o SQLAlchemy conheça todas as tabelas antes do create_all."
+    },
+    {
+      "id": "file:templates/mfa.html",
+      "score": 3,
+      "name": "mfa.html",
+      "summary": "Página de verificação em dois passos com dois modos: configurar (QR code, chave secreta e confirmação com código de 6 dígitos) e entrar (segundo passo do login)."
+    },
+    {
+      "id": "file:templates/painel.html",
+      "score": 3,
+      "name": "painel.html",
+      "summary": "Painel de estatísticas com temperatura e condutividade médias e mapa de suspeitas por teto; os números começam como esqueletos (aria-busy) até o painel.js receber os dados da API."
+    }
+  ],
+  "fanInRanking": [
+    {
+      "id": "file:templates/base.html",
+      "fanIn": 10,
+      "name": "base.html"
+    },
+    {
+      "id": "file:servidor.py",
+      "fanIn": 9,
+      "name": "servidor.py"
+    },
+    {
+      "id": "file:templates/_componentes.html",
+      "fanIn": 9,
+      "name": "_componentes.html"
+    },
+    {
+      "id": "file:stetic/js/componentes.js",
+      "fanIn": 9,
+      "name": "componentes.js"
+    },
+    {
+      "id": "file:servicos/autenticacao.py",
+      "fanIn": 8,
+      "name": "autenticacao.py"
+    },
+    {
+      "id": "file:servicos/seguranca.py",
+      "fanIn": 7,
+      "name": "seguranca.py"
+    },
+    {
+      "id": "file:blueprints/paginas.py",
+      "fanIn": 6,
+      "name": "paginas.py"
+    },
+    {
+      "id": "file:stetic/js/movimento.js",
+      "fanIn": 6,
+      "name": "movimento.js"
+    },
+    {
+      "id": "file:dao/banco.py",
+      "fanIn": 5,
+      "name": "banco.py"
+    },
+    {
+      "id": "file:dao/usuario_dao.py",
+      "fanIn": 5,
+      "name": "usuario_dao.py"
+    },
+    {
+      "id": "file:modelos/base.py",
+      "fanIn": 5,
+      "name": "base.py"
+    },
+    {
+      "id": "file:frontend/src/main.tsx",
+      "fanIn": 5,
+      "name": "main.tsx"
+    },
+    {
+      "id": "file:blueprints/auth.py",
+      "fanIn": 5,
+      "name": "auth.py"
+    },
+    {
+      "id": "file:servicos/senhas.py",
+      "fanIn": 5,
+      "name": "senhas.py"
+    },
+    {
+      "id": "file:blueprints/testes.py",
+      "fanIn": 4,
+      "name": "testes.py"
+    },
+    {
+      "id": "file:modelos/usuario.py",
+      "fanIn": 4,
+      "name": "usuario.py"
+    },
+    {
+      "id": "file:firmware/quickmast_esp8266/quickmast_esp8266.ino",
+      "fanIn": 4,
+      "name": "quickmast_esp8266.ino"
+    },
+    {
+      "id": "file:stetic/css/quickmast.css",
+      "fanIn": 4,
+      "name": "quickmast.css"
+    },
+    {
+      "id": "file:blueprints/sensor.py",
+      "fanIn": 3,
+      "name": "sensor.py"
+    },
+    {
+      "id": "file:servicos/diagnostico.py",
+      "fanIn": 3,
+      "name": "diagnostico.py"
+    }
+  ],
+  "fanOutRanking": [
+    {
+      "id": "file:blueprints/__init__.py",
+      "fanOut": 8,
+      "name": "__init__.py"
+    },
+    {
+      "id": "file:servidor.py",
+      "fanOut": 6,
+      "name": "servidor.py"
+    },
+    {
+      "id": "file:blueprints/auth.py",
+      "fanOut": 6,
+      "name": "auth.py"
+    },
+    {
+      "id": "file:blueprints/conta.py",
+      "fanOut": 6,
+      "name": "conta.py"
+    },
+    {
+      "id": "file:stetic/js/ubere.js",
+      "fanOut": 6,
+      "name": "ubere.js"
+    },
+    {
+      "id": "file:modelos/__init__.py",
+      "fanOut": 5,
+      "name": "__init__.py"
+    },
+    {
+      "id": "pipeline:.github/workflows/seguranca.yml",
+      "fanOut": 5,
+      "name": "seguranca.yml"
+    },
+    {
+      "id": "config:.env.example",
+      "fanOut": 5,
+      "name": ".env.example"
+    },
+    {
+      "id": "document:PROMPT_DEPLOY_GEMINI.md",
+      "fanOut": 5,
+      "name": "PROMPT_DEPLOY_GEMINI.md"
+    },
+    {
+      "id": "file:templates/index.html",
+      "fanOut": 5,
+      "name": "index.html"
+    },
+    {
+      "id": "file:templates/login.html",
+      "fanOut": 5,
+      "name": "login.html"
+    },
+    {
+      "id": "file:templates/mfa.html",
+      "fanOut": 5,
+      "name": "mfa.html"
+    },
+    {
+      "id": "file:templates/painel.html",
+      "fanOut": 5,
+      "name": "painel.html"
+    },
+    {
+      "id": "file:templates/ubere.html",
+      "fanOut": 5,
+      "name": "ubere.html"
+    },
+    {
+      "id": "file:templates/usuarios.html",
+      "fanOut": 5,
+      "name": "usuarios.html"
+    },
+    {
+      "id": "file:templates/vaca.html",
+      "fanOut": 5,
+      "name": "vaca.html"
+    },
+    {
+      "id": "file:firmware/quickmast_esp8266/quickmast_esp8266.ino",
+      "fanOut": 5,
+      "name": "quickmast_esp8266.ino"
+    },
+    {
+      "id": "file:blueprints/testes.py",
+      "fanOut": 4,
+      "name": "testes.py"
+    },
+    {
+      "id": "file:blueprints/usuarios.py",
+      "fanOut": 4,
+      "name": "usuarios.py"
+    },
+    {
+      "id": "file:modelos/teste.py",
+      "fanOut": 4,
+      "name": "teste.py"
+    }
+  ],
+  "bfsTraversal": {
+    "startNode": "file:blueprints/__init__.py",
+    "order": [
+      "file:blueprints/__init__.py",
+      "file:blueprints/auth.py",
+      "file:blueprints/conta.py",
+      "file:blueprints/erros.py",
+      "file:blueprints/paginas.py",
+      "file:blueprints/sensor.py",
+      "file:blueprints/testes.py",
+      "file:blueprints/usuarios.py",
+      "file:blueprints/utilitarios.py",
+      "file:servicos/autenticacao.py",
+      "file:servicos/limite.py",
+      "file:servicos/seguranca.py",
+      "file:servicos/senhas.py",
+      "file:servicos/diagnostico.py",
+      "file:modelos/usuario.py",
+      "file:modelos/base.py"
+    ],
+    "depthMap": {
+      "file:blueprints/__init__.py": 0,
+      "file:blueprints/auth.py": 1,
+      "file:blueprints/conta.py": 1,
+      "file:blueprints/erros.py": 1,
+      "file:blueprints/paginas.py": 1,
+      "file:blueprints/sensor.py": 1,
+      "file:blueprints/testes.py": 1,
+      "file:blueprints/usuarios.py": 1,
+      "file:blueprints/utilitarios.py": 1,
+      "file:servicos/autenticacao.py": 2,
+      "file:servicos/limite.py": 2,
+      "file:servicos/seguranca.py": 2,
+      "file:servicos/senhas.py": 2,
+      "file:servicos/diagnostico.py": 2,
+      "file:modelos/usuario.py": 2,
+      "file:modelos/base.py": 3
+    },
+    "byDepth": {
+      "0": [
+        "file:blueprints/__init__.py"
+      ],
+      "1": [
+        "file:blueprints/auth.py",
+        "file:blueprints/conta.py",
+        "file:blueprints/erros.py",
+        "file:blueprints/paginas.py",
+        "file:blueprints/sensor.py",
+        "file:blueprints/testes.py",
+        "file:blueprints/usuarios.py",
+        "file:blueprints/utilitarios.py"
+      ],
+      "2": [
+        "file:servicos/autenticacao.py",
+        "file:servicos/limite.py",
+        "file:servicos/seguranca.py",
+        "file:servicos/senhas.py",
+        "file:servicos/diagnostico.py",
+        "file:modelos/usuario.py"
+      ],
+      "3": [
+        "file:modelos/base.py"
+      ]
+    }
+  },
+  "nonCodeFiles": {
+    "documentation": [
+      {
+        "id": "document:CLAUDE.md",
+        "name": "CLAUDE.md",
+        "type": "document",
+        "summary": "Instruções do projeto para o Claude Code: manda consultar o grafo de conhecimento do graphify (query, path, explain) antes de buscar no código bruto e rodar 'graphify update .' após modificar código."
+      },
+      {
+        "id": "document:PROMPT_DEPLOY_GEMINI.md",
+        "name": "PROMPT_DEPLOY_GEMINI.md",
+        "type": "document",
+        "summary": "Prompt passo a passo para um assistente de IA instalar o QuickMast numa TV box Linux sem Docker: sistema, firewall/SSH, venv com requirements por hash, PostgreSQL nativo, .env, gunicorn sob systemd, Nginx com HTTPS, verificação e operação (atualização, backup, redefinição de MFA)."
+      },
+      {
+        "id": "document:README.md",
+        "name": "README.md",
+        "type": "document",
+        "summary": "README mínimo, com apenas o título 'QuickMast' e sem descrição, instruções de instalação ou uso."
+      },
+      {
+        "id": "document:requirements.txt",
+        "name": "requirements.txt",
+        "type": "document",
+        "summary": "Dependências Python fixadas e com hashes SHA-256, geradas pelo pip-compile a partir de requirements.in (Python 3.13): Flask, SQLAlchemy, psycopg2-binary, gunicorn, pyotp, segno, python-dotenv e suas dependências transitivas."
+      },
+      {
+        "id": "document:servicos/senhas_comuns.txt",
+        "name": "senhas_comuns.txt",
+        "type": "document",
+        "summary": "Arquivo de dados com cerca de 10 mil senhas comuns, uma por linha, usado como lista de bloqueio para recusar senhas fáceis de adivinhar; consumido por servicos/senhas.py."
+      },
+      {
+        "id": "document:stetic/fonts/OFL.txt",
+        "name": "OFL.txt",
+        "type": "document",
+        "summary": "Texto da licença SIL Open Font License 1.1 da fonte Inter (Inter Project Authors), distribuída em stetic/fonts e declarada via @font-face no quickmast.css."
+      }
+    ],
+    "infrastructure": [
+      {
+        "id": "service:Dockerfile",
+        "name": "Dockerfile",
+        "type": "service",
+        "summary": "Imagem Docker de estágio único (python:3.13.16-slim) usada para testes do QuickMast no PC: instala dependências com --require-hashes, roda como usuário de sistema sem privilégios e inicia o app com 'flask iniciar' seguido do gunicorn. A produção na TV box roda sem containers."
+      },
+      {
+        "id": "service:Dockerfile:python",
+        "name": "python (estágio base)",
+        "type": "service",
+        "summary": "Único estágio do build: parte de python:3.13.16-slim, copia requirements.txt e o código, cria o usuário 'quickmast' e expõe a porta 8000."
+      },
+      {
+        "id": "service:docker-compose.yml",
+        "name": "docker-compose.yml",
+        "type": "service",
+        "summary": "Orquestração local com o PostgreSQL 16.14 (porta só em 127.0.0.1:5433, healthcheck, volume persistente) e, sob o perfil 'app', o servidor Flask/gunicorn em rede host para testes com a placa ESP8266, com registro fechado por padrão."
+      },
+      {
+        "id": "service:docker-compose.yml:db",
+        "name": "db",
+        "type": "service",
+        "summary": "Serviço PostgreSQL 16.14 com credenciais vindas do .env, porta publicada apenas no loopback (5433), volume nomeado quickmast_dados e healthcheck com pg_isready."
+      },
+      {
+        "id": "service:docker-compose.yml:app",
+        "name": "app",
+        "type": "service",
+        "summary": "Servidor QuickMast para testes no PC, ativo só com '--profile app': constrói a imagem do Dockerfile, usa network_mode host na porta 5000, aponta PLACA_URL para 192.168.4.1 e mantém o registro de usuários fechado, salvo com ABRIR_REGISTO=1."
+      },
+      {
+        "id": "service:docker-compose.simulador.yml",
+        "name": "docker-compose.simulador.yml",
+        "type": "service",
+        "summary": "Override do Compose usado como plano B na apresentação: liga SIMULADOR_SENSOR e zera PLACA_URL para que o /read devolva valores de teste (270 a 420) sem a placa física."
+      },
+      {
+        "id": "pipeline:.github/workflows/seguranca.yml",
+        "name": "seguranca.yml",
+        "type": "pipeline",
+        "summary": "Workflow do GitHub Actions executado em cada push e pull request, com um job único de auditoria: instala as dependências com hashes verificados, roda pip-audit (falhas conhecidas), bandit (análise estática), um teste de que o servidor arranca com SQLite e o gitleaks (segredos no histórico)."
+      }
+    ],
+    "data": [],
+    "config": [
+      {
+        "id": "config:.dockerignore",
+        "name": ".dockerignore",
+        "type": "config",
+        "summary": "Lista de exclusões do contexto de build do Docker: deixa de fora segredos (.env), repositório git, ambientes virtuais, bancos locais, firmware, grafos e relatórios internos, de modo que só o código da aplicação vá para a imagem."
+      },
+      {
+        "id": "config:.env.example",
+        "name": ".env.example",
+        "type": "config",
+        "summary": "Modelo comentado do .env do QuickMast, com chaves de sessão, credenciais do PostgreSQL (dono do banco e usuário da aplicação), flags de produção (FLASK_DEBUG, COOKIE_SEGURO, ATRAS_DE_PROXY, PERMITIR_REGISTO, SIMULADOR_SENSOR, PLACA_URL, LOG_JSON) e dados do admin inicial. Os segredos ficam vazios e devem ser preenchidos localmente."
+      },
+      {
+        "id": "config:skills-lock.json",
+        "name": "skills-lock.json",
+        "type": "config",
+        "summary": "Lockfile de skills do agente: fixa 9 skills de segurança (testes de API, OWASP, pentest, CI) do repositório usestrix/strix com caminho do SKILL.md e hash computado de cada uma."
+      },
+      {
+        "id": "config:frontend/package.json",
+        "name": "package.json",
+        "type": "config",
+        "summary": "Manifesto npm do frontend quickmast-frontend (ESM, Node >=22.13): define os scripts dev/typecheck/build e as dependências da landing em React 19 com cena 3D (three, @react-three/fiber, drei, maath, motion), além de Vite, plugin React e TypeScript como devDependencies."
+      },
+      {
+        "id": "config:frontend/tsconfig.json",
+        "name": "tsconfig.json",
+        "type": "config",
+        "summary": "Configuração do compilador TypeScript do frontend: modo strict, target ES2022, moduleResolution bundler, JSX react-jsx e noEmit (o Vite faz o bundling), restrita ao diretório src com tipos do vite/client."
+      },
+      {
+        "id": "config:requirements.in",
+        "name": "requirements.in",
+        "type": "config",
+        "summary": "Lista das dependências Python diretas com versões fixas (Flask, Werkzeug, SQLAlchemy, psycopg2, python-dotenv, gunicorn, pyotp, segno); o requirements.txt com hashes é gerado a partir dela com pip-compile."
+      }
+    ]
+  },
+  "clusters": [],
+  "layers": {
+    "count": 9,
+    "list": [
+      {
+        "id": "layer:api",
+        "name": "Camada de Rotas (Blueprints Flask)",
+        "description": "Blueprints Flask que expõem as páginas HTML, a autenticação, a conta com MFA, a API de testes de mastite, a gestão de usuários, o recebimento do sensor ESP8266, o health check, a exportação CSV e o tratamento de erros."
+      },
+      {
+        "id": "layer:service",
+        "name": "Camada de Serviços",
+        "description": "Regras de negócio e de segurança usadas pelas rotas: autenticação e sessão, MFA/TOTP, política de senhas (com lista de senhas comuns), limite de tentativas, proteções globais (CSRF, cabeçalhos, auditoria) e diagnóstico de mastite."
+      },
+      {
+        "id": "layer:data",
+        "name": "Camada de Dados e Persistência",
+        "description": "Modelos ORM do SQLAlchemy (usuário, vaca, teste e leitura) e DAOs que cuidam do engine, da migração do esquema e do acesso ao PostgreSQL."
+      },
+      {
+        "id": "layer:core",
+        "name": "Núcleo da Aplicação e Scripts de Administração",
+        "description": "Ponto de entrada servidor.py (configuração do Flask, logs, sessão, registro dos blueprints e comandos de CLI) e scripts de uso único para definir a senha do admin e separar o usuário do banco com menor privilégio."
+      },
+      {
+        "id": "layer:web-ui",
+        "name": "Interface Web (Templates Jinja e Estáticos)",
+        "description": "Páginas Jinja renderizadas pelo Flask (layout base, login, MFA, painel, histórico da vaca, usuários, úbere) e os arquivos estáticos de stetic/ (CSS do design system, JavaScript do navegador e fontes)."
+      },
+      {
+        "id": "layer:landing-react",
+        "name": "Landing Page React com Cena 3D",
+        "description": "Aplicação React + Vite em frontend/ com a landing page, a cena 3D em Three.js (React Three Fiber), manchetes, tokens de design e a configuração de build (package.json, tsconfig, vite.config) que gera os assets servidos pelo Flask."
+      },
+      {
+        "id": "layer:firmware",
+        "name": "Firmware do Sensor (ESP8266)",
+        "description": "Sketch Arduino do NodeMCU/ESP8266 que lê o sensor TDS de condutividade, conduz o teste dos 4 tetos, calcula o diagnóstico de mastite e envia os testes à API do QuickMast (também responde ao GET /read usado pela página do úbere)."
+      },
+      {
+        "id": "layer:infrastructure",
+        "name": "Infraestrutura, CI/CD e Configuração de Ambiente",
+        "description": "Dockerfile, Docker Compose (app, banco e simulador), configuração do gunicorn, script de apresentação, pipeline de segurança no GitHub Actions, modelo de variáveis de ambiente e dependências Python fixadas com hashes."
+      },
+      {
+        "id": "layer:documentation",
+        "name": "Documentação e Ferramentas de IA",
+        "description": "README, guia de deploy para IA (PROMPT_DEPLOY_GEMINI), instruções do CLAUDE.md e o lockfile de skills do agente, que são metadados de documentação e de ferramentas fora do código da aplicação."
+      }
+    ]
+  },
+  "nodeSummaryIndex": {
+    "file:blueprints/__init__.py": {
+      "name": "__init__.py",
+      "type": "file",
+      "summary": "Pacote que reúne os blueprints da aplicação (páginas, auth, conta, API de testes e usuários, sensor, utilitários, erros) e expõe registrar_blueprints, que os registra no app Flask; o blueprint do sensor só entra quando há PLACA_URL ou SIMULADOR_SENSOR."
+    },
+    "file:blueprints/erros.py": {
+      "name": "erros.py",
+      "type": "file",
+      "summary": "Blueprint com handlers globais de erro: para rotas /api/ devolve JSON ({'erro': ...}) com o código HTTP correto, e nas páginas HTML mantém o tratamento padrão do Flask."
+    },
+    "file:blueprints/paginas.py": {
+      "name": "paginas.py",
+      "type": "file",
+      "summary": "Blueprint das páginas HTML (index, úbere, painel, histórico da vaca e usuários); os dados vêm depois da API via fetch, e as rotas protegidas usam o decorador exigir_login."
+    },
+    "file:blueprints/sensor.py": {
+      "name": "sensor.py",
+      "type": "file",
+      "summary": "Blueprint da rota /read que alimenta a página do úbere: repassa a leitura à placa ESP8266 (PLACA_URL fixa ou 'auto' com varredura da /24 local) ou devolve valores simulados, validando a resposta da placa e serializando o acesso com um lock."
+    },
+    "file:blueprints/testes.py": {
+      "name": "testes.py",
+      "type": "file",
+      "summary": "API REST dos testes de mastite sob /api: validação e normalização do brinco e das 4 leituras, registro com diagnóstico automático, listagem paginada com filtros, consulta, exclusão (admin), vacas e estatísticas."
+    },
+    "file:blueprints/usuarios.py": {
+      "name": "usuarios.py",
+      "type": "file",
+      "summary": "API de usuários sob /api: consulta do próprio usuário (/api/me), listagem para o admin e alteração de perfil/ativo com regras que impedem o admin de alterar a própria conta ou desativar o último admin ativo."
+    },
+    "file:blueprints/utilitarios.py": {
+      "name": "utilitarios.py",
+      "type": "file",
+      "summary": "Blueprint utilitário com o health check /saude (verifica a ligação ao banco) e a exportação /exportar.csv em streaming, com BOM para Excel e proteção contra injeção de fórmulas nas células."
+    },
+    "file:servicos/autenticacao.py": {
+      "name": "autenticacao.py",
+      "type": "file",
+      "summary": "Serviço de sessão e proteção de rotas: resolve o usuário da sessão (invalidando cookies antigos), nega por omissão toda rota fora da lista pública, força o MFA do admin, fornece o decorador exigir_login e cria o admin inicial a partir do ambiente."
+    },
+    "file:servicos/diagnostico.py": {
+      "name": "diagnostico.py",
+      "type": "file",
+      "summary": "Regras puras de diagnóstico de mastite: compara a condutividade (e a temperatura, quando disponível) de cada teto com a mediana dos outros três e com valores de referência; espelha a lógica do firmware ESP8266."
+    },
+    "file:servicos/seguranca.py": {
+      "name": "seguranca.py",
+      "type": "file",
+      "summary": "Proteções globais da aplicação: proteção anti-CSRF por Sec-Fetch-Site/Origin, cabeçalhos de segurança (CSP, HSTS, nosniff etc.), formatador de log em JSON e auditoria de eventos com mascaramento de email."
+    },
+    "file:servidor.py": {
+      "name": "servidor.py",
+      "type": "file",
+      "summary": "Ponto de entrada da aplicação Flask: carrega o .env, configura logs em JSON, ProxyFix, cookies de sessão e opções (registro, simulador, PLACA_URL), aplica as proteções, registra os blueprints e define os comandos de CLI iniciar, redefinir-mfa e redefinir-senha."
+    },
+    "file:dao/banco.py": {
+      "name": "banco.py",
+      "type": "file",
+      "summary": "Camada de acesso a dados principal: cria o engine SQLAlchemy a partir de DATABASE_URL, cria/migra as tabelas, provisiona o usuário PostgreSQL restrito da aplicação e expõe as consultas de testes, vacas, estatísticas e exportação CSV."
+    },
+    "file:dao/usuario_dao.py": {
+      "name": "usuario_dao.py",
+      "type": "file",
+      "summary": "DAO de usuários: CRUD de contas, versão de sessão para invalidar cookies, alteração de senha e operações de MFA/TOTP com proteção anti-replay atómica, sempre devolvendo dicionários sem expor campos internos por padrão."
+    },
+    "file:modelos/__init__.py": {
+      "name": "__init__.py",
+      "type": "file",
+      "summary": "Pacote de modelos: importa e reexporta Base, Usuario, Vaca, Teste e Leitura para que o SQLAlchemy conheça todas as tabelas antes do create_all."
+    },
+    "file:modelos/base.py": {
+      "name": "base.py",
+      "type": "file",
+      "summary": "Define a classe Base (DeclarativeBase) da qual todos os modelos ORM herdam e que concentra o metadata das tabelas."
+    },
+    "file:modelos/leitura.py": {
+      "name": "leitura.py",
+      "type": "file",
+      "summary": "Modelo ORM Leitura (tabela leituras): medição de um teto dentro de um teste, com condutividade, temperatura opcional, flag de suspeita e restrições de unicidade e faixa do teto (1 a 4)."
+    },
+    "file:modelos/teste.py": {
+      "name": "teste.py",
+      "type": "file",
+      "summary": "Modelo ORM Teste (tabela testes): sessão de medição dos 4 tetos de uma vaca com diagnóstico de mastite, observação e operador opcional, ligada a Vaca, Usuario e Leitura."
+    },
+    "file:modelos/usuario.py": {
+      "name": "usuario.py",
+      "type": "file",
+      "summary": "Modelo ORM Usuario (tabela usuarios): conta com perfil (operador, veterinário, admin), hash de senha, versão de sessão e campos TOTP para verificação em dois passos."
+    },
+    "file:modelos/vaca.py": {
+      "name": "vaca.py",
+      "type": "file",
+      "summary": "Modelo ORM Vaca (tabela vacas): animal identificado por brinco único, com relação em cascata para seus testes."
+    },
+    "file:frontend/src/Landing.tsx": {
+      "name": "Landing.tsx",
+      "type": "file",
+      "summary": "Componente React da landing page do QuickMast: tela de abertura, hero com manchetes que trocam conforme o progresso do scroll, medidor lateral e carregamento tardio (lazy) da cena 3D."
+    },
+    "file:frontend/src/LogoQuickMast.tsx": {
+      "name": "LogoQuickMast.tsx",
+      "type": "file",
+      "summary": "Componente SVG em linha com o ícone do QuickMast (placa verde com quatro tetos e o da suspeita em vermelho), usado na navegação, na abertura e como reserva enquanto a cena 3D carrega."
+    },
+    "file:frontend/src/main.tsx": {
+      "name": "main.tsx",
+      "type": "file",
+      "summary": "Ponto de entrada do frontend: monta o componente Landing em #landing dentro de StrictMode, substituindo a versão simples (sem JavaScript) fornecida por templates/index.html, e importa o landing.css."
+    },
+    "file:frontend/src/manchetes.ts": {
+      "name": "manchetes.ts",
+      "type": "file",
+      "summary": "Define o tipo Manchete e a lista MANCHETES com os quatro textos do hero (sobretítulo, título em duas linhas e detalhe). Serve de fonte única para o texto da landing e para a divisão do scroll na cena 3D."
+    },
+    "file:frontend/src/three/UbereScene.tsx": {
+      "name": "UbereScene.tsx",
+      "type": "file",
+      "summary": "Cena 3D em React Three Fiber do ícone do QuickMast: placa verde com quatro tetos e uma sonda que mede cada teto conforme o scroll, terminando de frente como o logo com o teto 3 em suspeita. Inclui iluminação, reflexos gerados localmente e degradação de qualidade pelo desempenho."
+    },
+    "file:frontend/src/tokens.ts": {
+      "name": "tokens.ts",
+      "type": "file",
+      "summary": "Paleta de cores em hex usada pela cena 3D (THREE.Color não lê variáveis CSS), espelhando as variáveis de stetic/css/quickmast.css e do landing.css."
+    },
+    "file:blueprints/auth.py": {
+      "name": "auth.py",
+      "type": "file",
+      "summary": "Blueprint Flask 'auth' com as páginas de entrada: login por senha, segundo passo MFA (TOTP), registro e logout. Aplica limites de tentativas por IP, e-mail e conta, mitiga open redirect e user enumeration (hash falso) e audita eventos de segurança."
+    },
+    "file:blueprints/conta.py": {
+      "name": "conta.py",
+      "type": "file",
+      "summary": "Blueprint Flask 'conta' (área 'A minha conta'): troca de senha com verificação da senha atual e limite de tentativas, e configuração da verificação em dois passos (TOTP) com QR code. Reaproveita os limitadores definidos em blueprints/auth.py."
+    },
+    "file:definir_senha_admin.py": {
+      "name": "definir_senha_admin.py",
+      "type": "file",
+      "summary": "Script de linha de comando que pede a senha do admin inicial, valida-a com problema_senha e grava apenas o hash (ADMIN_SENHA_HASH) no .env, substituindo qualquer ADMIN_SENHA em texto simples e restringindo o arquivo a chmod 600."
+    },
+    "file:servicos/limite.py": {
+      "name": "limite.py",
+      "type": "file",
+      "summary": "Limitador em memória de tentativas falhadas numa janela de tempo deslizante, protegido por threading.Lock; usado no login, no código MFA e na troca de senha. Pensado para 1 worker gunicorn com threads; para vários servidores deve ser trocado por Flask-Limiter + Redis."
+    },
+    "file:servicos/senhas.py": {
+      "name": "senhas.py",
+      "type": "file",
+      "summary": "Regras de qualidade de senha (tamanho de 8 a 128 e recusa de senhas comuns ou derivadas do e-mail), carregando a lista servicos/senhas_comuns.txt na importação; implementa a recomendação ASVS 6.2.4."
+    },
+    "config:.dockerignore": {
+      "name": ".dockerignore",
+      "type": "config",
+      "summary": "Lista de exclusões do contexto de build do Docker: deixa de fora segredos (.env), repositório git, ambientes virtuais, bancos locais, firmware, grafos e relatórios internos, de modo que só o código da aplicação vá para a imagem."
+    },
+    "service:Dockerfile": {
+      "name": "Dockerfile",
+      "type": "service",
+      "summary": "Imagem Docker de estágio único (python:3.13.16-slim) usada para testes do QuickMast no PC: instala dependências com --require-hashes, roda como usuário de sistema sem privilégios e inicia o app com 'flask iniciar' seguido do gunicorn. A produção na TV box roda sem containers."
+    },
+    "service:Dockerfile:python": {
+      "name": "python (estágio base)",
+      "type": "service",
+      "summary": "Único estágio do build: parte de python:3.13.16-slim, copia requirements.txt e o código, cria o usuário 'quickmast' e expõe a porta 8000."
+    },
+    "service:docker-compose.yml": {
+      "name": "docker-compose.yml",
+      "type": "service",
+      "summary": "Orquestração local com o PostgreSQL 16.14 (porta só em 127.0.0.1:5433, healthcheck, volume persistente) e, sob o perfil 'app', o servidor Flask/gunicorn em rede host para testes com a placa ESP8266, com registro fechado por padrão."
+    },
+    "service:docker-compose.yml:db": {
+      "name": "db",
+      "type": "service",
+      "summary": "Serviço PostgreSQL 16.14 com credenciais vindas do .env, porta publicada apenas no loopback (5433), volume nomeado quickmast_dados e healthcheck com pg_isready."
+    },
+    "service:docker-compose.yml:app": {
+      "name": "app",
+      "type": "service",
+      "summary": "Servidor QuickMast para testes no PC, ativo só com '--profile app': constrói a imagem do Dockerfile, usa network_mode host na porta 5000, aponta PLACA_URL para 192.168.4.1 e mantém o registro de usuários fechado, salvo com ABRIR_REGISTO=1."
+    },
+    "service:docker-compose.simulador.yml": {
+      "name": "docker-compose.simulador.yml",
+      "type": "service",
+      "summary": "Override do Compose usado como plano B na apresentação: liga SIMULADOR_SENSOR e zera PLACA_URL para que o /read devolva valores de teste (270 a 420) sem a placa física."
+    },
+    "pipeline:.github/workflows/seguranca.yml": {
+      "name": "seguranca.yml",
+      "type": "pipeline",
+      "summary": "Workflow do GitHub Actions executado em cada push e pull request, com um job único de auditoria: instala as dependências com hashes verificados, roda pip-audit (falhas conhecidas), bandit (análise estática), um teste de que o servidor arranca com SQLite e o gitleaks (segredos no histórico)."
+    },
+    "config:.env.example": {
+      "name": ".env.example",
+      "type": "config",
+      "summary": "Modelo comentado do .env do QuickMast, com chaves de sessão, credenciais do PostgreSQL (dono do banco e usuário da aplicação), flags de produção (FLASK_DEBUG, COOKIE_SEGURO, ATRAS_DE_PROXY, PERMITIR_REGISTO, SIMULADOR_SENSOR, PLACA_URL, LOG_JSON) e dados do admin inicial. Os segredos ficam vazios e devem ser preenchidos localmente."
+    },
+    "document:CLAUDE.md": {
+      "name": "CLAUDE.md",
+      "type": "document",
+      "summary": "Instruções do projeto para o Claude Code: manda consultar o grafo de conhecimento do graphify (query, path, explain) antes de buscar no código bruto e rodar 'graphify update .' após modificar código."
+    },
+    "document:PROMPT_DEPLOY_GEMINI.md": {
+      "name": "PROMPT_DEPLOY_GEMINI.md",
+      "type": "document",
+      "summary": "Prompt passo a passo para um assistente de IA instalar o QuickMast numa TV box Linux sem Docker: sistema, firewall/SSH, venv com requirements por hash, PostgreSQL nativo, .env, gunicorn sob systemd, Nginx com HTTPS, verificação e operação (atualização, backup, redefinição de MFA)."
+    },
+    "document:README.md": {
+      "name": "README.md",
+      "type": "document",
+      "summary": "README mínimo, com apenas o título 'QuickMast' e sem descrição, instruções de instalação ou uso."
+    },
+    "file:apresentacao.sh": {
+      "name": "apresentacao.sh",
+      "type": "file",
+      "summary": "Script Bash para a apresentação do QuickMast no notebook: sobe o banco e o servidor via docker compose, valida o .env, conecta o notebook à rede Wi-Fi da placa ESP8266, oferece modo simulador e confere saúde do servidor, rota /read, placa e contagem de dados no banco."
+    },
+    "document:requirements.txt": {
+      "name": "requirements.txt",
+      "type": "document",
+      "summary": "Dependências Python fixadas e com hashes SHA-256, geradas pelo pip-compile a partir de requirements.in (Python 3.13): Flask, SQLAlchemy, psycopg2-binary, gunicorn, pyotp, segno, python-dotenv e suas dependências transitivas."
+    },
+    "config:skills-lock.json": {
+      "name": "skills-lock.json",
+      "type": "config",
+      "summary": "Lockfile de skills do agente: fixa 9 skills de segurança (testes de API, OWASP, pentest, CI) do repositório usestrix/strix com caminho do SKILL.md e hash computado de cada uma."
+    },
+    "file:frontend/index.html": {
+      "name": "index.html",
+      "type": "file",
+      "summary": "Página HTML usada só no `npm run dev` do Vite para visualizar a landing sem o Flask; monta a ilha React em #landing, carrega /src/main.tsx como módulo e reaproveita o CSS global quickmast.css. Em produção quem serve a página é templates/index.html."
+    },
+    "config:frontend/package.json": {
+      "name": "package.json",
+      "type": "config",
+      "summary": "Manifesto npm do frontend quickmast-frontend (ESM, Node >=22.13): define os scripts dev/typecheck/build e as dependências da landing em React 19 com cena 3D (three, @react-three/fiber, drei, maath, motion), além de Vite, plugin React e TypeScript como devDependencies."
+    },
+    "config:frontend/tsconfig.json": {
+      "name": "tsconfig.json",
+      "type": "config",
+      "summary": "Configuração do compilador TypeScript do frontend: modo strict, target ES2022, moduleResolution bundler, JSX react-jsx e noEmit (o Vite faz o bundling), restrita ao diretório src com tipos do vite/client."
+    },
+    "file:templates/_componentes.html": {
+      "name": "_componentes.html",
+      "type": "file",
+      "summary": "Biblioteca de macros Jinja reutilizáveis (logo, barra superior, banner, campo de formulário, grelha do úbere, legenda, esqueletos, painel da marca e link de voltar) espelhando a página Componentes do Figma."
+    },
+    "file:templates/_landing_assets.html": {
+      "name": "_landing_assets.html",
+      "type": "file",
+      "summary": "Macros que injetam o CSS e o JS (com hash no nome) gerados pelo build do Vite para a landing page React; arquivo gerado, não deve ser editado à mão."
+    },
+    "file:templates/base.html": {
+      "name": "base.html",
+      "type": "file",
+      "summary": "Layout base Jinja com doctype, metadados, ícones, pré-carga da fonte Inter, folha de estilos global e blocos (título, estilos, cabeçalho, conteúdo, scripts) que todas as páginas estendem."
+    },
+    "file:templates/conta.html": {
+      "name": "conta.html",
+      "type": "file",
+      "summary": "Página 'A minha conta' com formulário para trocar a senha e secção de verificação em dois passos (MFA), mostrando se está ativa ou oferecendo o botão para ativar."
+    },
+    "file:templates/index.html": {
+      "name": "index.html",
+      "type": "file",
+      "summary": "Página inicial: sem sessão mostra a landing com cena 3D (ilha React montada em #landing, com fallback estático sem JS); com sessão mostra o início com saudação e atalho para as medições."
+    },
+    "file:templates/login.html": {
+      "name": "login.html",
+      "type": "file",
+      "summary": "Página de entrada com abas Entrar e Criar conta (registro público opcional via config PERMITIR_REGISTO), destacando com aria-invalid o campo em erro e mostrando banner de alerta."
+    },
+    "file:templates/mfa.html": {
+      "name": "mfa.html",
+      "type": "file",
+      "summary": "Página de verificação em dois passos com dois modos: configurar (QR code, chave secreta e confirmação com código de 6 dígitos) e entrar (segundo passo do login)."
+    },
+    "file:templates/painel.html": {
+      "name": "painel.html",
+      "type": "file",
+      "summary": "Painel de estatísticas com temperatura e condutividade médias e mapa de suspeitas por teto; os números começam como esqueletos (aria-busy) até o painel.js receber os dados da API."
+    },
+    "file:templates/ubere.html": {
+      "name": "ubere.html",
+      "type": "file",
+      "summary": "Página principal de medições em três fases (vaca, medir, resultado) controladas por data-fase/data-fases, com leitura ao vivo, úbere 2x2, diagnóstico, histórico, pesquisa e exportação CSV."
+    },
+    "file:templates/usuarios.html": {
+      "name": "usuarios.html",
+      "type": "file",
+      "summary": "Página de administração de usuários que mostra uma lista com esqueletos preenchida por usuarios.js; passa o id do usuário atual ao JS por data-meu-id por causa da CSP."
+    },
+    "file:templates/vaca.html": {
+      "name": "vaca.html",
+      "type": "file",
+      "summary": "Página do histórico de uma vaca (por brinco) com resumo e linha do tempo de testes, carregada via API e inicialmente preenchida com eventos esqueleto."
+    },
+    "file:configurar_banco_app.py": {
+      "name": "configurar_banco_app.py",
+      "type": "file",
+      "summary": "Script de uso único que separa o usuário da aplicação do dono do banco (menor privilégio): reescreve o .env movendo o DATABASE_URL original para DATABASE_URL_ADMIN e criando um novo DATABASE_URL com o usuário quickmast_app e uma senha aleatória, sem mostrar senhas no tela."
+    },
+    "file:firmware/quickmast_esp8266/quickmast_esp8266.ino": {
+      "name": "quickmast_esp8266.ino",
+      "type": "file",
+      "summary": "Firmware do medidor de condutividade (NodeMCU/ESP8266): lê o sensor TDS no A0, conduz o teste dos 4 tetos pelo Monitor Série ou pela página /ubere via GET /read, calcula o diagnóstico de mastite com as mesmas regras do servidor e envia os testes à API do QuickMast com sessão por cookie e fila circular em RAM."
+    },
+    "file:frontend/src/landing.css": {
+      "name": "landing.css",
+      "type": "file",
+      "summary": "Estilos da landing page sem sessão: hero preso ao tela com trilho de scroll de 500svh, véu sobre a cena 3D, manchetes que sobem por máscaras, medidor de scroll de 00 a 100, tela de abertura, rodapé e ajustes para tela em pé e tela baixo. Reaproveita as variáveis do quickmast.css."
+    },
+    "file:frontend/vite.config.ts": {
+      "name": "vite.config.ts",
+      "type": "file",
+      "summary": "Configuração do Vite para a landing React: build em stetic/landing com base relativa, alvo es2022 e entrada em src/main.tsx, mais um plugin que gera o parcial Jinja templates/_landing_assets.html com os nomes (com hash) dos arquivos do build."
+    },
+    "file:gunicorn.conf.py": {
+      "name": "gunicorn.conf.py",
+      "type": "file",
+      "summary": "Configuração do gunicorn em produção: escuta só em 127.0.0.1:8000 atrás do Nginx, usa 1 worker com 8 threads (o contador de tentativas falhadas vive na memória), timeouts de 30 s, limites de linha e campos de cabeçalho e logs em stdout."
+    },
+    "config:requirements.in": {
+      "name": "requirements.in",
+      "type": "config",
+      "summary": "Lista das dependências Python diretas com versões fixas (Flask, Werkzeug, SQLAlchemy, psycopg2, python-dotenv, gunicorn, pyotp, segno); o requirements.txt com hashes é gerado a partir dela com pip-compile."
+    },
+    "file:servicos/mfa.py": {
+      "name": "mfa.py",
+      "type": "file",
+      "summary": "Serviço de verificação em dois passos (TOTP, RFC 6238): gera o segredo, produz o QR code como data URI SVG, formata o segredo para digitação manual e valida códigos de 6 dígitos com tolerância de ±30 s e proteção contra reuso."
+    },
+    "document:servicos/senhas_comuns.txt": {
+      "name": "senhas_comuns.txt",
+      "type": "document",
+      "summary": "Arquivo de dados com cerca de 10 mil senhas comuns, uma por linha, usado como lista de bloqueio para recusar senhas fáceis de adivinhar; consumido por servicos/senhas.py."
+    },
+    "file:stetic/css/quickmast.css": {
+      "name": "quickmast.css",
+      "type": "file",
+      "summary": "Folha de estilo principal do app, pensada para celular: declara a fonte Inter local, as variáveis de design e os componentes (ícones de estado, botões, campos, banners, barra superior, cartões), o úbere 2x2 com os estados dos tetos, legenda, medição ao vivo, histórico, usuários, painel de estatísticas e linha do tempo da vaca."
+    },
+    "document:stetic/fonts/OFL.txt": {
+      "name": "OFL.txt",
+      "type": "document",
+      "summary": "Texto da licença SIL Open Font License 1.1 da fonte Inter (Inter Project Authors), distribuída em stetic/fonts e declarada via @font-face no quickmast.css."
+    },
+    "file:stetic/js/componentes.js": {
+      "name": "componentes.js",
+      "type": "file",
+      "summary": "Biblioteca de componentes DOM criados em JavaScript (criar, icone, banner, limparBanner, formatarData, itemHistorico), partilhada pelas páginas ubere, painel, usuarios e vaca; usa textContent para nunca injetar HTML."
+    },
+    "file:stetic/js/formularios.js": {
+      "name": "formularios.js",
+      "type": "file",
+      "summary": "Comportamento dos formulários de entrada, conta e MFA: botão mostrar/ocultar senha com aria-pressed, estado \"a enviar\" que impede duplo envio, restauração ao voltar pela cache e botão de copiar a chave do MFA com alternativa execCommand."
+    },
+    "file:stetic/js/login.js": {
+      "name": "login.js",
+      "type": "file",
+      "summary": "Alterna na página de login entre os formulários \"Entrar\" e \"Criar conta\" (este só existe quando o registro público está ligado)."
+    },
+    "file:stetic/js/movimento.js": {
+      "name": "movimento.js",
+      "type": "file",
+      "summary": "Movimento e retorno ao toque partilhados por todas as páginas (carregado no base.html): contagem animada de números, vibração, reinício de animações, entrada em cascata de listas e inclinação 3D que segue o mouse, tudo respeitando prefers-reduced-motion."
+    },
+    "file:stetic/js/painel.js": {
+      "name": "painel.js",
+      "type": "file",
+      "summary": "Script do painel de estatísticas: lê GET /api/estatisticas, anima as médias de temperatura e condutividade, pinta o mapa dos quatro tetos pela intensidade relativa de suspeitas e mostra o detalhe do teto tocado."
+    },
+    "file:stetic/js/ubere.js": {
+      "name": "ubere.js",
+      "type": "file",
+      "summary": "Script da página principal /ubere que conduz o teste de mastite no navegador: captura a condutividade teto a teto via GET /read com leitura ao vivo e mini-gráfico, envia as 4 leituras a POST /api/testes, mostra o diagnóstico do servidor e gere histórico, estatísticas, sugestões de vacas e procura por brinco."
+    },
+    "file:stetic/js/usuarios.js": {
+      "name": "usuarios.js",
+      "type": "file",
+      "summary": "Script da página de gestão de usuários (admin): lista os usuários em cartões, permite alterar perfil e ativar/desativar por PATCH /api/usuarios/<id> e mostra banner de sucesso ou erro."
+    },
+    "file:stetic/js/vaca.js": {
+      "name": "vaca.js",
+      "type": "file",
+      "summary": "Script da página de histórico de uma vaca: lê GET /api/vacas/<brinco>/testes, desenha a linha do tempo com marcadores sadio/suspeita e mostra o resumo (total de testes, suspeitas e data do último)."
+    }
+  },
+  "edgeTypes": {
+    "contains": 155,
+    "exports": 56,
+    "imports": 50,
+    "depends_on": 68,
+    "calls": 143,
+    "related": 48,
+    "configures": 11,
+    "deploys": 3,
+    "triggers": 4,
+    "documents": 7
+  },
+  "totalNodes": 77,
+  "totalEdges": 545
+}

@@ -1,0 +1,87 @@
+[
+  {
+    "order": 1,
+    "title": "Ponto de entrada: servidor.py",
+    "description": "O servidor.py é o ponto de entrada da aplicação Flask que o Gunicorn serve: carrega o .env, configura logs em JSON, ProxyFix, cookies de sessão e opções como registro, simulador e PLACA_URL, aplica as proteções, registra os blueprints e define os comandos de CLI iniciar, redefinir-mfa e redefinir-senha. Como o README.md traz só o título, é aqui que a jornada começa: este arquivo concentra a fiação de tudo e dá o mapa dos próximos passos. O sistema mede a condutividade dos quatro tetos de uma vaca para apoiar o diagnóstico de mastite.",
+    "nodeIds": ["file:servidor.py"],
+    "languageLesson": "Os comandos de CLI do Flask (registrados no objeto app) permitem expor tarefas administrativas, como redefinir a senha ou o MFA de um usuário, sem criar rotas HTTP. Assim operações sensíveis só ficam disponíveis a quem tem acesso ao servidor."
+  },
+  {
+    "order": 2,
+    "title": "Rotas organizadas em blueprints",
+    "description": "Partindo da fiação do servidor.py, o pacote blueprints/ reúne as rotas em módulos coesos, e registrar_blueprints os registra no app; o blueprint do sensor só entra quando há PLACA_URL ou SIMULADOR_SENSOR. O blueprint paginas entrega as páginas HTML (index, úbere, painel, histórico da vaca e usuários), cujos dados chegam depois via fetch, e o blueprint erros devolve JSON com o código HTTP correto nas rotas /api/. Essa separação mantém a camada de rotas fina e deixa a regra de negócio para os serviços.",
+    "nodeIds": ["file:blueprints/__init__.py", "file:blueprints/paginas.py", "file:blueprints/erros.py"]
+  },
+  {
+    "order": 3,
+    "title": "Sessão e proteções globais",
+    "description": "Antes de qualquer rota rodar, servicos/autenticacao.py resolve o usuário da sessão (invalidando cookies antigos), nega por omissão toda rota fora da lista pública, força o MFA do admin e oferece o decorador exigir_login usado nas páginas do passo anterior. Já servicos/seguranca.py aplica a proteção anti-CSRF por Sec-Fetch-Site/Origin, os cabeçalhos de segurança (CSP, HSTS, nosniff), o log em JSON e a auditoria de eventos com mascaramento de e-mail. Juntos formam a postura de segurança por padrão do projeto.",
+    "nodeIds": ["file:servicos/autenticacao.py", "file:servicos/seguranca.py"],
+    "languageLesson": "Um decorador em Python (como @exigir_login) é uma função que envolve outra para acrescentar comportamento, aqui, exigir sessão válida antes de executar a rota. Ele evita repetir a mesma verificação em cada view."
+  },
+  {
+    "order": 4,
+    "title": "Login, MFA e política de senhas",
+    "description": "O blueprint auth cuida do login por senha, do segundo passo MFA (TOTP), do registro e do logout, aplicando limites de tentativas por IP, e-mail e conta e mitigando open redirect e enumeração de usuários. O blueprint conta permite trocar a senha e ativar a verificação em dois passos, apoiado por servicos/mfa.py (TOTP RFC 6238, QR code em SVG e proteção contra reuso de código) e por servicos/senhas.py (tamanho de 8 a 128 e recusa de senhas comuns). O servicos/limite.py guarda as falhas em memória, o que explica por que a produção usa um único worker.",
+    "nodeIds": ["file:blueprints/auth.py", "file:blueprints/conta.py", "file:servicos/mfa.py", "file:servicos/senhas.py", "file:servicos/limite.py"]
+  },
+  {
+    "order": 5,
+    "title": "API de testes, usuários e utilitários",
+    "description": "O blueprint testes expõe a API REST sob /api: valida o brinco e as 4 leituras, registra o teste com diagnóstico automático, lista com filtros e paginação e entrega estatísticas. O cálculo do diagnóstico fica em servicos/diagnostico.py, com regras puras que comparam cada teto com a mediana dos outros três e espelham a lógica do firmware. O blueprint usuarios gerencia perfis (com regras que protegem o último admin ativo) e o utilitarios traz o health check /saude e a exportação /exportar.csv com proteção contra injeção de fórmulas.",
+    "nodeIds": ["file:blueprints/testes.py", "file:servicos/diagnostico.py", "file:blueprints/usuarios.py", "file:blueprints/utilitarios.py"]
+  },
+  {
+    "order": 6,
+    "title": "Modelos ORM do domínio",
+    "description": "Os modelos SQLAlchemy descrevem o vocabulário do domínio que as rotas e serviços anteriores manipulam: Usuario (perfil, hash de senha, versão de sessão e campos TOTP), Vaca (identificada por brinco único), Teste (sessão de medição dos 4 tetos com diagnóstico) e Leitura (condutividade de um teto, com restrições de unicidade e faixa de 1 a 4). Todos herdam de Base, que concentra o metadata das tabelas, e o modelos/__init__.py os reexporta para que o SQLAlchemy conheça todas as tabelas antes do create_all.",
+    "nodeIds": ["file:modelos/base.py", "file:modelos/usuario.py", "file:modelos/vaca.py", "file:modelos/teste.py", "file:modelos/leitura.py"],
+    "languageLesson": "No SQLAlchemy 2.x, herdar de DeclarativeBase transforma uma classe Python em tabela do banco: cada atributo mapeado vira uma coluna e as relações (como Vaca para Teste, em cascata) viram chaves estrangeiras navegáveis como objetos."
+  },
+  {
+    "order": 7,
+    "title": "DAOs e acesso ao PostgreSQL",
+    "description": "Em dao/banco.py ficam o engine SQLAlchemy criado a partir de DATABASE_URL, a criação e migração das tabelas, o provisionamento do usuário PostgreSQL restrito da aplicação e as consultas de testes, vacas, estatísticas e exportação CSV. O dao/usuario_dao.py cuida das contas, da versão de sessão que invalida cookies e das operações de MFA com proteção anti-replay atômica, devolvendo dicionários sem expor campos internos. O script configurar_banco_app.py aplica o menor privilégio: move o DATABASE_URL original para DATABASE_URL_ADMIN e cria o usuário quickmast_app.",
+    "nodeIds": ["file:dao/banco.py", "file:dao/usuario_dao.py", "file:configurar_banco_app.py"]
+  },
+  {
+    "order": 8,
+    "title": "Templates Jinja e herança de layout",
+    "description": "O base.html define o layout comum (metadados, fonte Inter e blocos de título, estilos, cabeçalho, conteúdo e scripts) que todas as páginas estendem, e o _componentes.html reúne macros reutilizáveis como barra superior, banner, campo de formulário e grade do úbere. O ubere.html é a tela principal, com três fases controladas por data-fase (vaca, medir, resultado), e o painel.html mostra as estatísticas com esqueletos (aria-busy) até os dados da API chegarem. São as páginas entregues pelos blueprints vistos no passo 2.",
+    "nodeIds": ["file:templates/base.html", "file:templates/_componentes.html", "file:templates/ubere.html", "file:templates/painel.html"],
+    "languageLesson": "No Jinja, {% extends %} e {% block %} permitem que cada página herde o layout base e preencha só os trechos que mudam, enquanto {% macro %} funciona como uma função de template para reaproveitar pedaços de HTML."
+  },
+  {
+    "order": 9,
+    "title": "Estáticos em stetic/",
+    "description": "A pasta stetic/ guarda o design system e o JavaScript do navegador. O quickmast.css, pensado para celular, declara a fonte Inter local, as variáveis de design e os componentes, enquanto componentes.js cria elementos DOM com textContent para nunca injetar HTML. O movimento.js (carregado no base.html) cuida de animações respeitando prefers-reduced-motion, e ubere.js e painel.js conduzem o teste via GET /read e POST /api/testes e leem GET /api/estatisticas, fechando o ciclo com a API do passo 5.",
+    "nodeIds": ["file:stetic/css/quickmast.css", "file:stetic/js/componentes.js", "file:stetic/js/movimento.js", "file:stetic/js/ubere.js", "file:stetic/js/painel.js"]
+  },
+  {
+    "order": 10,
+    "title": "Landing page React com cena 3D",
+    "description": "A landing page para visitantes sem sessão é uma aplicação React + Vite em frontend/: o main.tsx monta o componente Landing em #landing, substituindo a versão simples fornecida por templates/index.html. O Landing.tsx troca as manchetes conforme o scroll e carrega a cena 3D de forma tardia, e a UbereScene.tsx desenha em React Three Fiber a placa com quatro tetos e uma sonda que mede cada um. O vite.config.ts gera o build em stetic/landing e o parcial Jinja _landing_assets.html com os nomes (com hash) dos arquivos, ligando o frontend ao Flask.",
+    "nodeIds": ["file:frontend/src/main.tsx", "file:frontend/src/Landing.tsx", "file:frontend/src/three/UbereScene.tsx", "file:frontend/vite.config.ts", "file:templates/_landing_assets.html"],
+    "languageLesson": "No React, React.lazy junto com Suspense adia o download de um componente pesado (aqui, a cena 3D) até ele ser necessário, mantendo a primeira tela leve. É uma técnica de code splitting."
+  },
+  {
+    "order": 11,
+    "title": "Firmware ESP8266 e ponte do sensor",
+    "description": "O firmware do NodeMCU/ESP8266 lê o sensor TDS no pino A0, conduz o teste dos 4 tetos e responde ao GET /read, calcula o diagnóstico de mastite com as mesmas regras de servicos/diagnostico.py e envia os testes à API com sessão por cookie e fila circular em RAM. No lado do servidor, o blueprint sensor repassa a leitura à placa (PLACA_URL fixa ou 'auto', com varredura da rede /24 local), valida a resposta e serializa o acesso com um lock, alimentando o ubere.js do passo 9. Sem placa, o SIMULADOR_SENSOR devolve valores de teste.",
+    "nodeIds": ["file:firmware/quickmast_esp8266/quickmast_esp8266.ino", "file:blueprints/sensor.py"],
+    "languageLesson": "Um sketch Arduino (.ino) gira em torno de duas funções: setup(), executada uma vez ao ligar a placa, e loop(), repetida indefinidamente. Em microcontroladores como o ESP8266, a memória é escassa, por isso estruturas como a fila circular em RAM têm tamanho fixo."
+  },
+  {
+    "order": 12,
+    "title": "Empacotamento, Gunicorn e CI",
+    "description": "O Dockerfile de estágio único (python:3.13.16-slim) instala as dependências com --require-hashes a partir do requirements.txt e roda como usuário sem privilégios, e o docker-compose.yml sobe o PostgreSQL 16.14 (com healthcheck e volume persistente) e, sob o perfil 'app', o servidor para testes com a placa. Em produção, o gunicorn.conf.py escuta só em 127.0.0.1:8000 atrás do Nginx, com 1 worker e 8 threads por causa do limitador em memória do passo 4. O workflow seguranca.yml roda pip-audit, bandit, um teste de arranque com SQLite e o gitleaks a cada push e pull request.",
+    "nodeIds": ["service:Dockerfile", "service:docker-compose.yml", "file:gunicorn.conf.py", "document:requirements.txt", "pipeline:.github/workflows/seguranca.yml"],
+    "languageLesson": "No Docker Compose, 'profiles' deixam serviços opcionais fora do 'docker compose up' padrão, e um healthcheck permite que outros serviços esperem o banco ficar saudável. Já pip install --require-hashes só aceita pacotes cujo hash SHA-256 esteja no requirements.txt, protegendo contra pacotes adulterados."
+  },
+  {
+    "order": 13,
+    "title": "Configuração e scripts de operação",
+    "description": "O .env.example é o modelo comentado da configuração: chaves de sessão, credenciais do PostgreSQL, flags de produção (COOKIE_SEGURO, ATRAS_DE_PROXY, PERMITIR_REGISTO, SIMULADOR_SENSOR, PLACA_URL) e dados do admin inicial, com os segredos vazios para serem preenchidos localmente. O definir_senha_admin.py grava apenas o hash da senha do admin no .env, e o apresentacao.sh e o docker-compose.simulador.yml montam a demonstração com ou sem a placa física. O PROMPT_DEPLOY_GEMINI.md descreve a instalação em TV box sem Docker, com gunicorn sob systemd e Nginx com HTTPS.",
+    "nodeIds": ["config:.env.example", "file:definir_senha_admin.py", "file:apresentacao.sh", "service:docker-compose.simulador.yml", "document:PROMPT_DEPLOY_GEMINI.md"]
+  }
+]

@@ -1,0 +1,10 @@
+{
+  "projectRoot": "/home/edivaldo/PycharmProjects/QuickMast",
+  "batchFiles": [
+    {"path": ".dockerignore", "language": "unknown", "sizeLines": 21, "fileCategory": "infra"},
+    {"path": "Dockerfile", "language": "dockerfile", "sizeLines": 24, "fileCategory": "infra"},
+    {"path": "docker-compose.simulador.yml", "language": "yaml", "sizeLines": 8, "fileCategory": "infra"},
+    {"path": "docker-compose.yml", "language": "yaml", "sizeLines": 53, "fileCategory": "infra"}
+  ],
+  "batchImportData": {".dockerignore":[],"Dockerfile":[],"docker-compose.simulador.yml":[],"docker-compose.yml":[]}
+}

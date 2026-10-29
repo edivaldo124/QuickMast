@@ -1,0 +1,842 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 6,
+  "filesSkipped": [],
+  "filesUnreadable": [],
+  "analysisOutcomes": {
+    "structure": {
+      "succeeded": 6,
+      "failed": 0
+    },
+    "callGraph": {
+      "succeeded": 6,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "results": [
+    {
+      "path": "frontend/src/Landing.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 169,
+      "nonEmptyLines": 152,
+      "functions": [
+        {
+          "name": "classeDaManchete",
+          "startLine": 13,
+          "endLine": 15,
+          "params": [
+            "i",
+            "ativa"
+          ]
+        },
+        {
+          "name": "Landing",
+          "startLine": 17,
+          "endLine": 169,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "Landing",
+          "line": 17,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Landing",
+          "callee": "useState",
+          "lineNumber": 18
+        },
+        {
+          "caller": "Landing",
+          "callee": "useState",
+          "lineNumber": 19
+        },
+        {
+          "caller": "Landing",
+          "callee": "useState",
+          "lineNumber": 20
+        },
+        {
+          "caller": "Landing",
+          "callee": "useState",
+          "lineNumber": 21
+        },
+        {
+          "caller": "Landing",
+          "callee": "useRef",
+          "lineNumber": 22
+        },
+        {
+          "caller": "Landing",
+          "callee": "useRef",
+          "lineNumber": 23
+        },
+        {
+          "caller": "Landing",
+          "callee": "useRef",
+          "lineNumber": 24
+        },
+        {
+          "caller": "Landing",
+          "callee": "useRef",
+          "lineNumber": 25
+        },
+        {
+          "caller": "Landing",
+          "callee": "useReducedMotion",
+          "lineNumber": 26
+        },
+        {
+          "caller": "Landing",
+          "callee": "useScroll",
+          "lineNumber": 29
+        },
+        {
+          "caller": "mostrarProgresso",
+          "callee": "Math.min",
+          "lineNumber": 33
+        },
+        {
+          "caller": "mostrarProgresso",
+          "callee": "Math.max",
+          "lineNumber": 33
+        },
+        {
+          "caller": "mostrarProgresso",
+          "callee": "Math.max",
+          "lineNumber": 34
+        },
+        {
+          "caller": "mostrarProgresso",
+          "callee": "String(Math.round(p * 100)).padStart",
+          "lineNumber": 35
+        },
+        {
+          "caller": "mostrarProgresso",
+          "callee": "String",
+          "lineNumber": 35
+        },
+        {
+          "caller": "mostrarProgresso",
+          "callee": "Math.round",
+          "lineNumber": 35
+        },
+        {
+          "caller": "mostrarProgresso",
+          "callee": "Math.min",
+          "lineNumber": 36
+        },
+        {
+          "caller": "mostrarProgresso",
+          "callee": "Math.floor",
+          "lineNumber": 36
+        },
+        {
+          "caller": "mostrarProgresso",
+          "callee": "setAtiva",
+          "lineNumber": 39
+        },
+        {
+          "caller": "Landing",
+          "callee": "useMotionValueEvent",
+          "lineNumber": 42
+        },
+        {
+          "caller": "Landing",
+          "callee": "useEffect",
+          "lineNumber": 44
+        },
+        {
+          "caller": "Landing",
+          "callee": "mostrarProgresso",
+          "lineNumber": 44
+        },
+        {
+          "caller": "Landing",
+          "callee": "scrollYProgress.get",
+          "lineNumber": 44
+        },
+        {
+          "caller": "Landing",
+          "callee": "useEffect",
+          "lineNumber": 47
+        },
+        {
+          "caller": "Landing",
+          "callee": "document.body.classList.add",
+          "lineNumber": 48
+        },
+        {
+          "caller": "Landing",
+          "callee": "resolve",
+          "lineNumber": 50
+        },
+        {
+          "caller": "Landing",
+          "callee": "window.addEventListener",
+          "lineNumber": 51
+        },
+        {
+          "caller": "Landing",
+          "callee": "resolve",
+          "lineNumber": 51
+        },
+        {
+          "caller": "Landing",
+          "callee": "window.setTimeout",
+          "lineNumber": 53
+        },
+        {
+          "caller": "Landing",
+          "callee": "setPaginaPronta",
+          "lineNumber": 53
+        },
+        {
+          "caller": "Landing",
+          "callee": "Promise.all([pagina, document.fonts?.ready]).then",
+          "lineNumber": 54
+        },
+        {
+          "caller": "Landing",
+          "callee": "Promise.all",
+          "lineNumber": 54
+        },
+        {
+          "caller": "Landing",
+          "callee": "setPaginaPronta",
+          "lineNumber": 54
+        },
+        {
+          "caller": "Landing",
+          "callee": "window.clearTimeout",
+          "lineNumber": 56
+        },
+        {
+          "caller": "Landing",
+          "callee": "document.body.classList.remove",
+          "lineNumber": 57
+        },
+        {
+          "caller": "Landing",
+          "callee": "useEffect",
+          "lineNumber": 61
+        },
+        {
+          "caller": "Landing",
+          "callee": "document.body.classList.remove",
+          "lineNumber": 62
+        },
+        {
+          "caller": "Landing",
+          "callee": "useEffect",
+          "lineNumber": 66
+        },
+        {
+          "caller": "Landing",
+          "callee": "setNoEcra",
+          "lineNumber": 69
+        },
+        {
+          "caller": "Landing",
+          "callee": "observador.observe",
+          "lineNumber": 70
+        },
+        {
+          "caller": "Landing",
+          "callee": "observador.disconnect",
+          "lineNumber": 71
+        },
+        {
+          "caller": "irPara",
+          "callee": "trilho.getBoundingClientRect",
+          "lineNumber": 78
+        },
+        {
+          "caller": "irPara",
+          "callee": "window.scrollTo",
+          "lineNumber": 80
+        },
+        {
+          "caller": "Landing",
+          "callee": "setCenaPronta",
+          "lineNumber": 109
+        },
+        {
+          "caller": "Landing",
+          "callee": "MANCHETES.map",
+          "lineNumber": 123
+        },
+        {
+          "caller": "Landing",
+          "callee": "classeDaManchete",
+          "lineNumber": 124
+        },
+        {
+          "caller": "Landing",
+          "callee": "m.titulo.join",
+          "lineNumber": 124
+        },
+        {
+          "caller": "Landing",
+          "callee": "m.titulo.map",
+          "lineNumber": 130
+        },
+        {
+          "caller": "Landing",
+          "callee": "irPara",
+          "lineNumber": 137
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 1,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "frontend/src/LogoQuickMast.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 15,
+      "nonEmptyLines": 15,
+      "functions": [
+        {
+          "name": "LogoQuickMast",
+          "startLine": 3,
+          "endLine": 15,
+          "params": [
+            "{ className }"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "LogoQuickMast",
+          "line": 3,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "frontend/src/main.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 15,
+      "nonEmptyLines": 14,
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "frontend/src/manchetes.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 33,
+      "nonEmptyLines": 32,
+      "exports": [
+        {
+          "name": "MANCHETES",
+          "line": 12,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "frontend/src/three/UbereScene.tsx",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 293,
+      "nonEmptyLines": 264,
+      "functions": [
+        {
+          "name": "tetoEmLeitura",
+          "startLine": 46,
+          "endLine": 48,
+          "params": [
+            "p"
+          ]
+        },
+        {
+          "name": "estadoDoTeto",
+          "startLine": 51,
+          "endLine": 59,
+          "params": [
+            "n",
+            "p"
+          ]
+        },
+        {
+          "name": "poseEm",
+          "startLine": 71,
+          "endLine": 79,
+          "params": [
+            "p",
+            "alvo"
+          ]
+        },
+        {
+          "name": "criarPlaca",
+          "startLine": 82,
+          "endLine": 105,
+          "params": [
+            "lado",
+            "raio",
+            "espessura",
+            "chanfro"
+          ]
+        },
+        {
+          "name": "Sonda",
+          "startLine": 112,
+          "endLine": 133,
+          "params": [
+            "{ ref }"
+          ]
+        },
+        {
+          "name": "Reflexos",
+          "startLine": 137,
+          "endLine": 153,
+          "params": []
+        },
+        {
+          "name": "Placa",
+          "startLine": 161,
+          "endLine": 267,
+          "params": [
+            "{ progresso, reduzir, aoPrimeiroQuadro }"
+          ]
+        },
+        {
+          "name": "UbereScene",
+          "startLine": 269,
+          "endLine": 293,
+          "params": [
+            "{ progresso, ativa, aoFicarPronta }"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "UbereScene",
+          "line": 269,
+          "isDefault": true
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "tetoEmLeitura",
+          "callee": "Math.min",
+          "lineNumber": 47
+        },
+        {
+          "caller": "tetoEmLeitura",
+          "callee": "Math.max",
+          "lineNumber": 47
+        },
+        {
+          "caller": "tetoEmLeitura",
+          "callee": "Math.floor",
+          "lineNumber": 47
+        },
+        {
+          "caller": "estadoDoTeto",
+          "callee": "tetoEmLeitura",
+          "lineNumber": 54
+        },
+        {
+          "caller": "poseEm",
+          "callee": "Math.min",
+          "lineNumber": 72
+        },
+        {
+          "caller": "poseEm",
+          "callee": "Math.max",
+          "lineNumber": 72
+        },
+        {
+          "caller": "poseEm",
+          "callee": "Math.min",
+          "lineNumber": 73
+        },
+        {
+          "caller": "poseEm",
+          "callee": "Math.floor",
+          "lineNumber": 73
+        },
+        {
+          "caller": "poseEm",
+          "callee": "alvo.set",
+          "lineNumber": 78
+        },
+        {
+          "caller": "criarPlaca",
+          "callee": "forma.moveTo",
+          "lineNumber": 86
+        },
+        {
+          "caller": "criarPlaca",
+          "callee": "forma.lineTo",
+          "lineNumber": 87
+        },
+        {
+          "caller": "criarPlaca",
+          "callee": "forma.absarc",
+          "lineNumber": 88
+        },
+        {
+          "caller": "criarPlaca",
+          "callee": "forma.lineTo",
+          "lineNumber": 89
+        },
+        {
+          "caller": "criarPlaca",
+          "callee": "forma.absarc",
+          "lineNumber": 90
+        },
+        {
+          "caller": "criarPlaca",
+          "callee": "forma.lineTo",
+          "lineNumber": 91
+        },
+        {
+          "caller": "criarPlaca",
+          "callee": "forma.absarc",
+          "lineNumber": 92
+        },
+        {
+          "caller": "criarPlaca",
+          "callee": "forma.lineTo",
+          "lineNumber": 93
+        },
+        {
+          "caller": "criarPlaca",
+          "callee": "forma.absarc",
+          "lineNumber": 94
+        },
+        {
+          "caller": "criarPlaca",
+          "callee": "geometria.center",
+          "lineNumber": 103
+        },
+        {
+          "caller": "criarPlaca",
+          "callee": "toCreasedNormals",
+          "lineNumber": 104
+        },
+        {
+          "caller": "Reflexos",
+          "callee": "useThree",
+          "lineNumber": 138
+        },
+        {
+          "caller": "Reflexos",
+          "callee": "useEffect",
+          "lineNumber": 139
+        },
+        {
+          "caller": "Reflexos",
+          "callee": "gerador.fromScene",
+          "lineNumber": 142
+        },
+        {
+          "caller": "Reflexos",
+          "callee": "mapa.dispose",
+          "lineNumber": 147
+        },
+        {
+          "caller": "Reflexos",
+          "callee": "gerador.dispose",
+          "lineNumber": 148
+        },
+        {
+          "caller": "Reflexos",
+          "callee": "estudio.dispose",
+          "lineNumber": 149
+        },
+        {
+          "caller": "Placa",
+          "callee": "useRef",
+          "lineNumber": 162
+        },
+        {
+          "caller": "Placa",
+          "callee": "useRef",
+          "lineNumber": 163
+        },
+        {
+          "caller": "Placa",
+          "callee": "useRef",
+          "lineNumber": 164
+        },
+        {
+          "caller": "Placa",
+          "callee": "useRef",
+          "lineNumber": 165
+        },
+        {
+          "caller": "Placa",
+          "callee": "useRef",
+          "lineNumber": 166
+        },
+        {
+          "caller": "Placa",
+          "callee": "useRef",
+          "lineNumber": 167
+        },
+        {
+          "caller": "Placa",
+          "callee": "useRef",
+          "lineNumber": 168
+        },
+        {
+          "caller": "Placa",
+          "callee": "useMemo",
+          "lineNumber": 170
+        },
+        {
+          "caller": "Placa",
+          "callee": "criarPlaca",
+          "lineNumber": 170
+        },
+        {
+          "caller": "Placa",
+          "callee": "useMemo",
+          "lineNumber": 171
+        },
+        {
+          "caller": "Placa",
+          "callee": "useEffect",
+          "lineNumber": 172
+        },
+        {
+          "caller": "Placa",
+          "callee": "geometriaPlaca.dispose",
+          "lineNumber": 173
+        },
+        {
+          "caller": "Placa",
+          "callee": "geometriaTeto.dispose",
+          "lineNumber": 174
+        },
+        {
+          "caller": "Placa",
+          "callee": "useMemo",
+          "lineNumber": 178
+        },
+        {
+          "caller": "Placa",
+          "callee": "window.matchMedia",
+          "lineNumber": 178
+        },
+        {
+          "caller": "Placa",
+          "callee": "useMemo",
+          "lineNumber": 179
+        },
+        {
+          "caller": "Placa",
+          "callee": "useFrame",
+          "lineNumber": 181
+        },
+        {
+          "caller": "Placa",
+          "callee": "progresso.get",
+          "lineNumber": 182
+        },
+        {
+          "caller": "Placa",
+          "callee": "Math.min",
+          "lineNumber": 189
+        },
+        {
+          "caller": "Placa",
+          "callee": "Math.min",
+          "lineNumber": 190
+        },
+        {
+          "caller": "Placa",
+          "callee": "Math.sin",
+          "lineNumber": 191
+        },
+        {
+          "caller": "Placa",
+          "callee": "rig.current.scale.setScalar",
+          "lineNumber": 192
+        },
+        {
+          "caller": "Placa",
+          "callee": "rig.current.position.set",
+          "lineNumber": 193
+        },
+        {
+          "caller": "Placa",
+          "callee": "alvo.rotacao.set",
+          "lineNumber": 196
+        },
+        {
+          "caller": "Placa",
+          "callee": "poseEm",
+          "lineNumber": 198
+        },
+        {
+          "caller": "Placa",
+          "callee": "easing.dampE",
+          "lineNumber": 204
+        },
+        {
+          "caller": "Placa",
+          "callee": "easing.dampC",
+          "lineNumber": 209
+        },
+        {
+          "caller": "Placa",
+          "callee": "easing.damp",
+          "lineNumber": 210
+        },
+        {
+          "caller": "Placa",
+          "callee": "materiaisTeto.current.forEach",
+          "lineNumber": 212
+        },
+        {
+          "caller": "Placa",
+          "callee": "estadoDoTeto",
+          "lineNumber": 214
+        },
+        {
+          "caller": "Placa",
+          "callee": "easing.dampC",
+          "lineNumber": 215
+        },
+        {
+          "caller": "Placa",
+          "callee": "material.emissive.copy",
+          "lineNumber": 216
+        },
+        {
+          "caller": "Placa",
+          "callee": "Math.sin",
+          "lineNumber": 217
+        },
+        {
+          "caller": "Placa",
+          "callee": "easing.damp",
+          "lineNumber": 219
+        },
+        {
+          "caller": "Placa",
+          "callee": "tetoEmLeitura",
+          "lineNumber": 224
+        },
+        {
+          "caller": "Placa",
+          "callee": "alvo.posicao.set(teto.x, teto.y, PONTA_Z).addScaledVector",
+          "lineNumber": 227
+        },
+        {
+          "caller": "Placa",
+          "callee": "alvo.posicao.set",
+          "lineNumber": 227
+        },
+        {
+          "caller": "Placa",
+          "callee": "easing.damp3",
+          "lineNumber": 228
+        },
+        {
+          "caller": "Placa",
+          "callee": "easing.damp3",
+          "lineNumber": 229
+        },
+        {
+          "caller": "Placa",
+          "callee": "easing.damp3",
+          "lineNumber": 232
+        },
+        {
+          "caller": "Placa",
+          "callee": "aoPrimeiroQuadro",
+          "lineNumber": 236
+        },
+        {
+          "caller": "Placa",
+          "callee": "TETOS.map",
+          "lineNumber": 246
+        },
+        {
+          "caller": "UbereScene",
+          "callee": "useReducedMotion",
+          "lineNumber": 270
+        },
+        {
+          "caller": "UbereScene",
+          "callee": "useState",
+          "lineNumber": 272
+        },
+        {
+          "caller": "UbereScene",
+          "callee": "setNitida",
+          "lineNumber": 283
+        },
+        {
+          "caller": "UbereScene",
+          "callee": "setNitida",
+          "lineNumber": 283
+        },
+        {
+          "caller": "UbereScene",
+          "callee": "setNitida",
+          "lineNumber": 283
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 1,
+        "functionCount": 8,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "frontend/src/tokens.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 13,
+      "nonEmptyLines": 13,
+      "exports": [
+        {
+          "name": "cores",
+          "line": 3,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    }
+  ]
+}

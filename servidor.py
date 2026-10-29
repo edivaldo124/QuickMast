@@ -8,6 +8,7 @@ import click
 from dotenv import load_dotenv
 from flask import Flask
 from werkzeug.middleware.proxy_fix import ProxyFix
+from werkzeug.security import generate_password_hash
 
 # Lê o .env antes dos imports abaixo: o dao.banco usa DATABASE_URL logo ao ser importado
 load_dotenv(os.path.join(os.path.dirname(os.path.abspath(__file__)), '.env'))
@@ -16,6 +17,7 @@ from blueprints import registrar_blueprints
 from dao import banco, usuario_dao
 from servicos.autenticacao import garantir_admin, negar_por_omissao
 from servicos.seguranca import FormatoJSON, configurar_seguranca, mascarar_email
+from servicos.senhas import problema_senha
 
 # Modo debug só no seu PC (FLASK_DEBUG=1): o depurador do Werkzeug executa código Python
 DEBUG = os.environ.get('FLASK_DEBUG') == '1'
@@ -98,6 +100,35 @@ def redefinir_mfa(email):
     logging.getLogger('quickmast.seguranca').warning('mfa_redefinido email=%s (linha de comandos)',
                                                      mascarar_email(email))
     click.echo('Verificação em dois passos apagada e sessões terminadas. Configure-a no próximo login.')
+
+
+@app.cli.command('redefinir-senha')
+@click.argument('email')
+def redefinir_senha(email):
+    """Troca a senha de uma conta que já existe (ex.: o admin, depois de mudar o ADMIN_SENHA_HASH:
+    o garantir_admin só usa esse hash ao criar a conta, nunca a atualiza).
+    Uso: flask --app servidor redefinir-senha EMAIL. Pede a senha no terminal; as sessões abertas terminam."""
+    email = email.strip().lower()
+    u = usuario_dao.obter_por_email(email)
+    if u is None:
+        raise click.ClickException('Não há nenhum utilizador com esse email.')
+    nome_email = email.split('@')[0]
+    while True:
+        senha = click.prompt('Nova senha', hide_input=True, confirmation_prompt='Repita a senha')
+        erro = problema_senha(senha, email)
+        if erro is None:
+            break
+        click.echo(erro, err=True)
+        click.echo('Recusadas: palavras comuns, mesmo com números ou símbolos no fim (quickmast2026, admin123); '
+                   'uma senha que repete só 1 ou 2 caracteres'
+                   + (f"; e qualquer senha que contenha '{nome_email}' (a parte do email antes do @)"
+                      if len(nome_email) >= 4 else '')
+                   + '.\nCostuma passar: 3 palavras sem relação, separadas por hífen, ou 12+ caracteres misturados.',
+                   err=True)
+    usuario_dao.alterar_senha(u['id'], generate_password_hash(senha))
+    logging.getLogger('quickmast.seguranca').warning('senha_redefinida email=%s (linha de comandos)',
+                                                     mascarar_email(email))
+    click.echo('Senha trocada e sessões terminadas.')
 
 
 if __name__ == '__main__':

@@ -1,0 +1,92 @@
+{
+  "nodes": [
+    {
+      "id": "file:frontend/index.html",
+      "type": "file",
+      "name": "index.html",
+      "filePath": "frontend/index.html",
+      "summary": "Página HTML usada só no `npm run dev` do Vite para visualizar a landing sem o Flask; monta a ilha React em #landing, carrega /src/main.tsx como módulo e reaproveita o CSS global quickmast.css. Em produção quem serve a página é templates/index.html.",
+      "tags": ["entry-point", "html", "landing-page", "vite", "desenvolvimento"],
+      "complexity": "simple",
+      "languageNotes": "O comentário no próprio HTML deixa claro que é um shell apenas de desenvolvimento; as classes BEM (corpo--landing, pagina--landing) espelham as do template Jinja de produção."
+    },
+    {
+      "id": "config:frontend/package.json",
+      "type": "config",
+      "name": "package.json",
+      "filePath": "frontend/package.json",
+      "summary": "Manifesto npm do frontend quickmast-frontend (ESM, Node >=22.13): define os scripts dev/typecheck/build e as dependências da landing em React 19 com cena 3D (three, @react-three/fiber, drei, maath, motion), além de Vite, plugin React e TypeScript como devDependencies.",
+      "tags": ["configuration", "build-system", "npm", "react", "dependencies"],
+      "complexity": "simple",
+      "languageNotes": "Versões fixadas sem prefixo ^ ou ~ (pinning exato); o build roda tsc --noEmit antes do vite build, e a saída vai para stetic/landing e templates/_landing_assets.html."
+    },
+    {
+      "id": "config:frontend/tsconfig.json",
+      "type": "config",
+      "name": "tsconfig.json",
+      "filePath": "frontend/tsconfig.json",
+      "summary": "Configuração do compilador TypeScript do frontend: modo strict, target ES2022, moduleResolution bundler, JSX react-jsx e noEmit (o Vite faz o bundling), restrita ao diretório src com tipos do vite/client.",
+      "tags": ["configuration", "typescript", "build-system", "strict-mode"],
+      "complexity": "simple",
+      "languageNotes": "verbatimModuleSyntax e isolatedModules exigem imports de tipo explícitos (import type), compatíveis com o transpile por arquivo do Vite."
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:frontend/index.html",
+      "target": "file:frontend/src/main.tsx",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:frontend/index.html",
+      "target": "file:stetic/css/quickmast.css",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:frontend/index.html",
+      "target": "file:templates/index.html",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "config:frontend/package.json",
+      "target": "file:frontend/src/main.tsx",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:frontend/package.json",
+      "target": "file:frontend/vite.config.ts",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:frontend/package.json",
+      "target": "file:frontend/index.html",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:frontend/tsconfig.json",
+      "target": "file:frontend/src/main.tsx",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:frontend/tsconfig.json",
+      "target": "file:frontend/vite.config.ts",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

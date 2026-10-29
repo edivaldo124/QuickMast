@@ -1,0 +1,380 @@
+{
+  "projectRoot": "/home/edivaldo/PycharmProjects/QuickMast",
+  "files": [
+    {
+      "path": ".dockerignore",
+      "language": "unknown",
+      "fileCategory": "infra"
+    },
+    {
+      "path": ".env.example",
+      "language": "config",
+      "fileCategory": "config"
+    },
+    {
+      "path": ".github/workflows/seguranca.yml",
+      "language": "yaml",
+      "fileCategory": "infra"
+    },
+    {
+      "path": ".ua/config.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": "CLAUDE.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "Dockerfile",
+      "language": "dockerfile",
+      "fileCategory": "infra"
+    },
+    {
+      "path": "PROMPT_DEPLOY_GEMINI.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "README.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "apresentacao.sh",
+      "language": "shell",
+      "fileCategory": "script"
+    },
+    {
+      "path": "blueprints/__init__.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "blueprints/auth.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "blueprints/conta.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "blueprints/erros.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "blueprints/paginas.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "blueprints/sensor.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "blueprints/testes.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "blueprints/usuarios.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "blueprints/utilitarios.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "configurar_banco_app.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "dao/banco.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "dao/usuario_dao.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "definir_senha_admin.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "docker-compose.simulador.yml",
+      "language": "yaml",
+      "fileCategory": "infra"
+    },
+    {
+      "path": "docker-compose.yml",
+      "language": "yaml",
+      "fileCategory": "infra"
+    },
+    {
+      "path": "firmware/quickmast_esp8266/quickmast_esp8266.ino",
+      "language": "ino",
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/index.html",
+      "language": "html",
+      "fileCategory": "markup"
+    },
+    {
+      "path": "frontend/package.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": "frontend/src/Landing.tsx",
+      "language": "typescript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/LogoQuickMast.tsx",
+      "language": "typescript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/landing.css",
+      "language": "css",
+      "fileCategory": "markup"
+    },
+    {
+      "path": "frontend/src/main.tsx",
+      "language": "typescript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/manchetes.ts",
+      "language": "typescript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/three/UbereScene.tsx",
+      "language": "typescript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/src/tokens.ts",
+      "language": "typescript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "frontend/tsconfig.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": "frontend/vite.config.ts",
+      "language": "typescript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "gunicorn.conf.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "modelos/__init__.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "modelos/base.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "modelos/leitura.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "modelos/teste.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "modelos/usuario.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "modelos/vaca.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "requirements.in",
+      "language": "in",
+      "fileCategory": "code"
+    },
+    {
+      "path": "requirements.txt",
+      "language": "txt",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "servicos/autenticacao.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "servicos/diagnostico.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "servicos/limite.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "servicos/mfa.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "servicos/seguranca.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "servicos/senhas.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "servicos/senhas_comuns.txt",
+      "language": "txt",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "servidor.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "skills-lock.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": "stetic/css/quickmast.css",
+      "language": "css",
+      "fileCategory": "markup"
+    },
+    {
+      "path": "stetic/fonts/OFL.txt",
+      "language": "txt",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "stetic/js/componentes.js",
+      "language": "javascript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "stetic/js/formularios.js",
+      "language": "javascript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "stetic/js/login.js",
+      "language": "javascript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "stetic/js/movimento.js",
+      "language": "javascript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "stetic/js/painel.js",
+      "language": "javascript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "stetic/js/ubere.js",
+      "language": "javascript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "stetic/js/usuarios.js",
+      "language": "javascript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "stetic/js/vaca.js",
+      "language": "javascript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "templates/_componentes.html",
+      "language": "html",
+      "fileCategory": "markup"
+    },
+    {
+      "path": "templates/_landing_assets.html",
+      "language": "html",
+      "fileCategory": "markup"
+    },
+    {
+      "path": "templates/base.html",
+      "language": "html",
+      "fileCategory": "markup"
+    },
+    {
+      "path": "templates/conta.html",
+      "language": "html",
+      "fileCategory": "markup"
+    },
+    {
+      "path": "templates/index.html",
+      "language": "html",
+      "fileCategory": "markup"
+    },
+    {
+      "path": "templates/login.html",
+      "language": "html",
+      "fileCategory": "markup"
+    },
+    {
+      "path": "templates/mfa.html",
+      "language": "html",
+      "fileCategory": "markup"
+    },
+    {
+      "path": "templates/painel.html",
+      "language": "html",
+      "fileCategory": "markup"
+    },
+    {
+      "path": "templates/ubere.html",
+      "language": "html",
+      "fileCategory": "markup"
+    },
+    {
+      "path": "templates/usuarios.html",
+      "language": "html",
+      "fileCategory": "markup"
+    },
+    {
+      "path": "templates/vaca.html",
+      "language": "html",
+      "fileCategory": "markup"
+    }
+  ]
+}

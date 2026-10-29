@@ -1,0 +1,1013 @@
+{
+ "nodes": [
+  {
+   "id": "file:templates/_componentes.html",
+   "type": "file",
+   "name": "_componentes.html",
+   "filePath": "templates/_componentes.html",
+   "summary": "Biblioteca de macros Jinja reutilizáveis (logo, barra superior, banner, campo de formulário, grelha do úbere, legenda, esqueletos, painel da marca e link de voltar) espelhando a página Componentes do Figma.",
+   "tags": [
+    "jinja",
+    "macros",
+    "componentes",
+    "ui",
+    "acessibilidade"
+   ],
+   "complexity": "moderate",
+   "languageNotes": "Usa macros Jinja2 com {% call %}/caller() para envolver o corpo de um campo, e controlo de espaço em branco com -%} e {%- para gerar HTML limpo."
+  },
+  {
+   "id": "function:templates/_componentes.html:logo_inicio",
+   "type": "function",
+   "name": "logo_inicio",
+   "filePath": "templates/_componentes.html",
+   "lineRange": [
+    6,
+    20
+   ],
+   "summary": "Gera o logotipo do início em SVG inline (placa verde com quatro tetos e o alerta vermelho) para que os tetos possam animar-se um a um e inclinar-se com o rato (data-tilt).",
+   "tags": [
+    "svg",
+    "logotipo",
+    "animacao",
+    "macro"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:templates/_componentes.html:barra",
+   "type": "function",
+   "name": "barra",
+   "filePath": "templates/_componentes.html",
+   "lineRange": [
+    24,
+    35
+   ],
+   "summary": "Barra superior com a marca, o nome/perfil do utilizador (link para a conta), o link Utilizadores visível só para admin e o botão de logout; marca a página atual com aria-current.",
+   "tags": [
+    "navegacao",
+    "cabecalho",
+    "perfil-admin",
+    "macro"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:templates/_componentes.html:banner",
+   "type": "function",
+   "name": "banner",
+   "filePath": "templates/_componentes.html",
+   "lineRange": [
+    38,
+    43
+   ],
+   "summary": "Banner de diagnóstico/mensagem com tipo ok, alerta ou analisando, escolhendo ícone e role ARIA (alert ou status) conforme o tipo.",
+   "tags": [
+    "banner",
+    "feedback",
+    "acessibilidade",
+    "macro"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:templates/_componentes.html:campo",
+   "type": "function",
+   "name": "campo",
+   "filePath": "templates/_componentes.html",
+   "lineRange": [
+    47,
+    52
+   ],
+   "summary": "Envolve um controlo de formulário com rótulo associado por for/id; o corpo do input é injetado via caller() do {% call %}.",
+   "tags": [
+    "formulario",
+    "campo",
+    "caller",
+    "macro"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:templates/_componentes.html:ubere",
+   "type": "function",
+   "name": "ubere",
+   "filePath": "templates/_componentes.html",
+   "lineRange": [
+    55,
+    66
+   ],
+   "summary": "Grelha fixa 2x2 do úbere com os quatro tetos (AE, AD, PE, PD) e o atributo data-teto que corresponde à ordem de medição do firmware.",
+   "tags": [
+    "ubere",
+    "tetos",
+    "firmware",
+    "macro"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:templates/_componentes.html:legenda",
+   "type": "function",
+   "name": "legenda",
+   "filePath": "templates/_componentes.html",
+   "lineRange": [
+    69,
+    76
+   ],
+   "summary": "Legenda dos estados de um teto: não medido, a ler, sadio e suspeita.",
+   "tags": [
+    "legenda",
+    "estados",
+    "macro"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:templates/_componentes.html:esqueletos",
+   "type": "function",
+   "name": "esqueletos",
+   "filePath": "templates/_componentes.html",
+   "lineRange": [
+    79,
+    81
+   ],
+   "summary": "Gera n itens de lista esqueleto (placeholders de carregamento) enquanto a API ainda não respondeu.",
+   "tags": [
+    "skeleton",
+    "carregamento",
+    "macro"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:templates/_componentes.html:marca_entrada",
+   "type": "function",
+   "name": "marca_entrada",
+   "filePath": "templates/_componentes.html",
+   "lineRange": [
+    84,
+    90
+   ],
+   "summary": "Painel lateral da marca (logo, nome e slogan) exibido no desktop ao lado dos formulários de entrada, criação de conta e código MFA.",
+   "tags": [
+    "marca",
+    "entrada",
+    "layout",
+    "macro"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:templates/_componentes.html:voltar",
+   "type": "function",
+   "name": "voltar",
+   "filePath": "templates/_componentes.html",
+   "lineRange": [
+    92,
+    94
+   ],
+   "summary": "Link de texto com seta que volta à página de medições (/ubere).",
+   "tags": [
+    "navegacao",
+    "link",
+    "macro"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:templates/_landing_assets.html",
+   "type": "file",
+   "name": "_landing_assets.html",
+   "filePath": "templates/_landing_assets.html",
+   "summary": "Macros que injetam o CSS e o JS (com hash no nome) gerados pelo build do Vite para a landing page React; ficheiro gerado, não deve ser editado à mão.",
+   "tags": [
+    "gerado",
+    "vite",
+    "landing",
+    "assets",
+    "jinja"
+   ],
+   "complexity": "simple",
+   "languageNotes": "Ficheiro gerado por frontend/vite.config.ts: os nomes dos bundles levam hash de conteúdo, por isso mudam a cada npm run build."
+  },
+  {
+   "id": "function:templates/_landing_assets.html:estilos",
+   "type": "function",
+   "name": "estilos",
+   "filePath": "templates/_landing_assets.html",
+   "lineRange": [
+    2,
+    4
+   ],
+   "summary": "Devolve a tag <link> para o CSS da landing gerado pelo Vite.",
+   "tags": [
+    "css",
+    "landing",
+    "macro"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:templates/_landing_assets.html:scripts",
+   "type": "function",
+   "name": "scripts",
+   "filePath": "templates/_landing_assets.html",
+   "lineRange": [
+    5,
+    7
+   ],
+   "summary": "Devolve a tag <script type=module> do bundle JS da landing React.",
+   "tags": [
+    "javascript",
+    "landing",
+    "macro"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:templates/base.html",
+   "type": "file",
+   "name": "base.html",
+   "filePath": "templates/base.html",
+   "summary": "Layout base Jinja com doctype, metadados, ícones, pré-carga da fonte Inter, folha de estilos global e blocos (título, estilos, cabeçalho, conteúdo, scripts) que todas as páginas estendem.",
+   "tags": [
+    "layout",
+    "template-base",
+    "jinja",
+    "heranca"
+   ],
+   "complexity": "simple",
+   "languageNotes": "Template de herança Jinja2: define blocos sobrescritos pelas páginas filhas, incluindo script_base que a landing pode anular."
+  },
+  {
+   "id": "file:templates/conta.html",
+   "type": "file",
+   "name": "conta.html",
+   "filePath": "templates/conta.html",
+   "summary": "Página 'A minha conta' com formulário para trocar a senha e secção de verificação em dois passos (MFA), mostrando se está ativa ou oferecendo o botão para ativar.",
+   "tags": [
+    "pagina",
+    "conta",
+    "senha",
+    "mfa",
+    "formulario"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "file:templates/index.html",
+   "type": "file",
+   "name": "index.html",
+   "filePath": "templates/index.html",
+   "summary": "Página inicial: sem sessão mostra a landing com cena 3D (ilha React montada em #landing, com fallback estático sem JS); com sessão mostra o início com saudação e atalho para as medições.",
+   "tags": [
+    "pagina",
+    "landing",
+    "entry-point",
+    "react",
+    "condicional"
+   ],
+   "complexity": "simple",
+   "languageNotes": "Usa super() e blocos condicionais em {% if usuario %} para trocar tema, estilos, scripts e classes consoante haja sessão ou não."
+  },
+  {
+   "id": "file:templates/login.html",
+   "type": "file",
+   "name": "login.html",
+   "filePath": "templates/login.html",
+   "summary": "Página de entrada com abas Entrar e Criar conta (registo público opcional via config PERMITIR_REGISTO), destacando com aria-invalid o campo em erro e mostrando banner de alerta.",
+   "tags": [
+    "pagina",
+    "login",
+    "autenticacao",
+    "formulario",
+    "acessibilidade"
+   ],
+   "complexity": "moderate",
+   "languageNotes": "Mapeia mensagens de erro para campos usando um dicionário literal Jinja com .get(erro) para marcar aria-invalid no campo certo."
+  },
+  {
+   "id": "file:templates/mfa.html",
+   "type": "file",
+   "name": "mfa.html",
+   "filePath": "templates/mfa.html",
+   "summary": "Página de verificação em dois passos com dois modos: configurar (QR code, chave secreta e confirmação com código de 6 dígitos) e entrar (segundo passo do login).",
+   "tags": [
+    "pagina",
+    "mfa",
+    "autenticacao",
+    "qr-code",
+    "formulario"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "file:templates/painel.html",
+   "type": "file",
+   "name": "painel.html",
+   "filePath": "templates/painel.html",
+   "summary": "Painel de estatísticas com temperatura e condutividade médias e mapa de suspeitas por teto; os números começam como esqueletos (aria-busy) até o painel.js receber os dados da API.",
+   "tags": [
+    "pagina",
+    "painel",
+    "estatisticas",
+    "dashboard",
+    "acessibilidade"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "file:templates/ubere.html",
+   "type": "file",
+   "name": "ubere.html",
+   "filePath": "templates/ubere.html",
+   "summary": "Página principal de medições em três fases (vaca, medir, resultado) controladas por data-fase/data-fases, com leitura ao vivo, úbere 2x2, diagnóstico, histórico, pesquisa e exportação CSV.",
+   "tags": [
+    "pagina",
+    "medicao",
+    "ubere",
+    "fases",
+    "historico"
+   ],
+   "complexity": "moderate",
+   "languageNotes": "As fases da interface são alternadas por CSS/JS via atributo data-fase no body e data-fases em cada bloco."
+  },
+  {
+   "id": "file:templates/usuarios.html",
+   "type": "file",
+   "name": "usuarios.html",
+   "filePath": "templates/usuarios.html",
+   "summary": "Página de administração de utilizadores que mostra uma lista com esqueletos preenchida por usuarios.js; passa o id do utilizador atual ao JS por data-meu-id por causa da CSP.",
+   "tags": [
+    "pagina",
+    "admin",
+    "usuarios",
+    "lista",
+    "csp"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:templates/vaca.html",
+   "type": "file",
+   "name": "vaca.html",
+   "filePath": "templates/vaca.html",
+   "summary": "Página do histórico de uma vaca (por brinco) com resumo e linha do tempo de testes, carregada via API e inicialmente preenchida com eventos esqueleto.",
+   "tags": [
+    "pagina",
+    "vaca",
+    "historico",
+    "linha-do-tempo",
+    "csp"
+   ],
+   "complexity": "simple"
+  }
+ ],
+ "edges": [
+  {
+   "source": "file:templates/_componentes.html",
+   "target": "function:templates/_componentes.html:logo_inicio",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:templates/_componentes.html",
+   "target": "function:templates/_componentes.html:logo_inicio",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:templates/_componentes.html",
+   "target": "function:templates/_componentes.html:barra",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:templates/_componentes.html",
+   "target": "function:templates/_componentes.html:barra",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:templates/_componentes.html",
+   "target": "function:templates/_componentes.html:banner",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:templates/_componentes.html",
+   "target": "function:templates/_componentes.html:banner",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:templates/_componentes.html",
+   "target": "function:templates/_componentes.html:campo",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:templates/_componentes.html",
+   "target": "function:templates/_componentes.html:campo",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:templates/_componentes.html",
+   "target": "function:templates/_componentes.html:ubere",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:templates/_componentes.html",
+   "target": "function:templates/_componentes.html:ubere",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:templates/_componentes.html",
+   "target": "function:templates/_componentes.html:legenda",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:templates/_componentes.html",
+   "target": "function:templates/_componentes.html:legenda",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:templates/_componentes.html",
+   "target": "function:templates/_componentes.html:esqueletos",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:templates/_componentes.html",
+   "target": "function:templates/_componentes.html:esqueletos",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:templates/_componentes.html",
+   "target": "function:templates/_componentes.html:marca_entrada",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:templates/_componentes.html",
+   "target": "function:templates/_componentes.html:marca_entrada",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:templates/_componentes.html",
+   "target": "function:templates/_componentes.html:voltar",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:templates/_componentes.html",
+   "target": "function:templates/_componentes.html:voltar",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:templates/_landing_assets.html",
+   "target": "function:templates/_landing_assets.html:estilos",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:templates/_landing_assets.html",
+   "target": "function:templates/_landing_assets.html:estilos",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:templates/_landing_assets.html",
+   "target": "function:templates/_landing_assets.html:scripts",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:templates/_landing_assets.html",
+   "target": "function:templates/_landing_assets.html:scripts",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:templates/conta.html",
+   "target": "file:templates/base.html",
+   "type": "depends_on",
+   "direction": "forward",
+   "weight": 0.6
+  },
+  {
+   "source": "file:templates/conta.html",
+   "target": "file:templates/_componentes.html",
+   "type": "depends_on",
+   "direction": "forward",
+   "weight": 0.6
+  },
+  {
+   "source": "file:templates/index.html",
+   "target": "file:templates/base.html",
+   "type": "depends_on",
+   "direction": "forward",
+   "weight": 0.6
+  },
+  {
+   "source": "file:templates/index.html",
+   "target": "file:templates/_componentes.html",
+   "type": "depends_on",
+   "direction": "forward",
+   "weight": 0.6
+  },
+  {
+   "source": "file:templates/login.html",
+   "target": "file:templates/base.html",
+   "type": "depends_on",
+   "direction": "forward",
+   "weight": 0.6
+  },
+  {
+   "source": "file:templates/login.html",
+   "target": "file:templates/_componentes.html",
+   "type": "depends_on",
+   "direction": "forward",
+   "weight": 0.6
+  },
+  {
+   "source": "file:templates/mfa.html",
+   "target": "file:templates/base.html",
+   "type": "depends_on",
+   "direction": "forward",
+   "weight": 0.6
+  },
+  {
+   "source": "file:templates/mfa.html",
+   "target": "file:templates/_componentes.html",
+   "type": "depends_on",
+   "direction": "forward",
+   "weight": 0.6
+  },
+  {
+   "source": "file:templates/painel.html",
+   "target": "file:templates/base.html",
+   "type": "depends_on",
+   "direction": "forward",
+   "weight": 0.6
+  },
+  {
+   "source": "file:templates/painel.html",
+   "target": "file:templates/_componentes.html",
+   "type": "depends_on",
+   "direction": "forward",
+   "weight": 0.6
+  },
+  {
+   "source": "file:templates/ubere.html",
+   "target": "file:templates/base.html",
+   "type": "depends_on",
+   "direction": "forward",
+   "weight": 0.6
+  },
+  {
+   "source": "file:templates/ubere.html",
+   "target": "file:templates/_componentes.html",
+   "type": "depends_on",
+   "direction": "forward",
+   "weight": 0.6
+  },
+  {
+   "source": "file:templates/usuarios.html",
+   "target": "file:templates/base.html",
+   "type": "depends_on",
+   "direction": "forward",
+   "weight": 0.6
+  },
+  {
+   "source": "file:templates/usuarios.html",
+   "target": "file:templates/_componentes.html",
+   "type": "depends_on",
+   "direction": "forward",
+   "weight": 0.6
+  },
+  {
+   "source": "file:templates/vaca.html",
+   "target": "file:templates/base.html",
+   "type": "depends_on",
+   "direction": "forward",
+   "weight": 0.6
+  },
+  {
+   "source": "file:templates/vaca.html",
+   "target": "file:templates/_componentes.html",
+   "type": "depends_on",
+   "direction": "forward",
+   "weight": 0.6
+  },
+  {
+   "source": "file:templates/conta.html",
+   "target": "function:templates/_componentes.html:barra",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:templates/conta.html",
+   "target": "function:templates/_componentes.html:voltar",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:templates/conta.html",
+   "target": "function:templates/_componentes.html:banner",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:templates/conta.html",
+   "target": "function:templates/_componentes.html:campo",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:templates/index.html",
+   "target": "function:templates/_componentes.html:logo_inicio",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:templates/login.html",
+   "target": "function:templates/_componentes.html:banner",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:templates/login.html",
+   "target": "function:templates/_componentes.html:campo",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:templates/login.html",
+   "target": "function:templates/_componentes.html:marca_entrada",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:templates/mfa.html",
+   "target": "function:templates/_componentes.html:banner",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:templates/mfa.html",
+   "target": "function:templates/_componentes.html:campo",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:templates/mfa.html",
+   "target": "function:templates/_componentes.html:marca_entrada",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:templates/painel.html",
+   "target": "function:templates/_componentes.html:barra",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:templates/painel.html",
+   "target": "function:templates/_componentes.html:voltar",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:templates/ubere.html",
+   "target": "function:templates/_componentes.html:barra",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:templates/ubere.html",
+   "target": "function:templates/_componentes.html:campo",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:templates/ubere.html",
+   "target": "function:templates/_componentes.html:ubere",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:templates/ubere.html",
+   "target": "function:templates/_componentes.html:legenda",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:templates/ubere.html",
+   "target": "function:templates/_componentes.html:esqueletos",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:templates/usuarios.html",
+   "target": "function:templates/_componentes.html:barra",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:templates/usuarios.html",
+   "target": "function:templates/_componentes.html:voltar",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:templates/usuarios.html",
+   "target": "function:templates/_componentes.html:esqueletos",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:templates/vaca.html",
+   "target": "function:templates/_componentes.html:barra",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:templates/vaca.html",
+   "target": "function:templates/_componentes.html:voltar",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "function:templates/_componentes.html:marca_entrada",
+   "target": "function:templates/_componentes.html:logo_inicio",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:templates/index.html",
+   "target": "file:templates/_landing_assets.html",
+   "type": "depends_on",
+   "direction": "forward",
+   "weight": 0.6
+  },
+  {
+   "source": "file:templates/index.html",
+   "target": "function:templates/_landing_assets.html:estilos",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:templates/index.html",
+   "target": "function:templates/_landing_assets.html:scripts",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:templates/base.html",
+   "target": "file:stetic/css/quickmast.css",
+   "type": "depends_on",
+   "direction": "forward",
+   "weight": 0.6
+  },
+  {
+   "source": "file:templates/base.html",
+   "target": "file:stetic/js/movimento.js",
+   "type": "depends_on",
+   "direction": "forward",
+   "weight": 0.6
+  },
+  {
+   "source": "file:templates/conta.html",
+   "target": "file:stetic/js/formularios.js",
+   "type": "depends_on",
+   "direction": "forward",
+   "weight": 0.6
+  },
+  {
+   "source": "file:templates/login.html",
+   "target": "file:stetic/js/login.js",
+   "type": "depends_on",
+   "direction": "forward",
+   "weight": 0.6
+  },
+  {
+   "source": "file:templates/login.html",
+   "target": "file:stetic/js/formularios.js",
+   "type": "depends_on",
+   "direction": "forward",
+   "weight": 0.6
+  },
+  {
+   "source": "file:templates/mfa.html",
+   "target": "file:stetic/js/formularios.js",
+   "type": "depends_on",
+   "direction": "forward",
+   "weight": 0.6
+  },
+  {
+   "source": "file:templates/painel.html",
+   "target": "file:stetic/js/componentes.js",
+   "type": "depends_on",
+   "direction": "forward",
+   "weight": 0.6
+  },
+  {
+   "source": "file:templates/painel.html",
+   "target": "file:stetic/js/painel.js",
+   "type": "depends_on",
+   "direction": "forward",
+   "weight": 0.6
+  },
+  {
+   "source": "file:templates/ubere.html",
+   "target": "file:stetic/js/componentes.js",
+   "type": "depends_on",
+   "direction": "forward",
+   "weight": 0.6
+  },
+  {
+   "source": "file:templates/ubere.html",
+   "target": "file:stetic/js/ubere.js",
+   "type": "depends_on",
+   "direction": "forward",
+   "weight": 0.6
+  },
+  {
+   "source": "file:templates/usuarios.html",
+   "target": "file:stetic/js/componentes.js",
+   "type": "depends_on",
+   "direction": "forward",
+   "weight": 0.6
+  },
+  {
+   "source": "file:templates/usuarios.html",
+   "target": "file:stetic/js/usuarios.js",
+   "type": "depends_on",
+   "direction": "forward",
+   "weight": 0.6
+  },
+  {
+   "source": "file:templates/vaca.html",
+   "target": "file:stetic/js/componentes.js",
+   "type": "depends_on",
+   "direction": "forward",
+   "weight": 0.6
+  },
+  {
+   "source": "file:templates/vaca.html",
+   "target": "file:stetic/js/vaca.js",
+   "type": "depends_on",
+   "direction": "forward",
+   "weight": 0.6
+  },
+  {
+   "source": "file:templates/_componentes.html",
+   "target": "file:stetic/js/componentes.js",
+   "type": "related",
+   "direction": "forward",
+   "weight": 0.5
+  },
+  {
+   "source": "file:templates/_componentes.html",
+   "target": "file:stetic/js/movimento.js",
+   "type": "related",
+   "direction": "forward",
+   "weight": 0.5
+  },
+  {
+   "source": "file:templates/index.html",
+   "target": "file:frontend/src/main.tsx",
+   "type": "related",
+   "direction": "forward",
+   "weight": 0.5
+  },
+  {
+   "source": "file:templates/_landing_assets.html",
+   "target": "file:frontend/vite.config.ts",
+   "type": "related",
+   "direction": "forward",
+   "weight": 0.5
+  },
+  {
+   "source": "file:templates/index.html",
+   "target": "file:blueprints/paginas.py",
+   "type": "related",
+   "direction": "forward",
+   "weight": 0.5
+  },
+  {
+   "source": "file:templates/ubere.html",
+   "target": "file:blueprints/paginas.py",
+   "type": "related",
+   "direction": "forward",
+   "weight": 0.5
+  },
+  {
+   "source": "file:templates/painel.html",
+   "target": "file:blueprints/paginas.py",
+   "type": "related",
+   "direction": "forward",
+   "weight": 0.5
+  },
+  {
+   "source": "file:templates/vaca.html",
+   "target": "file:blueprints/paginas.py",
+   "type": "related",
+   "direction": "forward",
+   "weight": 0.5
+  },
+  {
+   "source": "file:templates/usuarios.html",
+   "target": "file:blueprints/paginas.py",
+   "type": "related",
+   "direction": "forward",
+   "weight": 0.5
+  },
+  {
+   "source": "file:templates/login.html",
+   "target": "file:blueprints/auth.py",
+   "type": "related",
+   "direction": "forward",
+   "weight": 0.5
+  },
+  {
+   "source": "file:templates/mfa.html",
+   "target": "file:blueprints/auth.py",
+   "type": "related",
+   "direction": "forward",
+   "weight": 0.5
+  },
+  {
+   "source": "file:templates/mfa.html",
+   "target": "file:blueprints/conta.py",
+   "type": "related",
+   "direction": "forward",
+   "weight": 0.5
+  },
+  {
+   "source": "file:templates/conta.html",
+   "target": "file:blueprints/conta.py",
+   "type": "related",
+   "direction": "forward",
+   "weight": 0.5
+  }
+ ]
+}

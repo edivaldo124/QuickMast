@@ -1,0 +1,8 @@
+# Plano B da apresentação: o /read devolve valores de teste (270 a 420), sem a placa.
+# Junta-se ao docker-compose.yml; quem o usa é o ./apresentacao.sh simulador.
+services:
+  app:
+    environment:
+      SIMULADOR_SENSOR: "1"
+      # Vazio de propósito: com PLACA_URL o /read seria repassado à placa em vez de simulado
+      PLACA_URL: ""

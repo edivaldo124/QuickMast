@@ -1,0 +1,146 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 3,
+  "filesSkipped": [
+    ".dockerignore"
+  ],
+  "filesUnreadable": [],
+  "analysisOutcomes": {
+    "structure": {
+      "succeeded": 3,
+      "failed": 0
+    },
+    "callGraph": {
+      "succeeded": 0,
+      "failed": 0,
+      "skipped": 3
+    }
+  },
+  "results": [
+    {
+      "path": "Dockerfile",
+      "language": "dockerfile",
+      "fileCategory": "infra",
+      "totalLines": 24,
+      "nonEmptyLines": 20,
+      "services": [
+        {
+          "name": "python",
+          "image": "python:3.13.16-slim",
+          "ports": [
+            8000
+          ],
+          "startLine": 4,
+          "endLine": 25
+        }
+      ],
+      "steps": [
+        {
+          "name": "FROM python:3.13.16-slim",
+          "startLine": 4,
+          "endLine": 4
+        },
+        {
+          "name": "ENV PYTHONDONTWRITEBYTECODE=1 \\",
+          "startLine": 6,
+          "endLine": 6
+        },
+        {
+          "name": "WORKDIR /app",
+          "startLine": 11,
+          "endLine": 11
+        },
+        {
+          "name": "COPY requirements.txt .",
+          "startLine": 12,
+          "endLine": 12
+        },
+        {
+          "name": "RUN pip install --require-hashes -r requirements.txt",
+          "startLine": 14,
+          "endLine": 14
+        },
+        {
+          "name": "COPY . .",
+          "startLine": 16,
+          "endLine": 16
+        },
+        {
+          "name": "RUN useradd --system --no-create-home quickmast",
+          "startLine": 17,
+          "endLine": 17
+        },
+        {
+          "name": "USER quickmast",
+          "startLine": 18,
+          "endLine": 18
+        },
+        {
+          "name": "EXPOSE 8000",
+          "startLine": 20,
+          "endLine": 20
+        },
+        {
+          "name": "CMD [\"sh\", \"-c\", \"flask --app servidor iniciar && exec gunicorn ",
+          "startLine": 24,
+          "endLine": 24
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "serviceCount": 1,
+        "stepCount": 10
+      }
+    },
+    {
+      "path": "docker-compose.simulador.yml",
+      "language": "yaml",
+      "fileCategory": "infra",
+      "totalLines": 8,
+      "nonEmptyLines": 8,
+      "sections": [
+        {
+          "heading": "services",
+          "level": 1,
+          "line": 3
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 1
+      }
+    },
+    {
+      "path": "docker-compose.yml",
+      "language": "yaml",
+      "fileCategory": "infra",
+      "totalLines": 53,
+      "nonEmptyLines": 51,
+      "sections": [
+        {
+          "heading": "services",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "volumes",
+          "level": 1,
+          "line": 52
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 2
+      }
+    }
+  ]
+}

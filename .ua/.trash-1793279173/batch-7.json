@@ -1,0 +1,246 @@
+{
+  "nodes": [
+    {
+      "id": "config:.env.example",
+      "type": "config",
+      "name": ".env.example",
+      "filePath": ".env.example",
+      "summary": "Modelo comentado do .env do QuickMast, com chaves de sessão, credenciais do PostgreSQL (dono do banco e usuário da aplicação), flags de produção (FLASK_DEBUG, COOKIE_SEGURO, ATRAS_DE_PROXY, PERMITIR_REGISTO, SIMULADOR_SENSOR, PLACA_URL, LOG_JSON) e dados do admin inicial. Os segredos ficam vazios e devem ser preenchidos localmente.",
+      "tags": [
+        "configuration",
+        "environment",
+        "secrets-template",
+        "deployment"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Arquivo no formato dotenv lido pelo python-dotenv e pelo docker compose; o hash da senha do admin deve ficar entre aspas simples porque contém '$'."
+    },
+    {
+      "id": "document:CLAUDE.md",
+      "type": "document",
+      "name": "CLAUDE.md",
+      "filePath": "CLAUDE.md",
+      "summary": "Instruções do projeto para o Claude Code: manda consultar o grafo de conhecimento do graphify (query, path, explain) antes de buscar no código bruto e rodar 'graphify update .' após modificar código.",
+      "tags": [
+        "documentation",
+        "ai-instructions",
+        "graphify",
+        "development"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:PROMPT_DEPLOY_GEMINI.md",
+      "type": "document",
+      "name": "PROMPT_DEPLOY_GEMINI.md",
+      "filePath": "PROMPT_DEPLOY_GEMINI.md",
+      "summary": "Prompt passo a passo para um assistente de IA instalar o QuickMast numa TV box Linux sem Docker: sistema, firewall/SSH, venv com requirements por hash, PostgreSQL nativo, .env, gunicorn sob systemd, Nginx com HTTPS, verificação e operação (atualização, backup, redefinição de MFA).",
+      "tags": [
+        "documentation",
+        "deployment",
+        "runbook",
+        "systemd",
+        "security"
+      ],
+      "complexity": "complex",
+      "languageNotes": "Define regras não negociáveis de segurança: nunca expor segredos no chat, FLASK_DEBUG=0, banco sem superuser e instalação sempre com --require-hashes."
+    },
+    {
+      "id": "document:README.md",
+      "type": "document",
+      "name": "README.md",
+      "filePath": "README.md",
+      "summary": "README mínimo, com apenas o título 'QuickMast' e sem descrição, instruções de instalação ou uso.",
+      "tags": [
+        "documentation",
+        "entry-point",
+        "readme"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:apresentacao.sh",
+      "type": "file",
+      "name": "apresentacao.sh",
+      "filePath": "apresentacao.sh",
+      "summary": "Script Bash para a apresentação do QuickMast no notebook: sobe o banco e o servidor via docker compose, valida o .env, conecta o notebook à rede Wi-Fi da placa ESP8266, oferece modo simulador e confere saúde do servidor, rota /read, placa e contagem de dados no banco.",
+      "tags": [
+        "shell-script",
+        "deployment",
+        "automation",
+        "docker-compose",
+        "health-check"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Usa um 'case' com subcomandos (iniciar, wifi, simulador, status, parar), saída colorida só quando stdout é um terminal e nmcli para gerenciar o Wi-Fi; evita imprimir o conteúdo do .env para não vazar senhas."
+    },
+    {
+      "id": "function:apresentacao.sh:conferir",
+      "type": "function",
+      "name": "conferir",
+      "filePath": "apresentacao.sh",
+      "lineRange": [
+        57,
+        95
+      ],
+      "summary": "Diagnóstico da apresentação: verifica se o servidor responde em /saude, se PLACA_URL ou o simulador está configurado, se a rota /read está ativa, se o registro público está aberto e quantas vacas e testes existem no banco, acumulando a contagem de problemas.",
+      "tags": [
+        "health-check",
+        "diagnostics",
+        "shell-function"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:requirements.txt",
+      "type": "document",
+      "name": "requirements.txt",
+      "filePath": "requirements.txt",
+      "summary": "Dependências Python fixadas e com hashes SHA-256, geradas pelo pip-compile a partir de requirements.in (Python 3.13): Flask, SQLAlchemy, psycopg2-binary, gunicorn, pyotp, segno, python-dotenv e suas dependências transitivas.",
+      "tags": [
+        "dependencies",
+        "python",
+        "pinned-versions",
+        "supply-chain-security",
+        "build-system"
+      ],
+      "complexity": "complex",
+      "languageNotes": "Arquivo gerado por 'pip-compile --generate-hashes'; deve ser instalado com 'pip install --require-hashes' e os hashes nunca devem ser removidos."
+    },
+    {
+      "id": "config:skills-lock.json",
+      "type": "config",
+      "name": "skills-lock.json",
+      "filePath": "skills-lock.json",
+      "summary": "Lockfile de skills do agente: fixa 9 skills de segurança (testes de API, OWASP, pentest, CI) do repositório usestrix/strix com caminho do SKILL.md e hash computado de cada uma.",
+      "tags": [
+        "configuration",
+        "lockfile",
+        "ai-skills",
+        "security"
+      ],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:apresentacao.sh",
+      "target": "function:apresentacao.sh:conferir",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "config:.env.example",
+      "target": "file:servidor.py",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:.env.example",
+      "target": "service:docker-compose.yml",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:.env.example",
+      "target": "file:definir_senha_admin.py",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "config:.env.example",
+      "target": "file:configurar_banco_app.py",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "config:.env.example",
+      "target": "file:firmware/quickmast_esp8266/quickmast_esp8266.ino",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "file:servidor.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:PROMPT_DEPLOY_GEMINI.md",
+      "target": "file:servidor.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:PROMPT_DEPLOY_GEMINI.md",
+      "target": "file:gunicorn.conf.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:PROMPT_DEPLOY_GEMINI.md",
+      "target": "config:.env.example",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:PROMPT_DEPLOY_GEMINI.md",
+      "target": "file:definir_senha_admin.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:PROMPT_DEPLOY_GEMINI.md",
+      "target": "document:requirements.txt",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:apresentacao.sh",
+      "target": "service:docker-compose.yml",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:apresentacao.sh",
+      "target": "service:docker-compose.simulador.yml",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:apresentacao.sh",
+      "target": "config:.env.example",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:apresentacao.sh",
+      "target": "file:firmware/quickmast_esp8266/quickmast_esp8266.ino",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "document:requirements.txt",
+      "target": "config:requirements.in",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

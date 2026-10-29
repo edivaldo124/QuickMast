@@ -1,0 +1,21 @@
+{
+  "fixedSectionOk": true,
+  "nodesRecovered": 0,
+  "edgesRestored": 0,
+  "crossBatchEdgesAdded": 0,
+  "typesRemapped": 0,
+  "complexityRemapped": 0,
+  "notes": [
+    "Seção 'Fixed' vazia: nenhum ID foi corrigido e nenhuma complexidade foi normalizada (0% dos 229 nós), então não há sinal de problema sistêmico na saída dos lotes.",
+    "Seção 'Could not fix' vazia. Conferido direto no assembled-graph.json: 0 nós sem id, 0 IDs duplicados, 0 arestas pendentes, 0 arestas duplicadas por (source, target, type), 0 autoarestas.",
+    "Tipos de nó: todos conhecidos (function 145, file 58, class 7, config 6, service 6, document 6, pipeline 1). O prefixo do ID coincide com o campo type em todos os 229 nós, então nenhum tipo foi remapeado.",
+    "Complexidade: só simple (126), moderate (87) e complex (16). Nenhum valor desconhecido, nada remapeado.",
+    "Cobertura: os 74 arquivos de scan-result.json têm ao menos um nó, e nenhum nó aponta para um filePath fora do scan.",
+    "Arestas entre lotes (importMap): as 50 importações do importMap existem como arestas 'imports' file->file, nenhuma está faltando e nenhuma aresta 'imports' extra existe fora do mapa. Nada foi adicionado.",
+    "As duas correções manuais pré-merge foram preservadas: document:requirements.txt e config:requirements.in existem e estão ligados (Dockerfile, workflow seguranca.yml e PROMPT_DEPLOY_GEMINI.md apontam para o primeiro; requirements.in aponta para servidor.py e servicos/mfa.py com 'configures'). Não foram tocadas.",
+    "Todo function e class tem uma aresta 'contains' vinda de um nó de arquivo.",
+    "Nós órfãos (sem nenhuma aresta): document:CLAUDE.md e config:skills-lock.json. Não foram ligados a nada, porque não há dado do importMap que sustente uma aresta e a regra proíbe arestas especulativas. Podem ser tratados como metadados do ambiente de IA, fora da aplicação.",
+    "Idioma: os resumos seguem em pt-BR, sem resumos em inglês detectados. Há uso de termos do português europeu (utilizador, registo, telemóvel) herdados do próprio código e da UI do projeto; mantidos como estão.",
+    "Todas as 545 arestas têm direction 'forward' e pesos entre 0.5 e 1.0 (0.8: 199, 1.0: 155, 0.6: 83, 0.5: 55, 0.7: 53). Nenhuma anomalia."
+  ]
+}

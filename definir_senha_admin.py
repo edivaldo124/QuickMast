@@ -39,3 +39,5 @@ with open(ENV, 'w') as f:
     f.write('\n'.join(linhas) + '\n')
 os.chmod(ENV, 0o600)
 print('Hash da senha guardado no .env (ADMIN_SENHA_HASH).')
+print('Se a conta do admin já existe no banco, a senha dela NÃO muda por aqui:\n'
+      '  flask --app servidor redefinir-senha EMAIL')

@@ -1,0 +1,1256 @@
+{
+ "nodes": [
+  {
+   "id": "file:dao/banco.py",
+   "type": "file",
+   "name": "banco.py",
+   "filePath": "dao/banco.py",
+   "summary": "Camada de acesso a dados principal: cria o engine SQLAlchemy a partir de DATABASE_URL, cria/migra as tabelas, provisiona o utilizador PostgreSQL restrito da aplicação e expõe as consultas de testes, vacas, estatísticas e exportação CSV.",
+   "tags": [
+    "dao",
+    "banco-de-dados",
+    "sqlalchemy",
+    "migracao",
+    "postgresql"
+   ],
+   "complexity": "complex",
+   "languageNotes": "Usa SQLAlchemy 2.x (select/Session) com migração manual via ALTER TABLE; o módulo falha na importação se DATABASE_URL não estiver definida, e linhas_csv é um gerador com yield_per para streaming."
+  },
+  {
+   "id": "file:dao/usuario_dao.py",
+   "type": "file",
+   "name": "usuario_dao.py",
+   "filePath": "dao/usuario_dao.py",
+   "summary": "DAO de usuários: CRUD de contas, versão de sessão para invalidar cookies, alteração de senha e operações de MFA/TOTP com proteção anti-replay atómica, sempre devolvendo dicionários sem expor campos internos por padrão.",
+   "tags": [
+    "dao",
+    "usuarios",
+    "autenticacao",
+    "mfa",
+    "sessao"
+   ],
+   "complexity": "complex"
+  },
+  {
+   "id": "file:modelos/__init__.py",
+   "type": "file",
+   "name": "__init__.py",
+   "filePath": "modelos/__init__.py",
+   "summary": "Pacote de modelos: importa e reexporta Base, Usuario, Vaca, Teste e Leitura para que o SQLAlchemy conheça todas as tabelas antes do create_all.",
+   "tags": [
+    "barrel",
+    "entry-point",
+    "modelos",
+    "sqlalchemy"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:modelos/base.py",
+   "type": "file",
+   "name": "base.py",
+   "filePath": "modelos/base.py",
+   "summary": "Define a classe Base (DeclarativeBase) da qual todos os modelos ORM herdam e que concentra o metadata das tabelas.",
+   "tags": [
+    "modelos",
+    "sqlalchemy",
+    "base",
+    "orm"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:modelos/leitura.py",
+   "type": "file",
+   "name": "leitura.py",
+   "filePath": "modelos/leitura.py",
+   "summary": "Modelo ORM Leitura (tabela leituras): medição de um teto dentro de um teste, com condutividade, temperatura opcional, flag de suspeita e restrições de unicidade e faixa do teto (1 a 4).",
+   "tags": [
+    "data-model",
+    "orm",
+    "sqlalchemy",
+    "leitura"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:modelos/teste.py",
+   "type": "file",
+   "name": "teste.py",
+   "filePath": "modelos/teste.py",
+   "summary": "Modelo ORM Teste (tabela testes): sessão de medição dos 4 tetos de uma vaca com diagnóstico de mastite, observação e operador opcional, ligada a Vaca, Usuario e Leitura.",
+   "tags": [
+    "data-model",
+    "orm",
+    "sqlalchemy",
+    "teste"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:modelos/usuario.py",
+   "type": "file",
+   "name": "usuario.py",
+   "filePath": "modelos/usuario.py",
+   "summary": "Modelo ORM Usuario (tabela usuarios): conta com perfil (operador, veterinário, admin), hash de senha, versão de sessão e campos TOTP para verificação em dois passos.",
+   "tags": [
+    "data-model",
+    "orm",
+    "usuario",
+    "autenticacao"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "file:modelos/vaca.py",
+   "type": "file",
+   "name": "vaca.py",
+   "filePath": "modelos/vaca.py",
+   "summary": "Modelo ORM Vaca (tabela vacas): animal identificado por brinco único, com relação em cascata para seus testes.",
+   "tags": [
+    "data-model",
+    "orm",
+    "sqlalchemy",
+    "vaca"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:dao/banco.py:_migrar",
+   "type": "function",
+   "name": "_migrar",
+   "filePath": "dao/banco.py",
+   "lineRange": [
+    38,
+    57
+   ],
+   "summary": "Migração manual: adiciona colunas novas ausentes e remove NOT NULL de colunas que passaram a ser opcionais (só no PostgreSQL), pois o create_all não altera tabelas existentes.",
+   "tags": [
+    "migracao",
+    "ddl",
+    "sqlalchemy"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:dao/banco.py:_garantir_utilizador_app",
+   "type": "function",
+   "name": "_garantir_utilizador_app",
+   "filePath": "dao/banco.py",
+   "lineRange": [
+    60,
+    84
+   ],
+   "summary": "Cria ou atualiza a role PostgreSQL do DATABASE_URL com privilégios mínimos (CONNECT, SELECT/INSERT/UPDATE/DELETE), seguindo o princípio do menor privilégio.",
+   "tags": [
+    "seguranca",
+    "postgresql",
+    "privilegio-minimo"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:dao/banco.py:criar_tabela",
+   "type": "function",
+   "name": "criar_tabela",
+   "filePath": "dao/banco.py",
+   "lineRange": [
+    87,
+    99
+   ],
+   "summary": "Cria as tabelas, aplica as migrações e prepara o utilizador da aplicação, usando DATABASE_URL_ADMIN quando disponível; chamada pelo comando de inicialização.",
+   "tags": [
+    "inicializacao",
+    "migracao",
+    "ddl"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:dao/banco.py:verificar_ligacao",
+   "type": "function",
+   "name": "verificar_ligacao",
+   "filePath": "dao/banco.py",
+   "lineRange": [
+    102,
+    109
+   ],
+   "summary": "Executa SELECT 1 e devolve True se o banco responde, usado pelo endpoint de saúde.",
+   "tags": [
+    "health-check",
+    "banco-de-dados",
+    "utilitario"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:dao/banco.py:_teste_para_dict",
+   "type": "function",
+   "name": "_teste_para_dict",
+   "filePath": "dao/banco.py",
+   "lineRange": [
+    113,
+    127
+   ],
+   "summary": "Converte um Teste (com vaca, operador e leituras) em dicionário serializável para JSON.",
+   "tags": [
+    "serializacao",
+    "conversao",
+    "dicionario"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:dao/banco.py:registrar_teste",
+   "type": "function",
+   "name": "registrar_teste",
+   "filePath": "dao/banco.py",
+   "lineRange": [
+    131,
+    155
+   ],
+   "summary": "Grava, numa única transação, a vaca (se nova), o teste e as 4 leituras com o diagnóstico, devolvendo o teste como dicionário.",
+   "tags": [
+    "escrita",
+    "transacao",
+    "teste",
+    "sqlalchemy"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:dao/banco.py:apagar_teste",
+   "type": "function",
+   "name": "apagar_teste",
+   "filePath": "dao/banco.py",
+   "lineRange": [
+    158,
+    165
+   ],
+   "summary": "Remove um teste pelo id e devolve False se ele não existir.",
+   "tags": [
+    "escrita",
+    "delecao",
+    "teste"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:dao/banco.py:_filtros",
+   "type": "function",
+   "name": "_filtros",
+   "filePath": "dao/banco.py",
+   "lineRange": [
+    169,
+    175
+   ],
+   "summary": "Monta a lista de filtros SQLAlchemy por brinco e por presença de mastite, reutilizada nas consultas de listagem e exportação.",
+   "tags": [
+    "filtro",
+    "consulta",
+    "utilitario"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:dao/banco.py:listar_testes",
+   "type": "function",
+   "name": "listar_testes",
+   "filePath": "dao/banco.py",
+   "lineRange": [
+    178,
+    193
+   ],
+   "summary": "Lista testes paginados, mais recentes primeiro, com carregamento antecipado de vaca, leituras e operador, devolvendo (lista, total).",
+   "tags": [
+    "leitura",
+    "paginacao",
+    "consulta",
+    "sqlalchemy"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:dao/banco.py:obter_teste",
+   "type": "function",
+   "name": "obter_teste",
+   "filePath": "dao/banco.py",
+   "lineRange": [
+    196,
+    204
+   ],
+   "summary": "Busca um teste por id com suas relações carregadas e o devolve como dicionário, ou None.",
+   "tags": [
+    "leitura",
+    "consulta",
+    "teste"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:dao/banco.py:listar_vacas",
+   "type": "function",
+   "name": "listar_vacas",
+   "filePath": "dao/banco.py",
+   "lineRange": [
+    207,
+    223
+   ],
+   "summary": "Lista vacas paginadas com total de testes, data do último teste e quantidade de testes com suspeita, via agregação SQL.",
+   "tags": [
+    "leitura",
+    "agregacao",
+    "paginacao",
+    "vaca"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:dao/banco.py:estatisticas",
+   "type": "function",
+   "name": "estatisticas",
+   "filePath": "dao/banco.py",
+   "lineRange": [
+    226,
+    245
+   ],
+   "summary": "Calcula estatísticas gerais: totais, percentual de suspeita, temperatura e condutividade médias e suspeitas por teto.",
+   "tags": [
+    "estatisticas",
+    "agregacao",
+    "consulta"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:dao/banco.py:linhas_csv",
+   "type": "function",
+   "name": "linhas_csv",
+   "filePath": "dao/banco.py",
+   "lineRange": [
+    248,
+    262
+   ],
+   "summary": "Gerador que emite uma linha por leitura para exportação CSV, lendo do banco em blocos (yield_per) sem carregar tudo na memória.",
+   "tags": [
+    "exportacao",
+    "csv",
+    "gerador",
+    "streaming"
+   ],
+   "complexity": "moderate"
+  },
+  {
+   "id": "function:dao/usuario_dao.py:_para_dict",
+   "type": "function",
+   "name": "_para_dict",
+   "filePath": "dao/usuario_dao.py",
+   "lineRange": [
+    11,
+    19
+   ],
+   "summary": "Converte um Usuario em dicionário, incluindo opcionalmente os campos internos (hash, versão de sessão, segredo TOTP).",
+   "tags": [
+    "serializacao",
+    "seguranca",
+    "conversao"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:dao/usuario_dao.py:publico",
+   "type": "function",
+   "name": "publico",
+   "filePath": "dao/usuario_dao.py",
+   "lineRange": [
+    22,
+    24
+   ],
+   "summary": "Remove os campos internos de um dicionário de usuário, deixando apenas dados seguros para API e templates.",
+   "tags": [
+    "seguranca",
+    "serializacao",
+    "utilitario"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:dao/usuario_dao.py:criar_usuario",
+   "type": "function",
+   "name": "criar_usuario",
+   "filePath": "dao/usuario_dao.py",
+   "lineRange": [
+    27,
+    34
+   ],
+   "summary": "Cria um usuário com hash de senha e perfil (padrão operador) e devolve o dicionário com campos internos.",
+   "tags": [
+    "escrita",
+    "usuarios",
+    "cadastro"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:dao/usuario_dao.py:obter_por_email",
+   "type": "function",
+   "name": "obter_por_email",
+   "filePath": "dao/usuario_dao.py",
+   "lineRange": [
+    37,
+    41
+   ],
+   "summary": "Busca usuário por email incluindo hash e segredo MFA, destinado somente à validação de login.",
+   "tags": [
+    "leitura",
+    "autenticacao",
+    "login"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:dao/usuario_dao.py:obter_por_id",
+   "type": "function",
+   "name": "obter_por_id",
+   "filePath": "dao/usuario_dao.py",
+   "lineRange": [
+    44,
+    47
+   ],
+   "summary": "Busca usuário por id, com campos internos opcionais.",
+   "tags": [
+    "leitura",
+    "usuarios",
+    "consulta"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:dao/usuario_dao.py:listar_usuarios",
+   "type": "function",
+   "name": "listar_usuarios",
+   "filePath": "dao/usuario_dao.py",
+   "lineRange": [
+    50,
+    52
+   ],
+   "summary": "Lista todos os usuários ordenados por nome, sem campos internos.",
+   "tags": [
+    "leitura",
+    "usuarios",
+    "listagem"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:dao/usuario_dao.py:contar_admins_ativos",
+   "type": "function",
+   "name": "contar_admins_ativos",
+   "filePath": "dao/usuario_dao.py",
+   "lineRange": [
+    55,
+    59
+   ],
+   "summary": "Conta administradores ativos, útil para impedir a remoção do último admin.",
+   "tags": [
+    "consulta",
+    "admin",
+    "contagem"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:dao/usuario_dao.py:atualizar_usuario",
+   "type": "function",
+   "name": "atualizar_usuario",
+   "filePath": "dao/usuario_dao.py",
+   "lineRange": [
+    62,
+    75
+   ],
+   "summary": "Atualiza perfil e/ou estado ativo; ao desativar, incrementa a versão de sessão para invalidar cookies antigos.",
+   "tags": [
+    "escrita",
+    "usuarios",
+    "sessao"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:dao/usuario_dao.py:encerrar_sessoes",
+   "type": "function",
+   "name": "encerrar_sessoes",
+   "filePath": "dao/usuario_dao.py",
+   "lineRange": [
+    78,
+    87
+   ],
+   "summary": "Incrementa atomicamente a versão de sessão, invalidando todos os cookies do usuário, e devolve a nova versão.",
+   "tags": [
+    "sessao",
+    "seguranca",
+    "logout"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:dao/usuario_dao.py:alterar_senha",
+   "type": "function",
+   "name": "alterar_senha",
+   "filePath": "dao/usuario_dao.py",
+   "lineRange": [
+    90,
+    99
+   ],
+   "summary": "Troca o hash da senha e incrementa a versão de sessão numa única operação UPDATE.",
+   "tags": [
+    "senha",
+    "seguranca",
+    "sessao"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:dao/usuario_dao.py:ativar_mfa",
+   "type": "function",
+   "name": "ativar_mfa",
+   "filePath": "dao/usuario_dao.py",
+   "lineRange": [
+    102,
+    112
+   ],
+   "summary": "Grava o segredo TOTP confirmado só se o MFA ainda estiver inativo, evitando corrida entre pedidos simultâneos.",
+   "tags": [
+    "mfa",
+    "totp",
+    "seguranca",
+    "concorrencia"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:dao/usuario_dao.py:usar_passo_totp",
+   "type": "function",
+   "name": "usar_passo_totp",
+   "filePath": "dao/usuario_dao.py",
+   "lineRange": [
+    115,
+    125
+   ],
+   "summary": "Marca um passo TOTP como usado de forma atómica (anti-replay), devolvendo False se ele ou um posterior já foi usado.",
+   "tags": [
+    "mfa",
+    "totp",
+    "anti-replay",
+    "seguranca"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "function:dao/usuario_dao.py:redefinir_mfa",
+   "type": "function",
+   "name": "redefinir_mfa",
+   "filePath": "dao/usuario_dao.py",
+   "lineRange": [
+    128,
+    137
+   ],
+   "summary": "Apaga o segredo MFA e invalida sessões do usuário, para recuperação de telemóvel perdido.",
+   "tags": [
+    "mfa",
+    "recuperacao",
+    "seguranca"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:modelos/base.py:Base",
+   "type": "class",
+   "name": "Base",
+   "filePath": "modelos/base.py",
+   "lineRange": [
+    4,
+    5
+   ],
+   "summary": "Classe base declarativa do SQLAlchemy compartilhada por todos os modelos.",
+   "tags": [
+    "modelos",
+    "orm",
+    "base"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:modelos/leitura.py:Leitura",
+   "type": "class",
+   "name": "Leitura",
+   "filePath": "modelos/leitura.py",
+   "lineRange": [
+    7,
+    23
+   ],
+   "summary": "Leitura de um teto num teste: condutividade, temperatura opcional e suspeita, com unicidade (teste, teto) e teto entre 1 e 4.",
+   "tags": [
+    "data-model",
+    "orm",
+    "leitura"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:modelos/teste.py:Teste",
+   "type": "class",
+   "name": "Teste",
+   "filePath": "modelos/teste.py",
+   "lineRange": [
+    9,
+    27
+   ],
+   "summary": "Sessão de medição de uma vaca com diagnóstico, tetos afetados e leituras em cascata.",
+   "tags": [
+    "data-model",
+    "orm",
+    "teste"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:modelos/usuario.py:Usuario",
+   "type": "class",
+   "name": "Usuario",
+   "filePath": "modelos/usuario.py",
+   "lineRange": [
+    12,
+    29
+   ],
+   "summary": "Conta de usuário com perfil restrito por CHECK, versão de sessão e campos de TOTP.",
+   "tags": [
+    "data-model",
+    "orm",
+    "autenticacao"
+   ],
+   "complexity": "simple"
+  },
+  {
+   "id": "class:modelos/vaca.py:Vaca",
+   "type": "class",
+   "name": "Vaca",
+   "filePath": "modelos/vaca.py",
+   "lineRange": [
+    9,
+    19
+   ],
+   "summary": "Animal identificado por brinco único, dono dos testes realizados nele.",
+   "tags": [
+    "data-model",
+    "orm",
+    "vaca"
+   ],
+   "complexity": "simple"
+  }
+ ],
+ "edges": [
+  {
+   "source": "file:dao/banco.py",
+   "target": "function:dao/banco.py:_migrar",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:dao/banco.py",
+   "target": "function:dao/banco.py:_garantir_utilizador_app",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:dao/banco.py",
+   "target": "function:dao/banco.py:criar_tabela",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:dao/banco.py",
+   "target": "function:dao/banco.py:criar_tabela",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:dao/banco.py",
+   "target": "function:dao/banco.py:verificar_ligacao",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:dao/banco.py",
+   "target": "function:dao/banco.py:verificar_ligacao",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:dao/banco.py",
+   "target": "function:dao/banco.py:_teste_para_dict",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:dao/banco.py",
+   "target": "function:dao/banco.py:registrar_teste",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:dao/banco.py",
+   "target": "function:dao/banco.py:registrar_teste",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:dao/banco.py",
+   "target": "function:dao/banco.py:apagar_teste",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:dao/banco.py",
+   "target": "function:dao/banco.py:apagar_teste",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:dao/banco.py",
+   "target": "function:dao/banco.py:_filtros",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:dao/banco.py",
+   "target": "function:dao/banco.py:listar_testes",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:dao/banco.py",
+   "target": "function:dao/banco.py:listar_testes",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:dao/banco.py",
+   "target": "function:dao/banco.py:obter_teste",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:dao/banco.py",
+   "target": "function:dao/banco.py:obter_teste",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:dao/banco.py",
+   "target": "function:dao/banco.py:listar_vacas",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:dao/banco.py",
+   "target": "function:dao/banco.py:listar_vacas",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:dao/banco.py",
+   "target": "function:dao/banco.py:estatisticas",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:dao/banco.py",
+   "target": "function:dao/banco.py:estatisticas",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:dao/banco.py",
+   "target": "function:dao/banco.py:linhas_csv",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:dao/banco.py",
+   "target": "function:dao/banco.py:linhas_csv",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:dao/usuario_dao.py",
+   "target": "function:dao/usuario_dao.py:_para_dict",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:dao/usuario_dao.py",
+   "target": "function:dao/usuario_dao.py:publico",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:dao/usuario_dao.py",
+   "target": "function:dao/usuario_dao.py:publico",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:dao/usuario_dao.py",
+   "target": "function:dao/usuario_dao.py:criar_usuario",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:dao/usuario_dao.py",
+   "target": "function:dao/usuario_dao.py:criar_usuario",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:dao/usuario_dao.py",
+   "target": "function:dao/usuario_dao.py:obter_por_email",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:dao/usuario_dao.py",
+   "target": "function:dao/usuario_dao.py:obter_por_email",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:dao/usuario_dao.py",
+   "target": "function:dao/usuario_dao.py:obter_por_id",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:dao/usuario_dao.py",
+   "target": "function:dao/usuario_dao.py:obter_por_id",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:dao/usuario_dao.py",
+   "target": "function:dao/usuario_dao.py:listar_usuarios",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:dao/usuario_dao.py",
+   "target": "function:dao/usuario_dao.py:listar_usuarios",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:dao/usuario_dao.py",
+   "target": "function:dao/usuario_dao.py:contar_admins_ativos",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:dao/usuario_dao.py",
+   "target": "function:dao/usuario_dao.py:contar_admins_ativos",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:dao/usuario_dao.py",
+   "target": "function:dao/usuario_dao.py:atualizar_usuario",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:dao/usuario_dao.py",
+   "target": "function:dao/usuario_dao.py:atualizar_usuario",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:dao/usuario_dao.py",
+   "target": "function:dao/usuario_dao.py:encerrar_sessoes",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:dao/usuario_dao.py",
+   "target": "function:dao/usuario_dao.py:encerrar_sessoes",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:dao/usuario_dao.py",
+   "target": "function:dao/usuario_dao.py:alterar_senha",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:dao/usuario_dao.py",
+   "target": "function:dao/usuario_dao.py:alterar_senha",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:dao/usuario_dao.py",
+   "target": "function:dao/usuario_dao.py:ativar_mfa",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:dao/usuario_dao.py",
+   "target": "function:dao/usuario_dao.py:ativar_mfa",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:dao/usuario_dao.py",
+   "target": "function:dao/usuario_dao.py:usar_passo_totp",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:dao/usuario_dao.py",
+   "target": "function:dao/usuario_dao.py:usar_passo_totp",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:dao/usuario_dao.py",
+   "target": "function:dao/usuario_dao.py:redefinir_mfa",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:dao/usuario_dao.py",
+   "target": "function:dao/usuario_dao.py:redefinir_mfa",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:modelos/base.py",
+   "target": "class:modelos/base.py:Base",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:modelos/base.py",
+   "target": "class:modelos/base.py:Base",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:modelos/leitura.py",
+   "target": "class:modelos/leitura.py:Leitura",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:modelos/leitura.py",
+   "target": "class:modelos/leitura.py:Leitura",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:modelos/teste.py",
+   "target": "class:modelos/teste.py:Teste",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:modelos/teste.py",
+   "target": "class:modelos/teste.py:Teste",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:modelos/usuario.py",
+   "target": "class:modelos/usuario.py:Usuario",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:modelos/usuario.py",
+   "target": "class:modelos/usuario.py:Usuario",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:modelos/vaca.py",
+   "target": "class:modelos/vaca.py:Vaca",
+   "type": "contains",
+   "direction": "forward",
+   "weight": 1.0
+  },
+  {
+   "source": "file:modelos/vaca.py",
+   "target": "class:modelos/vaca.py:Vaca",
+   "type": "exports",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:dao/banco.py",
+   "target": "file:modelos/__init__.py",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:dao/usuario_dao.py",
+   "target": "file:dao/banco.py",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:dao/usuario_dao.py",
+   "target": "file:modelos/usuario.py",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:modelos/__init__.py",
+   "target": "file:modelos/base.py",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:modelos/__init__.py",
+   "target": "file:modelos/leitura.py",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:modelos/__init__.py",
+   "target": "file:modelos/teste.py",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:modelos/__init__.py",
+   "target": "file:modelos/usuario.py",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:modelos/__init__.py",
+   "target": "file:modelos/vaca.py",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:modelos/leitura.py",
+   "target": "file:modelos/base.py",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:modelos/teste.py",
+   "target": "file:modelos/base.py",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:modelos/usuario.py",
+   "target": "file:modelos/base.py",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:modelos/vaca.py",
+   "target": "file:modelos/base.py",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "function:dao/banco.py:criar_tabela",
+   "target": "function:dao/banco.py:_migrar",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "function:dao/banco.py:criar_tabela",
+   "target": "function:dao/banco.py:_garantir_utilizador_app",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "function:dao/banco.py:registrar_teste",
+   "target": "function:dao/banco.py:_teste_para_dict",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "function:dao/banco.py:listar_testes",
+   "target": "function:dao/banco.py:_filtros",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "function:dao/banco.py:listar_testes",
+   "target": "function:dao/banco.py:_teste_para_dict",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "function:dao/banco.py:obter_teste",
+   "target": "function:dao/banco.py:_teste_para_dict",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "function:dao/banco.py:linhas_csv",
+   "target": "function:dao/banco.py:_filtros",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "function:dao/usuario_dao.py:criar_usuario",
+   "target": "function:dao/usuario_dao.py:_para_dict",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "function:dao/usuario_dao.py:obter_por_email",
+   "target": "function:dao/usuario_dao.py:_para_dict",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "function:dao/usuario_dao.py:obter_por_id",
+   "target": "function:dao/usuario_dao.py:_para_dict",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "function:dao/usuario_dao.py:listar_usuarios",
+   "target": "function:dao/usuario_dao.py:_para_dict",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "function:dao/usuario_dao.py:atualizar_usuario",
+   "target": "function:dao/usuario_dao.py:_para_dict",
+   "type": "calls",
+   "direction": "forward",
+   "weight": 0.8
+  },
+  {
+   "source": "file:modelos/teste.py",
+   "target": "file:modelos/vaca.py",
+   "type": "depends_on",
+   "direction": "forward",
+   "weight": 0.6
+  },
+  {
+   "source": "file:modelos/teste.py",
+   "target": "file:modelos/leitura.py",
+   "type": "depends_on",
+   "direction": "forward",
+   "weight": 0.6
+  },
+  {
+   "source": "file:modelos/teste.py",
+   "target": "file:modelos/usuario.py",
+   "type": "depends_on",
+   "direction": "forward",
+   "weight": 0.6
+  },
+  {
+   "source": "file:modelos/vaca.py",
+   "target": "file:modelos/teste.py",
+   "type": "depends_on",
+   "direction": "forward",
+   "weight": 0.6
+  },
+  {
+   "source": "file:modelos/leitura.py",
+   "target": "file:modelos/teste.py",
+   "type": "depends_on",
+   "direction": "forward",
+   "weight": 0.6
+  }
+ ]
+}

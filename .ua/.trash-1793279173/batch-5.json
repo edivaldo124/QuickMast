@@ -1,0 +1,89 @@
+{
+  "nodes": [
+    {
+      "id": "config:.dockerignore",
+      "type": "config",
+      "name": ".dockerignore",
+      "filePath": ".dockerignore",
+      "summary": "Lista de exclusões do contexto de build do Docker: deixa de fora segredos (.env), repositório git, ambientes virtuais, bancos locais, firmware, grafos e relatórios internos, de modo que só o código da aplicação vá para a imagem.",
+      "tags": ["containerizacao", "seguranca", "build-system", "configuracao"],
+      "complexity": "simple",
+      "languageNotes": "Sintaxe de padrões estilo .gitignore; exclui também o próprio Dockerfile e o docker-compose.yml do contexto."
+    },
+    {
+      "id": "service:Dockerfile",
+      "type": "service",
+      "name": "Dockerfile",
+      "filePath": "Dockerfile",
+      "summary": "Imagem Docker de estágio único (python:3.13.16-slim) usada para testes do QuickMast no PC: instala dependências com --require-hashes, roda como usuário de sistema sem privilégios e inicia o app com 'flask iniciar' seguido do gunicorn. A produção na TV box roda sem containers.",
+      "tags": ["containerizacao", "infraestrutura", "deployment", "flask", "gunicorn"],
+      "complexity": "simple",
+      "languageNotes": "Versão da imagem base fixa de propósito; pip com --require-hashes garante instalação reprodutível; o CMD usa 'sh -c' com 'exec gunicorn' para que o gunicorn receba os sinais como PID 1."
+    },
+    {
+      "id": "service:Dockerfile:python",
+      "type": "service",
+      "name": "python (estágio base)",
+      "filePath": "Dockerfile",
+      "lineRange": [4, 25],
+      "summary": "Único estágio do build: parte de python:3.13.16-slim, copia requirements.txt e o código, cria o usuário 'quickmast' e expõe a porta 8000.",
+      "tags": ["containerizacao", "imagem-base", "python", "deployment"],
+      "complexity": "simple"
+    },
+    {
+      "id": "service:docker-compose.yml",
+      "type": "service",
+      "name": "docker-compose.yml",
+      "filePath": "docker-compose.yml",
+      "summary": "Orquestração local com o PostgreSQL 16.14 (porta só em 127.0.0.1:5433, healthcheck, volume persistente) e, sob o perfil 'app', o servidor Flask/gunicorn em rede host para testes com a placa ESP8266, com registro fechado por padrão.",
+      "tags": ["orquestracao", "infraestrutura", "postgresql", "docker-compose", "seguranca"],
+      "complexity": "moderate",
+      "languageNotes": "Usa interpolação com erro obrigatório (${VAR:?...}) para exigir credenciais do .env, perfis do Compose para tornar o serviço 'app' opcional e 'no-new-privileges' em ambos os containers."
+    },
+    {
+      "id": "service:docker-compose.yml:db",
+      "type": "service",
+      "name": "db",
+      "filePath": "docker-compose.yml",
+      "lineRange": [2, 21],
+      "summary": "Serviço PostgreSQL 16.14 com credenciais vindas do .env, porta publicada apenas no loopback (5433), volume nomeado quickmast_dados e healthcheck com pg_isready.",
+      "tags": ["banco-de-dados", "postgresql", "healthcheck", "infraestrutura"],
+      "complexity": "simple"
+    },
+    {
+      "id": "service:docker-compose.yml:app",
+      "type": "service",
+      "name": "app",
+      "filePath": "docker-compose.yml",
+      "lineRange": [25, 50],
+      "summary": "Servidor QuickMast para testes no PC, ativo só com '--profile app': constrói a imagem do Dockerfile, usa network_mode host na porta 5000, aponta PLACA_URL para 192.168.4.1 e mantém o registro de usuários fechado, salvo com ABRIR_REGISTO=1.",
+      "tags": ["aplicacao", "flask", "gunicorn", "perfil-compose", "rede-host"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "service:docker-compose.simulador.yml",
+      "type": "service",
+      "name": "docker-compose.simulador.yml",
+      "filePath": "docker-compose.simulador.yml",
+      "summary": "Override do Compose usado como plano B na apresentação: liga SIMULADOR_SENSOR e zera PLACA_URL para que o /read devolva valores de teste (270 a 420) sem a placa física.",
+      "tags": ["orquestracao", "simulador", "override", "apresentacao"],
+      "complexity": "simple",
+      "languageNotes": "É um arquivo de override: só redefine variáveis de ambiente do serviço 'app' e é mesclado ao docker-compose.yml pelo ./apresentacao.sh simulador."
+    }
+  ],
+  "edges": [
+    {"source": "config:.dockerignore", "target": "service:Dockerfile", "type": "configures", "direction": "forward", "weight": 0.6},
+    {"source": "service:Dockerfile", "target": "service:Dockerfile:python", "type": "contains", "direction": "forward", "weight": 1.0},
+    {"source": "service:Dockerfile", "target": "file:servidor.py", "type": "deploys", "direction": "forward", "weight": 0.7},
+    {"source": "service:Dockerfile", "target": "file:gunicorn.conf.py", "type": "deploys", "direction": "forward", "weight": 0.7},
+    {"source": "service:Dockerfile", "target": "document:requirements.txt", "type": "depends_on", "direction": "forward", "weight": 0.6},
+    {"source": "service:docker-compose.yml", "target": "service:docker-compose.yml:db", "type": "contains", "direction": "forward", "weight": 1.0},
+    {"source": "service:docker-compose.yml", "target": "service:docker-compose.yml:app", "type": "contains", "direction": "forward", "weight": 1.0},
+    {"source": "service:docker-compose.yml", "target": "service:Dockerfile", "type": "depends_on", "direction": "forward", "weight": 0.6},
+    {"source": "service:docker-compose.yml", "target": "config:.env.example", "type": "depends_on", "direction": "forward", "weight": 0.6},
+    {"source": "service:docker-compose.yml:app", "target": "service:docker-compose.yml:db", "type": "depends_on", "direction": "forward", "weight": 0.6},
+    {"source": "service:docker-compose.yml:app", "target": "file:servidor.py", "type": "deploys", "direction": "forward", "weight": 0.7},
+    {"source": "service:docker-compose.simulador.yml", "target": "service:docker-compose.yml", "type": "depends_on", "direction": "forward", "weight": 0.6},
+    {"source": "service:docker-compose.simulador.yml", "target": "file:apresentacao.sh", "type": "related", "direction": "forward", "weight": 0.5}
+  ]
+}

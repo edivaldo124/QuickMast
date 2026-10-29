@@ -1,0 +1,30 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 0,
+  "filesSkipped": [
+    "templates/_componentes.html",
+    "templates/_landing_assets.html",
+    "templates/base.html",
+    "templates/conta.html",
+    "templates/index.html",
+    "templates/login.html",
+    "templates/mfa.html",
+    "templates/painel.html",
+    "templates/ubere.html",
+    "templates/usuarios.html",
+    "templates/vaca.html"
+  ],
+  "filesUnreadable": [],
+  "analysisOutcomes": {
+    "structure": {
+      "succeeded": 0,
+      "failed": 0
+    },
+    "callGraph": {
+      "succeeded": 0,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "results": []
+}

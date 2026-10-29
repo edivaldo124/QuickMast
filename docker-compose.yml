@@ -39,6 +39,9 @@ services:
       COOKIE_SEGURO: "0"      # HTTP na rede local
       ATRAS_DE_PROXY: "0"     # sem Nginx: o gunicorn atende direto (por isso o 0.0.0.0 é seguro)
       SIMULADOR_SENSOR: "0"
+      # A placa na rede própria "QuickMast" (REDE_PROPRIA 1 no firmware) está sempre neste endereço.
+      # Fica aqui e não no .env, que vale menos: o que está no environment passa por cima do env_file.
+      PLACA_URL: "http://192.168.4.1"
       LOG_JSON: "0"
       # Registo fechado aqui, seja qual for o .env (este servidor fica aberto à rede). Para criar a
       # conta da placa: ABRIR_REGISTO=1 docker compose --profile app up -d (e depois sem o ABRIR_REGISTO)

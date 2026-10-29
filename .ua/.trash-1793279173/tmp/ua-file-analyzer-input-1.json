@@ -1,0 +1,115 @@
+{
+ "projectRoot": "/home/edivaldo/PycharmProjects/QuickMast",
+ "batchFiles": [
+  {
+   "path": "blueprints/__init__.py",
+   "language": "python",
+   "sizeLines": 27,
+   "fileCategory": "code"
+  },
+  {
+   "path": "blueprints/erros.py",
+   "language": "python",
+   "sizeLines": 20,
+   "fileCategory": "code"
+  },
+  {
+   "path": "blueprints/paginas.py",
+   "language": "python",
+   "sizeLines": 35,
+   "fileCategory": "code"
+  },
+  {
+   "path": "blueprints/sensor.py",
+   "language": "python",
+   "sizeLines": 120,
+   "fileCategory": "code"
+  },
+  {
+   "path": "blueprints/testes.py",
+   "language": "python",
+   "sizeLines": 122,
+   "fileCategory": "code"
+  },
+  {
+   "path": "blueprints/usuarios.py",
+   "language": "python",
+   "sizeLines": 52,
+   "fileCategory": "code"
+  },
+  {
+   "path": "blueprints/utilitarios.py",
+   "language": "python",
+   "sizeLines": 52,
+   "fileCategory": "code"
+  },
+  {
+   "path": "servicos/autenticacao.py",
+   "language": "python",
+   "sizeLines": 101,
+   "fileCategory": "code"
+  },
+  {
+   "path": "servicos/diagnostico.py",
+   "language": "python",
+   "sizeLines": 59,
+   "fileCategory": "code"
+  },
+  {
+   "path": "servicos/seguranca.py",
+   "language": "python",
+   "sizeLines": 95,
+   "fileCategory": "code"
+  },
+  {
+   "path": "servidor.py",
+   "language": "python",
+   "sizeLines": 128,
+   "fileCategory": "code"
+  }
+ ],
+ "batchImportData": {
+  "blueprints/__init__.py": [
+   "blueprints/auth.py",
+   "blueprints/conta.py",
+   "blueprints/erros.py",
+   "blueprints/paginas.py",
+   "blueprints/sensor.py",
+   "blueprints/testes.py",
+   "blueprints/usuarios.py",
+   "blueprints/utilitarios.py"
+  ],
+  "blueprints/erros.py": [],
+  "blueprints/paginas.py": [
+   "servicos/autenticacao.py"
+  ],
+  "blueprints/sensor.py": [
+   "servicos/autenticacao.py"
+  ],
+  "blueprints/testes.py": [
+   "servicos/autenticacao.py",
+   "servicos/diagnostico.py",
+   "servicos/seguranca.py"
+  ],
+  "blueprints/usuarios.py": [
+   "modelos/usuario.py",
+   "servicos/autenticacao.py",
+   "servicos/seguranca.py"
+  ],
+  "blueprints/utilitarios.py": [
+   "servicos/autenticacao.py",
+   "servicos/seguranca.py"
+  ],
+  "servicos/autenticacao.py": [
+   "servicos/seguranca.py"
+  ],
+  "servicos/diagnostico.py": [],
+  "servicos/seguranca.py": [],
+  "servidor.py": [
+   "blueprints/__init__.py",
+   "servicos/autenticacao.py",
+   "servicos/seguranca.py",
+   "servicos/senhas.py"
+  ]
+ }
+}
