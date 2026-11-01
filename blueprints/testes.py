@@ -5,7 +5,7 @@ from flask import Blueprint, jsonify, request
 
 from dao import banco
 from servicos.autenticacao import exigir_login, usuario_atual
-from servicos.diagnostico import diagnosticar
+from servicos.diagnostico import BASE_MINIMO, BASE_TESTES, diagnosticar
 from servicos.seguranca import auditar
 
 testes_api = Blueprint('testes_api', __name__, url_prefix='/api')
@@ -62,9 +62,13 @@ def criar_teste():
     except ValueError as e:
         return jsonify({'erro': str(e)}), 400
 
-    teste = banco.registrar_teste(brinco, leituras, diagnosticar(leituras), observacao,
+    # Cada vaca tem o seu nível de condutividade: o diagnóstico compara com o histórico dela
+    diagnostico = diagnosticar(leituras, banco.historico_da_vaca(brinco, BASE_TESTES))
+    teste = banco.registrar_teste(brinco, leituras, diagnostico, observacao,
                                     usuario_id=usuario_atual()['id'])
-    return jsonify({'ok': True, 'teste': teste}), 201
+    # base: linha de base de cada teto (None = ainda sem histórico, só comparado com os outros tetos)
+    return jsonify({'ok': True, 'teste': teste,
+                    'historico': {'base': [d['base'] for d in diagnostico], 'minimo': BASE_MINIMO}}), 201
 
 
 @testes_api.get('/testes')

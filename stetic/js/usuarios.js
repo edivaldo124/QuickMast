@@ -1,6 +1,7 @@
 const msg = document.getElementById('mensagem');
 const lista = document.getElementById('listaUsuarios');
 const PERFIS = ['operador', 'veterinario', 'admin'];
+const NOMES_PERFIL = { operador: 'Operador', veterinario: 'Veterinário', admin: 'Administrador' };
 const MEU_ID = Number(document.body.dataset.meuId);
 let apagarGuardado = null;   // o "Guardado." some sozinho; um erro fica até à próxima alteração
 
@@ -23,23 +24,27 @@ async function alterar(id, campos) {
     if (r.ok) lista.querySelector('[data-id="' + id + '"]')?.classList.add('cartao--guardado');
 }
 
-// Cartão de um utilizador: nome, email, Perfil (lista) e Ativo (interruptor com Sim/Não)
+// Linha de um utilizador: inicial, nome, email, Perfil (lista) e Ativo (interruptor com Sim/Não)
 function cartao(u) {
     const eu = u.id === MEU_ID;
-    const li = criar('li', 'cartao cartao-usuario');
+    const li = criar('li', 'usuario' + (u.ativo ? '' : ' usuario--inativo'));
     li.dataset.id = u.id;
 
-    const cabecalho = criar('div', 'cartao-usuario__cabecalho');
-    cabecalho.append(
-        criar('p', 'cartao-usuario__nome', u.nome + (eu ? ' (você)' : '')),
-        criar('p', 'cartao-usuario__email', u.email)
+    const avatar = criar('span', 'avatar avatar--usuario', u.nome.slice(0, 1).toUpperCase());
+    avatar.setAttribute('aria-hidden', 'true');
+    const texto = criar('div', 'usuario__texto');
+    texto.append(
+        criar('p', 'usuario__nome', u.nome + (eu ? ' (você)' : '')),
+        criar('p', 'usuario__email', u.email)
     );
+    const cabecalho = criar('div', 'usuario__cabecalho');
+    cabecalho.append(avatar, texto);
 
     const sel = criar('select', 'seletor');
     sel.id = 'perfil-' + u.id;
     PERFIS.forEach(p => {
         const o = document.createElement('option');
-        o.value = p; o.textContent = p; o.selected = p === u.perfil;
+        o.value = p; o.textContent = NOMES_PERFIL[p]; o.selected = p === u.perfil;
         sel.appendChild(o);
     });
     sel.disabled = eu;
@@ -47,7 +52,7 @@ function cartao(u) {
 
     const rotuloPerfil = criar('label', 'linha__rotulo', 'Perfil');
     rotuloPerfil.htmlFor = sel.id;
-    const linhaPerfil = criar('div', 'linha');
+    const linhaPerfil = criar('div', 'linha linha--perfil');
     linhaPerfil.append(rotuloPerfil, sel);
 
     const chk = criar('input', 'interruptor');
@@ -61,7 +66,7 @@ function cartao(u) {
     });
 
     // A linha inteira é o rótulo: tocar em qualquer ponto liga/desliga
-    const linhaAtivo = criar('label', 'linha');
+    const linhaAtivo = criar('label', 'linha linha--ativo');
     linhaAtivo.append(criar('span', 'linha__rotulo', 'Ativo'), estado, chk);
 
     li.append(cabecalho, linhaPerfil, linhaAtivo);

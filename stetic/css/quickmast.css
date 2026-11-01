@@ -23,6 +23,14 @@
     unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB,
                    U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
+/* Barlow Condensed: só para o que vem "estampado" (o número do brinco, as siglas dos tetos e as leituras grandes) */
+@font-face {
+    font-family: 'Barlow Condensed';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url('../fonts/barlow-condensed-latin-700-normal.woff2') format('woff2');
+}
 
 /* ---------- 1. VARIÁVEIS ---------- */
 :root {
@@ -54,6 +62,18 @@
 
     --marca-escura: #1B5E20;
     --marca-clara: #E3F1E4;
+    --noite: #0B110D;                   /* o fundo da landing: entrada e painel da marca */
+    --noite-texto: #F3F6F2;
+    --noite-suave: rgb(243 246 242 / 0.74);
+    --noite-destaque: #7FD08A;
+
+    /* Brinco: a etiqueta amarela da orelha da vaca (o número a preto tem 9,8:1 no amarelo) */
+    --brinco: #F6C61B;
+    --brinco-sombra: #D4A50B;
+    --brinco-texto: #1C231E;
+
+    /* Mini-úbere das listas: o teto sadio fica discreto para o suspeito saltar à vista */
+    --mini-sadio: #A5CFA7;
 
     --banner-ok-fundo: var(--marca-clara);
     --banner-ok-texto: var(--marca-escura);
@@ -61,6 +81,7 @@
     --banner-alerta-texto: #FFFFFF;
 
     --fonte: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    --fonte-estampada: 'Barlow Condensed', 'Arial Narrow', var(--fonte);
     --fs-titulo: 28px;
     --fs-instrucao: 20px;
     --fs-botao: 20px;
@@ -445,6 +466,46 @@ h1 + .voltar { margin-top: -12px; }
 /* O campo em erro abana uma vez quando a página chega (o servidor marcou-o) */
 .campo[aria-invalid="true"] { animation: abanar 0.4s ease-in-out; }
 
+/* Campo do brinco (início da medição): uma etiqueta em branco onde se escreve o número.
+   O pescoço com o furo é o ::before da caixa; fica maiúsculo como o servidor o grava. */
+/* Do tamanho de uma etiqueta (e não da largura do ecrã) */
+.campo-caixa:has(> .campo--brinco) { width: 100%; max-width: 290px; margin: 28px auto 0; }
+.campo-caixa:has(> .campo--brinco)::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% - 1px);
+    width: 72px;
+    height: 34px;
+    margin-left: -36px;
+    border-radius: 36px 36px 0 0;
+    background: var(--brinco);
+    -webkit-mask: radial-gradient(circle at 50% 58%, transparent 9px, #000 9.6px);
+    mask: radial-gradient(circle at 50% 58%, transparent 9px, #000 9.6px);
+}
+.campo--brinco {
+    min-height: 88px;
+    border: 0;
+    border-radius: 18px 18px 32px 32px;
+    background: var(--brinco);
+    box-shadow: inset 0 -6px 0 var(--brinco-sombra), 0 14px 24px -16px rgb(110 80 0 / 0.8);
+    font: 700 42px / 1 var(--fonte-estampada);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--brinco-texto);
+    caret-color: var(--brinco-texto);
+}
+/* O exemplo fica mais pequeno e mais claro do que um número escrito: não parece já preenchido */
+.campo--brinco::placeholder { color: #806A12; font-size: 28px; text-transform: none; letter-spacing: 0.02em; }
+.campo--brinco:focus {
+    box-shadow: inset 0 -6px 0 var(--brinco-sombra), 0 0 0 4px var(--superficie-fundo), 0 0 0 7px var(--botao-azul);
+}
+.campo--brinco[aria-invalid="true"],
+.campo--brinco[aria-invalid="true"]:focus {
+    box-shadow: inset 0 -6px 0 var(--brinco-sombra), 0 0 0 4px var(--superficie-fundo), 0 0 0 7px var(--teto-suspeita);
+}
+.passo-vaca .rotulo { text-align: center; }
+
 /* Texto do erro por baixo do campo (ex.: brinco vazio) */
 .campo-erro { display: flex; align-items: center; gap: 8px; margin-top: -8px; font-size: 15px; font-weight: 600; color: var(--teto-suspeita); }
 .campo-erro[hidden] { display: none; }
@@ -532,8 +593,21 @@ h1 + .voltar { margin-top: -12px; }
     padding: 6px 16px;
 }
 .barra form { margin: 0; flex: none; }
-.barra__marca { display: inline-flex; flex: none; margin-right: auto; border-radius: 10px; }
+.barra__marca {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    flex: none;
+    margin-right: auto;
+    border-radius: 10px;
+    color: var(--texto-principal);
+    text-decoration: none;
+}
 .barra__marca img { display: block; width: 36px; height: 36px; }
+.barra__marca-nome { display: none; font-size: 18px; font-weight: 800; letter-spacing: -0.03em; }
+.barra__quem { display: flex; flex-direction: column; min-width: 0; }
+.barra__nome { font-weight: 600; color: var(--texto-principal); }
+.barra__perfil { font-size: 12px; }
 .barra__usuario {
     display: inline-flex;
     align-items: center;
@@ -586,6 +660,8 @@ a.barra__usuario:hover .barra__nome, a.barra__usuario[aria-current="page"] .barr
 
 @media (min-width: 600px) {
     .avatar { display: inline-grid; }
+    .barra__marca-nome { display: inline; }
+    .barra__usuario { text-align: left; }
     .barra__link::before {
         content: '';
         width: 19px;
@@ -603,6 +679,56 @@ a.barra__usuario:hover .barra__nome, a.barra__usuario[aria-current="page"] .barr
     border-radius: var(--raio);
     box-shadow: var(--sombra-1);
 }
+
+/* ---------- 8b. BRINCO (a identidade da vaca, como a etiqueta da orelha) ----------
+   Corpo amarelo com o número estampado e, por cima, o pescoço com o furo do pino.
+   --tam é o tamanho do número; tudo o resto acompanha. */
+.brinco {
+    --tam: 20px;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+    min-width: calc(var(--tam) * 3.3);
+    max-width: 9em;
+    margin-top: calc(var(--tam) * 0.5);
+    padding: calc(var(--tam) * 0.3) calc(var(--tam) * 0.5) calc(var(--tam) * 0.26);
+    border-radius: calc(var(--tam) * 0.42) calc(var(--tam) * 0.42) calc(var(--tam) * 0.75) calc(var(--tam) * 0.75);
+    background: var(--brinco);
+    box-shadow: inset 0 calc(var(--tam) * -0.12) 0 var(--brinco-sombra), 0 1px 2px rgb(28 35 30 / 0.2);
+    color: var(--brinco-texto);
+    font: 700 var(--tam) / 1 var(--fonte-estampada);
+    letter-spacing: 0.03em;
+    text-align: center;
+    overflow-wrap: anywhere;
+}
+.brinco::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% - 1px);
+    width: calc(var(--tam) * 1.15);
+    height: calc(var(--tam) * 0.6);
+    margin-left: calc(var(--tam) * -0.575);
+    border-radius: calc(var(--tam) * 0.58) calc(var(--tam) * 0.58) 0 0;
+    background: var(--brinco);
+    /* O furo do pino é transparente de verdade: o fundo da linha (hover incluído) aparece por ele */
+    -webkit-mask: radial-gradient(circle at 50% 60%, transparent calc(var(--tam) * 0.15), #000 calc(var(--tam) * 0.15 + 0.6px));
+    mask: radial-gradient(circle at 50% 60%, transparent calc(var(--tam) * 0.15), #000 calc(var(--tam) * 0.15 + 0.6px));
+}
+.brinco:empty { display: none; }
+.brinco--grande { --tam: 44px; letter-spacing: 0.02em; }
+
+/* Mini-úbere: os 4 tetos na posição real (AE AD / PE PD); o suspeito a vermelho */
+.mini-ubere {
+    display: inline-grid;
+    grid-template-columns: repeat(2, 10px);
+    gap: 3px;
+    flex: none;
+}
+.mini-ubere > i { width: 10px; height: 10px; border-radius: 50%; background: var(--mini-sadio); }
+.mini-ubere > .mini-ubere__suspeito { background: var(--teto-suspeita); box-shadow: 0 0 0 2px rgb(198 40 40 / 0.18); }
 
 /* ---------- 9. ÚBERE: grelha 2x2 fixa (AE | AD em cima, PE | PD em baixo) ----------
    Um painel de instrumento: os eixos tracejados separam frente/trás e esquerda/direita. */
@@ -650,7 +776,7 @@ a.barra__usuario:hover .barra__nome, a.barra__usuario[aria-current="page"] .barr
     font-weight: 800;
     line-height: 1;
 }
-.teto__sigla { font-size: 34px; font-weight: 700; line-height: 40px; letter-spacing: -0.02em; }
+.teto__sigla { font: 700 42px / 42px var(--fonte-estampada); letter-spacing: 0.02em; }
 .teto small {
     margin-top: 4px;
     padding: 0 9px;
@@ -764,14 +890,15 @@ body[data-fase="medir"] .teto { cursor: pointer; }
 .cabecalho-vaca__linha {
     display: flex;
     justify-content: space-between;
-    align-items: baseline;
+    align-items: center;
     gap: 12px;
     font-size: 20px;
     font-weight: 700;
     line-height: 26px;
     letter-spacing: -0.01em;
 }
-.cabecalho-vaca__linha p:first-child { min-width: 0; overflow-wrap: anywhere; }
+.cabecalho-vaca__vaca { display: flex; min-width: 0; }
+.cabecalho-vaca__vaca .brinco { --tam: 28px; }
 .progresso__texto { flex: none; color: var(--botao-azul); font-variant-numeric: tabular-nums; }
 
 .progresso { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 12px; }
@@ -909,10 +1036,7 @@ body[data-fase="medir"] .teto { cursor: pointer; }
     transition: background-color 0.15s;
 }
 .estatistica__numero {
-    font-size: var(--fs-titulo);
-    font-weight: 700;
-    line-height: 1.2;
-    letter-spacing: -0.025em;
+    font: 700 36px / 1.05 var(--fonte-estampada);
     font-variant-numeric: tabular-nums;
 }
 .estatistica__rotulo { font-size: 13px; color: var(--texto-secundario); }
@@ -925,8 +1049,8 @@ body[data-fase="medir"] .teto { cursor: pointer; }
     .estatisticas { grid-template-columns: repeat(4, 1fr); }
 }
 
-/* Lista do histórico: um só painel com divisórias */
-#listaHistorico {
+/* Listas de testes e de vacas: um só painel com divisórias (e não um cartão por item) */
+.lista--linhas {
     gap: 0;
     background: var(--superficie-superficie);
     border: 1px solid var(--borda-cartao);
@@ -934,9 +1058,12 @@ body[data-fase="medir"] .teto { cursor: pointer; }
     box-shadow: var(--sombra-1);
     overflow: hidden;
 }
+.lista--linhas > li:not([hidden]) ~ li { border-top: 1px solid var(--borda-cartao); }
+.lista--linhas > .esqueleto { border: 0; border-radius: 0; box-shadow: none; }
+.lista--linhas .banner { border-radius: 0; }
+.lista--linhas > .procura__vazio { padding: 20px 16px; }
 #listaHistorico:empty,
 #listaHistorico:not(:has(> li:not([hidden]))) { display: none; }   /* a procura escondeu todos */
-#listaHistorico > li:not([hidden]) ~ li { border-top: 1px solid var(--borda-cartao); }
 
 /* Procurar uma vaca: filtra o histórico enquanto se escreve; a lupa abre o histórico dela */
 .procura { position: relative; display: flex; }
@@ -982,17 +1109,19 @@ body[data-fase="medir"] .teto { cursor: pointer; }
 .procura__botao:active { transform: scale(0.95); }
 .procura__vazio { font-size: 15px; color: var(--texto-secundario); text-align: center; }
 .procura__vazio[hidden] { display: none; }
-#listaHistorico .item { border: 0; border-radius: 0; box-shadow: none; }
-#listaHistorico .banner { border-radius: 0; }
-
+/* Item (um teste ou uma vaca): o brinco à esquerda, data e quem mediu ao meio, o estado à direita */
 .item {
     position: relative;
     display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
+    /* Coluna do brinco com largura fixa: as datas ficam alinhadas de linha para linha */
+    grid-template-columns: 86px minmax(0, 1fr) auto;
+    grid-template-areas:
+        "vaca data estado"
+        "vaca operador estado";
     align-items: center;
-    gap: 6px 12px;
-    min-height: 80px;
-    padding: 14px 16px;
+    gap: 2px 14px;
+    min-height: 76px;
+    padding: 12px 16px;
     color: inherit;
     text-decoration: none;
     transition: background-color 0.15s;
@@ -1018,10 +1147,27 @@ a.item::after {
 }
 a.item:active { background: #EBEFEA; }
 a.item:focus-visible { outline-offset: -3px; }
-.item__data, .item__operador { font-size: 13px; color: var(--texto-secundario); }
-.item__data { font-variant-numeric: tabular-nums; }
-.item__operador { text-align: right; overflow-wrap: anywhere; }
-.item__vaca { font-size: 18px; font-weight: 700; line-height: 1.3; letter-spacing: -0.01em; overflow-wrap: anywhere; }
+.item__vaca { grid-area: vaca; justify-self: start; max-width: 100%; margin-bottom: 2px; }
+.item__data { grid-area: data; align-self: end; font-size: 15px; font-weight: 600; line-height: 1.3; font-variant-numeric: tabular-nums; }
+.item__operador { grid-area: operador; align-self: start; font-size: 13px; line-height: 1.35; color: var(--texto-secundario); overflow-wrap: anywhere; }
+
+/* Estado: o mini-úbere por cima do que ele diz ("Normal" discreto, "Teto AD" a vermelho) */
+.item__estado {
+    grid-area: estado;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    min-width: 52px;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--texto-secundario);
+    text-align: center;
+    white-space: nowrap;
+}
+.item--suspeita .item__estado { font-weight: 700; color: #B3261E; }
+.item__contagem { font: 700 28px / 0.9 var(--fonte-estampada); font-variant-numeric: tabular-nums; }
 
 /* Selo: "Normal" discreto, suspeita em vermelho cheio (é o que tem de saltar à vista) */
 .selo {
@@ -1041,16 +1187,21 @@ a.item:focus-visible { outline-offset: -3px; }
 .selo--suspeita { background: var(--teto-suspeita); color: var(--texto-branco); }
 
 /* ---------- 13. UTILIZADORES ---------- */
-.lista--usuarios { gap: 12px; }
-
-.cartao-usuario { display: flex; flex-direction: column; padding: 16px 16px 4px; }
-.cartao-usuario__cabecalho { display: flex; flex-direction: column; gap: 2px; padding-bottom: 12px; }
-.cartao-usuario__nome { font-size: 18px; font-weight: 700; line-height: 1.3; letter-spacing: -0.01em; overflow-wrap: anywhere; }
-.cartao-usuario__email { font-size: var(--fs-legenda); color: var(--texto-secundario); overflow-wrap: anywhere; }
-.cartao-usuario .linha { border-top: 1px solid var(--borda-cartao); }
-/* O cartão que acabou de ser guardado acende um instante a verde */
+/* Uma linha por pessoa no mesmo painel (.lista--linhas); no computador, tudo numa só fila */
+.usuario { display: grid; padding: 14px 16px 0; transition: background-color 0.2s; }
+.usuario__cabecalho { display: flex; align-items: center; gap: 12px; min-width: 0; padding-bottom: 12px; }
+.avatar--usuario { display: inline-grid; width: 40px; height: 40px; font-size: 17px; }
+.usuario__texto { min-width: 0; }
+.usuario__nome { font-size: 17px; font-weight: 700; line-height: 1.3; letter-spacing: -0.01em; overflow-wrap: anywhere; }
+.usuario__email { font-size: var(--fs-legenda); color: var(--texto-secundario); overflow-wrap: anywhere; }
+.usuario .linha { border-top: 1px dashed var(--borda-cartao); }
+/* Conta desativada: a pessoa fica esbatida (o interruptor diz "Não") */
+.usuario--inativo .usuario__cabecalho { opacity: 0.55; }
+.usuario--inativo .avatar { background: var(--teto-nao-medido-fundo); color: var(--texto-secundario); }
+/* A linha que acabou de ser guardada acende um instante a verde */
 .cartao--guardado { animation: guardado 1.4s ease-out; }
-.esqueleto--usuario { min-height: 212px; }
+.usuario.cartao--guardado { animation: guardado-linha 1.4s ease-out; }
+.esqueleto--usuario { min-height: 180px; }
 
 .linha { display: flex; align-items: center; gap: 12px; min-height: 68px; }
 .linha__rotulo { min-width: 48px; font-size: 15px; font-weight: 600; }
@@ -1143,7 +1294,7 @@ label.linha { cursor: pointer; }
 }
 .media--temp { --icone-media: var(--svg-termometro); }
 .media--cond { --icone-media: var(--svg-condutividade); }
-.media__valor { font-size: 30px; font-weight: 700; line-height: 1.2; letter-spacing: -0.025em; font-variant-numeric: tabular-nums; }
+.media__valor { font: 700 40px / 1.05 var(--fonte-estampada); font-variant-numeric: tabular-nums; }
 
 .painel__mapa { display: flex; flex-direction: column; gap: 18px; padding: 18px 16px 20px; border-radius: var(--raio-grande); box-shadow: var(--sombra-2); }
 .titulo-secao { font-size: 20px; font-weight: 700; line-height: 1.3; letter-spacing: -0.01em; }
@@ -1182,7 +1333,7 @@ label.linha { cursor: pointer; }
 .mapa__detalhe { min-height: 2.8em; font-size: 15px; line-height: 1.4; color: var(--texto-secundario); text-align: center; text-wrap: balance; }
 .mapa__detalhe strong { color: var(--texto-principal); }
 .mapa__rotulo { font-size: 17px; font-weight: 700; line-height: 1.2; }
-.mapa__numero { font-size: 40px; font-weight: 700; line-height: 1.1; letter-spacing: -0.025em; font-variant-numeric: tabular-nums; }
+.mapa__numero { font: 700 50px / 1 var(--fonte-estampada); font-variant-numeric: tabular-nums; }
 
 .escala {
     display: flex;
@@ -1234,8 +1385,11 @@ label.linha { cursor: pointer; }
 .linha-tempo[data-entrada] .evento:not(:last-child)::before { transform-origin: top; animation: desenhar 0.5s var(--curva-saida) backwards; animation-delay: inherit; }
 .evento--esqueleto .evento__marcador { background: var(--borda-cartao); }
 
+/* Título da página de uma vaca: o brinco grande (o pescoço precisa de espaço por cima) */
+.titulo-vaca { display: flex; padding-top: 4px; line-height: 1; }
+
 /* Resumo da vaca: quantos testes, quantos com suspeita, o último */
-.resumo { display: flex; flex-wrap: wrap; gap: 8px; margin: -4px 0 4px; }
+.resumo { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 4px; }
 .resumo__item {
     display: inline-flex;
     align-items: center;
@@ -1283,10 +1437,32 @@ label.linha { cursor: pointer; }
 /* O texto e o botão chegam logo a seguir: tudo visível e utilizável em ~0,6 s */
 .pagina--inicio > :not(.inicio__icone) { animation: surgir 0.35s var(--curva-saida) 0.2s backwards; }
 
-.pagina--entrada { padding-top: 40px; gap: 20px; }
+.pagina--entrada { padding-top: 40px; gap: 24px; }
 .entrada__conteudo { display: flex; flex-direction: column; gap: 20px; }
-/* Painel da marca à esquerda do formulário: só no computador (17. ECRÃS LARGOS) */
-.entrada__marca { display: none; }
+/* Painel da marca (o fundo escuro da página inicial): no telemóvel, uma faixa no topo;
+   no computador, a metade esquerda (17. ECRÃS LARGOS) */
+.entrada__marca {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    margin: -40px -16px 0;
+    padding: 36px 24px 32px;
+    border-radius: 0 0 28px 28px;
+    background: radial-gradient(80% 70% at 50% 30%, rgb(46 125 50 / 0.34), transparent 75%), var(--noite);
+    color: var(--noite-texto);
+    text-align: center;
+}
+.entrada__marca .inicio__icone { width: 80px; height: 80px; margin-bottom: 12px; filter: drop-shadow(0 14px 22px rgb(0 0 0 / 0.45)); }
+.entrada__marca-nome { font-size: 28px; font-weight: 800; line-height: 1.1; letter-spacing: -0.035em; }
+.entrada__marca-nome .marca__mast { color: var(--noite-destaque); }
+.entrada__marca-texto { font-size: 16px; color: var(--noite-suave); }
+/* O logo e o nome já estão no painel: no formulário fica só o que se faz ("Entrar", "Criar conta"...) */
+.pagina--entrada:has(> .entrada__marca) .entrada__icone { display: none; }
+.pagina--entrada:has(> .entrada__marca) .entrada__cabecalho h1 {
+    position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
+}
+.pagina--entrada:has(> .entrada__marca) .subtitulo { font-size: 26px; font-weight: 700; letter-spacing: -0.02em; color: var(--texto-principal); }
 .entrada { display: flex; flex-direction: column; gap: 20px; }
 .entrada--criar, .entrada--criar .entrada__form { gap: 18px; }
 .entrada__cabecalho { display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center; }
@@ -1298,6 +1474,33 @@ label.linha { cursor: pointer; }
 button.link-texto { background: none; border: 0; font-family: inherit; cursor: pointer; }
 
 /* ---------- 16b. A MINHA CONTA E VERIFICAÇÃO EM DOIS PASSOS ---------- */
+/* Pessoa: a inicial, o nome e o email; o perfil num selo à direita */
+.pessoa {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 14px;
+    padding: 4px 0 8px;
+}
+.avatar--grande { display: inline-grid; width: 60px; height: 60px; font-size: 26px; }
+.pessoa__nome { font-size: 24px; line-height: 1.2; }
+.pessoa__email { font-size: 15px; color: var(--texto-secundario); overflow-wrap: anywhere; }
+.perfil-chip {
+    display: inline-flex;
+    align-items: center;
+    height: 30px;
+    padding: 0 12px;
+    border-radius: var(--raio-pilula);
+    background: var(--marca-clara);
+    color: var(--marca-escura);
+    font-size: 13px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+@container (width < 380px) {
+    .pessoa { grid-template-columns: auto minmax(0, 1fr); }
+    .pessoa .perfil-chip { grid-column: 2; justify-self: start; margin-top: -6px; }
+}
 .conta__secao { display: flex; flex-direction: column; gap: 18px; padding: 20px 16px; }
 .conta__titulo { font-size: 20px; }
 .conta__texto, .mfa__texto, .mfa__passos, .mfa__chave { font-size: 15px; line-height: 1.5; color: var(--texto-secundario); }
@@ -1341,6 +1544,8 @@ button.link-texto { background: none; border: 0; font-family: inherit; cursor: p
         border-radius: 24px;
         box-shadow: var(--sombra-2);
     }
+    /* A faixa da marca encaixa no topo do cartão */
+    .entrada__marca { margin: -36px -36px 0; border-radius: 23px 23px 0 0; }
     .pagina--lista { max-width: 640px; padding-top: 28px; }
 }
 
@@ -1351,8 +1556,13 @@ button.link-texto { background: none; border: 0; font-family: inherit; cursor: p
     .painel__mapa { padding: 24px 24px 28px; }
     .painel__listas { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; align-items: start; }
 
-    .pagina--usuarios { max-width: 1120px; }
-    .lista--usuarios { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); align-items: start; }
+    .pagina--usuarios { max-width: 880px; }
+    .usuario { grid-template-columns: minmax(0, 1fr) 300px 140px; align-items: center; column-gap: 28px; padding: 10px 20px; }
+    .usuario__cabecalho { padding-bottom: 0; }
+    .usuario .linha { border-top: 0; }
+    .usuario .linha--ativo { justify-content: flex-end; }
+    .usuario .linha--ativo .linha__estado { margin-left: 0; }
+    .esqueleto--usuario { min-height: 88px; }
 }
 
 @media (min-width: 1024px) {
@@ -1368,23 +1578,17 @@ button.link-texto { background: none; border: 0; font-family: inherit; cursor: p
         overflow: hidden;
     }
     .entrada__marca {
-        display: flex;
-        flex-direction: column;
         justify-content: center;
-        align-items: center;
         gap: 10px;
+        margin: 0;
         padding: 48px 40px;
-        background: radial-gradient(70% 60% at 50% 40%, rgb(46 125 50 / 0.32), transparent 75%), #0B110D;
-        color: #F3F6F2;
-        text-align: center;
+        border-radius: 0;
+        background: radial-gradient(70% 60% at 50% 40%, rgb(46 125 50 / 0.32), transparent 75%), var(--noite);
     }
     .entrada__marca .inicio__icone { width: 132px; height: 132px; margin-bottom: 18px; }
-    .entrada__marca-nome { font-size: 36px; font-weight: 800; line-height: 1.1; letter-spacing: -0.035em; }
-    .entrada__marca-nome .marca__mast { color: #7FD08A; }
-    .entrada__marca-texto { font-size: 18px; color: rgb(243 246 242 / 0.74); }
+    .entrada__marca-nome { font-size: 36px; }
+    .entrada__marca-texto { font-size: 18px; }
     .entrada__conteudo { justify-content: center; padding: 48px 44px 36px; }
-    /* O logo já está no painel: no formulário fica só o título */
-    .pagina--entrada:has(> .entrada__marca) .entrada__icone { display: none; }
 
     /* Identificar a vaca + úbere à esquerda, histórico à direita.
        Durante a medição volta a uma coluna: o operador só vê o que está a fazer. */
@@ -1438,6 +1642,7 @@ button.link-texto { background: none; border: 0; font-family: inherit; cursor: p
 @keyframes virar { from { opacity: 0.3; transform: perspective(500px) rotateY(85deg); } }
 @keyframes desenhar { from { transform: scaleY(0); } }
 @keyframes guardado { from { box-shadow: 0 0 0 3px var(--teto-sadio), var(--sombra-2); } }
+@keyframes guardado-linha { from { background-color: var(--marca-clara); } }
 
 /* Movimento reduzido: tudo fica no estado final (o anel de suspeita continua visível) */
 @media (prefers-reduced-motion: reduce) {

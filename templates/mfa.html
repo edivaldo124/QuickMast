@@ -2,6 +2,8 @@
 {% from '_componentes.html' import banner, campo, marca_entrada %}
 {% block titulo %}QuickMast - Verificação em dois passos{% endblock %}
 {% block classe_pagina %} pagina--entrada{% endblock %}
+{# A barra de estado do telemóvel no tom da faixa da marca #}
+{% block cor_tema %}#0B110D{% endblock %}
 
 {# modo='configurar': ler o QR e confirmar com um código (/conta/mfa).
    modo='entrar': segundo passo do login, depois da senha (/login/mfa). #}

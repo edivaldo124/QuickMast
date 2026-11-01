@@ -18,7 +18,8 @@
     - Entra com uma conta de operador (POST /login, como o formulário) e guarda o cookie de sessão.
     - POST /api/testes  {"brinco": "BR-102", "leituras": [{"teto": 1, "cond": 312}, ...]}
       O servidor recalcula o diagnóstico (servicos/diagnostico.py) e é esse que fica no histórico;
-      a placa compara-o com o seu e avisa se forem diferentes.
+      a placa compara-o com o seu e avisa se forem diferentes. O servidor também compara cada teto
+      com o histórico da vaca (cada vaca tem o seu nível), por isso pode achar mais tetos suspeitos.
     - Continua a responder a GET /read com {"cond": N}: a página /ubere usa-o (o Nginx da box
       encaminha o /read para esta placa), para quem prefere conduzir o teste pelo telemóvel.
 
@@ -128,20 +129,19 @@ ESP8266WebServer servidorLocal(80);
 // do struct Teste e dos enum, e não no início.
 
 // ---------- Diagnóstico ----------
-// Regras de diagnóstico de mastite: as mesmas de servicos/diagnostico.py no servidor.
+// Regras de diagnóstico de mastite: a comparação entre tetos de servicos/diagnostico.py no servidor.
 // O servidor recalcula sempre e é o diagnóstico dele que fica no histórico; a placa calcula
 // para dar o resultado na hora, mesmo sem rede. Mudar os valores nos dois sítios ao mesmo tempo.
+// O servidor também compara cada teto com o histórico da vaca, que a placa não guarda.
 
 // Condutividade em valor bruto do analogRead (0-1023). Com o resistor de 1 kΩ no módulo TDS,
-// o leite normal lê ~300.
-const double LIMITE_COND = 320.0;       // alerta absoluto: acima de 320
-const double LIMIAR_RELATIVO = 0.20;    // alerta relativo: 20% acima da mediana dos outros tetos...
+// o leite normal lê ~300, mas cada vaca tem o seu nível: não há um limite fixo que sirva para todas.
+const double LIMIAR_RELATIVO = 0.20;    // alerta: 20% acima da mediana dos outros tetos...
 const double DIFERENCA_MINIMA = 40.0;   // ...e pelo menos 40 pontos, para o ruído não dar alarme
 
 struct DiagnosticoTeto {
   bool relativo;   // condutividade acima dos outros tetos
-  bool absoluto;   // acima do valor de referência
-  bool suspeito;   // um dos dois
+  bool suspeito;   // por agora, o mesmo que relativo (a única regra que a placa sabe calcular)
 };
 
 inline int mediana3(int a, int b, int c) {
@@ -162,8 +162,7 @@ inline void diagnosticar(const int cond[4], DiagnosticoTeto res[4]) {
     double diff = cond[i] - med;
     double rel = med != 0 ? diff / med : 0;
     res[i].relativo = diff > DIFERENCA_MINIMA && rel > LIMIAR_RELATIVO;
-    res[i].absoluto = cond[i] > LIMITE_COND;
-    res[i].suspeito = res[i].relativo || res[i].absoluto;
+    res[i].suspeito = res[i].relativo;
   }
 }
 
@@ -235,7 +234,6 @@ void finalizarTeste() {
                   d[i].suspeito ? "SUSPEITA" : "normal");
     // Os mesmos motivos que o servidor grava no histórico
     if (d[i].relativo) Serial.print(" - condutividade acima dos outros tetos");
-    if (d[i].absoluto) Serial.print(" - acima do valor de referência");
     Serial.println();
     if (d[i].suspeito) {
       if (mastite) afetados += ", ";
@@ -502,8 +500,13 @@ void compararComServidor(const Teste &t, const String &resposta) {
     int teto = resposta[i] - '0';
     if (teto >= 1 && teto <= 4) servidor[teto - 1] = true;
   }
+  // O servidor faz a mesma comparação entre tetos e ainda compara com o histórico da vaca:
+  // pode achar mais tetos suspeitos do que a placa, nunca menos.
   for (int i = 0; i < 4; i++) {
-    if (servidor[i] != t.suspeito[i]) {
+    if (servidor[i] && !t.suspeito[i]) {
+      Serial.printf("Teto %d: o servidor achou suspeita pelo histórico desta vaca (a placa não tem o "
+                    "histórico). Vale o do servidor.\n", i + 1);
+    } else if (!servidor[i] && t.suspeito[i]) {
       Serial.println("Atenção: o diagnóstico do servidor é diferente do da placa (vale o do servidor). "
                      "Confira se a secção Diagnóstico deste arquivo e servicos/diagnostico.py têm os mesmos limites.");
       return;
