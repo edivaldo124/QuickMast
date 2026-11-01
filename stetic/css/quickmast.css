@@ -1187,6 +1187,9 @@ a.item:focus-visible { outline-offset: -3px; }
 .selo--suspeita { background: var(--teto-suspeita); color: var(--texto-branco); }
 
 /* ---------- 13. UTILIZADORES ---------- */
+.usuario-cadastro__campos { display: flex; flex-direction: column; gap: 16px; }
+.usuario-cadastro .seletor { width: 100%; }
+
 /* Uma linha por pessoa no mesmo painel (.lista--linhas); no computador, tudo numa só fila */
 .usuario { display: grid; padding: 14px 16px 0; transition: background-color 0.2s; }
 .usuario__cabecalho { display: flex; align-items: center; gap: 12px; min-width: 0; padding-bottom: 12px; }
@@ -1557,6 +1560,7 @@ button.link-texto { background: none; border: 0; font-family: inherit; cursor: p
     .painel__listas { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; align-items: start; }
 
     .pagina--usuarios { max-width: 880px; }
+    .usuario-cadastro__campos { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
     .usuario { grid-template-columns: minmax(0, 1fr) 300px 140px; align-items: center; column-gap: 28px; padding: 10px 20px; }
     .usuario__cabecalho { padding-bottom: 0; }
     .usuario .linha { border-top: 0; }

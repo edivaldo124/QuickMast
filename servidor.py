@@ -64,8 +64,7 @@ app.config.update(
     SESSION_COOKIE_SECURE=os.environ.get('COOKIE_SEGURO', '0' if DEBUG else '1') == '1',
     PERMANENT_SESSION_LIFETIME=timedelta(hours=12),
     MAX_CONTENT_LENGTH=64 * 1024,      # nenhum pedido legítimo passa de poucos KB
-    # Registo público desligado por omissão. Ainda não há "criar utilizador" no painel do admin:
-    # para dar acesso a alguém, ligar PERMITIR_REGISTO=1 só enquanto a pessoa cria a conta.
+    # Registo público desligado por omissão: quem cadastra operários e veterinários é o admin em /usuarios.
     PERMITIR_REGISTO=os.environ.get('PERMITIR_REGISTO', '0') == '1',
     # Simulador do sensor em /read: só no seu PC. Em produção o /read é do ESP8266.
     SIMULADOR_SENSOR=os.environ.get('SIMULADOR_SENSOR', '1' if DEBUG else '0') == '1',
