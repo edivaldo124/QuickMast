@@ -1,7 +1,7 @@
 import logging
 import os
 
-from sqlalchemy import create_engine, inspect, make_url, select, func, case
+from sqlalchemy import create_engine, inspect, make_url, select, func, case, or_
 from sqlalchemy.orm import Session, selectinload, contains_eager
 
 from modelos import Base, Vaca, Teste, Leitura
@@ -147,7 +147,7 @@ def registrar_teste(brinco, leituras, diagnostico, observacao=None, usuario_id=N
         for i, (l, d) in enumerate(zip(leituras, diagnostico), start=1):
             teste.leituras.append(Leitura(
                 teto=i, temp=l['temp'], cond=l['cond'],
-                suspeito=d['suspeito'], motivo=d['motivo'],
+                suspeito=d['suspeito'], motivo=(d['motivo'] or '')[:100] or None,   # coluna de 100
             ))
         sessao.add(teste)
         sessao.commit()
@@ -202,6 +202,31 @@ def obter_teste(teste_id):
         )
         teste = sessao.scalar(consulta)
         return _teste_para_dict(teste) if teste else None
+
+
+def historico_da_vaca(brinco, n):
+    """Condutividades das últimas n leituras sadias de cada teto desta vaca, da mais recente para a
+    mais antiga: 4 listas (tetos 1 a 4). Vaca nova: 4 listas vazias."""
+    # Leituras marcadas só pelo antigo limite fixo de condutividade contam como sadias: esse limite
+    # deixou de ser regra (cada vaca tem o seu nível) e era justamente o das vacas que leem mais alto.
+    sadia = or_(Leitura.suspeito.is_(False), Leitura.motivo == 'acima do valor de referência')
+    ordem = func.row_number().over(partition_by=Leitura.teto, order_by=Teste.id.desc()).label('ordem')
+    recentes = (
+        select(Leitura.teto, Leitura.cond, ordem)
+        .join(Leitura.teste).join(Teste.vaca)
+        .where(Vaca.brinco == brinco, sadia)
+        .subquery()
+    )
+    historico = [[], [], [], []]
+    with Session(engine) as sessao:
+        linhas = sessao.execute(
+            select(recentes.c.teto, recentes.c.cond)
+            .where(recentes.c.ordem <= n)
+            .order_by(recentes.c.teto, recentes.c.ordem)
+        )
+        for teto, cond in linhas:
+            historico[teto - 1].append(cond)
+    return historico
 
 
 def listar_vacas(limite=1000, pagina=1):

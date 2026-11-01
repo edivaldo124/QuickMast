@@ -9,10 +9,11 @@
 
 {% block conteudo %}
     <!-- PASSO 0: identificar a vaca -->
-    <section id="passoVaca" class="pilha" data-fases="vaca">
-        <h1 class="centro">Quick<span class="marca__mast">Mast</span></h1>
+    <section id="passoVaca" class="pilha passo-vaca" data-fases="vaca">
+        <h1 class="sr-only">Medições</h1>
+        {# O campo é o próprio brinco em branco: escreve-se o número na etiqueta #}
         {% call campo('inputVaca', 'Brinco / ID da vaca', 'rotulo rotulo--grande') %}
-            <input class="campo campo--centro" id="inputVaca" type="text" placeholder="Ex.: BR-102" autocomplete="off" list="listaVacas" aria-describedby="erroVaca">
+            <input class="campo campo--centro campo--brinco" id="inputVaca" type="text" placeholder="Ex.: BR-102" autocomplete="off" list="listaVacas" aria-describedby="erroVaca">
         {% endcall %}
         <p id="erroVaca" class="campo-erro" hidden>Escreva o brinco/ID da vaca.</p>
         {# Sugestões: as vacas já registadas (GET /api/vacas), para não criar a mesma vaca duas vezes #}
@@ -23,7 +24,7 @@
     <!-- Vaca em teste e progresso (passos 1-4 e resultado) -->
     <div class="cartao cabecalho-vaca" data-fases="medir resultado">
         <div class="cabecalho-vaca__linha">
-            <p id="vacaAtual"></p>
+            <p class="cabecalho-vaca__vaca"><span class="sr-only">Vaca </span><span id="vacaAtual" class="brinco"></span></p>
             <p id="progressoTexto" class="progresso__texto" data-fases="medir"></p>
         </div>
         <div class="progresso" data-fases="medir" aria-hidden="true">
@@ -69,7 +70,7 @@
             <span class="cartao estatistica"><span id="estVacas" class="estatistica__numero"></span><span class="estatistica__rotulo">vacas</span></span>
             <span class="cartao estatistica"><span id="estTestes" class="estatistica__numero"></span><span class="estatistica__rotulo">testes</span></span>
             <span class="cartao estatistica"><span id="estSuspeita" class="estatistica__numero"></span><span class="estatistica__rotulo">com suspeita</span></span>
-            <span class="cartao estatistica"><span id="estPercentual" class="estatistica__numero"></span></span>
+            <span class="cartao estatistica"><span id="estPercentual" class="estatistica__numero"></span><span class="estatistica__rotulo">dos testes com suspeita</span></span>
         </a>
         <a class="btn btn--cinza btn--descarregar" href="/exportar.csv">Descarregar relatório (CSV)</a>
         {# Escrever filtra os últimos testes; a seta abre o histórico completo da vaca (/vacas/<brinco>) #}
@@ -79,7 +80,7 @@
             <button class="procura__botao" type="submit" aria-label="Abrir o histórico da vaca"></button>
         </form>
         <p id="procuraVazia" class="procura__vazio" hidden>Nenhum dos últimos testes é desta vaca. Toque na seta para ver o histórico dela.</p>
-        <ul id="listaHistorico" class="lista" data-entrada>{{ esqueletos(3) }}</ul>
+        <ul id="listaHistorico" class="lista lista--linhas" data-entrada>{{ esqueletos(3) }}</ul>
     </section>
 {% endblock %}
 

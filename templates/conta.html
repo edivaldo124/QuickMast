@@ -1,13 +1,21 @@
 {% extends 'base.html' %}
-{% from '_componentes.html' import barra, voltar, banner, campo %}
+{% from '_componentes.html' import barra, voltar, banner, campo, nome_perfil %}
 {% block titulo %}QuickMast - A minha conta{% endblock %}
 {% block classe_pagina %} pagina--lista pagina--conta{% endblock %}
 
 {% block cabecalho %}{{ barra(usuario, atual='conta') }}{% endblock %}
 
 {% block conteudo %}
-    <h1>A minha conta</h1>
     {{ voltar() }}
+    {# Quem está na conta: o título da página é o nome (o <title> diz "A minha conta") #}
+    <header class="pessoa">
+        <span class="avatar avatar--grande" aria-hidden="true">{{ usuario.nome[:1]|upper }}</span>
+        <div class="pessoa__texto">
+            <h1 class="pessoa__nome">{{ usuario.nome }}</h1>
+            <p class="pessoa__email">{{ usuario.email }}</p>
+        </div>
+        <span class="perfil-chip">{{ nome_perfil(usuario.perfil) }}</span>
+    </header>
     {% for mensagem in get_flashed_messages() %}{{ banner('ok', mensagem) }}{% endfor %}
     {% if erro %}{{ banner('alerta', erro) }}{% endif %}
 

@@ -4,24 +4,37 @@
 {% block classe_pagina %} pagina--lista{% endblock %}
 {# Dados para o JS em data-*: a CSP não permite <script> inline #}
 {% block atributos_body %} data-brinco="{{ brinco }}"{% endblock %}
+{% block estilos %}<link rel="stylesheet" href="{{ url_for('static', filename='css/vaca.css') }}">{% endblock %}
 
 {% block cabecalho %}{{ barra(usuario) }}{% endblock %}
 
 {% block conteudo %}
     {{ voltar() }}
-    <h1>{{ brinco }}</h1>
+    <h1 class="titulo-vaca"><span class="sr-only">Vaca </span><span class="brinco brinco--grande">{{ brinco }}</span></h1>
     <p id="resumoVaca" class="resumo oculto-se-vazio"></p>
     <div id="mensagem" class="oculto-se-vazio" aria-live="polite"></div>
 
+    {# Cada teto ao longo dos testes, na posição do úbere (AE | AD em cima, PE | PD em baixo) #}
+    <section id="secaoTetos" class="secao-vaca" aria-labelledby="tituloTetos">
+        <h2 id="tituloTetos" class="titulo-secao">Condutividade por teto <span id="periodoTetos" class="titulo-secao__total"></span></h2>
+        <div id="tetosVaca" class="tetos-vaca" aria-busy="true" data-entrada>
+            {% for _ in range(4) %}<div class="cartao esqueleto" aria-hidden="true"><span></span><span></span><span></span></div>{% endfor %}
+        </div>
+    </section>
+
     {# data-entrada: os testes entram em cascata e a linha desenha-se (só na 1.ª vez) #}
-    <ol id="linhaTempo" class="linha-tempo" data-entrada>
-        {% for _ in range(3) %}
-        <li class="evento evento--esqueleto" aria-hidden="true">
-            <span class="ic evento__marcador"></span>
-            <div class="cartao esqueleto"><span></span><span></span></div>
-        </li>
-        {% endfor %}
-    </ol>
+    <section id="secaoTestes" class="secao-vaca" aria-labelledby="tituloTestes">
+        <h2 id="tituloTestes" class="titulo-secao">Testes</h2>
+        <ol id="linhaTempo" class="linha-tempo" data-entrada>
+            {% for _ in range(3) %}
+            <li class="evento evento--esqueleto" aria-hidden="true">
+                <span class="ic evento__marcador"></span>
+                <div class="cartao esqueleto"><span></span><span></span></div>
+            </li>
+            {% endfor %}
+        </ol>
+        <button id="maisTestes" type="button" class="btn btn--cinza escondido">Ver mais testes</button>
+    </section>
 {% endblock %}
 
 {% block scripts %}

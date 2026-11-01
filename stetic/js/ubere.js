@@ -189,7 +189,7 @@ function iniciar() {
         t.querySelector('small').textContent = '';
     });
     tetoAtual = 1;
-    $('vacaAtual').textContent = 'Vaca: ' + vaca;
+    $('vacaAtual').textContent = vaca;   // o "Vaca" está no HTML (só para leitores de ecrã): aqui é o brinco
     mostrarFase('medir');
     mostrarPasso();
     iniciarAoVivo();
@@ -262,7 +262,7 @@ async function finalizar() {
         });
         const corpo = await r.json();
         if (!r.ok) throw new Error(corpo.erro || ('HTTP ' + r.status));
-        mostrarResultado(corpo.teste);
+        mostrarResultado(corpo.teste, corpo.historico);
         estado.replaceChildren(
             icone('ic--check'),
             criar('span', null, 'Teste #' + corpo.teste.id + ' guardado no histórico.')
@@ -275,7 +275,7 @@ async function finalizar() {
     carregarHistorico();
 }
 
-function mostrarResultado(teste) {
+function mostrarResultado(teste, historico) {
     teste.leituras.forEach(l => {
         const el = elTeto(l.teto);
         mudarEstado(el, l.suspeito ? 'mastite' : 'sadio');
@@ -284,18 +284,33 @@ function mostrarResultado(teste) {
     });
 
     const diag = $('diagnostico');
+    const avisos = avisoHistorico(historico);
     if (teste.tem_mastite) {
+        // Siglas (AD, AE, PD, PE) como no úbere do ecrã e nas listas
         const motivos = teste.leituras
             .filter(l => l.suspeito)
-            .map(l => 'Teto ' + l.teto + ': ' + l.motivo);
+            .map(l => textoTetos([l.teto]) + ': ' + l.motivo);
         banner(diag, 'alerta',
-               'ALERTA: suspeita de mastite no(s) teto(s) ' + teste.tetos_afetados.join(', '),
-               motivos);
+               'ALERTA: suspeita de mastite – ' + textoTetos(teste.tetos_afetados),
+               motivos.concat(avisos));
         vibrar([90, 60, 90]);
     } else {
-        banner(diag, 'ok', 'Todos os tetos normais.');
+        banner(diag, 'ok', 'Todos os tetos normais.', avisos);
         vibrar(40);
     }
+}
+
+// Cada vaca tem o seu nível de condutividade. Um teto sem linha de base (vaca nova, ou poucos
+// testes sadios) só foi comparado com os outros tetos: o operador tem de saber disso.
+function avisoHistorico(historico) {
+    if (!historico) return [];
+    const semBase = historico.base.map((b, i) => b === null ? i + 1 : 0).filter(Boolean);
+    if (semBase.length === 0) return [];
+    const quem = semBase.length === 4
+        ? 'Vaca ainda sem histórico suficiente: os tetos foram comparados só entre si.'
+        : textoTetos(semBase) + (semBase.length === 1 ? ' ainda sem histórico suficiente: comparado só com os outros tetos.'
+                                                      : ' ainda sem histórico suficiente: comparados só com os outros tetos.');
+    return [quem + ' O histórico da vaca conta a partir de ' + historico.minimo + ' testes sadios.'];
 }
 
 

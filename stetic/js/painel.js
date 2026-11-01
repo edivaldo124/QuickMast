@@ -66,22 +66,21 @@ async function carregar() {
 
 // ---------- Listas: as vacas (GET /api/vacas) e os testes (GET /api/testes) ----------
 // Cada item abre o histórico da vaca. Ver mais acrescenta mais POR_PAGINA itens.
+// Uma vaca: o brinco, quando foi o último teste e quantos tem; à direita, quantos deram suspeita
 function itemVaca(v) {
-    const item = criar('a', 'cartao item');
+    const n = v.testes_com_suspeita;
+    const item = criar('a', 'item' + (n ? ' item--suspeita' : ''));
     item.href = '/vacas/' + encodeURIComponent(v.brinco);
     item.append(
-        criar('span', 'item__data', v.ultimo_teste ? formatarData(v.ultimo_teste) : 'Sem testes'),
-        criar('span', 'item__operador', v.testes + (v.testes === 1 ? ' teste' : ' testes')),
-        criar('span', 'item__vaca', v.brinco)
+        brinco(v.brinco, 'item__vaca'),
+        v.ultimo_teste ? dataItem(v.ultimo_teste) : criar('span', 'item__data', 'Sem testes'),
+        criar('span', 'item__operador', v.testes + (v.testes === 1 ? ' teste' : ' testes'))
     );
     if (v.testes) {
-        const n = v.testes_com_suspeita;
-        const selo = criar('span', 'selo ' + (n ? 'selo--suspeita' : 'selo--normal'));
-        selo.append(
-            icone(n ? 'ic--alerta' : 'ic--check'),
-            criar('span', null, n ? n + (n === 1 ? ' suspeita' : ' suspeitas') : 'Sem suspeitas')
-        );
-        item.append(selo);
+        const estado = criar('span', 'item__estado');
+        if (n) estado.append(criar('span', 'item__contagem', n), criar('span', null, n === 1 ? 'suspeita' : 'suspeitas'));
+        else estado.append(criar('span', null, 'Sem suspeitas'));
+        item.append(estado);
     }
     return item;
 }

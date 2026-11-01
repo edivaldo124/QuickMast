@@ -1,0 +1,102 @@
+/* Histórico de uma vaca (/vacas/<brinco>): condutividade por teto e os testes com as 4 leituras.
+   Só esta página carrega este ficheiro; as variáveis e os componentes base estão em quickmast.css.
+   Os 4 tetos aparecem sempre na posição do úbere (AE | AD em cima, PE | PD em baixo). */
+
+.secao-vaca { display: flex; flex-direction: column; gap: 12px; margin-top: 12px; }
+
+/* ---------- Condutividade por teto ---------- */
+.tetos-vaca { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.tetos-vaca > .esqueleto { min-height: 148px; }
+
+.teto-vaca { display: flex; flex-direction: column; gap: 6px; min-width: 0; padding: 14px 14px 12px; }
+.teto-vaca--suspeita { border-color: rgb(198 40 40 / 0.45); }
+.teto-vaca__rotulo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 20px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--texto-secundario);
+}
+.teto-vaca__rotulo .ic { width: 20px; height: 20px; font-size: 12px; }
+/* Números grandes na fonte estampada, como as estatísticas e o mapa do painel */
+.teto-vaca__valor { font: 700 40px / 1.05 var(--fonte-estampada); font-variant-numeric: tabular-nums; }
+.teto-vaca--suspeita .teto-vaca__valor { color: var(--teto-suspeita); }
+.teto-vaca__detalhe { font-size: 13px; color: var(--texto-secundario); font-variant-numeric: tabular-nums; }
+.teto-vaca__suspeitas { font-size: 13px; font-weight: 600; color: var(--teto-suspeita); }
+
+/* Uma barra por teste, do mais antigo (esquerda) ao último (direita, mais escuro) */
+.barras { display: flex; align-items: flex-end; justify-content: flex-end; gap: 2px; height: 40px; margin: 4px 0 2px; }
+.barras__barra {
+    flex: 1 1 0;
+    max-width: 12px;
+    height: var(--h);
+    min-height: 3px;
+    border-radius: 2px;
+    background: var(--borda-cartao);
+    transform-origin: bottom;
+}
+.barras__barra:last-child { background: var(--texto-secundario); }
+.barras__barra--suspeita,
+.barras__barra--suspeita:last-child { background: var(--teto-suspeita); }
+/* Na 1.ª vez as barras crescem, cada cartão um pouco depois do anterior (cascata do data-entrada) */
+.tetos-vaca[data-entrada] .barras__barra { animation: crescer 0.5s var(--curva-saida) backwards; animation-delay: inherit; }
+.tetos-vaca[data-entrada] .barras { animation-delay: inherit; }
+
+/* ---------- Cartão de um teste na linha do tempo ---------- */
+/* O marcador acompanha a 1.ª linha do cartão (data); a linha vertical vai do centro de um ao seguinte */
+.secao-vaca .evento__marcador { margin-top: 12px; }
+.secao-vaca .evento:not(:last-child)::before { top: 26px; bottom: -38px; }
+
+.teste { display: flex; flex-direction: column; gap: 10px; min-width: 0; padding: 14px 16px 16px; }
+.teste__topo { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.teste__data { font-size: 15px; font-weight: 600; line-height: 1.4; }
+.teste__operador { font-size: 13px; color: var(--texto-secundario); overflow-wrap: anywhere; }
+
+.leituras__titulo {
+    margin-top: 2px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--texto-secundario);
+}
+.leituras { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; margin: 0; }
+.leitura {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: var(--superficie-suave);
+}
+.leitura dd { margin: 0; }
+.leitura__teto { font-size: 12px; font-weight: 600; color: var(--texto-secundario); }
+.leitura__valor { font: 700 28px / 1.1 var(--fonte-estampada); font-variant-numeric: tabular-nums; }
+.leitura__temp { font-size: 12px; color: var(--texto-secundario); }
+.leitura--suspeita { background: rgb(198 40 40 / 0.07); box-shadow: inset 0 0 0 1px rgb(198 40 40 / 0.3); }
+.leitura--suspeita .leitura__valor { color: var(--teto-suspeita); }
+
+/* Motivo de cada teto suspeito, com o ponto vermelho do estado */
+.teste__motivos { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; font-size: 14px; }
+.teste__motivos li { position: relative; padding-left: 16px; }
+.teste__motivos li::before {
+    content: '';
+    position: absolute;
+    left: 2px;
+    top: 0.55em;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--teto-suspeita);
+}
+.teste__observacao {
+    padding-top: 10px;
+    border-top: 1px solid var(--borda-cartao);
+    font-size: 14px;
+    color: var(--texto-secundario);
+    overflow-wrap: anywhere;
+}
+
+@keyframes crescer { from { transform: scaleY(0); } }
