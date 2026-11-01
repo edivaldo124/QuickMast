@@ -38,7 +38,7 @@ def criar():
         return jsonify({'erro': 'Nome entre 2 e 100 caracteres.', 'campo': 'nome'}), 400
     if len(email) > 120 or not EMAIL_RE.match(email):
         return jsonify({'erro': 'Email inválido.', 'campo': 'email'}), 400
-    if perfil not in PERFIS:
+    if perfil not in ('operador', 'veterinario'):
         return jsonify({'erro': 'Perfil inválido.', 'campo': 'perfil'}), 400
     erro_senha = problema_senha(senha, email)
     if erro_senha:
