@@ -51,6 +51,35 @@ def _validar(dados):
     return brinco, [por_teto[t] for t in (1, 2, 3, 4)], observacao
 
 
+# Evita duplicar um teste da placa se o Wi-Fi cair depois de gravar no banco mas antes de a
+# confirmação chegar ao ESP8266 (a placa mantém o teste salvo até receber a certeza e reenvia-o).
+_ultimos_da_placa = {}
+
+
+def gravar_teste_validado(dados, usuario_id, origem='api'):
+    brinco, leituras, observacao = _validar(dados)
+    seq = dados.get('seq')
+    chave = None
+    if type(seq) is int and seq > 0:
+        conds = tuple(l['cond'] for l in leituras)
+        chave = (origem, usuario_id, seq, brinco, conds)
+        if chave in _ultimos_da_placa:
+            existente, hist = _ultimos_da_placa[chave]
+            if banco.obter_teste(existente['id']) is not None:
+                return existente, hist
+
+    # Cada vaca tem o seu nível de condutividade: o diagnóstico compara com o histórico dela
+    diagnostico = diagnosticar(leituras, banco.historico_da_vaca(brinco, BASE_TESTES))
+    teste = banco.registrar_teste(brinco, leituras, diagnostico, observacao,
+                                  usuario_id=usuario_id)
+    historico = {'base': [d['base'] for d in diagnostico], 'minimo': BASE_MINIMO}
+    if chave is not None:
+        if len(_ultimos_da_placa) >= 128:
+            _ultimos_da_placa.pop(next(iter(_ultimos_da_placa)))
+        _ultimos_da_placa[chave] = (teste, historico)
+    return teste, historico
+
+
 @testes_api.post('/testes')
 @exigir_login()
 def criar_teste():
@@ -58,22 +87,20 @@ def criar_teste():
     if not isinstance(dados, dict):
         return jsonify({'erro': 'corpo JSON inválido'}), 400
     try:
-        brinco, leituras, observacao = _validar(dados)
+        teste, historico = gravar_teste_validado(dados, usuario_atual()['id'])
     except ValueError as e:
         return jsonify({'erro': str(e)}), 400
 
-    # Cada vaca tem o seu nível de condutividade: o diagnóstico compara com o histórico dela
-    diagnostico = diagnosticar(leituras, banco.historico_da_vaca(brinco, BASE_TESTES))
-    teste = banco.registrar_teste(brinco, leituras, diagnostico, observacao,
-                                    usuario_id=usuario_atual()['id'])
     # base: linha de base de cada teto (None = ainda sem histórico, só comparado com os outros tetos)
-    return jsonify({'ok': True, 'teste': teste,
-                    'historico': {'base': [d['base'] for d in diagnostico], 'minimo': BASE_MINIMO}}), 201
+    return jsonify({'ok': True, 'teste': teste, 'historico': historico}), 201
 
 
 @testes_api.get('/testes')
 @exigir_login()
 def listar_testes():
+    from blueprints.sensor import sincronizar_se_houver_placa
+    sincronizar_se_houver_placa(usuario_atual()['id'])
+
     brinco = request.args.get('brinco', '').strip() or None
     suspeitos = {'1': True, 'true': True, '0': False, 'false': False}.get(
         request.args.get('suspeitos', '').lower())

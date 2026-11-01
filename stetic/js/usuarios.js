@@ -1,9 +1,68 @@
 const msg = document.getElementById('mensagem');
 const lista = document.getElementById('listaUsuarios');
+const formNovo = document.getElementById('formNovoUsuario');
+const btnCadastrar = document.getElementById('btnCadastrar');
+const camposForm = {
+    nome: document.getElementById('novoNome'),
+    email: document.getElementById('novoEmail'),
+    perfil: document.getElementById('novoPerfil'),
+    senha: document.getElementById('novoSenha')
+};
 const PERFIS = ['operador', 'veterinario', 'admin'];
-const NOMES_PERFIL = { operador: 'Operador', veterinario: 'Veterinário', admin: 'Administrador' };
+const NOMES_PERFIL = { operador: 'Operário', veterinario: 'Veterinário', admin: 'Administrador' };
 const MEU_ID = Number(document.body.dataset.meuId);
 let apagarGuardado = null;   // o "Guardado." some sozinho; um erro fica até à próxima alteração
+
+function limparErrosForm() {
+    Object.values(camposForm).forEach(c => c?.removeAttribute('aria-invalid'));
+}
+
+Object.values(camposForm).forEach(c => {
+    c?.addEventListener('input', () => c.removeAttribute('aria-invalid'));
+});
+
+async function cadastrar(e) {
+    e.preventDefault();
+    limparErrosForm();
+    let r = null;
+    let corpoResp = {};
+    try {
+        r = await fetch('/api/usuarios', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                nome: camposForm.nome.value.trim(),
+                email: camposForm.email.value.trim(),
+                perfil: camposForm.perfil.value,
+                senha: camposForm.senha.value
+            })
+        });
+        corpoResp = (await r.json()) || {};
+    } catch (err) {
+        corpoResp = { erro: 'Erro de comunicação com o servidor.' };
+    } finally {
+        delete formNovo.dataset.aEnviar;
+        btnCadastrar.removeAttribute('aria-busy');
+    }
+
+    clearTimeout(apagarGuardado);
+    if (r && r.ok) {
+        formNovo.reset();
+        banner(msg, 'ok', (NOMES_PERFIL[corpoResp.perfil] || 'Utilizador') + ' ' + corpoResp.nome + ' cadastrado.');
+        apagarGuardado = setTimeout(() => limparBanner(msg), 4000);
+        await carregar();
+        lista.querySelector('[data-id="' + corpoResp.id + '"]')?.classList.add('cartao--guardado');
+    } else {
+        banner(msg, 'alerta', corpoResp.erro || 'Não foi possível cadastrar.');
+        const alvo = camposForm[corpoResp.campo];
+        if (alvo) {
+            alvo.setAttribute('aria-invalid', 'true');
+            alvo.focus();
+        }
+    }
+}
+
+formNovo?.addEventListener('submit', cadastrar);
 
 async function alterar(id, campos) {
     const r = await fetch('/api/usuarios/' + id, {

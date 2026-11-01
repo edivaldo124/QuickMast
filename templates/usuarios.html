@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% from '_componentes.html' import barra, voltar, esqueletos %}
+{% from '_componentes.html' import barra, voltar, campo, esqueletos %}
 {% block titulo %}QuickMast - Utilizadores{% endblock %}
 {% block classe_pagina %} pagina--lista pagina--usuarios{% endblock %}
 {# Dados para o JS em data-*: a CSP não permite <script> inline #}
@@ -12,10 +12,38 @@
     {{ voltar() }}
     <div id="mensagem" class="oculto-se-vazio" aria-live="polite"></div>
 
+    <section class="cartao conta__secao usuario-cadastro" aria-labelledby="tituloCadastro">
+        <h2 id="tituloCadastro" class="conta__titulo">Cadastrar operário ou veterinário</h2>
+        <form id="formNovoUsuario" class="entrada__form usuario-cadastro__form" novalidate>
+            <div class="usuario-cadastro__campos">
+                {% call campo('novoNome', 'Nome') %}
+                    <input class="campo" id="novoNome" name="nome" type="text" required minlength="2" maxlength="100" autocomplete="off" placeholder="Ex.: João Silva">
+                {% endcall %}
+                {% call campo('novoEmail', 'Email') %}
+                    <input class="campo" id="novoEmail" name="email" type="email" required maxlength="120" autocomplete="off" placeholder="Ex.: joao@quickmast.local">
+                {% endcall %}
+                <div class="grupo">
+                    <label class="rotulo" for="novoPerfil">Função</label>
+                    <div class="campo-caixa">
+                        <select class="seletor" id="novoPerfil" name="perfil">
+                            <option value="operador">Operário</option>
+                            <option value="veterinario">Veterinário</option>
+                        </select>
+                    </div>
+                </div>
+                {% call campo('novoSenha', 'Senha inicial (mín. 8 caracteres)') %}
+                    <input class="campo" id="novoSenha" name="senha" type="password" required minlength="8" maxlength="128" autocomplete="new-password">
+                {% endcall %}
+            </div>
+            <button id="btnCadastrar" class="btn btn--verde" type="submit">Cadastrar</button>
+        </form>
+    </section>
+
     <ul id="listaUsuarios" class="lista lista--linhas lista--usuarios" data-entrada>{{ esqueletos(2, 'esqueleto esqueleto--usuario') }}</ul>
 {% endblock %}
 
 {% block scripts %}
     <script src="{{ url_for('static', filename='js/componentes.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/formularios.js') }}"></script>
     <script src="{{ url_for('static', filename='js/usuarios.js') }}"></script>
 {% endblock %}
